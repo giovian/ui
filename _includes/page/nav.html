@@ -1,0 +1,20 @@
+{%- assign html_pages = site.html_pages | sort: "order" -%}
+{%- assign sorted_collections = site.collections | sort: "order" -%}
+<nav>
+  <ul>
+    {% if html_pages.size > 1 or site.documents.size > 0 %}{% for link in html_pages %}<li><a href="{{ link.url | absolute_url }}"{% if page.url == link.url %} class="active"{% endif %}>{{ link.title }}</a></li>
+    {% endfor %}{% endif %}
+    {% if site.documents.size > 0 %}{%- for collection in sorted_collections -%}{% if collection.docs.size > 0 %}
+    <li>
+      <span{% if page.collection == collection.label %} class="active"{% endif %}>
+        {{ collection.title | default: collection.label }} &#x25BE;</span>
+      <ul>
+        {%- assign collection_docs = collection.docs | sort: "order" -%}
+        {% for link in collection_docs %}<li><a href="{{ link.url | absolute_url }}"{% if page.url == link.url %} class="active"{% endif %}>{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endif %}{%- endfor -%}{% endif %}
+    {% if page.login %}{% include widgets/login.html %}{% endif %}
+  </ul>
+</nav>

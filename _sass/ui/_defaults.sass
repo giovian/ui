@@ -1,0 +1,51 @@
+$bg-dark:  hsl(200, 0%, 4%) !default
+$fg-dark:  hsl( 40, 0%, 83%) !default
+$bg-light: hsl( 40, 0%, 86%) !default
+$fg-light: hsl(200, 0%, 8%) !default
+$bg-dark-secondary:  hsl( 40, 0%, 9%) !default
+$fg-dark-secondary:  hsl( 40, 0%, 57%) !default
+$bg-light-secondary: hsl( 40, 0%, 81%) !default
+$fg-light-secondary: hsl( 40, 0%, 50%) !default
+
+// Accents
+$accents-dark:  (blue: DodgerBlue, red: Red, green: LimeGreen, orange: Orange) !default
+$accents-light: (blue: MediumBlue, red: FireBrick, green: DarkGreen, orange: OrangeRed) !default
+
+// FORMS
+$input-bg-dark:   $bg-dark-secondary !default
+$input-bg-light:  $bg-light-secondary !default
+
+// Links
+$link-color-dark:         nth(nth($accents-dark, 1), 2) !default
+$link-color-light:        nth(nth($accents-light, 1), 2) !default
+// Decoration
+$link-decoration:         none !default
+$link-decoration-hover:   underline !default
+$link-decoration-active:  none !default
+
+// Scrollbar
+$scrollbar-track-dark:  $bg-dark !default
+$scrollbar-thumb-dark:  nth(nth($accents-dark, 1), 2) !default
+$scrollbar-track-light: $bg-light !default
+$scrollbar-thumb-light: nth(nth($accents-light, 1), 2) !default
+
+// Fonts
+$font-size:   15px !default
+$line-height: 1.4 !default
+$main_font:   sans-serif !default
+$code-font:   monospace !default
+// Headings
+$headings-font:    sans-serif !default
+$headings-weight:  normal !default
+$headings-margins: 0.67 0.83 1 1.33 1.67 2.33 !default
+
+// LAYOUT
+$max-width:      60rem !default
+$mobile-width:   700px !default
+$layout-padding: 2rem !default
+
+// Borders
+$border-color-dark:   hsl(0, 0%, 21%) !default
+$border-color-light:  hsl(0, 0%, 68%) !default
+$border-radius:       6px !default
+$border-radius-small: 2px !default

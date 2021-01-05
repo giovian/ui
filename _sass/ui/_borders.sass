@@ -1,0 +1,28 @@
+// Forms
+form
+  border-radius: $border-radius
+  border-width: 1px
+  border-style: solid
+  border-color: var(--border-color)
+
+// Fields
+input:not([type=submit]):not([type=reset]):not([type=button]),
+textarea, select[multiple], select
+  border-width: 1px
+  border-style: solid
+  border-color: var(--border-color)
+  // Important if its inside a color-
+  border-radius: $border-radius-small !important
+// color swatch border hack
+input[type="color"]
+  &::-moz-color-swatch
+    border: none
+  &::-webkit-color-swatch
+    border: none
+
+// Tables
+tr:not(:last-of-type) td,
+thead th
+  border-bottom-width: 1px
+  border-bottom-style: solid
+  border-bottom-color: var(--border-color)

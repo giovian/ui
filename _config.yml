@@ -1,0 +1,20 @@
+timezone: Europe/Rome
+baseurl: /ui
+permalink: pretty
+
+# COLLECTIONS
+collections:
+  docs:
+    output: true
+    title: Docs
+
+# DEFAULTS
+defaults:
+  - scope:
+      type: docs
+    values:
+      layout: default
+  - scope:
+      path: ''
+    values:
+      login: true

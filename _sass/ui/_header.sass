@@ -1,0 +1,34 @@
+header
+
+  // Dominate
+  z-index: 1000
+
+  // COLORS
+  background-color: var(--bg)
+  border-bottom: 1px solid var(--border-color)
+
+  // FLEX
+  display: flex
+  justify-content: space-between
+  align-items: end
+
+  // STICKY
+  position: sticky
+  top: 0
+
+  // HGROUP
+  hgroup
+
+    // TYPOGRAPHY
+    h2:not(:first-child)
+      @extend .fg-secondary
+      font-style: italic
+
+    // FLEX
+    display: flex
+    align-items: baseline
+    
+    // Spacing and separation
+    > *
+      margin: 0
+      padding-right: .5rem

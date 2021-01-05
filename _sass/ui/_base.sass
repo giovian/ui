@@ -1,0 +1,31 @@
+*
+  box-sizing: border-box
+
+html
+  overflow-y: scroll
+  scroll-behavior: smooth
+
+body
+  margin: 0 auto
+  max-width: $max-width
+  display: flex
+  flex-direction: column
+
+header, footer, section, main > aside
+  padding-top: $layout-padding
+  padding-bottom: $layout-padding
+
+header, footer, section
+  padding-left: $layout-padding
+  padding-right: $layout-padding
+
+blockquote
+  padding: 1rem
+  margin: 1rem 0
+
+// Remove top and bottom margins of the first and last elements
+header, section, footer, hgroup, form, blockquote, main > aside, *:not(form) > [class*='color-']
+  & > *:first-child
+    margin-top: 0
+  & > *:last-child
+    margin-bottom: 0

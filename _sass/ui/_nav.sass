@@ -1,0 +1,35 @@
+nav ul
+
+  // FLEX
+  display: flex
+
+  // RESET LIST
+  margin: 0
+  padding-left: 0
+  list-style: none
+
+  // LIST ELEMENTS
+  li
+    margin-left: .5rem
+    &:hover ul
+      display: block
+
+    // SPANS AND LINKS
+    span
+      cursor: default
+    a, span
+      display: block
+      @extend .border, .minimum-padding
+      background-color: var(--bg-secondary)
+      &:hover, &.active
+        text-decoration: none
+        background-color: var(--bg)
+      &:active
+        background-color: var(--bg-secondary)
+
+    // DROPDOWN
+    ul
+      position: absolute
+      display: none
+      li
+        margin: .4rem 0

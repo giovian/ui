@@ -1,0 +1,6 @@
+{%- assign url = site.github.repository_url -%}
+{%- if include.path -%}
+{%- assign branch = site.github.public_repositories | where: "html_url", url | map: "default_branch" | first -%}
+{%- assign url = url | append: '/blob/' | append: branch | append: '/' | append: page.path -%}
+{%- endif -%}
+{{ url }}

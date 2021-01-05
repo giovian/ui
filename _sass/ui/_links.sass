@@ -1,0 +1,11 @@
+a
+  text-decoration: $link-decoration
+  &:hover
+    text-decoration: $link-decoration-hover
+  &:active
+    text-decoration: $link-decoration-active
+    outline-width: 0
+  &[disabled]
+    pointer-events: none
+    cursor: default
+    color: unset

@@ -1,0 +1,11 @@
+<header>
+  <hgroup>
+    <h2><a href="{{ '/' | absolute_url }}">{{ site.title }}</a></h2>
+    {% if page.url != '/' %}
+      <h2>&rarr; {{ page.title }}</i></h2>
+    {% else %}
+      <h2>&larr; {{ site.description }}</h2>
+    {% endif %}
+  </hgroup>
+  {% include page/nav.html %}
+</header>

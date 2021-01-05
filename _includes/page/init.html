@@ -1,0 +1,8 @@
+{%- assign gh = site.github -%}
+{%- assign repo = gh.public_repositories | where: "full_name", gh.repository_nwo | first -%}
+{%- assign build = site.time | date: "%Y-%m-%d %T %Z" -%}
+{%- if gh.environment == "development" -%}
+  {%- assign version = build -%}
+{%- else -%}
+  {%- assign version = gh.build_revision -%}
+{%- endif -%}

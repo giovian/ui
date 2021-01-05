@@ -1,0 +1,22 @@
+{% include page/init.html %}
+<!DOCTYPE html>
+<html
+  id="page-top"
+  lang="{{ site.language | default: "en" }}"
+  dir="{{ site.direction | default: "ltr" }}"
+  class="{{ page.classes | join: " " }}">
+{% include page/head.html %}
+<body
+  page-title="{{ page.title | slugify }}"
+  page-collection="{{ page.collection }}">
+{% include page/header.html %}
+<main>
+{% include page/sidebar.html %}
+{% include page/main.html %}
+</main>
+<footer>
+{% include page/footer.html %}
+</footer>
+
+</body>
+</html>
