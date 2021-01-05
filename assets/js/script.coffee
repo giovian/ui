@@ -1,12 +1,12 @@
 ---
 ---
 
-{% include_relative widgets/storage.coffee %}
-{% include_relative widgets/busy.coffee %}
-{% include_relative widgets/notification.coffee %}
-{% include_relative widgets/login.coffee %}
-{% include_relative widgets/mode.coffee %}
-{% include_relative widgets/datetime.coffee %}
+{% include scripts/storage.coffee %}
+{% include scripts/busy.coffee %}
+{% include scripts/notification.coffee %}
+{% include scripts/login.coffee %}
+{% include scripts/mode.coffee %}
+{% include scripts/datetime.coffee %}
 
 # Prevent default events
 $("a.prevent-default").on "click", (e) -> e.preventDefault()
