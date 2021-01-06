@@ -13,7 +13,11 @@ a
 // Tables
 table
   @extend .border
+  tbody, tbody tr, tbody tr td
+    color: var(--fg)
+    background-color: var(--bg)
   thead, tfoot
+    color: var(--fg)
     @extend .bg-secondary
 
 // 
@@ -74,3 +78,9 @@ select[multiple]
   @extend .border
   &:not(tr) *
     border-radius: $border-radius
+
+// Typography
+ins
+  color: var(--green-fg)
+del
+  color: var(--red-fg)

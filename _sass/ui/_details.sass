@@ -1,0 +1,15 @@
+details summary
+  cursor: pointer
+  outline: none
+  color: var(--link-color)
+  &::marker
+    color: var(--fg)
+  &:active
+    text-decoration: underline
+  &::after
+    display: table
+    clear: both
+    content: ""
+    margin-bottom: .5em
+  h1, h2, h3, h4, h5, h6
+    display: inline

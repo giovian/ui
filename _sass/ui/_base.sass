@@ -22,6 +22,8 @@ header, footer, section
 blockquote
   padding: 1rem
   margin: 1rem 0
+  background-color: var(--bg)
+  color: var(--fg)
 
 // Remove top and bottom margins of the first and last elements
 header, section, footer, hgroup, form, blockquote, main > aside, *:not(form) > [class*='color-']
@@ -29,3 +31,7 @@ header, section, footer, hgroup, form, blockquote, main > aside, *:not(form) > [
     margin-top: 0
   & > *:last-child
     margin-bottom: 0
+
+// Cursor on title attribute
+[title]
+  cursor: default
