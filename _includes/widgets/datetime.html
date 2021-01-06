@@ -4,4 +4,4 @@
 {%- assign text = include.text | default: cropped -%}
 {%- assign rfc = datetime | date_to_rfc822 -%}
 {%- assign title = include.title | default: rfc -%}
-<span datetime="{{ datetime }}"{% if include.embed %} data-embed="true"{% endif %}{% if include.decimals %} data-decimals="{{ include.decimals }}"{% endif %}{% if include.replace %} data-replace="true"{% endif %} title="{{ title }}">{{ text }}</span>
+<span datetime="{{ datetime }}"{% if include.embed %} data-embed="true"{% endif %}{% if include.replace %} data-replace="true"{% endif %} title="{{ title }}" original-text="{{ text }}">{{ text }}</span>
