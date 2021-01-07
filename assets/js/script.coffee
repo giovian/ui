@@ -11,3 +11,6 @@
 # Prevent default events
 $("a.prevent-default").on "click", (e) -> e.preventDefault()
 $("form.prevent-default").on "submit", (e) -> e.preventDefault()
+
+# Fix inline <code> element without class
+$(':not(pre) code').addClass 'highlighter-rouge highlight'
