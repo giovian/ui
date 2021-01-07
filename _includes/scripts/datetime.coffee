@@ -11,21 +11,14 @@ dateTime = (e) ->
   # 's' function
   s = (value) -> if value >= 2 then 's' else ''
   # Check range
-  if absolute < second
-    moment = 'now'
-    update = second / 2
-  else if absolute < (second * 15)
+  if absolute < (second * 11)
     value = ~~(absolute / second)
-    moment = "#{value} second#{s value}"
-    update = second
-  else if absolute < (second * 30)
-    value = ~~(absolute / second)
-    moment = "#{value} second#{s value}"
+    moment = "now"
     update = second * 5
   else if absolute < minute
     value = ~~(absolute / second)
-    moment = "#{value} second#{s value}"
-    update = if (value % 10) is 0 then second * 10 else (value % 10) * 1000
+    moment = "less than a minute"
+    update = second * 10
   else if absolute < hour
     value = ~~(absolute / minute)
     moment = "#{value} minute#{s value}"
@@ -61,7 +54,7 @@ dateTime = (e) ->
     $(e).text out
     $(e).attr "title", (i, t) -> if not t then text
   else
-    $(e).attr "title", (i, t) -> if not t then out
+    $(e).attr "title", out
   $(e).removeClass('past future').addClass () -> if diff > 0 then 'past' else 'future'
   # Return a setTimeout function
   setTimeout ->
