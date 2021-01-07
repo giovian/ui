@@ -6,31 +6,6 @@ html
   .fg-secondary
     color: var(--fg-secondary)
 
-// Links
-a
-  color: var(--link-color)
-
-// Tables
-table
-  @extend .border
-  tbody, tbody tr, tbody tr td
-    color: var(--fg)
-    background-color: var(--bg)
-  thead, tfoot
-    color: var(--fg)
-    @extend .bg-secondary
-
-// 
-// FIELDS
-// --------------------------------------
-
-// Background and foreground
-input:not([type=submit]):not([type=reset]):not([type=button]),
-textarea,
-select[multiple]
-  background: var(--input-bg)
-  color: var(--fg)
-
 // Scrollbars
 *
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track)
@@ -63,7 +38,8 @@ select[multiple]
         width: auto
 
 @each $accent_name, $accent_color in $accents_light
-  html .color-#{$accent-name}
+  html .color-#{$accent-name},
+  tr.color-#{$accent-name} td, td.color-#{$accent-name}
     color: var(--#{$accent-name}-fg)
     background-color: var(--#{$accent-name}-bg)
     border-color: var(--#{$accent-name}-border)
@@ -73,14 +49,3 @@ select[multiple]
       color: var(--#{$accent-name}-fg-secondary)
     .bg-secondary
       background-color: var(--#{$accent-name}-bg-secondary) !important
-
-*:not(form) > [class*='color-']
-  @extend .border
-  &:not(tr) *
-    border-radius: $border-radius
-
-// Typography
-ins
-  color: var(--green-fg)
-del
-  color: var(--red-fg)

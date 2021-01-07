@@ -15,22 +15,18 @@ html:not(.logged) .show-if-logged,
 .mode-light
   .mode-opposite, .mode-opposite *
     @extend .mode-dark
-    *:not(pre) > code
-      background: inherit
-      color: inherit
 .mode-dark
   .mode-opposite, .mode-opposite *
     @extend .mode-light
-    *:not(pre) > code
-      background: inherit
-      color: inherit
 
+.border-rounded
+  border-radius: $border-radius
+  overflow: hidden
 .border
   border-style: solid
   border-color: var(--border-color)
   border-width: 1px
-  border-radius: $border-radius
-  overflow: hidden
+  @extend .border-rounded
 
 .minimum-padding
   padding: 0.5rem 1rem
