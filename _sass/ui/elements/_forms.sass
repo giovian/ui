@@ -1,3 +1,4 @@
+// Fonts and Outline
 input, select, textarea, button
   font-family: inherit
   font-size: inherit
@@ -30,6 +31,13 @@ input:not([type=button]):not([type=range]):not([type=checkbox]):not([type=radio]
   appearance: none
   -webkit-appearance: none
 
+// Colors
+input:not([type=submit]):not([type=reset]):not([type=button]),
+textarea,
+select[multiple]
+  background: var(--input-bg)
+  color: var(--fg)
+
 // Buttons
 input[type=submit], input[type=reset]
   @extend .border, .minimum-padding
@@ -58,7 +66,7 @@ input + span, select + span, textarea + span, label.radio + span, label.boolean 
 input[type='checkbox'] + span, select + span, label.boolean + span, label.radio
   display: block
 
-// Labels and small notes on forms
+// Labels and small notes
 label, input + span, select + span, textarea + span
   margin: .2rem
 
@@ -90,3 +98,22 @@ input::-webkit-inner-spin-button
   -webkit-appearance: none !important
 input[type=number]
   -moz-appearance: textfield !important
+
+// Borders
+form:not(.no-border)
+  @extend .border
+
+// Fields
+input:not([type=submit]):not([type=reset]):not([type=button]),
+textarea, select[multiple], select
+  border-width: 1px
+  border-style: solid
+  border-color: var(--border-color)
+  // Important if its inside a color-
+  border-radius: $border-radius-small !important
+// color swatch border hack
+input[type="color"]
+  &::-moz-color-swatch
+    border: none
+  &::-webkit-color-swatch
+    border: none

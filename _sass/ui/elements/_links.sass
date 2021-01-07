@@ -1,10 +1,17 @@
 a
+
+  // Color
+  color: var(--link-color)
+
+  // Decorations
   text-decoration: $link-decoration
   &:hover
     text-decoration: $link-decoration-hover
   &:active
     text-decoration: $link-decoration-active
     outline-width: 0
+  
+  // Disabled
   &[disabled]
     pointer-events: none
     cursor: default

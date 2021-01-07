@@ -1,0 +1,47 @@
+figure.highlight,
+div.highlighter-rouge
+  
+  // Spacing
+  margin: 1rem 0
+  display: inline-block
+
+  // Borders
+  border-radius: $border-radius
+
+pre.highlight, .highlight pre
+
+  // Spacing
+  padding: .5rem 1rem
+  margin: 0
+
+  // Typography
+  white-space: pre-wrap
+  word-break: break-all
+
+*:not(code).highlight
+  border-radius: $border-radius
+
+//
+// INLINE
+// --------------------------------------
+
+*:not(pre)
+
+  & > code
+    // Spacing
+    padding: 0.1rem 0.2rem
+
+    // Borders
+    border-radius: $border-radius-small
+
+// Opposite mode
+.mode-light
+  .mode-opposite, .mode-opposite *
+    *:not(pre) > code
+      background: inherit
+      color: inherit
+.mode-dark
+  .mode-opposite, .mode-opposite *
+    *:not(pre) > code
+      background: inherit
+      color: inherit
