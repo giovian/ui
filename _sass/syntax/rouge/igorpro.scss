@@ -1,32 +1,32 @@
-[class*="highlight"] table td { padding: 5px; }
-[class*="highlight"] table pre { margin: 0; }
-[class*="highlight"], [class*="highlight"] .w {
+.highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
   color: #444444;
 }
-[class*="highlight"] .cp {
+.highlight .cp {
   color: #CC00A3;
 }
-[class*="highlight"] .cs {
+.highlight .cs {
   color: #CC00A3;
 }
-[class*="highlight"] .c, [class*="highlight"] .ch, [class*="highlight"] .cd, [class*="highlight"] .cm, [class*="highlight"] .cpf, [class*="highlight"] .c1 {
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cpf, .highlight .c1 {
   color: #FF0000;
 }
-[class*="highlight"] .kc {
+.highlight .kc {
   color: #C34E00;
 }
-[class*="highlight"] .kd {
+.highlight .kd {
   color: #0000FF;
 }
-[class*="highlight"] .kr {
+.highlight .kr {
   color: #007575;
 }
-[class*="highlight"] .k, [class*="highlight"] .kn, [class*="highlight"] .kp, [class*="highlight"] .kt, [class*="highlight"] .kv {
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kt, .highlight .kv {
   color: #0000FF;
 }
-[class*="highlight"] .s, [class*="highlight"] .sa, [class*="highlight"] .sb, [class*="highlight"] .sc, [class*="highlight"] .dl, [class*="highlight"] .sd, [class*="highlight"] .s2, [class*="highlight"] .se, [class*="highlight"] .sh, [class*="highlight"] .si, [class*="highlight"] .sx, [class*="highlight"] .sr, [class*="highlight"] .s1, [class*="highlight"] .ss {
+.highlight .s, .highlight .sa, .highlight .sb, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .se, .highlight .sh, .highlight .si, .highlight .sx, .highlight .sr, .highlight .s1, .highlight .ss {
   color: #009C00;
 }
-[class*="highlight"] .nb, [class*="highlight"] .bp {
+.highlight .nb, .highlight .bp {
   color: #C34E00;
 }

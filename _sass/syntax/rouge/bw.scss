@@ -1,63 +1,63 @@
-[class*="highlight"] table td { padding: 5px; }
-[class*="highlight"] table pre { margin: 0; }
-[class*="highlight"], [class*="highlight"] .w {
+.highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
   color: #000000;
   background-color: #ffffff;
 }
-[class*="highlight"] .c, [class*="highlight"] .ch, [class*="highlight"] .cd, [class*="highlight"] .cm, [class*="highlight"] .cpf, [class*="highlight"] .c1, [class*="highlight"] .cs {
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cpf, .highlight .c1, .highlight .cs {
   font-style: italic;
 }
-[class*="highlight"] .cp {
+.highlight .cp {
 }
-[class*="highlight"] .k, [class*="highlight"] .kc, [class*="highlight"] .kd, [class*="highlight"] .kn, [class*="highlight"] .kr, [class*="highlight"] .kv {
+.highlight .k, .highlight .kc, .highlight .kd, .highlight .kn, .highlight .kr, .highlight .kv {
   font-weight: bold;
 }
-[class*="highlight"] .kp {
+.highlight .kp {
 }
-[class*="highlight"] .kt {
+.highlight .kt {
 }
-[class*="highlight"] .o, [class*="highlight"] .ow {
+.highlight .o, .highlight .ow {
   font-weight: bold;
 }
-[class*="highlight"] .nc {
+.highlight .nc {
   font-weight: bold;
 }
-[class*="highlight"] .nn {
+.highlight .nn {
   font-weight: bold;
 }
-[class*="highlight"] .ne {
+.highlight .ne {
   font-weight: bold;
 }
-[class*="highlight"] .ni {
+.highlight .ni {
   font-weight: bold;
 }
-[class*="highlight"] .nt {
+.highlight .nt {
   font-weight: bold;
 }
-[class*="highlight"] .s, [class*="highlight"] .sa, [class*="highlight"] .sb, [class*="highlight"] .sc, [class*="highlight"] .dl, [class*="highlight"] .sd, [class*="highlight"] .s2, [class*="highlight"] .sh, [class*="highlight"] .sx, [class*="highlight"] .sr, [class*="highlight"] .s1, [class*="highlight"] .ss {
+.highlight .s, .highlight .sa, .highlight .sb, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .sr, .highlight .s1, .highlight .ss {
   font-style: italic;
 }
-[class*="highlight"] .si {
+.highlight .si {
   font-weight: bold;
 }
-[class*="highlight"] .se {
+.highlight .se {
   font-weight: bold;
 }
-[class*="highlight"] .gh {
+.highlight .gh {
   font-weight: bold;
 }
-[class*="highlight"] .gu {
+.highlight .gu {
   font-weight: bold;
 }
-[class*="highlight"] .ge {
+.highlight .ge {
   font-style: italic;
 }
-[class*="highlight"] .gs {
+.highlight .gs {
   font-weight: bold;
 }
-[class*="highlight"] .gp {
+.highlight .gp {
   font-weight: bold;
 }
-[class*="highlight"] .err {
+.highlight .err {
   color: #FF0000;
 }
