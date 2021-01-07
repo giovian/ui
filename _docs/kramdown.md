@@ -56,6 +56,55 @@ Variabile | Description | Value
 `html_pages` | Pages `HTML` rendered | {{ site.html_pages.size }}
 `documents` | Documents in every collection | {{ site.documents.size }}
 
+## Code
+
+Fenced, start <code>```yml</code> end <code>```</code>
+
+```yml
+city: 1
+coas: "ok"
+array:
+  - 1
+  - 2
+  - three
+array: [1, 2, "three"]
+```
+
+Liquid, start `{% raw %}{%- highlight yml -%}{% endraw %}`{:.language-liquid} end `{% raw %}{%- endhighlight -%}{% endraw %}`{:.language-liquid}
+
+{%- highlight yml -%}
+city: 1
+coas: "ok"
+array:
+  - 1
+  - 2
+  - three
+array: [1, 2, "three"]
+{%- endhighlight -%}
+
+Kramdown code block, start `~~~ yml` end `~~~`
+
+~~~ yml
+city: 1
+coas: "ok"
+array:
+  - 1
+  - 2
+  - three
+array: [1, 2, "three"]
+~~~
+
+Kramdown lines indented by 4 spaces, start `{:.language-yml}`
+
+{:.language-yml}
+    city: 1
+    coas: "ok"
+    array:
+      - 1
+      - 2
+      - three
+    array: [1, 2, "three"]
+
 ## Details
 
 <details>
