@@ -56,10 +56,12 @@ Variabile | Description | Value
 `html_pages` | Pages `HTML` rendered | {{ site.html_pages.size }}
 `documents` | Documents in every collection | {{ site.documents.size }}
 
-## Code
+## Code blocks
 
-Fenced, start <code>```yml</code> end <code>```</code>
-
+<div class="grid">
+  <div markdown=1>
+__Fenced__  
+  start with <code>```yml</code>, end with <code>```</code>
 ```yml
 city: 1
 coas: "ok"
@@ -69,9 +71,10 @@ array:
   - three
 array: [1, 2, "three"]
 ```
-
-Liquid, start `{% raw %}{%- highlight yml -%}{% endraw %}`{:.language-liquid} end `{% raw %}{%- endhighlight -%}{% endraw %}`{:.language-liquid}
-
+  </div>
+  <div markdown=1>
+__Liquid__  
+`{% raw %}{%- highlight yml -%}{% endraw %}`{:.language-liquid} and `{% raw %}{%- endhighlight -%}{% endraw %}`{:.language-liquid}
 {%- highlight yml -%}
 city: 1
 coas: "ok"
@@ -81,9 +84,12 @@ array:
   - three
 array: [1, 2, "three"]
 {%- endhighlight -%}
-
-Kramdown code block, start `~~~ yml` end `~~~`
-
+  </div>
+</div>
+<div class="grid">
+<div markdown=1>
+__Kramdown code block__  
+start with `~~~ yml`, end with `~~~`
 ~~~ yml
 city: 1
 coas: "ok"
@@ -93,8 +99,10 @@ array:
   - three
 array: [1, 2, "three"]
 ~~~
-
-Kramdown lines indented by 4 spaces, start `{:.language-yml}`
+</div>
+<div markdown=1>
+__Kramdown indented by 4 spaces__  
+start with `{:.language-yml}`, end with emply line
 
 {:.language-yml}
     city: 1
@@ -104,6 +112,8 @@ Kramdown lines indented by 4 spaces, start `{:.language-yml}`
       - 2
       - three
     array: [1, 2, "three"]
+</div>
+</div>
 
 ## Details
 

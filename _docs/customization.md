@@ -14,6 +14,15 @@
 // Override CSS rules here
 ```
 
+## Footer
+
+The `footer` include 3 files:
+- `_includes/footer/left.html` GitHub links
+- `_includes/footer/center.html` empty by default
+- `_includes/footer/right.html` Top link and mode toggle link
+
+To override theese defaults add any of theese files to your repository with customized content.
+
 ## Colors
 
 <details>
