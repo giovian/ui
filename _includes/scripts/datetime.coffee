@@ -40,12 +40,18 @@ dateTime = (e) ->
     moment = "#{value} month#{s value}"
     update = month
   else
-    moment = "#{~~(absolute / year)} year#{s value}"
+    value = ~~(absolute / year)
+    moment = "#{value} year#{s value}"
     update = year
   # Past or Future
-  out = if moment isnt 'now'
-    if diff > 0 then "#{moment} ago" else "in #{moment}"
-  else moment
+  $(e).removeClass('past future')
+  if diff > 0
+    formula = "#{moment} ago"
+    $(e).addClass 'past'
+  else
+    formula = "in #{moment}"
+    $(e).addClass 'future'
+  out = if moment isnt 'now' then formula else moment
   # Embed or add title attribute
   if $(e).data "embed"
     $(e).text "#{$(e).attr 'original-text'} (#{out})"
@@ -55,7 +61,6 @@ dateTime = (e) ->
     $(e).attr "title", (i, t) -> if not t then text
   else
     $(e).attr "title", out
-  $(e).removeClass('past future').addClass () -> if diff > 0 then 'past' else 'future'
   # Return a setTimeout function
   setTimeout ->
     dateTime e
