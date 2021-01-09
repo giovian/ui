@@ -2,11 +2,21 @@ figure.highlight,
 div.highlighter-rouge
   
   // Spacing
-  margin: 1rem 0
-  display: inline-block
+  margin: 0
 
   // Borders
   border-radius: $border-radius
+
+figure.highlight,
+div.highlighter-rouge
+  // Width as needed
+  display: inline-block
+
+.grid
+  figure.highlight,
+  div.highlighter-rouge
+    // Revert at default
+    display: block
 
 pre.highlight, .highlight pre
 
@@ -18,6 +28,8 @@ pre.highlight, .highlight pre
   white-space: pre-wrap
   word-break: break-all
 
+
+// Border
 *:not(code).highlight
   border-radius: $border-radius
 
@@ -25,23 +37,17 @@ pre.highlight, .highlight pre
 // INLINE
 // --------------------------------------
 
-*:not(pre)
+*:not(pre) > code
 
-  & > code
-    // Spacing
-    padding: 0.1rem 0.2rem
+  // Spacing
+  padding: 0.1rem 0.2rem
 
-    // Borders
-    border-radius: $border-radius-small
+  // Borders
+  border-radius: $border-radius-small
 
 // Opposite mode
-.mode-light
-  .mode-opposite, .mode-opposite *
-    *:not(pre) > code
-      background: inherit
-      color: inherit
-.mode-dark
-  .mode-opposite, .mode-opposite *
+.mode-light .mode-opposite, .mode-light .mode-opposite *,
+.mode-dark .mode-opposite, .mode-dark .mode-opposite *
     *:not(pre) > code
       background: inherit
       color: inherit

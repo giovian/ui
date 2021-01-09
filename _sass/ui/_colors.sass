@@ -38,14 +38,16 @@ html
         width: auto
 
 @each $accent_name, $accent_color in $accents_light
-  html .color-#{$accent-name},
+  .color-#{$accent-name},
   tr.color-#{$accent-name} td, td.color-#{$accent-name}
     color: var(--#{$accent-name}-fg)
     background-color: var(--#{$accent-name}-bg)
-    border-color: var(--#{$accent-name}-border)
+    border-color: var(--#{$accent-name}-border) !important
     a
       color: var(--#{$accent-name})
     .fg-secondary
       color: var(--#{$accent-name}-fg-secondary)
     .bg-secondary
       background-color: var(--#{$accent-name}-bg-secondary) !important
+  .color-#{$accent-name} .highlight
+    color: var(--#{$accent-name}-fg)
