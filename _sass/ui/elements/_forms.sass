@@ -35,30 +35,27 @@ input:not([type=button]):not([type=range]):not([type=checkbox]):not([type=radio]
 input:not([type=submit]):not([type=reset]):not([type=button]),
 textarea,
 select[multiple]
-  background: var(--input-bg)
+  background: var(--bg-secondary)
   color: var(--fg)
 
 // Buttons
 input[type=submit], input[type=reset]
   @extend .border, .minimum-padding
+  background: var(--bg)
+  color: var(--fg)
   &:hover
-    background-color: var(--bg)
+    background: var(--bg-secondary)
+  &:active
+    background: var(--bg)
 input[type=submit]
   @extend .color-green
-  &:active
-    background-color: var(--green-bg-secondary)
 input[type=reset]
   @extend .color-red
-  &:active
-    background-color: var(--red-bg-secondary)
 
 // Selects
 select
-  @extend .border
-  background-color: var(--bg-secondary)
+  background: var(--bg-secondary)
   color: var(--fg)
-  &:hover
-    background-color: var(--bg)
 
 // Spans for descriptions
 input + span, select + span, textarea + span, label.radio + span, label.boolean + span
@@ -103,14 +100,19 @@ input[type=number]
 form:not(.no-border)
   @extend .border
 
-// Fields
-input:not([type=submit]):not([type=reset]):not([type=button]),
-textarea, select[multiple], select
-  border-width: 1px
-  border-style: solid
-  border-color: var(--border-color)
-  // Important if its inside a color-
-  border-radius: $border-radius-small !important
+  // Fields border
+  input:not([type=submit]):not([type=reset]):not([type=button]),
+  textarea, select[multiple], select
+    border-width: $border-width
+    border-style: solid
+    border-color: var(--border-color)
+    // Important if its inside a color-
+    border-radius: $border-radius-small !important
+
+form.no-border
+  input, select
+    border: none
+
 // color swatch border hack
 input[type="color"]
   &::-moz-color-swatch

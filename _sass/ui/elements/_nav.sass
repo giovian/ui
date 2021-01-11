@@ -20,16 +20,20 @@ nav ul
     a, span
       display: block
       @extend .border, .minimum-padding
-      background-color: var(--bg-secondary)
+      background: var(--bg-secondary)
       &:hover, &.active
         text-decoration: none
-        background-color: var(--bg)
+        background: var(--bg)
       &:active
-        background-color: var(--bg-secondary)
+        background: var(--bg-secondary)
 
     // DROPDOWN
     ul
       position: absolute
       display: none
+      @extend .border
       li
-        margin: .4rem 0
+        margin: 0
+        a, span
+          border: none
+          border-radius: 0

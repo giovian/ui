@@ -1,0 +1,72 @@
+//
+// Small screens
+// --------------------------------------
+@media (max-width: $mobile-width)
+
+  // Layout
+  header, footer, section, main > aside
+    padding-top: $mobile-layout-padding
+    padding-bottom: $mobile-layout-padding
+
+  header, footer, section
+    padding-left: $mobile-layout-padding
+    padding-right: $mobile-layout-padding
+
+  // Tables
+  section
+    overflow-x: auto
+  table, thead, tbody, th, td, tr
+    display: block
+  td, th
+    text-align: left !important
+    border-bottom-width: 0px !important
+    &:empty
+      display: none
+    &:last-child
+      border-bottom-width: $border-width !important
+
+  // Header
+  header
+    // Remove sticky
+    position: static
+    // Stack elements vertically (left)
+    flex-direction: column
+    align-items: start
+
+  footer
+    flex-direction: column
+    // Lists alignment
+    ul
+      text-align: left !important
+
+  // Navigation
+  nav ul
+    flex-direction: column
+    li
+      margin-left: 0
+      a, span
+        border: none
+        border-radius: 0
+        padding: 0
+        background: var(--bg)
+        &:active
+          background: var(--bg)
+        &.active
+          color: var(--fg-secondary)
+      ul
+        margin-left: 1em
+        border: none
+        position: static
+        display: block
+
+  // Visibility
+  .show-if-big-screen
+    display: none !important
+
+  //
+  // GRID
+  // --------------------------------------
+  .grid
+
+    // Stack columns
+    grid-template-columns: 1fr

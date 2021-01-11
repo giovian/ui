@@ -1,15 +1,21 @@
 details summary
-  cursor: pointer
-  outline: none
-  color: var(--link-color)
+
+  // Colors
+  @extend a
   &::marker
     color: var(--fg)
-  &:active
-    text-decoration: underline
+
+  // Cursor and outline
+  cursor: pointer
+  outline: none
+
+  // Clear both
   &::after
     display: table
     clear: both
     content: ""
     margin-bottom: .5em
+
+  // Headers on summray
   h1, h2, h3, h4, h5, h6
     display: inline

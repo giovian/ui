@@ -1,46 +1,59 @@
 \:root, .mode-light
-  --bg: #{$bg-light}
-  --bg-secondary: #{$bg-light-secondary}
-  --fg: #{$fg-light}
-  --fg-secondary: #{$fg-light-secondary}
-  --border-color: #{$border-color-light}
+  --bg:              #{$bg-light}
+  --bg-secondary:    #{$bg-light-secondary}
+  --fg:              #{$fg-light}
+  --fg-secondary:    #{$fg-light-secondary}
+  --border-color:    #{$border-color-light}
   // Links
-  --link-color:         #{$link-color-light}
-  // Forms
-  --input-bg:           #{$input-bg-light}
+  --link-color:      #{$link-color-light}
   // Scrollbar
-  --scrollbar-thumb:    #{$scrollbar-thumb-light}
-  --scrollbar-track:    #{$scrollbar-track-light}
-  // Accents
+  --scrollbar-thumb: #{$scrollbar-thumb-light}
+  --scrollbar-track: #{$scrollbar-track-light}
+  // Colors light
   @each $accent-name, $accent-color in $accents-light
     $hue: hue($accent-color)
-    --#{$accent-name}: #{$accent-color}
-    --#{$accent-name}-bg: #{hsl($hue, 28%, 87%)}
-    --#{$accent-name}-bg-secondary: #{hsl($hue, 21%, 80%)}
-    --#{$accent-name}-border: #{hsl($hue, 12%, 68%)}
-    --#{$accent-name}-fg: #{hsl($hue, 17%, 28%)}
-    --#{$accent-name}-fg-secondary: #{hsl($hue, 9%, 48%)}
+    &.accent-#{$accent-name},
+    .accent-#{$accent-name}
+      --link-color:      #{$accent-color}
+      --scrollbar-thumb: #{$accent-color}
+      --scrollbar-track: #{hsl($hue, 28%, 87%)}
+    &.color-#{$accent-name},
+    .color-#{$accent-name}
+      --bg:              #{hsl($hue, 28%, 87%)}
+      --bg-secondary:    #{hsl($hue, 21%, 80%)}
+      --border-color:    #{hsl($hue, 12%, 68%)}
+      --fg:              #{hsl($hue, 17%, 28%)}
+      --fg-secondary:    #{hsl($hue, 9%, 49%)}
 
 // Dark mode, overwrite :root
 .mode-dark
-  --bg: #{$bg_dark}
-  --fg: #{$fg_dark}
-  --bg-secondary: #{$bg-dark-secondary}
-  --fg-secondary: #{$fg-dark-secondary}
-  --border-color: #{$border-color-dark}
+  --bg:              #{$bg_dark}
+  --fg:              #{$fg_dark}
+  --bg-secondary:    #{$bg-dark-secondary}
+  --fg-secondary:    #{$fg-dark-secondary}
+  --border-color:    #{$border-color-dark}
   // Links
-  --link-color:         #{$link-color-dark}
-  // Forms
-  --input-bg:           #{$input-bg-dark}
+  --link-color:      #{$link-color-dark}
   // Scrollbar
-  --scrollbar-thumb:    #{$scrollbar-thumb-dark}
-  --scrollbar-track:    #{$scrollbar-track-dark}
-  // Accents
+  --scrollbar-thumb: #{$scrollbar-thumb-dark}
+  --scrollbar-track: #{$scrollbar-track-dark}
+  // Colors dark
   @each $accent-name, $accent-color in $accents-dark
     $hue: hue($accent-color)
-    --#{$accent-name}: #{$accent-color}
-    --#{$accent-name}-bg: #{hsl($hue, 28%, 7%)}
-    --#{$accent-name}-bg-secondary: #{hsl($hue, 21%, 11%)}
-    --#{$accent-name}-border: #{hsl($hue, 12%, 21%)}
-    --#{$accent-name}-fg: #{hsl($hue, 17%, 82%)}
-    --#{$accent-name}-fg-secondary: #{hsl($hue, 9%, 58%)}
+    &.accent-#{$accent-name},
+    .accent-#{$accent-name}
+      --link-color:      #{$accent-color}
+      --scrollbar-thumb: #{$accent-color}
+      --scrollbar-track: #{hsl($hue, 28%, 7%)}
+    &.color-#{$accent-name},
+    .color-#{$accent-name}
+      --bg:              #{hsl($hue, 28%, 7%)}
+      --bg-secondary:    #{hsl($hue, 21%, 11%)}
+      --border-color:    #{hsl($hue, 12%, 21%)}
+      --fg:              #{hsl($hue, 17%, 82%)}
+      --fg-secondary:    #{hsl($hue, 9%, 58%)}
+
+// Hues
+@each $accent_name, $accent_color in $accents_light
+  .color-#{$accent-name}
+    @extend .accent-#{$accent-name}

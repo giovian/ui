@@ -11,10 +11,6 @@ $fg-light-secondary: hsl( 40, 0%, 49%) !default
 $accents-dark:  (blue: DodgerBlue, red: Red, green: LimeGreen, orange: Orange) !default
 $accents-light: (blue: MediumBlue, red: FireBrick, green: DarkGreen, orange: OrangeRed) !default
 
-// FORMS
-$input-bg-dark:   $bg-dark-secondary !default
-$input-bg-light:  $bg-light-secondary !default
-
 // Links
 $link-color-dark:         nth(nth($accents-dark, 1), 2) !default
 $link-color-light:        nth(nth($accents-light, 1), 2) !default
@@ -40,12 +36,17 @@ $headings-weight:  normal !default
 $headings-margins: 0.67 0.83 1 1.33 1.67 2.33 !default
 
 // LAYOUT
-$max-width:      60rem !default
-$mobile-width:   700px !default
-$layout-padding: 2rem !default
+$max-width:             60rem !default
+$layout-padding:        2rem !default
+$minimum-padding:       0.5rem 1rem !default
+$header-direction:      row !default
+// Mobile
+$mobile-width:          700px !default
+$mobile-layout-padding: 1rem !default
 
 // Borders
 $border-color-dark:   hsl(0, 0%, 21%) !default
 $border-color-light:  hsl(0, 0%, 68%) !default
 $border-radius:       6px !default
 $border-radius-small: 2px !default
+$border-width:        1px !default

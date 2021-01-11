@@ -1,33 +1,58 @@
 // Loading cursor
-.loading, .loading *
+.loading
   cursor: wait
+  a, nav span, input, select, label
+    @extend .disabled
+  main, header, footer
+    opacity: .5
 
+// Disabled
+[disabled], .disabled
+  pointer-events: none
+  cursor: default
+  color: var(--fg-secondary)
+
+// Hide classes
 .show-if-alone:not(:only-of-type),
 .mode-dark .show-if-mode-light,
 .mode-light .show-if-mode-dark,
 html:not(.logged) .show-if-logged,
 .logged .show-if-not-logged,
 .role-admin .show-if-role-guest,
+.role-undefined .show-if-role-guest,
 .role-guest .show-if-role-admin,
+.role-undefined .show-if-role-admin,
 .hidden, template, [hidden]
   display: none
 
-// Opposite mode
-.mode-light
-  .mode-opposite, .mode-opposite *
-    @extend .mode-dark
-.mode-dark
-  .mode-opposite, .mode-opposite *
-    @extend .mode-light
+// Big screens
+@media (min-width: $mobile-width)
+  .show-if-small-screen
+    display: none
 
+// Opposite mode
+.mode-light .mode-opposite
+  @extend .mode-dark
+.mode-dark .mode-opposite
+  @extend .mode-light
+
+// Minimum padding
+.minimum-padding
+  padding: $minimum-padding
+
+//
+// Borders
+// --------------------------------------
+
+// Only rounded
 .border-rounded
   border-radius: $border-radius
+  // Fix background bleeding
   overflow: hidden
+
+// Complete border
 .border
   border-style: solid
   border-color: var(--border-color)
-  border-width: 1px
+  border-width: $border-width
   @extend .border-rounded
-
-.minimum-padding
-  padding: 0.5rem 1rem

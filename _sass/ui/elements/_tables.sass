@@ -10,16 +10,16 @@ table
   tbody
     tr, td
       color: var(--fg)
-      background-color: var(--bg)
+      background: var(--bg)
   thead, tfoot
     color: var(--fg)
-    @extend .bg-secondary
+    background: var(--bg-secondary)
 
   // BORDERS
   &:not(.no-border)
     @extend .border
-  tr:not(:last-of-type) td,
-  thead th
-    border-bottom-width: 1px
-    border-bottom-style: solid
-    border-bottom-color: var(--border-color)
+    tr:not(:last-of-type) td,
+    thead th
+      border-bottom-width: 1px
+      border-bottom-style: solid
+      border-bottom-color: var(--border-color)
