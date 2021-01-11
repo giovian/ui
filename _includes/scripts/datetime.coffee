@@ -12,35 +12,33 @@ dateTime = (e) ->
   s = (value) -> if value >= 2 then 's' else ''
   # Check range
   if absolute < (second * 11)
-    value = ~~(absolute / second)
     moment = "now"
     update = second * 5
   else if absolute < minute
-    value = ~~(absolute / second)
     moment = "less than a minute"
     update = second * 10
   else if absolute < hour
-    value = ~~(absolute / minute)
+    value = Math.round(absolute / minute)
     moment = "#{value} minute#{s value}"
     update = minute
   else if absolute < day
-    value = ~~(absolute / hour)
+    value = Math.round(absolute / hour)
     moment = "#{value} hour#{s value}"
     update = hour
-  else if absolute < week
-    value = ~~(absolute / day)
+  else if absolute < (week * 2)
+    value = Math.round(absolute / day)
     moment = "#{value} day#{s value}"
     update = day
-  else if absolute < 4 * week
-    value = ~~(absolute / week)
+  else if absolute < 3.5 * week
+    value = Math.round(absolute / week)
     moment = "#{value} week#{s value}"
     update = week
-  else if absolute <= year
-    value = ~~(absolute / month)
+  else if absolute < year
+    value = Math.round(absolute / month)
     moment = "#{value} month#{s value}"
     update = month
   else
-    value = ~~(absolute / year)
+    value = Math.round(absolute / year)
     moment = "#{value} year#{s value}"
     update = year
   # Past or Future
