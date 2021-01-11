@@ -21,11 +21,11 @@ The `footer` include 3 files:
 - `_includes/footer/center.html` empty by default
 - `_includes/footer/right.html` Top link and mode toggle link
 
-To override theese defaults add any of theese files to your repository with customized content.
+To override these defaults add any of theese files to your repository with customized content.
 
 ## Colors
 
-<details>
+<details open>
   <summary>Blockquotes</summary>
 <blockquote>
   <h3>Plain</h3>
@@ -44,7 +44,7 @@ To override theese defaults add any of theese files to your repository with cust
   </div>
 </blockquote>
 {% endfor %}
-<blockquote class="mode-opposite">
+<blockquote class="mode-opposite color-red">
   <h3>blockquote opposite</h3>
   <p markdown=1>Lorem ipsum dolor [sit amet](), consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
   <p class="fg-secondary" markdown=1>`.fg-secondary` Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
