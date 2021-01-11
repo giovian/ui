@@ -1,5 +1,14 @@
 # Show notification on screen top
-notification = (text, cls="blue") ->
+notification_reset = ->
+  $('html').removeClass 'loading'
+  $('#notification').fadeOut(400, ->
+    $('#notification').empty()
+      .removeClass 'cliccable color-blue color-green color-red color-orange'
+    return
+  )
+  return
+
+notification = (text, cls, end) ->
   # Store in storage
   # logs_array = storage.get 'storage.logs'
   # logs_array.unshift {time: new Date(), text: text, cls: cls}
@@ -11,18 +20,20 @@ notification = (text, cls="blue") ->
   #   cls: cls
   # }
   # Show notification
+  $('html').addClass 'loading'
   $('#notification')
-    .removeClass('color-blue color-green color-red color-orange')
-    .addClass("color-#{cls}")
-    .empty()
-    .append(
-      $('<div/>', {text: text})
-    ).show()
+    .removeClass 'cliccable color-blue color-green color-red color-orange'
+    .addClass () -> if cls then "color-#{cls}"
+    .addClass () -> if end then 'cliccable'
+    .append $ '<div/>', {text: text}
+    .show()
   # Fade out timer
-  setTimeout ->
-    $('#notification').fadeOut()
-  , 3000
+  if end then setTimeout notification_reset, 3000
+    # $('html').removeClass 'loading'
+    # setTimeout ->
+    #   $('#notification').fadeOut(400, -> return notification_reset())
+    # , 3000
   return
 
 # Click to hide
-$('#notification').on 'click', -> $(@).hide()
+$('#notification').on 'click', -> if $(@).hasClass('cliccable') then notification_reset()

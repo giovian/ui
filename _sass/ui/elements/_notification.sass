@@ -1,23 +1,34 @@
 #notification
 
-  // Hide
-  display: none
-
   // Positioning
   position: fixed
   top: 50%
   left: 50%
   transform: translate(-50%, -50%)
-  @extend .border, .minimum-padding
 
-  // Dominate
-  z-index: 2000
-  cursor: pointer
+  // Appearence
+  color: var(--fg)
+  background: var(--bg)
+  @extend .mode-opposite, .border, .minimum-padding
+
+  // Children divs
+  > div:not(:last-child)
+    @extend .fg-secondary
 
   // Typography
   text-align: center
-  line-height: 2.5
 
   // Size
   overflow: hidden
   max-width: $max-width
+
+  // Hide
+  display: none
+
+  // Dominate
+  z-index: 2000
+
+  // Cursor
+  cursor: default
+  &.cliccable
+    cursor: pointer
