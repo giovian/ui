@@ -12,14 +12,11 @@ login.login_link.on 'click', (e) ->
     "Authorization": "token #{token}"
     "Accept": "application/vnd.github.v3+json"
   }
-  storage.set 'login', Object.assign(login.storage(), {'token': token})
+  storage.set 'login', {'token': token}
   notification 'Verifying'
   auth = $.get '{{ site.github.api_url }}/user'
   auth.done (data, status) ->
-    storage.set 'login', Object.assign(login.storage(), {
-      'user': data.login
-      'logged': new Date()
-    })
+    storage.assign 'login', {'user': data.login, 'logged': new Date()}
     login.permissions()
     return
   auth.fail (request, status, error) ->
@@ -33,7 +30,11 @@ login.permissions = ->
   repo = $.get '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}'
   repo.fail (request, status, error) -> notification "Permissions #{status} #{error}", 'red'
   repo.done (data, status) ->
-    storage.set 'login', Object.assign(login.storage(), {"role": (if data.permissions.admin then 'admin' else 'guest'), 'fork': data.fork, 'parent': data.parent?.full_name?})
+    storage.assign 'login', {
+      "role": (if data.permissions.admin then 'admin' else 'guest')
+      'fork': data.fork
+      'parent': data.parent?.full_name?
+    }
     return
   repo.always () ->
     login.setLogout()
