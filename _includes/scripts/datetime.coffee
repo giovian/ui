@@ -1,3 +1,4 @@
+# Delays larger than 2,147,483,647 ms (about 24.8 days) will result in the timeout being executed immediately.
 dateTime = (e) ->
   second = 1000
   minute = second * 60
@@ -10,6 +11,9 @@ dateTime = (e) ->
   absolute = Math.abs diff
   # 's' function
   s = (value) -> if value >= 2 then 's' else ''
+  # `in/ago` function
+  in_ago = (moment, diff) ->
+    if moment is 'now' then 'now' else if diff > 0 then "#{moment} ago" else "in #{moment}"
   # Check range
   if absolute < (second * 11)
     moment = "now"
@@ -32,36 +36,30 @@ dateTime = (e) ->
   else if absolute < 3.5 * week
     value = Math.round(absolute / week)
     moment = "#{value} week#{s value}"
-    update = week
+    update = day
   else if absolute < year
     value = Math.round(absolute / month)
     moment = "#{value} month#{s value}"
-    update = month
+    update = day
   else
     value = Math.round(absolute / year)
     moment = "#{value} year#{s value}"
-    update = year
+    update = day
   # Past or Future
-  $(e).removeClass('past future')
-  if diff > 0
-    formula = "#{moment} ago"
-    $(e).addClass 'past'
-  else
-    formula = "in #{moment}"
-    $(e).addClass 'future'
-  out = if moment isnt 'now' then formula else moment
+  $(e).removeClass 'past future'
+    .addClass if diff > 0 then 'past' else 'future'
+  out = in_ago moment, diff
   # Embed or add title attribute
+  text = $(e).text()
   if $(e).data "embed"
     $(e).text "#{$(e).attr 'original-text'} (#{out})"
+    $(e).attr "title", (i, t) -> if not t then text
   else if $(e).data "replace"
-    text = $(e).text()
     $(e).text out
     $(e).attr "title", (i, t) -> if not t then text
   else
     $(e).attr "title", out
   # Return a setTimeout function
-  setTimeout ->
-    dateTime e
-  , update
+  setTimeout dateTime, update, e
 
 $("[datetime]").each -> dateTime @
