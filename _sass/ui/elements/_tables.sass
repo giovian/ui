@@ -11,15 +11,19 @@ table
     tr, td
       color: var(--fg)
       background: var(--bg)
-  thead, tfoot
+  thead, tfoot, tbody.thead, tr.thead td
     color: var(--fg)
     background: var(--bg-secondary)
+    font-weight: bold
 
   // BORDERS
   &:not(.no-border)
     @extend .border
-    tr:not(:last-of-type) td,
+    tbody:last-of-type tr:not(:last-of-type) td,
+    tbody:not(:last-of-type) tr td,
     thead th
       border-bottom-width: 1px
       border-bottom-style: solid
       border-bottom-color: var(--border-color)
+    tbody:nth-child(2n+1) tr td
+      @extend .bg-secondary
