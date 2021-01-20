@@ -7,6 +7,7 @@
   class="{{ page.classes | join: " " }}">
 {% include page/head.html %}
 <body
+  site-pages="{{ site.html_pages.size | plus: site.documents.size }}"
   page-title="{{ page.title | slugify }}"
   page-collection="{{ page.collection }}">
 {% include page/header.html %}

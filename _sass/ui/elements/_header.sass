@@ -13,10 +13,6 @@ header
   flex-direction: $header-direction
   align-items: center
 
-  // STICKY
-  position: sticky
-  top: 0
-
   // HGROUP
   hgroup
 
@@ -33,3 +29,8 @@ header
     > *
       margin: 0
       padding-right: .5rem
+
+// STICKY
+*:not([site-pages="1"]) header
+  position: sticky
+  top: 0

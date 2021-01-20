@@ -15,15 +15,16 @@ table
     color: var(--fg)
     background: var(--bg-secondary)
     font-weight: bold
+  tbody:nth-of-type(2n) tr td
+    @extend .bg-secondary
 
   // BORDERS
   &:not(.no-border)
     @extend .border
-    tbody:last-of-type tr:not(:last-of-type) td,
-    tbody:not(:last-of-type) tr td,
+    & > tr:not(:last-of-type):not(.no-border) td:not(.no-border),
+    tbody:last-of-type tr:not(:last-of-type):not(.no-border) td:not(.no-border),
+    tbody:not(:last-of-type) tr:not(.no-border) td:not(.no-border),
     thead th
       border-bottom-width: 1px
       border-bottom-style: solid
       border-bottom-color: var(--border-color)
-    tbody:nth-child(2n+1) tr td
-      @extend .bg-secondary
