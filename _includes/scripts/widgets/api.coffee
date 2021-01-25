@@ -14,8 +14,8 @@ $('[data-api]').each ->
     call = $.ajax {
       url: api.url
       method: api.method || 'GET'
-      headers: api.headers || {}
-      data: api.data || {}
+      headers: api.headers || null
+      data: api.data || null
     }
     call.done (data, status) -> $results.append output populate api, data
     call.fail (request, status, error) -> notification "API #{status} #{error}", 'red', true
@@ -25,7 +25,7 @@ $('[data-api]').each ->
   populate = (api, data) ->
     elements = []
     if Array.isArray api.out
-      property_array = api.out.map (property) -> property.split(' ').reduce ((acc, cur) -> acc[cur] ? 'Not found'), data
+      property_array = api.out.map (property) -> property.split(' ').reduce ((acc, cur) -> if acc[cur] is undefined then 'Not found' else acc[cur] ? 'null'), data
       elements.push property_array.map (out, index) -> [capitalize(unslug api.out[index]), out]
     if api.loop
       if api.loop.property
@@ -43,7 +43,7 @@ $('[data-api]').each ->
             span = $ '<span/>', {text: "#{i[1]}", datetime: i[1], replace: true}
             dateTime span
           else
-            span = $('<span/>', {text: "#{i[1] ? 'Not found'}"})
+            span = $('<span/>', {text: "#{i[1]}"})
           $('<li/>').append [
             $('<span/>', {text: "#{i[0]}: "})
             span

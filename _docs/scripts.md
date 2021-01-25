@@ -18,10 +18,12 @@ search:
         property: matches
         out: [text]
 repo:
+  title: Repository
   description: Get repository
   url: https://api.github.com/repos/giovian/ui
   out: [id, owner id]
 commits:
+  title: Commits
   url: https://api.github.com/repos/giovian/ui/commits
   data:
     per_page: 3
@@ -34,7 +36,7 @@ spx:
   title: SpaceX-API
   description: Next launch
   url: https://api.spacexdata.com/v4/launches/next
-  out: [flight_number, name, date_unix, static_fire_date_unix]
+  out: [flight_number, name, date_utc, static_fire_date_utc]
   loop:
     property: cores
     out: [flight, landing_type]
