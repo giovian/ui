@@ -1,0 +1,10 @@
+{% assign api = include.api %}
+<div data-api="{{ api | jsonify | uri_escape }}" class="{{ api.classes | join: ' ' }}">
+  <p>
+    <span title="{{ api.description }}">{{ api.title | default: "API" }}:</span>
+    <span>{% if api.execute == nil %}
+      <a href="#" title="{{ api.url }}" class="prevent-default">{{ api.method | upcase | default: "GET" }}</a> 
+    {% endif %}</span>
+  </p>
+  <div></div>
+</div>
