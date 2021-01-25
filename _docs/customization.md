@@ -63,7 +63,7 @@ To override these defaults add any of theese files to your repository with custo
   </thead>
   <tbody>
     <tr>
-      <td>Normal <code>code</code></td>
+      <td><code>code</code></td>
       {% for c in colors %}
         <td class="color-{{ c }}">.color-{{ c }}</td>
       {% endfor %}
@@ -73,8 +73,17 @@ To override these defaults add any of theese files to your repository with custo
         <td colspan=5>.color-{{ c }} <code>code</code></td>
       </tr>
     {% endfor %}
+  </tbody>
+</table>
+<table>
+  <thead>
+    <tr>
+      <th colspan=5 class="mode-opposite">Colors</th>
+    </tr>
+  </thead>
+  <tbody>
     <tr class="mode-opposite">
-      <td>Opposite <code>code</code></td>
+      <td><code>code</code></td>
       {% for c in colors %}
         <td class="color-{{ c }}">.color-{{ c }}</td>
       {% endfor %}
