@@ -1,10 +1,10 @@
 $bg-dark:  hsl(200, 0%, 4%) !default
 $fg-dark:  hsl( 40, 0%, 83%) !default
-$bg-light: hsl( 40, 0%, 87%) !default
-$fg-light: hsl(200, 0%, 8%) !default
+$bg-light: hsl( 40, 0%, 91%) !default
+$fg-light: hsl(200, 0%, 9%) !default
 $bg-dark-secondary:  hsl( 40, 0%, 9%) !default
 $fg-dark-secondary:  hsl( 40, 0%, 57%) !default
-$bg-light-secondary: hsl( 40, 0%, 81%) !default
+$bg-light-secondary: hsl( 40, 0%, 84%) !default
 $fg-light-secondary: hsl( 40, 0%, 49%) !default
 
 // Accents
@@ -37,8 +37,11 @@ $headings-margins: 0.67 0.83 1 1.33 1.67 2.33 !default
 
 // LAYOUT
 $max-width:             60rem !default
-$layout-padding:        2rem !default
-$minimum-padding:       0.5rem 1rem !default
+$space:                 1em !default
+$space-double:          $space * 2 !default
+$space-half:            $space / 2 !default
+$layout-padding:        $space-double !default
+$minimum-padding:       $space-half $space !default
 $header-direction:      row !default
 // Mobile
 $mobile-width:          700px !default

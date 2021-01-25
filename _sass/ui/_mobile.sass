@@ -24,6 +24,10 @@
       display: none
     &:last-child
       border-bottom-width: $border-width !important
+    &:not(:first-of-type)
+      padding-top: 0 !important
+    &:not(:last-of-type)
+      padding-bottom: 0 !important
 
   // Header
   header
@@ -64,9 +68,12 @@
     display: none !important
 
   //
-  // GRID
+  // GRIDS
   // --------------------------------------
   .grid
 
     // Stack columns
     grid-template-columns: 1fr
+
+  .flex
+    flex-direction: column

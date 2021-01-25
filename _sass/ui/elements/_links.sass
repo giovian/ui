@@ -10,3 +10,16 @@ a
   &:active
     text-decoration: $link-decoration-active
     outline-width: 0
+
+.big-link
+  @extend .border, .minimum-padding, .bg-secondary
+  &:hover, &.active
+    text-decoration: none
+    background: var(--bg)
+  &:active
+    background: var(--bg-secondary)
+
+// Disabled
+[disabled], .disabled
+  pointer-events: none
+  color: var(--fg-secondary)

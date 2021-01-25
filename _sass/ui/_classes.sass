@@ -3,14 +3,16 @@
   cursor: wait
   a, nav span, input, select, label
     @extend .disabled
+
+// Dim page content
+main, header, footer
+  opacity: 1
+  transition: opacity .5s
+
+.dim
   main, header, footer
     opacity: .5
-
-// Disabled
-[disabled], .disabled
-  pointer-events: none
-  cursor: default
-  color: var(--fg-secondary)
+    transition: opacity .5s
 
 // Hide classes
 .show-if-alone:not(:only-of-type),
@@ -56,3 +58,16 @@ html:not(.logged) .show-if-logged,
   border-color: var(--border-color)
   border-width: $border-width
   @extend .border-rounded
+
+.laser
+  @extend .mode-opposite
+  & > *
+    background: var(--link-color)
+    color: var(--bg)
+    padding: 0.2em 0.7em
+    &:first-child
+      border-top-left-radius: 1em
+      border-bottom-left-radius: 1em
+    &:last-child
+      border-top-right-radius: 1em
+      border-bottom-right-radius: 1em
