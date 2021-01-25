@@ -3,4 +3,4 @@
 {%- assign cropped = datetime | date_to_rfc822 -%}
 {%- assign text = include.text | default: cropped -%}
 {%- assign title = include.title -%}
-<span datetime="{{ datetime }}"{% if include.embed %} data-embed="true"{% endif %}{% if include.replace %} data-replace="true"{% endif %} title="{{ title }}" original-text="{{ text }}">{{ text }}</span>
+<span datetime="{{ datetime }}"{% if include.embed %} embed="true"{% endif %}{% if include.replace %} replace="true"{% endif %} title="{{ title }}" original-text="{{ text }}">{{ text }}</span>

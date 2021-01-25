@@ -1,13 +1,6 @@
 ---
 ---
 
-{% include scripts/storage.coffee %}
-{% include scripts/notification.coffee %}
-{% include scripts/login.coffee %}
-{% include scripts/mode.coffee %}
-{% include scripts/datetime.coffee %}
-{% include scripts/search_users.coffee %}
-
 # Prevent default events
 $("a.prevent-default").on "click", (e) -> e.preventDefault()
 $("form.prevent-default").on "submit", (e) -> e.preventDefault()
@@ -25,3 +18,14 @@ $('[apply-if-children]').each ->
   [apply, match] = $(@).attr('apply-if-children').split(':')
   if $(@).find(match).length then $(@).addClass apply
   return
+
+unslug = (string) -> string.replace "_", " "
+capitalize = (string) -> string.charAt(0).toUpperCase() + string.slice 1
+get_data = (element, data_name) -> JSON.parse(decodeURIComponent element.data data_name) || {}
+
+{% include scripts/storage.coffee %}
+{% include scripts/notification.coffee %}
+{% include scripts/widgets/login.coffee %}
+{% include scripts/widgets/mode.coffee %}
+{% include scripts/widgets/datetime.coffee %}
+{% include scripts/widgets/api.coffee %}

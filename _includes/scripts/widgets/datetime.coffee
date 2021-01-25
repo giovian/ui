@@ -51,12 +51,12 @@ dateTime = (e) ->
   out = in_ago moment, diff
   # Embed or add title attribute
   text = $(e).text()
-  if $(e).data "embed"
+  if $(e).attr "embed"
     $(e).text "#{$(e).attr 'original-text'} (#{out})"
-    $(e).attr "title", (i, t) -> if not t then text
-  else if $(e).data "replace"
+    $(e).attr "title", (i, t) -> t || text
+  else if $(e).attr "replace"
     $(e).text out
-    $(e).attr "title", (i, t) -> if not t then text
+    $(e).attr "title", (i, t) -> t || text
   else
     $(e).attr "title", out
   # Return a setTimeout function

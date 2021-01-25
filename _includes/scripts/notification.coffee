@@ -1,6 +1,6 @@
 # Show notification on screen top
 notification_reset = ->
-  $('html').removeClass 'loading'
+  $('html').removeClass 'loading dim'
   $('#notification').fadeOut(400, ->
     $('#notification').empty()
       .removeClass 'cliccable color-blue color-green color-red color-orange'
@@ -20,19 +20,15 @@ notification = (text, cls, end) ->
   #   cls: cls
   # }
   # Show notification
-  $('html').addClass 'loading'
+  $('html').addClass 'dim'
   $('#notification')
     .removeClass 'cliccable color-blue color-green color-red color-orange'
     .addClass () -> if cls then "color-#{cls}"
     .addClass () -> if end then 'cliccable'
     .append $ '<div/>', {text: text}
-    .show()
+    .fadeIn()
   # Fade out timer
-  if end then setTimeout notification_reset, 3000
-    # $('html').removeClass 'loading'
-    # setTimeout ->
-    #   $('#notification').fadeOut(400, -> return notification_reset())
-    # , 3000
+  if end then setTimeout notification_reset, 3000 else $('html').addClass 'loading'
   return
 
 # Click to hide
