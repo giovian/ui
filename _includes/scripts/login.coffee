@@ -52,6 +52,7 @@ login.setLogin = ->
   $('html').removeClass 'role-admin role-guest logged'
   $.ajaxSetup { headers: {"Accept": "application/vnd.github.v3+json"} }
   storage.clear 'login'
+  apply_family()
   true
 
 login.setLogout = ->
@@ -61,6 +62,7 @@ login.setLogout = ->
     "Authorization": "token #{login.storage()['token']}"
     "Accept": "application/vnd.github.v3+json"
   }
+  apply_family()
   true
 
 # Immediately Invoked Function Expressions
