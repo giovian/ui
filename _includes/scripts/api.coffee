@@ -2,11 +2,15 @@ $('[data-api]').each ->
 
   $container = $ @
   api = get_data $container, 'api'
-  $results = $container.find('div:last-of-type')
-  $title = $container.find("span:first-of-type")
+  if api.out?.length is 1 and !api.loop?
+    $results = $container.find('span:nth-child(2)')
+    parent_element = '<span/>'
+    child_element = '<span/>'
+  else
+    $results = $container.find('div:last-of-type')
+    parent_element = '<ul/>'
+    child_element = '<li/>'
   $link = $container.find('a:first-of-type')
-
-  if api.execute then execute api else $link.on 'click', -> execute api
 
   execute = (api) ->
     $link.addClass 'disabled'
@@ -35,7 +39,7 @@ $('[data-api]').each ->
     return elements
 
   output = (array) ->
-    markup = $('<ul/>')
+    markup = $(parent_element)
     for e in array
       markup.append e.map (i) ->
         return if typeof i[1] isnt 'object'
@@ -44,11 +48,13 @@ $('[data-api]').each ->
             dateTime span
           else
             span = $('<span/>', {text: "#{i[1]}"})
-          $('<li/>').append [
+          $(child_element).append [
             $('<span/>', {text: "#{i[0]}: "})
             span
           ]
-        else $('<li/>', {class: 'no-marker', text: i[0]}).append output i.slice 1
+        else $(child_element, {class: 'no-marker', text: i[0]}).append output i.slice 1
     return markup
+
+  if api.execute then execute api else $link.on 'click', -> execute api
 
   true

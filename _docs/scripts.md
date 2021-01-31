@@ -21,7 +21,7 @@ repo:
   title: Repository
   description: Get repository
   url: https://api.github.com/repos/giovian/ui
-  out: [id, owner id]
+  out: [subscribers_count]
 commits:
   title: Commits
   url: https://api.github.com/repos/giovian/ui/commits
@@ -43,6 +43,9 @@ spx:
 ---
 
 # Scripts
+
+* toc
+{:toc}
 
 ## Login
 
@@ -112,7 +115,7 @@ login: true
 - Month {% include widgets/datetime.html replace=1 datetime=past_month %}
 - Year {% include widgets/datetime.html replace=1 datetime=past_year %}
 
-## Apply if chidren/parent
+## Apply if _family_
 
 Attribute `apply-if-children` in the form `class:children` will apply the `class` to the element if `children` is a descendant.
 
