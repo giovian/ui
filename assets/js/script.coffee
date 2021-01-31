@@ -8,24 +8,21 @@ $("form.prevent-default").on "submit", (e) -> e.preventDefault()
 # Fix inline <code> element without class
 $(':not(pre) code').addClass 'highlighter-rouge highlight'
 
-# apply-if-parent apply-if-children
-# Will not work on runtime changes
-$('[apply-if-parent]').each ->
-  [apply, match] = $(@).attr('apply-if-parent').split(':')
-  if $(@).parents(match).length then $(@).addClass apply
-  return
-$('[apply-if-children]').each ->
-  [apply, match] = $(@).attr('apply-if-children').split(':')
-  if $(@).find(match).length then $(@).addClass apply
-  return
-
-unslug = (string) -> string.replace "_", " "
+unslug = (string) -> string.replace /_/g, " "
 capitalize = (string) -> string.charAt(0).toUpperCase() + string.slice 1
 get_data = (element, data_name) -> JSON.parse(decodeURIComponent element.data data_name) || {}
 
+$('a[set-color]').on 'click', ->
+  color = $(@).attr 'set-color'
+  $('html').removeClass 'color-blue color-green color-orange color-red'
+  if color isnt 'default' then $('html').addClass "color-#{color}"
+  return
+
 {% include scripts/storage.coffee %}
+{% include scripts/apply_family.coffee %}
 {% include scripts/notification.coffee %}
-{% include scripts/widgets/login.coffee %}
-{% include scripts/widgets/mode.coffee %}
-{% include scripts/widgets/datetime.coffee %}
-{% include scripts/widgets/api.coffee %}
+{% include scripts/mode.coffee %} # Needs: apply-family
+{% include scripts/login.coffee %} # Needs: storage, notification, apply_family
+{% include scripts/datetime.coffee %}
+{% include scripts/sidebar/toc.coffee %}
+{% include scripts/api.coffee %} # Needs: notification
