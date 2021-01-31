@@ -1,6 +1,9 @@
 ---
 ---
 
+* toc
+{:toc}
+
 # Customization
 
 - **FAVICON** `/assets/images/favicon.ico`
@@ -13,6 +16,65 @@
 @import ui
 // Override CSS rules here
 ```
+
+## Sidebar
+
+The main page content has an optional sidebar and use flexbox with `flex-direction: row-reverse;`{:.language-css} for a right sidebar.
+
+```html
+<main>
+  <aside><!-- Sidebar --></aside>
+  <section><!-- Page content --></section>
+</main>
+```
+
+### Widgets
+
+The sidebar will be populated with widgets included from `_includes/widgets/sidear/`.
+
+Select the widgets with a YAML array `sidebar: [...]` for the relative pages:
+
+<div class="grid">
+<div markdown="1">
+
+For every page
+
+```yml
+# _config.yml
+defaults:
+  - scope:
+      path: ""
+    values:
+      sidebar: [...]
+```
+</div>
+<div markdown="1">
+
+For pages in one or more collections
+
+```yml
+# _config.yml
+defaults:
+  - scope:
+      type: my-collection
+    values:
+      sidebar: [...]
+```
+</div>
+</div>
+
+For singular pages, in the _front-matter_
+
+```yml
+---
+sidebar: [...]
+---
+```
+
+### Widgets list
+
+Table of contents
+: `toc` Will move the table of contents (generated in the page with `{:toc}`) to the sidebar
 
 ## Footer
 

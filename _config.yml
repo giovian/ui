@@ -14,6 +14,7 @@ defaults:
       type: docs
     values:
       layout: default
+      sidebar: [toc]
   - scope:
       path: ''
     values:

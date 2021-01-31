@@ -4,6 +4,9 @@ order: 2
 
 # Kramdown
 
+* toc
+{:toc}
+
 ## Forms
 
 <form class="prevent-default">
@@ -61,10 +64,11 @@ Variabile | Description | Value
 <div class="grid">
   <div markdown=1>
 __Fenced__  
-  start with <code>```yml</code>, end with <code>```</code>
+start: <code>```yml</code>  
+end: <code>```</code>
 ```yml
 city: 1
-coas: "ok"
+caos: "ok"
 array:
   - 1
   - 2
@@ -74,10 +78,11 @@ array: [1, 2, "three"]
   </div>
   <div markdown=1>
 __Liquid__  
-`{% raw %}{%- highlight yml -%}{% endraw %}`{:.language-liquid} and `{% raw %}{%- endhighlight -%}{% endraw %}`{:.language-liquid}
+start: `{% raw %}{%- highlight yml -%}{% endraw %}`{:.language-liquid}  
+end: `{% raw %}{%- endhighlight -%}{% endraw %}`{:.language-liquid}
 {%- highlight yml -%}
 city: 1
-coas: "ok"
+caos: "ok"
 array:
   - 1
   - 2
@@ -89,10 +94,11 @@ array: [1, 2, "three"]
 <div class="grid">
 <div markdown=1>
 __Kramdown code block__  
-start with `~~~ yml`, end with `~~~`
+start: `~~~ yml`  
+end: `~~~`
 ~~~ yml
 city: 1
-coas: "ok"
+caos: "ok"
 array:
   - 1
   - 2
@@ -102,11 +108,12 @@ array: [1, 2, "three"]
 </div>
 <div markdown=1>
 __Kramdown indented by 4 spaces__  
-start with `{:.language-yml}`, end with emply line
+start: `{:.language-yml}`  
+end: emply line
 
 {:.language-yml}
     city: 1
-    coas: "ok"
+    caos: "ok"
     array:
       - 1
       - 2
