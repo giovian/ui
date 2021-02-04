@@ -16,6 +16,8 @@ $link-color-dark:         nth(nth($accents-dark, 1), 2) !default
 $link-color-light:        nth(nth($accents-light, 1), 2) !default
 $link-color-hover-dark:   $fg-dark !default
 $link-color-hover-light:  $fg-light !default
+$link-color-active-dark:  $fg-dark-secondary !default
+$link-color-active-light: $fg-light-secondary !default
 // Decoration
 $link-decoration:         none !default
 $link-decoration-hover:   none !default
@@ -39,15 +41,20 @@ $headings-margins: 0.67 0.83 1 1.33 1.67 2.33 !default
 
 // LAYOUT
 $max-width:             60rem !default
+// Mobile
+$mobile-width:          700px !default
+// HEADER: left headings, right navigation
+// `row-reverse` for left navigation
+$header-direction:      row !default
+// MAIN: sidebar right. `row` for sidebar left
+$main-direction:        row-reverse !default
+// Spacing
 $space:                 1em !default
 $space-double:          $space * 2 !default
 $space-half:            $space / 2 !default
 $layout-padding:        $space-double !default
+$mobile-layout-padding: $space !default
 $minimum-padding:       $space-half $space !default
-$header-direction:      row !default
-// Mobile
-$mobile-width:          700px !default
-$mobile-layout-padding: 1rem !default
 
 // Borders
 $border-color-dark:   hsl(0, 0%, 21%) !default

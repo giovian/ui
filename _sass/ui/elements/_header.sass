@@ -16,21 +16,31 @@ header
   // HGROUP
   hgroup
 
-    // TYPOGRAPHY
-    h2:not(:first-child)
-      @extend .fg-secondary
-      font-style: italic
-
     // FLEX
     display: flex
     align-items: baseline
-    
+
+    // Prevent text overflow
+    overflow: hidden
+
     // Spacing and separation
-    > *
+    h2
       margin: 0
-      padding-right: .5rem
+      padding-left: $space-half
+
+      &:last-child
+        @extend .fg-secondary
+        font-style: italic
+        padding-right: $space-half
+
+        // Prevent text overflow
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
 
 // STICKY
+// if site has more than 1 page,
+// navigation is present and header is sticky
 body:not([site-pages="1"]) header
   position: sticky
   top: 0

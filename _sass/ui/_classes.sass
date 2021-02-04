@@ -16,14 +16,6 @@ main, header, footer
 
 // Hide classes
 .show-if-alone:not(:only-of-type),
-.mode-dark .show-if-mode-light,
-.mode-light .show-if-mode-dark,
-html:not(.logged) .show-if-logged,
-.logged .show-if-not-logged,
-.role-admin .show-if-role-guest,
-.role-undefined .show-if-role-guest,
-.role-guest .show-if-role-admin,
-.role-undefined .show-if-role-admin,
 .hidden, template, [hidden]
   display: none
 
@@ -58,16 +50,3 @@ html:not(.logged) .show-if-logged,
   border-color: var(--border-color)
   border-width: $border-width
   @extend .border-rounded
-
-.laser
-  @extend .mode-opposite
-  & > *
-    background: var(--link-color)
-    color: var(--bg)
-    padding: 0.2em 0.7em
-    &:first-child
-      border-top-left-radius: 1em
-      border-bottom-left-radius: 1em
-    &:last-child
-      border-top-right-radius: 1em
-      border-bottom-right-radius: 1em

@@ -4,13 +4,22 @@
 @media (max-width: $mobile-width)
 
   // Layout
-  header, footer, section, main > aside
+  header, footer, section, main > aside:first-child
     padding-top: $mobile-layout-padding
     padding-bottom: $mobile-layout-padding
 
-  header, footer, section
+  header, footer, section, main > aside:first-child
     padding-left: $mobile-layout-padding
     padding-right: $mobile-layout-padding
+
+  //
+  // Stack sidebar
+  // --------------------------------------
+  main
+    flex-direction: column
+    > aside:first-child
+      position: static
+      padding-bottom: 0
 
   // Tables
   section
@@ -32,10 +41,18 @@
   // Header
   header
     // Remove sticky
-    position: static
+    position: static !important
     // Stack elements vertically (left)
     flex-direction: column
     align-items: start
+
+  // Remove sticky margin for targets
+  .screen-big
+    \:target
+      scroll-margin-top: 0
+      scroll-snap-margin-top: 0
+  html
+    @extend .screen-big
 
   footer
     flex-direction: column
@@ -52,9 +69,7 @@
         border: none
         border-radius: 0
         padding: 0
-        background: var(--bg)
-        &:active
-          background: var(--bg)
+        background: var(--bg) !important
         &.active
           color: var(--fg-secondary)
       ul

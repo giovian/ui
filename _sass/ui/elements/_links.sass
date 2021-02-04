@@ -5,21 +5,21 @@ a
 
   // Decorations
   text-decoration: $link-decoration
+  outline-width: 0
   &:hover
     text-decoration: $link-decoration-hover
     color: var(--link-color-hover)
   &:active
     text-decoration: $link-decoration-active
     color: var(--link-color-active)
-    outline-width: 0
 
 .big-link
   @extend .border, .minimum-padding, .bg-secondary
-  &:hover, &.active
+  &:hover
+    text-decoration: none
+  &.active
     text-decoration: none
     background: var(--bg)
-  &:active
-    background: var(--bg-secondary)
 
 // Disabled
 [disabled], .disabled
