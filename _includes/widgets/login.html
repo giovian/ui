@@ -1,2 +1,2 @@
-<li apply-if-parent="hidden:.logged"><a href="#" class="login-link">Login</a></li>
-<li apply-if-parent="hidden:.not-logged"><a href="#" class="logout-link">Logout</a></li>
+<li apply-if-parent="hidden|.logged"><a href="#" class="login-link">Login</a></li>
+<li apply-if-parent="hidden|html:not(.logged)"><a href="#" class="logout-link">Logout</a></li>
