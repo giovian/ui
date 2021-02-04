@@ -18,11 +18,18 @@ $('a[set-color]').on 'click', ->
   if color isnt 'default' then $('html').addClass "color-#{color}"
   return
 
+$('a[set-accent]').on 'click', ->
+  accent = $(@).attr 'set-accent'
+  $('html').removeClass 'accent-blue accent-green accent-orange accent-red'
+  if accent isnt 'default' then $('html').addClass "accent-#{accent}"
+  return
+
 {% include scripts/storage.coffee %}
 {% include scripts/apply_family.coffee %}
 {% include scripts/notification.coffee %}
 {% include scripts/mode.coffee %} # Needs: apply-family
 {% include scripts/login.coffee %} # Needs: storage, notification, apply_family
 {% include scripts/datetime.coffee %}
+{% include scripts/details.coffee %}
 {% include scripts/sidebar/toc.coffee %}
 {% include scripts/api.coffee %} # Needs: notification
