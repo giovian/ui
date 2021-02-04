@@ -117,9 +117,9 @@ login: true
 
 ## Apply if _family_
 
-Attribute `apply-if-children` in the form `class:children` will apply the `class` to the element if `children` is a descendant.
+Attribute `apply-if-children` in the form `class|children` will apply the `class` to the element if `children` is a descendant.
 
-Attribute `apply-if-parent` in the form `class:parent` will apply the `class` to the element if `parent` is an ancestor.
+Attribute `apply-if-parent` in the form `class|parent` will apply the `class` to the element if `parent` is an ancestor.
 
 - `class` is a space separated class list
 - `children` and `parent` are selectors
@@ -128,10 +128,10 @@ Attribute `apply-if-parent` in the form `class:parent` will apply the `class` to
 
 ```html
 <!-- paragraph will have `hidden` class if has any parent with class `logged` -->
-<p apply-if-parent="hidden:.logged">...</p>
+<p apply-if-parent="hidden|.logged">...</p>
 
 <!-- table will have `no-border color-red` classes if has any children with class `past` -->
-<table apply-if-children="no-border color-red:.past">...</table>
+<table apply-if-children="no-border color-red|.past">...</table>
 ```
 
 ## API
@@ -142,6 +142,7 @@ A YAML object will execute an API call.
 |---|---|:---:|---
 | `title` | string | `API` | API title
 | `description` | string | | API description
+| `classes` | string | | Space separated class list for API DIV
 | `url` | url | | URL of the API
 | `headers` | object | `{}` | Headers parameters
 | `data` | object | `{}` | Data payload
@@ -153,3 +154,13 @@ A YAML object will execute an API call.
 {% include widgets/api.html api=page.commits %}
 {% include widgets/api.html api=page.repo %}
 {% include widgets/api.html api=page.spx %}
+
+## Notifications
+
+Show a modal notification, dimming background and showing a `wait` mouse pointer.
+
+`notification(text, class, end)`
+
+- `text` of the notification
+- `class` of the notification DIV, set to `false` if not used
+- `end` boolean for last message: modal is dismissable

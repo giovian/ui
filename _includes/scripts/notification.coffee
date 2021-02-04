@@ -1,4 +1,4 @@
-# Show notification on screen top
+# Show notification as modal
 notification_reset = ->
   $('html').removeClass 'loading dim'
   $('#notification').fadeOut(400, ->
@@ -20,7 +20,7 @@ notification = (text, cls, end) ->
   #   cls: cls
   # }
   # Show notification
-  $('html').addClass 'dim'
+  $('html').removeClass('loading').addClass 'dim'
   $('#notification')
     .removeClass 'cliccable color-blue color-green color-red color-orange'
     .addClass () -> if cls then "color-#{cls}"

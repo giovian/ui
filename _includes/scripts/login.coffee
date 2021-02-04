@@ -30,8 +30,9 @@ login.permissions = ->
   repo = $.get '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}'
   repo.fail (request, status, error) -> notification "Permissions #{status} #{error}", 'red'
   repo.done (data, status) ->
-    storage.assign 'login', {
+    storage.assign('login', {
       "role": (if data.permissions.admin then 'admin' else 'guest')
+    }).assign 'repository', {
       'fork': data.fork
       'parent': data.parent?.full_name?
     }
@@ -51,7 +52,7 @@ login.logout_link.on 'click', (e) ->
 login.setLogin = ->
   $('html').removeClass 'role-admin role-guest logged'
   $.ajaxSetup { headers: {"Accept": "application/vnd.github.v3+json"} }
-  storage.clear 'login'
+  storage.clear('login').clear 'repository'
   apply_family()
   true
 

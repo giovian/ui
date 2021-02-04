@@ -1,10 +1,10 @@
 ---
 ---
 
+# Customization
+
 * toc
 {:toc}
-
-# Customization
 
 - **FAVICON** `/assets/images/favicon.ico`
 - **SASS** `/assets/css/stylesheet.sass`
