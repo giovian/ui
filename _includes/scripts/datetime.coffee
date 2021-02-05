@@ -18,6 +18,7 @@ dateTime = (e) ->
   if absolute < (second * 11)
     moment = "now"
     update = second * 5
+    apply_family()
   else if absolute < minute
     moment = "less than a minute"
     update = second * 10

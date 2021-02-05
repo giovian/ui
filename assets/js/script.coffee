@@ -27,9 +27,9 @@ $('a[set-accent]').on 'click', ->
 {% include scripts/storage.coffee %}
 {% include scripts/apply_family.coffee %}
 {% include scripts/notification.coffee %}
+{% include scripts/datetime.coffee %} # Needs: apply-family
 {% include scripts/mode.coffee %} # Needs: apply-family
 {% include scripts/login.coffee %} # Needs: storage, notification, apply_family
-{% include scripts/datetime.coffee %}
 {% include scripts/details.coffee %}
 {% include scripts/sidebar/toc.coffee %}
 {% include scripts/api.coffee %} # Needs: notification

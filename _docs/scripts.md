@@ -75,6 +75,22 @@ login: true
 
 ## Datetime
 
+Render a SPAN element with _x time ago_ or _in x time_ format
+
+```liquid
+{% raw %}{% include widgets/datetime.html datetime="..." %}{% endraw %}
+```
+
+Optional attributes
+
+- `embed` will append countdown or countup to the date
+- `replace` will replace the date with countdown/countup
+- `time` will add a time to date in the format `00:00:00`
+- `text` text to show
+- `title` title attribute on hover
+
+__Examples__
+
 {% assign now = 'now' | date: "%s" %}
 {% assign minute = 60 %}
 {% assign hour = minute | times: 60 %}
@@ -123,6 +139,8 @@ Attribute `apply-if-parent` in the form `class|parent` will apply the `class` to
 
 - `class` is a space separated class list
 - `children` and `parent` are selectors
+
+The function `apply_family()` is initially called after login check (even if no login interface is present), on mode toggle events and when `datetime` events are `now`.
 
 **Examples**
 
