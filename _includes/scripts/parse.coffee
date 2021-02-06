@@ -12,7 +12,7 @@ $('[data-parse]').each ->
     call = $.ajax {
       url: cors_url + parse.url
       cache: false
-      headers: {}
+      headers: parse.headers || null
     }
     call.done (data, status) -> console.log data
     call.fail (request, status, error) -> notification "PARSE #{status} #{error}", 'red', true
