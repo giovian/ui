@@ -8,8 +8,11 @@ $("form.prevent-default").on "submit", (e) -> e.preventDefault()
 # Fix inline <code> element without class
 $(':not(pre) code').addClass 'highlighter-rouge highlight'
 
+# String manipulation
 unslug = (string) -> string.replace /_/g, " "
 capitalize = (string) -> string.charAt(0).toUpperCase() + string.slice 1
+
+# Get JSON data attribute
 get_data = (element, data_name) -> JSON.parse(decodeURIComponent element.data data_name) || {}
 
 $('a[set-color]').on 'click', ->
@@ -33,3 +36,4 @@ $('a[set-accent]').on 'click', ->
 {% include scripts/details.coffee %}
 {% include scripts/sidebar/toc.coffee %}
 {% include scripts/api.coffee %} # Needs: notification
+{% include scripts/parse.coffee %} # Needs: notification

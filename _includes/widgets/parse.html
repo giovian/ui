@@ -1,0 +1,7 @@
+{% assign parse = include.parse %}
+<div data-parse="{{ parse | jsonify | uri_escape }}" class="{{ parse.classes | join: ' ' }}">
+  <p>
+    <span title="{{ parse.description }}">{{ parse.title | default: "PARSE" }}{% if parse.execute == nil %} <a href="#" title="{{ parse.url }}" class="prevent-default">GET</a>{% endif %} </span><span></span>
+  </p>
+  <div></div>
+</div>
