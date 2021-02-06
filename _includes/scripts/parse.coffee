@@ -13,7 +13,7 @@ $('[data-parse]').each ->
       url: cors_url + parse.url
       cache: false
       # method: api.method || 'GET'
-      headers: parse.headers || null
+      headers: {}
       # data: api.data || null
     }
     call.done (data, status) -> console.log data
