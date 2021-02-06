@@ -1,22 +1,16 @@
 ---
+stone:
+  file: "stones"
+  url: https://necrologie.messaggeroveneto.gelocal.it/
+  get: ".item .died .picture a img"
+  attribute: "alt"
+  update: ".gnn-header_uptime"
+paper:
+  url: https://www.goodreads.com/book/show/56078386-heaven-s-river
 ---
 
 # Home
 
 This is <span class="fg-secondary">secondary</span>.
 
-__Colors__
-
-- <a href="#" class="prevent-default" set-color="default">Default</a>
-- <a href="#" class="prevent-default" set-color="blue">Blue</a>
-- <a href="#" class="prevent-default" set-color="green">Green</a>
-- <a href="#" class="prevent-default" set-color="orange">Orange</a>
-- <a href="#" class="prevent-default" set-color="red">Red</a>
-
-__Accents__
-
-- <a href="#" class="prevent-default" set-accent="default">Default</a>
-- <a href="#" class="prevent-default" set-accent="blue">Blue</a>
-- <a href="#" class="prevent-default" set-accent="green">Green</a>
-- <a href="#" class="prevent-default" set-accent="orange">Orange</a>
-- <a href="#" class="prevent-default" set-accent="red">Red</a>
+{% include widgets/parse.html parse=page.stone %}
