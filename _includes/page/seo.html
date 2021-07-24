@@ -1,0 +1,22 @@
+{%- if site.html_pages.size == 1 and site.documents.size == 0 -%}
+  {%- assign title = site.title -%}
+  {%- assign description = site.description -%}
+{%- else -%}
+  {%- assign title = page.title -%}
+  {%- assign description = page.description | default: site.description -%}
+{%- endif -%}
+<!-- SEO tags -->
+  <title>{{ title }} | {{ description }}</title>
+  <meta name="generator" content="Jekyll v{{ site.github.versions.jekyll }}" />
+  <meta property="og:title" content="{{ title }}" />
+  <meta property="og:locale" content="{{ site.language | default: "en_US" }}" />
+  <meta name="description" content="{{ description }}" />
+  <meta property="og:description" content="{{ description }}" />
+  <link rel="canonical" href="{{ page.url | absolute_url }}" />
+  <meta property="og:url" content="{{ page.url | absolute_url }}" />
+  <meta property="og:site_name" content="{{ site.title }}" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="twitter:title" content="{{ title }}" />
+  <script type="application/ld+json">
+  {"description":"{{ description }}","url":"{{ page.url | absolute_url }}","@type":"WebSite","headline":"{{ title }}","name":"{{ site.title }}","@context":"https://schema.org"}</script>
+  <!-- End SEO tag -->

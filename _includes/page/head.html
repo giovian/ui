@@ -7,7 +7,7 @@
   <meta name="repository_created_at" content="{{ repo.created_at }}">
   <meta name="repository_updated_at" content="{{ repo.updated_at }}">
   <meta name="repository_sha" content="{{ gh.build_revision }}">
-  {% seo %}
+  {% include page/seo.html %}
 
   <!-- CSS -->
   <link rel="stylesheet" href="{{ "/assets/css/syntax.css?v=" | append: version | replace: " ", "-" | absolute_url }}">
