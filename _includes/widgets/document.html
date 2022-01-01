@@ -1,0 +1,31 @@
+{% if include.schema %}
+<form class='prevent-default document'{% if include.schema %} data-schema='{{ include.schema }}'{% endif %}{% if include.document %} data-document='{{ include.document }}'{% endif %}>
+  <h3>Document{% if include.schema %} <code>{{ include.schema }}</code>{% endif %}</h3>
+
+  <div inject></div>
+
+<!-- BUTTONS -->
+  <div data-type='button'>
+    <input type='submit' value='Save'>
+    <input type='reset'>
+  </div>
+</form>
+
+{% else %}
+Missing `schema` options in `{% raw %}{% include 'widgets/document.html' %}{% endraw %}`{:.language-liquid}
+{% endif %}
+{%- capture api -%}
+## Document
+
+Render a FORM to manage a document from a JSON schema.  
+Require [form]({{ 'docs/scripts/#form' | absolute_url }}) and [document]({{ 'docs/scripts/#document' | absolute_url }})
+
+```liquid
+{% raw %}{% include widgets/document.html schema='schema-$id' %}{% endraw %}
+```
+
+**Includes**
+
+- `schema`: `$id` value of the JSON schema for the document.  
+  Required
+{%- endcapture -%}

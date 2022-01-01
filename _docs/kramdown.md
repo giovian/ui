@@ -1,135 +1,181 @@
 ---
-order: 2
+order: 20
 ---
 
 # Kramdown
-
+{:.no_toc}
 * toc
 {:toc}
 
-## Forms
+> <https://kramdown.gettalong.org/>
 
-<form class="prevent-default">
-  <h3>Form</h3>
-  <p>Description</p>
-  <div>
-    <label for="name">Label for name</label>
-    <input type="text" name="name" placeholder="Name">
-    <span>Notes on the field</span>
-  </div>
-  <div>
-    <label for="select">Selector</label>
-    <select name="select">
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-    </select>
-    <span>Notes selectors</span>
-  </div>
-  <h4>Boolean field</h4>
-  <div>
-    <label for="boolean[checkbox1]" class="boolean">checkbox 1 (default)</label>
-    <input type="checkbox" id="boolean[checkbox1]" name="boolean[checkbox1]" aria-label="checkbox1" value="true" data-boolean="true" />
-    <span>This is the checkbox-description</span>
-  </div>
-  <div>
-    <label for="boolean[checkbox2]" class="boolean">checkbox 2 (default)</label>
-    <input type="checkbox" id="boolean[checkbox2]" name="boolean[checkbox2]" aria-label="checkbox2" value="true" data-boolean="true" />
-    <span>This is the checkbox-description</span>
-  </div>
-  <div>
-    <label for="boolean[radio]">radio buttons</label>
-    <label class="radio"><input type="radio" id="boolean[radio]" name="boolean[radio]" data-boolean="true" value="true" />true</label>
-    <label class="radio"><input type="radio" id="boolean[radio]" name="boolean[radio]" checked="" data-boolean="true" value="false" />false</label>
-    <span>This is the radio-description</span>
-  </div>
-  <div>
-    <label for="string[color]">color picker</label>
-    <input type="color" id="string[color]" name="string[color]" aria-label="color" value="#151ce6" />
-  </div>
-  <div class="buttons">
-    <input type="submit">
-    <input type="reset">
-  </div>
-</form>
+Kramdown is the default Markdown renderer for Jekyll and use the _GitHub Flavored Markdown (GFM) processor_.
+
+Classes ids and attributes can be added with an Inline Attribute List (IAL)
+```md
+{: .class #id key="value"}
+```
+{:.minimal}
+
+## Table of contents
+
+Render an ordered or unordered nested list (with default ID `markdown-toc`) of the headers in the page.  
+
+Add an IAL with reference name `toc` to a one element ordered or unordered list.
+```md
+* toc or 1. toc
+{:toc}
+```
+{:.minimal}
+
+Exclude headers from the TOC with the class `no_toc`.
+```md
+## Excluded header
+{: .no_toc}
+```
+{:.minimal}
+
+Check [toc widget]({{ 'docs/widgets#table-of-contents' | absolute_url }}) to put the TOC in the sidebar.
+
+## Code
+
+**Inline**
+
+`` `<nav>`{:.language-html}`` render `<nav>`{:.language-html}
+
+**Code blocks**
+
+<div class="grid">
+{%- assign code_files = 'fenced,liquid,kramdown,indented' | split: "," -%}
+{% for code in code_files %}{% include code/{{ code }}.html %}{% endfor %}
+</div>
+
+To limit code block width to the content, use the `.minimal`{:.language-css} class appending `{: .minimal}` to the block.
 
 ## Tables
 
-Variabile | Description | Value
----|---|:---:
-`html_pages` | Pages `HTML` rendered | {{ site.html_pages.size }}
-`documents` | Documents in every collection | {{ site.documents.size }}
+Use `|----` for a new `<tbody>`{:.language-html} and `|====` for a table footer `<tfoot>`{:.language-html}
 
-## Code blocks
+| Header1 | Header2 | Header3 |
+|:---|:---:|---:|
+| cell1 | cell2 | cell3 |
+| cell4 | cell5 | cell6 |
+|----
+| cell1 | cell2 | cell3 |
+| cell4 | cell5 | cell6 |
+|----
+| cell1 | cell2 | cell3 |
+| cell4 | cell5 | cell6 |
+|====
+| Foot1 | Foot2 | Foot3
 
-<div class="grid">
-  <div markdown=1>
-__Fenced__  
-start: <code>```yml</code>  
-end: <code>```</code>
-```yml
-city: 1
-caos: "ok"
-array:
-  - 1
-  - 2
-  - three
-array: [1, 2, "three"]
-```
-  </div>
-  <div markdown=1>
-__Liquid__  
-start: `{% raw %}{%- highlight yml -%}{% endraw %}`{:.language-liquid}  
-end: `{% raw %}{%- endhighlight -%}{% endraw %}`{:.language-liquid}
-{%- highlight yml -%}
-city: 1
-caos: "ok"
-array:
-  - 1
-  - 2
-  - three
-array: [1, 2, "three"]
-{%- endhighlight -%}
-  </div>
-</div>
-<div class="grid">
-<div markdown=1>
-__Kramdown code block__  
-start: `~~~ yml`  
-end: `~~~`
-~~~ yml
-city: 1
-caos: "ok"
-array:
-  - 1
-  - 2
-  - three
-array: [1, 2, "three"]
-~~~
-</div>
-<div markdown=1>
-__Kramdown indented by 4 spaces__  
-start: `{:.language-yml}`  
-end: emply line
+Default TABLES have a border, rounded corners and shaded headers. A class color can be applied on rows or cells.
 
-{:.language-yml}
-    city: 1
-    caos: "ok"
-    array:
-      - 1
-      - 2
-      - three
-    array: [1, 2, "three"]
-</div>
-</div>
+{% assign colors = "blue,green,red,orange,pink" | split: "," %}
+<table>
+  <thead>
+    <tr>
+      <th colspan=6>Colors</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>code</code></td>
+      {% for color in colors %}
+        <td class="color-{{ color }}">.color-{{ color }}</td>
+      {% endfor %}
+    </tr>
+    {% for color in colors %}
+      <tr class="color-{{ color }}">
+        <td colspan=6>.color-{{ color }} <code>code</code></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+  <tbody>
+    <tr>
+      <td colspan=6>New body</td>
+    </tr>
+  </tbody>
+</table>
 
-## Details
+## Blockquotes
 
-<details>
-  <summary>Details</summary>
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</details>
+> Example
 
 ## Typography
 
-<del>Deleted</del>
-<ins>Inserted</ins>
+|Kramdown|Result
+|:---|:---
+|`__` `**`|__Bold__
+|`_` `*`|_Italic_
+
+|HTML|Result
+|:---|:---
+|`del`|<del>Deleted</del>
+|`ins`|<ins>Inserted</ins>
+|`abbr[title]`|<abbr title="Abbreviation">Abbreviation</abbr>
+|`cite`|<cite>Cite</cite>
+|`kbd`|<kbd>Ctrl + S</kbd>
+|`samp`|<samp>Sample</samp>
+|`mark`|<mark>Highlighted</mark>
+|`s`|<s>Strikethrough</s>
+|`u`|<u>Underline</u>
+|`small`|<small>small</small>
+|`sub`|Text<sub>Sub</sub>
+|`sup`|Text<sup>Sup</sup>
+
+## Abbreviations
+
+Abbreviated text is written normally and below the text add  
+`*[normally]: Abbreviation`
+
+*[normally]: Abbreviation
+
+## Footnotes
+
+Text is followed[^1] by `[^1]` and below the text add `[^1]: Footnote`.  
+The note will be added at the end[^where] of the document.
+
+```html
+<sup id="fnref:1" role="doc-noteref">
+  <a href="#fn:1" class="footnote" rel="footnote">1</a>
+</sup>
+```
+
+```html
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>... <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    ...
+  </ol>
+</div>
+```
+
+[^1]: Some *markdown* footnote definition
+[^where]: End of page
+
+## Definition lists
+
+Elements: `<dl><dt><dd>`{:.language-html}  
+Markdown: `: `&nbsp;for the descriptions  
+- Empty line before new term
+- End with a definition
+
+```md
+term
+: definition
+: another definition
+
+another term
+and another term
+: and a definition for the term
+```
+term
+: definition
+: another definition
+
+another term
+and another term
+: and a definition for the term

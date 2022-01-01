@@ -1,0 +1,33 @@
+*
+  box-sizing: border-box
+
+section
+  // Prevent overflow
+  width: 100%
+
+.wrapper
+  max-width: $max-width
+  margin: 0 auto
+
+// Remove top and bottom margins of the first and last elements
+hgroup, form, blockquote, section, aside, article
+  & > *:first-child
+    margin-top: 0
+  & > *:last-child
+    margin-bottom: 0
+
+// Cursor on title attribute
+[title], abbr
+  cursor: default
+// Not for clickable elements
+a, button, summary
+  &[title]
+    cursor: pointer
+
+// Inserted and deleted
+ins
+  @extend .color-green
+  color: var(--fg)
+del
+  @extend .color-red
+  color: var(--fg)

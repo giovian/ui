@@ -1,0 +1,10 @@
+{%- assign sorted_collections = site.collections | sort: "order" -%}
+{%- for collection in sorted_collections -%}{% if collection.docs.size > 0 %}
+{%- assign collection_docs = collection.docs | sort: "order" -%}
+<li>
+  <span{% if page.collection == collection.label %} class="active"{% endif %}>{{ collection.title | default: collection.label }} &#x25BE;</span>
+  <ul>
+    {% for link in collection_docs %}<li><a href="{{ link.url | absolute_url }}"{% if page.url == link.url %} class="active"{% endif %}>{{ link.title }}</a></li>
+  {% endfor %}</ul>
+</li>
+{% endif %}{%- endfor -%}

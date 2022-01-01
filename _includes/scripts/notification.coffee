@@ -1,35 +1,31 @@
-# Show notification as modal
-notification_reset = ->
-  $('html').removeClass 'loading dim'
-  $('#notification').fadeOut(400, ->
-    $('#notification').empty()
-      .removeClass 'cliccable color-blue color-green color-red color-orange'
-    return
-  )
-  return
+notification = (code, cls, persist = false) ->
+  # Create notification SPAN
+  span = $('<span/>').append code
+  color_class = "#{if cls then "color-#{cls}" else 'bg-secondary'}"
+  $('#notification').empty().attr('class','').addClass(color_class).append span
+  # Timer to fade and expire
+  if persist then return
+  span.delay(3000).fadeOut 'slow', ->
+    span.remove()
+    $('#notification').removeClass color_class
+    return # End fadeout delay
+  # Log notification in console as well
+  console.log $("<b>#{code}</b>").text(), new Date().toLocaleTimeString('it-IT')
+  return # end notification
+{%- capture api -%}
+## Notification
 
-notification = (text, cls, end) ->
-  # Store in storage
-  # logs_array = storage.get 'storage.logs'
-  # logs_array.unshift {time: new Date(), text: text, cls: cls}
-  # storage.set 'storage.logs', logs_array.slice(0, 20)
-  # Append in logs details
-  # $('.logs').prepend return_log {
-  #   time: new Date()
-  #   text: text
-  #   cls: cls
-  # }
-  # Show notification
-  $('html').removeClass('loading').addClass 'dim'
-  $('#notification')
-    .removeClass 'cliccable color-blue color-green color-red color-orange'
-    .addClass () -> if cls then "color-#{cls}"
-    .addClass () -> if end then 'cliccable'
-    .append $ '<div/>', {text: text}
-    .fadeIn()
-  # Fade out timer
-  if end then setTimeout notification_reset, 3000 else $('html').addClass 'loading'
-  return
+Render a notification on the navigation bar with custom text and color.  
+Will fadeout after 3 seconds.
 
-# Click to hide
-$('#notification').on 'click', -> if $(@).hasClass('cliccable') then notification_reset()
+```coffee
+notification('text', 'color', persist)
+```
+
+**Arguments**
+
+- `text`: text to show
+- `color`: added as class with prepended `.color-`{:.language-sass}.  
+  Default to `.bg-secondary`{:.language-sass}
+- `persist`: boolean, if `true` the notification will not fade out
+{%- endcapture -%}

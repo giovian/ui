@@ -1,0 +1,82 @@
+// COLORS
+.bg
+  background: var(--bg)
+.bg-secondary
+  background: var(--bg-secondary)
+.fg
+  color: var(--fg)
+.fg-secondary
+  color: var(--fg-secondary)
+
+// SHADOW
+.shadow
+  box-shadow: 0 5px 10px var(--bg)
+
+// Display
+.hidden, [hidden], template
+  display: none
+.show
+  display: initial
+.inline-block
+  display: inline-block
+.block
+  display: block
+
+// PADDINGS
+.p-around
+  padding: $space*.7 $space
+.pbz
+  padding-bottom: 0 !important
+
+// BUTTONS
+.button
+  cursor: pointer
+
+// MARGINS
+// Margin vertical
+.mv
+  margin-block: $space
+// Margin vertical half
+.mvh
+  margin-block: $space/2
+// Margin horizontal
+.mh
+  margin-inline: $space
+// Margin horizontal half
+.mhh
+  margin-inline: $space/2
+// Margin bottom zero
+.mbz
+  margin-bottom: 0
+
+// BORDERS
+.border
+  border: $border-small solid var(--border)
+.border-bottom
+  border-bottom: $border-small solid var(--border)
+.border-top
+  border-top: $border-small solid var(--border)
+.border-right
+  border-right: $border-small solid var(--border)
+.border-left
+  border-left: $border-small solid var(--border)
+.border-block
+  @extend .border-top, .border-bottom
+.border-inline
+  @extend .border-left, .border-right
+// Rounded
+.rounded
+  border-radius: $border-big
+.rounded-medium
+  border-radius: $border-medium
+.rounded-small
+  border-radius: $border-small
+
+// GRIDS
+.grid
+  display: grid
+  grid-template-columns: 1fr 1fr
+  gap: 1em
+.flex
+  display: flex
+  flex-direction: row

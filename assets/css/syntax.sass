@@ -1,8 +1,0 @@
----
----
-// Syntax highlight
-.mode-light, .mode-dark .mode-opposite
-  @import {{ site.css.syntax.light | default: "rouge/github" | prepend: "syntax/" }}
-// dark
-.mode-dark, .mode-light .mode-opposite
-  @import {{ site.css.syntax.dark | default: "rouge/molokai" | prepend: "syntax/" }}

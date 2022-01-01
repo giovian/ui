@@ -1,20 +1,19 @@
 ---
-stone:
-  title: Stones
-  file: "stones"
-  url: https://necrologie.messaggeroveneto.gelocal.it/
-  get: ".item .died .picture a img"
-  attribute: "alt"
-  update: ".gnn-header_uptime"
-paper:
-  title: Papers
-  url: https://www.goodreads.com/book/show/56078386-heaven-s-river
+sidebar: [navigation]
 ---
 
 # Home
 
-This is <span class="fg-secondary">secondary</span>.
+## Setup
 
-{% include widgets/parse.html parse=page.stone %}
+`_config.yml`
 
-{% include widgets/parse.html parse=page.paper %}
+```yml
+baseurl: /eu
+permalink: pretty
+remote_theme: giovian/ui@main
+
+# optional
+timezone: Europe/Rome
+```
+{:.minimal}

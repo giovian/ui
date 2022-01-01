@@ -1,0 +1,8 @@
+---
+layout: null
+---
+{
+  "name": "{{ site.description | default: site.github.project_tagline }}",
+  "short_name": "{{ site.github.project_title }}",
+  "display": "standalone"
+}

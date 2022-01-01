@@ -1,0 +1,17 @@
+[`{{ include.text | default: include.path | default: site.github.repository_url }}`]({% include widgets/github_url.html path=include.path %})
+{%- capture api -%}
+## GitHub link
+
+Render a markdown link to a file in this GitHub repository given the file path.
+
+```liquid
+{% raw %}{% include widgets/github_link.html path='folder/file.ext' %}{% endraw %}
+```
+
+**Includes**
+
+- `path`: path of the file on the repository.  
+Default to the repository URL.
+- `text`: text for the link, default to `path`.  
+  With no path default to the repository URL.
+{%- endcapture -%}

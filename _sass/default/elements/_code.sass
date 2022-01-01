@@ -1,0 +1,47 @@
+code, kbd, pre, samp
+  font-family: $font-code
+  font-size: 92%
+
+.highlighter-rouge, .highlight
+  @extend .rounded
+  // Spacing
+  margin: 0
+
+.api .highlighter-rouge
+  @extend .minimal
+
+// Code blocks inside lists
+li > .highlighter-rouge 
+  margin-top: .5em
+
+pre.highlight, .highlight pre
+
+  // Spacing
+  @extend .p-around
+  margin: 0
+
+  // Fix for mobile
+  white-space: pre-wrap
+  word-wrap: break-word
+  overflow: auto
+
+// Minimal
+div.minimal.highlighter-rouge div.highlight
+  display: inline-flex
+
+//
+// INLINE
+// --------------------------------------
+*:not(pre) > code
+
+  @extend .highlight
+  border-radius: $border-medium !important
+
+  // Spacing
+  padding: $space*.1 $space*.2
+
+  // Colors
+  background-color: $code-background
+  color: $code-color
+  span:not([datetime])
+    color: var(--fg)

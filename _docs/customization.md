@@ -1,42 +1,101 @@
 ---
+order: 10
 ---
 
 # Customization
+{:.no_toc}
 
 * toc
 {:toc}
 
-- **FAVICON** `/assets/images/favicon.ico`
-- **SASS** `/assets/css/stylesheet.sass`
+## Favicon
 
-```sass
----
----
-// Override default variabiles here
-@import ui
-// Override CSS rules here
+The favicon files are expected to be `/favicon.ico` and `/favicon.png`.
+
+Specify different paths in `_config.yml`
+```yml
+favicon:
+  ico: "ico-file-path"
+  png: "png-file-path"
 ```
+
+Changing favicon files require updating the browser cache opening the file directly: [ico file]({{ 'favicon.ico' | absolute_url }}), [png file]({{ 'favicon.png' | absolute_url }}).
+
+## Theme
+
+The theme is set in the `_config.yml` file with the value `css.theme`, default to `dark`.
+
+```yml
+# _config.yml
+css:
+  theme: light
+```
+
+Theme list: `dark`, `light`
+
+## Sass
+
+The theme {% include widgets/github_link.html path='_sass/default/_variabiles.sass' text='variabiles' %} can be overridden in the (empty) file `_sass/variabiles.sass`.  
+
+Custom sass can be included in the (empty) file `_sass/custom.sass`.
+
+To create a new theme, add a file `_sass/theme-name.sass`. To change only the color scheme, include in the file the colors and lightness variabiles and `@import default`{:.language-sass}.
+
+## Colors
+
+Color variations are defined in the theme file, along with the link color.
+```sass
+$link-color: DodgerBlue
+$colors: (blue: DodgerBlue, red: Red, green: LimeGreen, orange: Orange, pink: Fuchsia)
+```
+For every colors there are five shades defined in the lightness SASS list for background, foreground, secondary background and foreground and borders.
+```sass
+$lightness: (bg: 4%, fg: 83%, bg_secondary: 9%, fg_secondary: 57%, border: 21%)
+```
+
+Colors are applied to elements with the classes `.color-(blue/red/green/orange/pink)`.
+<div class="grid">
+{%- assign colors = "blue,green,red,orange,pink,default" | split: "," -%}
+{% for color in colors %}
+<div class="p-around rounded color-{{ color }}">
+Example {{ color }} <span class="fg-secondary">secondary text</span>
+<div class="p-around mvh bg-secondary rounded">Secondary background</div>
+and <a href="#">Link</a>
+</div>
+{% endfor %}
+</div>
+
+## Syntax highlight
+
+Syntax highlight theme is set in the `_config.yml` file with the value `css.syntax`, default to `rouge/molokai_custom`.
+
+```yml
+# _config.yml
+css:
+  syntax: rouge/github
+```
+
+Possible themes are in {% include widgets/github_link.html path='_sass/syntax' %}. 
 
 ## Sidebar
 
-The main page content has an optional sidebar and use flexbox with `flex-direction: row-reverse;`{:.language-css} for a right sidebar.
+The main page content use `flexbox` to show an optional sidebar.
 
 ```html
 <main>
-  <aside><!-- Sidebar --></aside>
-  <section><!-- Page content --></section>
+  <div class="wrapper">
+    <aside><!-- Sidebar --></aside>
+    <section><!-- Page content --></section>
+  </div>
 </main>
 ```
 
-### Widgets
+The sidebar will be populated with widgets included from the folder `_includes/widgets/`.
 
-The sidebar will be populated with widgets included from `_includes/widgets/sidear/`.
-
-Select the widgets with a YAML array `sidebar: [...]` for the relative pages:
+Select the widgets with a YAML array `sidebar: [...]`{:.language-yml}:
 
 <div class="grid">
 <div markdown="1">
-
 For every page
 
 ```yml
@@ -49,8 +108,7 @@ defaults:
 ```
 </div>
 <div markdown="1">
-
-For pages in one or more collections
+For pages in collections
 
 ```yml
 # _config.yml
@@ -71,105 +129,29 @@ sidebar: [...]
 ---
 ```
 
-### Widgets list
+To add custom content, create a `_includes/widgets/sidebar.html` file and include it in the array: `sidebar: [sidebar]`{:.language-yml}
 
-Table of contents
-: `toc` Will move the table of contents (generated in the page with `{:toc}`) to the sidebar
+To choose sidebar side add `$sidebar-side: left/right`{:.language-sass} in the {% include widgets/github_link.html path='_sass/variabiles.sass' %} file (default is `right`).
 
-## Footer
+The default sidebar width is `0.3` times the main content, customize with `$sidebar-width`{:.language-sass}.
 
-The `footer` include 3 files:
-- `_includes/footer/left.html` GitHub links
-- `_includes/footer/center.html` empty by default
-- `_includes/footer/right.html` Top link and mode toggle link
+If the sidebar is empty (no widgets) it will collapse.
 
-To override these defaults add any of theese files to your repository with customized content.
+{% include widgets/api.html include='page/navigation' %}
+{% include widgets/api.html include='page/footer' %}
 
-## Colors
+## Collections
 
-__Colors__
+Minimum configuration on `_config.yml` for pages in the folder `_myCollection`
 
-- <a href="#" class="prevent-default" set-color="default">Default</a>
-- <a href="#" class="prevent-default" set-color="blue">Blue</a>
-- <a href="#" class="prevent-default" set-color="green">Green</a>
-- <a href="#" class="prevent-default" set-color="orange">Orange</a>
-- <a href="#" class="prevent-default" set-color="red">Red</a>
+```yml
+collections:
+  myCollection:
+    output: true
 
-__Accents__
-
-- <a href="#" class="prevent-default" set-accent="default">Default</a>
-- <a href="#" class="prevent-default" set-accent="blue">Blue</a>
-- <a href="#" class="prevent-default" set-accent="green">Green</a>
-- <a href="#" class="prevent-default" set-accent="orange">Orange</a>
-- <a href="#" class="prevent-default" set-accent="red">Red</a>
-
-<details>
-  <summary>Blockquotes</summary>
-<blockquote>
-  <h3>Plain</h3>
-  <p markdown=1>Lorem ipsum dolor [sit amet](), consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-  <p class="fg-secondary" markdown=1>`.fg-secondary` Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-  <div class="bg-secondary minimum-padding">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  </div>
-</blockquote>
-{%- assign colors = 'blue,green,orange,red' | split: ',' -%}
-{% for c in colors %}
-<blockquote class="color-{{ c }}">
-  <h3>.color-{{ c }}</h3>
-  <p markdown=1>Lorem ipsum dolor [sit amet](), consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-  <p class="fg-secondary" markdown=1>`.fg-secondary` Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-  <div class="bg-secondary minimum-padding">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  </div>
-</blockquote>
-{% endfor %}
-<blockquote class="mode-opposite color-red">
-  <h3>blockquote opposite</h3>
-  <p markdown=1>Lorem ipsum dolor [sit amet](), consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-  <p class="fg-secondary" markdown=1>`.fg-secondary` Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-  <div class="bg-secondary minimum-padding">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  </div>
-</blockquote>
-</details>
-
-### Tables
-
-<table>
-  <thead>
-    <tr>
-      <th colspan=5>Colors</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>code</code></td>
-      {% for c in colors %}
-        <td class="color-{{ c }}">.color-{{ c }}</td>
-      {% endfor %}
-    </tr>
-    {% for c in colors %}
-      <tr class="color-{{ c }}">
-        <td colspan=5>.color-{{ c }} <code>code</code></td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <th colspan=5 class="mode-opposite">Colors</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="mode-opposite">
-      <td><code>code</code></td>
-      {% for c in colors %}
-        <td class="color-{{ c }}">.color-{{ c }}</td>
-      {% endfor %}
-    </tr>
-    {% for c in colors %}
-      <tr class="mode-opposite color-{{ c }}">
-        <td colspan=5>.color-{{ c }} <code>code</code></td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+defaults:
+  - scope:
+      type: myCollection
+    values:
+      layout: default
+```

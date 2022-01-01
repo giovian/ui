@@ -1,0 +1,88 @@
+@media (max-width: $mobile-width)
+
+  //
+  // MAIN
+  // --------------------------------------
+  main .wrapper
+    max-width: 100%
+    padding: $space
+
+    // Stack sidebar
+    flex-direction: column
+    > aside:first-of-type
+      position: static
+      padding-bottom: 0
+
+  //
+  // HTML
+  // --------------------------------------
+  html
+    // Reset anchors
+    \:target
+      scroll-margin-top: 0
+      scroll-snap-margin-top: 0
+
+  //
+  // NAV
+  // --------------------------------------
+  nav
+    // Remove sticky
+    position: static !important
+
+    .wrapper
+      // Stack elements vertically (left)
+      flex-direction: column
+      align-items: start
+
+      & > ul
+        display: block
+        margin-left: 0
+        padding-left: $space
+        padding-bottom: $space
+        li
+          a, span
+            padding: 0
+          ul
+            display: block
+            position: static
+            background: var(--bg)
+            padding-left: $space
+            li
+              a, span
+                padding: 0
+
+  // Stack grid columns
+  .grid
+    grid-template-columns: 1fr
+  .flex
+    flex-direction: column
+
+  //
+  // Footer
+  // --------------------------------------
+  footer .wrapper
+    padding: $space
+
+    // Stack lists
+    flex-direction: column
+    // Lists alignment
+    ul
+      text-align: left !important
+
+  //
+  // Headings
+  // --------------------------------------
+  // Spacing
+  @for $index from 1 through length($headings-margins)
+    $margin: nth($headings-margins, $index)
+    h#{$index}
+      margin-top: #{$margin*2}em
+
+  // Tables
+  table, thead, tbody, th, td, tr
+    display: block
+  td, th
+    text-align: left !important
+    border-bottom-width: 0px !important
+    &:last-child
+      border-bottom-width: 1px !important

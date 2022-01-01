@@ -1,0 +1,32 @@
+main .wrapper
+
+  & > section:first-of-type
+    // <number> 1 0 (grow shrink basis)
+    flex: 1
+    // Prevent sidebar jump when section is shorter
+    min-height: 20em
+
+  & > aside:first-of-type
+    // STICKY
+    @if $sidebar-sticky
+      position: sticky
+      top: 6.3em
+    @else
+      position: static
+      margin-top: 7px
+
+    // WIDTH
+    flex: $sidebar-width
+
+    // Hide if empty
+    &:empty
+      flex: initial
+
+    // Table of contents
+    ul
+      list-style-type: none
+      padding-left: $space
+
+    // Notifications
+    #notification > div
+      font-size: 92%

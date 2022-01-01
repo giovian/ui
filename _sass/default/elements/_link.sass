@@ -1,0 +1,19 @@
+a, a .highlight, a > code
+
+  // Color
+  color: var(--link) !important
+
+  // Decorations
+  text-decoration: none
+  outline-width: 0
+
+  // Interactions
+  &:hover
+    color: var(--fg) !important
+  &:active, &.active
+    color: var(--fg-secondary) !important
+
+  // Disabled
+  &[disabled], &.disabled
+    pointer-events: none
+    color: var(--fg-secondary) !important

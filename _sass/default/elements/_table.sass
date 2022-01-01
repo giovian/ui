@@ -1,0 +1,21 @@
+table
+  
+  // Spacing
+  border-spacing: 0
+  @extend .mvh, .rounded, .border
+
+th, td
+  padding: $space/2
+
+thead:last-of-type th,
+tbody:not(:last-child) td,
+tbody:last-child tr:not(:last-child) td,
+tfoot:last-child tr:not(:last-child) td
+  @extend .border-bottom
+
+th,
+tfoot td
+  background: var(--bg-secondary)
+
+tbody:nth-of-type(2n) td
+  background: var(--bg-secondary)

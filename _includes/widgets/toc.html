@@ -1,0 +1,18 @@
+<details id="widget-toc" open>
+  <summary><h3>Table of contents</h3></summary>
+</details>
+{%- capture api -%}
+## Table of contents
+Render a `<details id="widget-toc" open>`{:.language-html} widget.  
+Require the [markdown table of contents]({{ 'docs/kramdown/#table-of-contents' | absolute_url }}) somewhere in the page.
+```liquid
+{% raw %}{% include widgets/toc.html %}{% endraw %}
+```
+The [toc]({{ 'docs/scripts/#toc' | absolute_url }}) script will move the markdown generated toc inside the widget.
+
+To have the widget on the sidebar, include the widget in the YAML `sidebar` array:
+```yml
+sidebar:
+  - toc
+```
+{%- endcapture -%}

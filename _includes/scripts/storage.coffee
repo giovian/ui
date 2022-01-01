@@ -1,34 +1,18 @@
-# STORAGE
-# localStorage key is "owner/repository"
-# GET ---------------------------
-# storage.get()                     Return whole object { ... }
-# storage.get('key')                Return value (can be number, string, array, object)
-# storage.get('object')['property'] Return object's property
-# storage.get('array')[index]       Return index element of array
-# SET ---------------------------> Return storage
-# storage.set('key', value)         Store { key: value }
-# PUSH --------------------------> Return storage
-# storage.push('array', element)    Push element to array
-# CONCAT ------------------------> Return storage
-# storage.concat('array', [array])  Store array's merge
-# ASSIGN ------------------------> Return storage
-# storage.assign('object', object)  Store merged objects
-# CLEAR -------------------------
-# storage.clear()                   Return storage, remove localStorage key
-# storage.clear('key')              Return storage, remove { key: value, ... }
 storage =
-  key: "{{ site.github.repository_nwo }}"
-  get: (key) -> if key then storage.get_object()[key] else storage.get_object()
-  get_object: () -> JSON.parse atob localStorage.getItem(storage.key) || "e30="
-  set_object: (obj) -> localStorage.setItem(storage.key, btoa JSON.stringify obj)
+  key: '{{ site.github.repository_nwo }}'
+  get: (key) -> if key then key.split('.').reduce(((acc, part) => acc && acc[part]), storage.get_object()) else storage.get_object()
+  get_object: () -> JSON.parse Base64.decode localStorage.getItem(storage.key) || 'e30='
+  set_object: (obj) -> localStorage.setItem(storage.key, Base64.encode JSON.stringify obj)
   push: (key, element) -> storage.set key, (storage.get(key) || []).concat [element]
   concat: (key, array) -> storage.set key, (storage.get(key) || []).concat array
   assign: (key, object) -> storage.set key, Object.assign(storage.get(key) || {}, object)
   set: (key, value) ->
-    if key and value
-      obj = storage.get_object()
-      obj[key] = value
-      storage.set_object obj
+    if key
+      if value and not jQuery.isEmptyObject value
+        obj = storage.get_object()
+        obj[key] = value
+        storage.set_object obj
+      else storage.clear key
     return storage
   clear: (key) ->
     if key
@@ -38,8 +22,95 @@ storage =
     else
       localStorage.removeItem(storage.key)
     return storage
+  console: ->
+    console.group storage.key
+    console.log localStorage.getItem storage.key
+    console.log storage.get()
+    console.groupEnd()
+    return
 
-console.group storage.key
-console.log localStorage.getItem storage.key
-console.log storage.get()
-console.groupEnd()
+$(document).on "click", "a[log-storage]", (e) ->
+  e.preventDefault()
+  storage.console()
+  return
+
+{%- capture api -%}
+## Storage
+
+Hashed localStorage object with key `owner/repository`.
+
+If unlogged is empty or store the DETAILS state:
+```json
+{
+  details: {
+    "page-title-1|detail-summary-1": false,
+    "page-title-2|detail-summary-2": true
+  }
+}
+```
+
+If logged:
+```json
+{
+  details: {
+    "page-title-1|detail-summary-1": false,
+    "page-title-2|detail-summary-2": true
+  },
+  login: {
+    token: "...",
+    user: "username",
+    logged: "2021-08-18T16:06:38.559Z",
+    role: "admin"/"guest"
+  },
+  repository: {
+    fork: true/false,
+    parent: false/repository_object
+}
+```
+
+**GET**
+
+```coffee
+# Return whole object { ... }
+storage.get()
+# Return value (can be number, string, array, object), key is a dot notation
+storage.get("key")
+storage.get("key.nested.property")
+# Return object's property
+storage.get("object")["property"]
+# Return index element of array
+storage.get("array")[index]
+```
+**SET**
+```coffee
+# Store { key: value } (can be number, string, array, object)
+storage.set("key", value)
+```
+**PUSH**
+```coffee
+# Push element to array
+storage.push("array", element)
+```
+**CONCAT**
+```coffee
+# Store array's merge
+storage.concat("array", [array])
+```
+**ASSIGN**
+```coffee
+# Store merged objects
+storage.assign("object", object)
+```
+**CLEAR**
+```coffee
+# Return storage, remove localStorage key
+storage.clear()
+# Return storage, remove { key: value, ... }
+storage.clear("key")
+```
+**CONSOLE**
+```coffee
+# Show storage objects in web console
+storage.console()
+```
+{%- endcapture -%}

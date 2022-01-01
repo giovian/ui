@@ -1,0 +1,171 @@
+// FONTS
+input, select, textarea, button, option
+  font-family: inherit
+  font-size: inherit
+  line-height: inherit
+
+// BORDERS MARGINS and BLOCK
+// --------------------------------------
+input:not([type=range]), textarea, select
+  @extend .border, .rounded-medium
+  margin-top: $space*.2
+  margin-bottom: $space*.1
+
+// RESET and PADDINGS
+input:not([type=range]), textarea, select
+  appearance: none
+  -webkit-appearance: none
+  padding: 1px 5px
+input[type=color]
+  padding: 0
+
+// BG Secondary
+input, textarea, select,
+  background: var(--bg-secondary)
+  color: var(--fg)
+
+// TWEAKS
+// --------------------------------------
+
+// COLOR swatch border hack
+input[type="color"]
+  &::-moz-color-swatch
+    border: none
+  &::-webkit-color-swatch
+    border: none
+
+// Hide number ARROWS
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+  -webkit-appearance: none !important
+input[type=number]
+  -moz-appearance: textfield !important
+
+// Range OUTPUT
+output
+  position: relative
+  top: $space*-.5
+  left: $space*.3
+
+// RANGE and SELECT cursor
+input[type=range], select
+  cursor: pointer !important
+
+// Empty multiple select min-width
+select[multiple] option[value=""]:only-of-type
+  min-width: $space*5
+
+//
+// Inside FORMS
+// --------------------------------------
+form
+  @extend .border, .mv, .rounded, .inline-block
+  
+  // Do not clip rounded corners
+  overflow: hidden
+
+  // Grid has no GAP
+  div.grid
+    gap: 0
+
+  // Spacing
+  div[data-type], & > h3, & > p,
+  details summary
+    padding: $space/2 $space*.7
+    margin: 0
+
+  //
+  // LABELS & SPANS
+  // --------------------------------------
+  span
+    font-size: 85%
+    @extend .fg-secondary
+
+  //
+  // BORDERS MARGINS and BLOCK
+  // --------------------------------------
+  & > h3, & > p, div.item
+    @extend .border-bottom
+  div.grid > div:not(:last-child)
+    @extend .border-right
+  div[data-type=array]
+    @extend .border-top
+  details
+    @extend .mbz
+
+  //
+  // BUTTONS
+  // --------------------------------------
+  div[data-type=button]
+    padding: $space/2
+    @extend .border-top
+  // Enabled
+  button:enabled, input[type=button], input[type=reset], input[type=submit]
+    @extend .button
+    margin: 0
+  // Disabled
+  input:disabled, button:disabled, select:disabled, input[readonly]
+    @extend .disabled
+  // FONT SIZE and BORDER
+  .button
+    font-size: 92%
+    @extend .border, .p-around, .rounded
+
+  //
+  // COLORS
+  // --------------------------------------
+
+  // BG Secondary
+  & > h3, & > h4,
+  [data-type=button], .button:hover
+    background: var(--bg-secondary)
+    color: var(--fg)
+
+  // Normal
+  .button, .button:active
+    background: var(--bg)
+    color: var(--fg)
+
+  // Special
+  input[type=submit]:not([disabled])
+    @extend .color-green
+  input[type=reset]:not([disabled])
+    @extend .color-red
+
+  //
+  // DISPLAY
+  // --------------------------------------
+
+  // Blocks
+  input:not([type=range], [type=button], [type=submit], [type=reset], .button, .inline),
+  textarea, select:not(.inline)
+    @extend .block
+
+  // Ranges
+  [data-type=range]
+    label, span
+      display: block
+
+  //
+  // ADD/REMOVE links
+  // --------------------------------------
+
+  // Links align right
+  [data-add], [data-remove]
+    float: right
+
+  //
+  // ENUM values spacing
+  // --------------------------------------
+  [enum-inject] [data-type]:not(:last-of-type)
+    padding-bottom: 0.2em
+
+  //
+  // DISABLED (Loading state)
+  // --------------------------------------
+  &[disabled]
+    cursor: wait
+    opacity: .5
+    input, button, select
+      pointer-events: none
+      @extend .disabled

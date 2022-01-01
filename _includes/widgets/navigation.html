@@ -1,0 +1,15 @@
+<details open>
+  <summary><h3>Navigation</h3></summary>
+  {% include page/navigation.html %}
+</details>
+{%- capture api -%}
+## Navigation
+
+Render a DETAILS with the site navigation as unordered list.
+
+```liquid
+{% raw %}{% include widgets/navigation.html %}{% endraw %}
+```
+
+Will include the actual navigation present in the file {% include widgets/github_link.html path='_includes/page/navigation.html' %}.
+{%- endcapture -%}

@@ -1,6 +1,22 @@
-{%- assign url = site.github.repository_url -%}
+{%- assign repo = site.github.public_repositories | where: "full_name", site.github.repository_nwo | first -%}
 {%- if include.path -%}
-{%- assign branch = site.github.public_repositories | where: "html_url", url | map: "default_branch" | first -%}
-{%- assign url = url | append: '/blob/' | append: branch | append: '/' | append: page.path -%}
-{%- endif -%}
+{%- assign branch = repo | map: 'default_branch' | first -%}
+{%- assign url = site.github.repository_url | append: '/blob/' | append: branch | append: '/' | append: include.path -%}
 {{ url }}
+{%- else -%}
+{{ site.github.repository_url }}
+{%- endif -%}
+{%- capture api -%}
+## GitHub URL
+
+Render the GitHub URL of a file given a path.
+
+```liquid
+{% raw %}{% include widgets/github_url.html path='folder/file.ext' %}{% endraw %}
+```
+
+**Includes**
+
+- `path`: path of the file on the repository.  
+  Default to the repository URL.
+{%- endcapture -%}

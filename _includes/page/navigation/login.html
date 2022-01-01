@@ -1,0 +1,23 @@
+<li apply-if-parent="hidden|.logged"><a href="#" class="login-link prevent-default">Login</a></li>
+<li apply-if-parent="hidden|html:not(.logged)"><a href="#" class="logout-link prevent-default">Logout</a></li>
+{%- capture api -%}
+## Login
+
+Render two list items links with `a.login-link`{:.language-sass} and `a.logout-link`{:.language-sass}, usually included in the right site of the NAV element. Needs the [login]({{ 'docs/scripts/#login' | absolute_url }}) script.
+
+```liquid
+{% raw %}{% include widgets/login.html %}{% endraw %}
+```
+{:.minimal}
+Render
+```html
+<li apply-if-parent="hidden|.logged">
+  <a href="#" class="login-link prevent-default">Login</a>
+</li>
+<li apply-if-parent="hidden|html:not(.logged)">
+  <a href="#" class="logout-link prevent-default">Logout</a>
+</li>
+```
+
+Setting `{% raw %}{{ page.login }}{% endraw %}`{:.language-liquid} as `true` will include the links in the main navigation.
+{%- endcapture -%}

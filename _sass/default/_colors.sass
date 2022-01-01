@@ -1,0 +1,47 @@
+// Default lightness
+
+\:root
+  --link:         #{$link-color}
+  --bg:           hsl(0, 0%, #{map-get($lightness, bg)})
+  --fg:           hsl(0, 0%, #{map-get($lightness, fg)})
+  --bg-secondary: hsl(0, 0%, #{map-get($lightness, bg_secondary)})
+  --fg-secondary: hsl(0, 0%, #{map-get($lightness, fg_secondary)})
+  --border:       hsl(0, 0%, #{map-get($lightness, border)})
+
+// Colors and lightness
+
+@each $color-name, $color-value in $colors
+  $hue: hue($color-value)
+  .color-#{$color-name}
+    --link:         #{$color-value}
+    --bg:           #{hsl($hue, 28%, map-get($color-lightness, bg))}
+    --fg:           #{hsl($hue, 17%, map-get($color-lightness, fg))}
+    --bg-secondary: #{hsl($hue, 21%, map-get($color-lightness, bg_secondary))}
+    --fg-secondary: #{hsl($hue,  9%, map-get($color-lightness, fg_secondary))}
+    --border:       #{hsl($hue, 12%, map-get($color-lightness, border))}
+
+[class*='color-']
+  background: var(--bg)
+  color: var(--fg)
+
+// prefers-color-scheme
+// --------------------------------------
+@media not all and (prefers-color-scheme)
+  .prefers-color-scheme::after
+    content: "not-supported"
+
+@media (prefers-color-scheme)
+  .prefers-color-scheme::after
+    content: "supported"
+
+@media (prefers-color-scheme: light)
+  .prefers-color-scheme::after
+    content: "light"
+
+@media (prefers-color-scheme: dark)
+  .prefers-color-scheme::after
+    content: "dark"
+
+@media (prefers-color-scheme: no-preference)
+  .prefers-color-scheme::after
+    content: "no-preference"

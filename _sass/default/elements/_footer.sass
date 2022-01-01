@@ -1,0 +1,27 @@
+footer
+
+  // COLORS
+  @extend .border-top
+  color: var(--fg-secondary)
+
+  .wrapper
+
+    padding: 2em 1em
+
+    // FLEX
+    display: flex
+    justify-content: space-between
+
+    // LISTS
+    ul
+
+      // RESET STYLE
+      margin: 0
+      padding-left: 0
+      list-style: none
+
+      // ALIGNMENT
+      &:last-child
+        text-align: right
+      &:not(:first-child):not(:last-child)
+        text-align: center

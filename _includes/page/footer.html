@@ -1,3 +1,22 @@
-{% include page/footer/left.html %}
-{% include page/footer/center.html %}
-{% include page/footer/right.html %}
+<div class="wrapper">
+  {% include page/footer/left.html %}
+  {% include page/footer/center.html %}
+  {% include page/footer/right.html %}
+</div>
+{%- capture api -%}
+## Footer
+
+The FOOTER include the 3 files in the folder `_includes/page/footer/`:
+
+| File | Default content |
+|---|---|
+| [`left.html`]({% include widgets/github_url.html path='_includes/page/footer/left.html' %}) | GitHub links |
+| [`center.html`]({% include widgets/github_url.html path='_includes/page/footer/center.html' %}) | empty |
+| [`right.html`]({% include widgets/github_url.html path='_includes/page/footer/right.html' %}) | Link to page-top |
+
+To override these defaults add any of theese files to your repository with custom content.
+
+```liquid
+{% raw %}{% include page/footer.html %}{% endraw %}
+```
+{%- endcapture -%}

@@ -1,0 +1,21 @@
+{% assign navigation_default = 'pages,collections,login' | split: ',' %}
+{%- assign navigation = page.navigation | default: navigation_default -%}
+<ul>
+  {% for item in navigation %}{% include page/navigation/{{ item }}.html %}{% endfor %}
+</ul>
+{%- capture api -%}
+## Navigation
+
+Render the website navigation as unordered list with dropdowns.  
+
+- `pages`: `{% raw %}{{ site.html_pages }}{% endraw %}`{:.language-liquid} sorted by `order` liquid variabile
+- `collections`: `{% raw %}{{ site.collections }}{% endraw %}`{:.language-liquid} dropdowns sorted by `order` liquid variabile
+- `login`: links
+- `help`: link to Help page
+
+```liquid
+{% raw %}{% include page/navigation.html %}{% endraw %}
+```
+
+By default the navigation bar is sticky; for a normal behavior add `$nav-sticky: false`{:.language-sass} in `_sass/custom.sass`.
+{%- endcapture -%}

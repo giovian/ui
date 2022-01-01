@@ -1,0 +1,57 @@
+nav
+
+  // Sticky
+  @if $nav-sticky
+    z-index: 1000
+    position: sticky
+    top: 0
+
+  // COLORS
+  background: var(--bg)
+  @extend .border-bottom, .shadow
+
+  .wrapper
+
+    // FLEX
+    display: flex
+    // justify-content: space-between
+
+    & > span
+      @extend .p-around
+
+    ul
+
+      // FLEX
+      display: flex
+
+      // RESET LIST
+      margin: 0 0 0 auto
+      padding-left: 0
+      list-style: none
+
+      // LIST ELEMENTS
+      li
+
+        // SPANS AND LINKS
+        span
+          cursor: default
+        a, span
+          display: block
+          padding: $space*.7
+
+        // HIDE DROPDOWN
+        &:hover ul
+          display: block
+
+        // DROPDOWN
+        ul
+          position: absolute
+          display: none
+          // COLORS
+          background: var(--bg-secondary)
+          // SHADOW
+          box-shadow: -5px 5px 10px var(--bg)
+
+          li
+            a, span
+              padding: $space/2 $space*.7

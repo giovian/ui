@@ -1,39 +1,33 @@
 ---
 ---
 
-# Prevent default events
-$("a.prevent-default").on "click", (e) -> e.preventDefault()
-$("form.prevent-default").on "submit", (e) -> e.preventDefault()
+# HELPERS
 
-# Fix inline <code> element without class
-$(':not(pre) code').addClass 'highlighter-rouge highlight'
+{% include scripts/prevent.coffee %}        # Prevent default events for links and forms
+{% include scripts/storage.coffee %}        # Hashed storage system for localStorage
+{% include scripts/apply_family.coffee %}   # Apply classes to parents/childrens
+{% include scripts/datetime.coffee %}       # Use apply_family
+{% include scripts/prefilter.coffee %}      # Prefilter for Ajax calls
+{% include scripts/toc.coffee %}            # Move toc to sidebar
+{% include scripts/slug.coffee %}           # Function for string slug
 
-# String manipulation
-unslug = (string) -> string.replace /_/g, " "
-capitalize = (string) -> string.charAt(0).toUpperCase() + string.slice 1
+# WIDGETS
 
-# Get JSON data attribute
-get_data = (element, data_name) -> JSON.parse(decodeURIComponent element.data data_name) || {}
+{% include scripts/notification.coffee %}   # Use datetime
+{% include scripts/login.coffee %}          # Use notification, apply_family, storage
+{% include scripts/detail.coffee %}         # Use storage
+{% include scripts/github_api.coffee %}     # Perform GitHub API REST requests
 
-$('a[set-color]').on 'click', ->
-  color = $(@).attr 'set-color'
-  $('html').removeClass 'color-blue color-green color-orange color-red'
-  if color isnt 'default' then $('html').addClass "color-#{color}"
-  return
+# FUNCTIONS
 
-$('a[set-accent]').on 'click', ->
-  accent = $(@).attr 'set-accent'
-  $('html').removeClass 'accent-blue accent-green accent-orange accent-red'
-  if accent isnt 'default' then $('html').addClass "accent-#{accent}"
-  return
+{% include scripts/focus.coffee %}          # Check website browser tab is focused
+{% include scripts/inview.coffee %}         # In view Observer
+{% include scripts/updates.coffee %}        # Check repository and remote theme updates
+{% include scripts/tab.coffee %}            # Manage TABs
+{% include scripts/form.coffee %}           # Form engine
+{% include scripts/schema.coffee %}         # Manage array schema engine
+{% include scripts/document.coffee %}       # Manage document from schema
 
-{% include scripts/storage.coffee %}
-{% include scripts/apply_family.coffee %}
-{% include scripts/notification.coffee %}
-{% include scripts/datetime.coffee %} # Needs: apply-family
-{% include scripts/mode.coffee %} # Needs: apply-family
-{% include scripts/login.coffee %} # Needs: storage, notification, apply_family
-{% include scripts/details.coffee %}
-{% include scripts/sidebar/toc.coffee %}
-{% include scripts/api.coffee %} # Needs: notification
-{% include scripts/parse.coffee %} # Needs: notification
+# CUSTOM
+
+{% include scripts/custom.coffee %}         # Custom file, empty by default

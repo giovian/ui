@@ -1,7 +1,39 @@
-{% assign api = include.api %}
-<div data-api="{{ api | jsonify | uri_escape }}" class="{{ api.classes | join: ' ' }}">
-  <p>
-    <span title="{{ api.description }}">{{ api.title | default: "API" }}{% if api.execute == nil %} <a href="#" title="{{ api.url }}" class="prevent-default">{{ api.method | upcase | default: "GET" }}</a>{% endif %} </span><span></span>
-  </p>
-  <div></div>
+{%- assign api = nil -%}
+{% if include.include %}
+{%- assign include_file = include.include -%}
+{%- assign extension = include_file | split: '.' -%}
+{%- if extension.size == 1 -%}{%- assign include_file = include_file | append: '.html' -%}{%- endif -%}
+{%- capture include_content -%}{% include {{include_file}} %}{%- endcapture -%}
+{% else %}
+{%- capture api -%}
+## API
+Capture, markdownify and render the liquid `api` variabile of an include file.
+
+```liquid
+{% raw %}{% include widgets/api.html include="folder/file" %}{% endraw %}
+```
+
+**Includes**
+
+- `include`: target include file in the form `folder/file`.  
+  Extension `.html` can be omitted.
+
+**Example of include file**
+```liquid
+...code...
+
+{% raw %}{%- capture api -%}
+## Title
+
+Description
+
+- options
+{%- endcapture -%}{% endraw %}
+```
+{%- endcapture -%}
+{% endif %}
+<div class='api' markdown='1'>
+{{ api | mardowify }}
+
+{% if api %}File: {% assign absolute_path = include_file | prepend: '_includes/' %}{% include widgets/github_link.html path=absolute_path %}{% endif %}
 </div>
