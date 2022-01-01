@@ -6,14 +6,7 @@ main .wrapper
     // Prevent sidebar jump when section is shorter
     min-height: 20em
 
-  & > aside:first-of-type
-    // STICKY
-    @if $sidebar-sticky
-      position: sticky
-      top: 6.3em
-    @else
-      position: static
-      margin-top: 7px
+  & > aside
 
     // WIDTH
     flex: $sidebar-width
@@ -22,11 +15,15 @@ main .wrapper
     &:empty
       flex: initial
 
-    // Table of contents
+    // Lists
     ul
       list-style-type: none
       padding-left: $space
 
-    // Notifications
-    #notification > div
-      font-size: 92%
+// STICKY Sidebar
+@if $sidebar-sticky
+  main .wrapper > aside
+    position: sticky
+    top: 3em
+  body[page-top*='nav'] main .wrapper > aside
+    top: 6.3em

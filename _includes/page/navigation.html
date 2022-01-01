@@ -1,6 +1,4 @@
-{% assign navigation_default = 'pages,collections,login' | split: ',' %}
-{%- assign navigation = page.navigation | default: navigation_default -%}
-<ul>
+<ul class="navigation">
   {% for item in navigation %}{% include page/navigation/{{ item }}.html %}{% endfor %}
 </ul>
 {%- capture api -%}

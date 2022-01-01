@@ -19,7 +19,10 @@ nav
     & > span
       @extend .p-around
 
-    ul
+    //
+    // Link list
+    // --------------------------------------
+    ul.navigation
 
       // FLEX
       display: flex
@@ -35,6 +38,7 @@ nav
         // SPANS AND LINKS
         span
           cursor: default
+          color: var(--fg-secondary)
         a, span
           display: block
           padding: $space*.7
@@ -45,6 +49,8 @@ nav
 
         // DROPDOWN
         ul
+          list-style: none
+          padding-left: 0
           position: absolute
           display: none
           // COLORS
@@ -55,3 +61,9 @@ nav
           li
             a, span
               padding: $space/2 $space*.7
+
+//
+// Navigation Sidebar Widget
+// --------------------------------------
+ul.navigation li span
+  color: var(--fg-secondary)

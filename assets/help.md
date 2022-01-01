@@ -1,7 +1,6 @@
 ---
 title: Help
 permalink: help/
-sidebar: []
 order: 1000
 ---
 {%- assign repo = site.github.public_repositories | where: "full_name", site.github.repository_nwo | first -%}

@@ -1,5 +1,7 @@
-<div class='wrapper'>
-  <span><a href="{{ '/' | absolute_url }}">{{ site.title }}</a> <span class="fg-secondary">{% if page.url != '/' %}&rarr; {{ page.title }}{% else %}&larr; {{ site.description }}</h2>{% endif %}</span></span>
-  <span id='notification'></span>
-  {% include page/navigation.html %}
-</div>
+<nav>
+  <div class='wrapper'>
+    <span><a href="{{ '/' | absolute_url }}">{{ site.title }}</a> <span class="fg-secondary">{% if page.url != '/' %}&rarr; {{ page.title }}{% else %}&larr; {{ site.description }}</h2>{% endif %}</span></span>
+    <span id='notification'></span>
+    {% include page/navigation.html %}
+  </div>
+</nav>

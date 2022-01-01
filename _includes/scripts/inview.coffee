@@ -1,12 +1,12 @@
 config_default = {
   in:
-    element: 'h2'
-    attribute: 'id'
+    element: '{{ page.inview.in.element | default: "h2" }}'
+    attribute: '{{ page.inview.in.attribute | default: "id" }}'
   out:
-    element: '#markdown-toc a'
-    attribute: 'href'
+    element: '{{ page.inview.out.element | default: "#markdown-toc a" }}'
+    attribute: '{{ page.inview.out.attribute | default: "href" }}'
 }
-inview = (configuration = {}, options = {}) ->
+inview = ((configuration = {}, options = {}) ->
   config = $.extend {}, config_default, configuration
   if 'IntersectionObserver' of window
     callback = (entries) ->
@@ -21,7 +21,7 @@ inview = (configuration = {}, options = {}) ->
     # start observing
     $(config.in.element).each -> new IntersectionObserver(callback, options).observe @
 
-  return # end inview
+  return)() # end inview
 
 {%- capture api -%}
 ## In view
@@ -52,6 +52,17 @@ options = {
   root: document
   rootMargin: "0px"
   threshold: 0
+}
+```
+Configure in YAML with Jekyll
+```yml
+inview:
+  in:
+    element: 'h2'
+    attribute: 'id'
+  out:
+    element: '#markdown-toc a'
+    attribute: 'href'
 }
 ```
 {%- endcapture -%}

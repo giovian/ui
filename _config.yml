@@ -11,7 +11,8 @@ collections:
 # DEFAULTS
 defaults:
   - scope:
-      type: docs
+      path: ""
     values:
       layout: default
-      sidebar: [toc, navigation]
+      top: []
+      footer: false

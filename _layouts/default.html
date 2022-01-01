@@ -7,26 +7,29 @@
 {% include page/head.html %}
 </head>
 
+{%- assign top = page.top -%}
+{%- if page.top == nil -%}{%- assign top = 'header,nav' | split: ',' -%}{%- endif -%}
+{%- assign navigation = page.navigation -%}
+{%- if page.navigation == nil -%}{%- assign navigation = 'pages,collections,login' | split: ',' -%}{%- endif -%}
+{%- assign sidebar = page.sidebar -%}
+{%- if page.sidebar == nil -%}{%- assign sidebar = 'navigation,toc,meta_links' | split: ',' -%}{%- endif -%}
+{%- assign footer = page.footer -%}
+{%- if page.footer == nil -%}{%- assign footer = true -%}{%- endif -%}
+
 <body
   site-pages="{{ site.html_pages.size | plus: site.documents.size }}"
   page-title="{{ page.title | slugify }}"
-  page-collection="{{ page.collection }}">
+  page-collection="{{ page.collection }}"
+  page-top="{{ top | join: ',' }}"
+  page.navigation="{{ navigation | join: ',' }}">
 
-<nav>
-{% include page/nav.html %}
-</nav>
-
-<!-- <header>
-{% include page/header.html %}
-</header> -->
+{% for item in top %}{% include page/{{ item }}.html %}{% endfor %}
 
 <main>
 {% include page/main.html %}
 </main>
 
-<footer>
-{% include page/footer.html %}
-</footer>
+{%- if footer -%}{% include page/footer.html %}{%- endif -%}
 
 </body>
 </html>
