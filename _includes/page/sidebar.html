@@ -1,3 +1,29 @@
-<aside>
+<aside class="sidebar">
   {%- for widget in sidebar -%}{% include widgets/{{ widget }}.html %}{%- endfor -%}
 </aside>
+{%- capture api -%}
+## Sidebar
+
+The main page content use `flexbox` to show an optional sidebar.
+
+```html
+<main>
+  <div class="wrapper">
+    <aside><!-- Sidebar --></aside>
+    <section><!-- Page content --></section>
+  </div>
+</main>
+```
+
+The sidebar will be populated with widgets included from the folder `_includes/widgets/`.
+
+Select the widgets with a YAML array `sidebar: [...]`{:.language-yml}.
+
+To add custom content, create a `_includes/widgets/sidebar.html` file and include it in the array: `sidebar: [sidebar]`{:.language-yml}.
+
+To choose sidebar side add `$sidebar-side: left/right`{:.language-sass} in the {% include widgets/github_link.html path='_sass/variabiles.sass' %} file (default is `right`).
+
+The default sidebar width is `0.3` times the main content, customize with `$sidebar-width`{:.language-sass}.
+
+If the sidebar is empty (no widgets) it will collapse.
+{%- endcapture -%}

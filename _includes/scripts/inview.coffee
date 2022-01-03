@@ -63,6 +63,5 @@ inview:
   out:
     element: '#markdown-toc a'
     attribute: 'href'
-}
 ```
 {%- endcapture -%}

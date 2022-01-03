@@ -8,8 +8,12 @@ a, a .highlight, a > code
   outline-width: 0
 
   // Interactions
-  &:hover, &:active, &.active
+  &:hover, &.active
     color: var(--fg) !important
+
+  // Click
+  &:active
+    color: var(--fg-secondary) !important
 
   // Disabled
   &[disabled], &.disabled

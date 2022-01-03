@@ -1,14 +1,22 @@
 storage =
+  # Shorcuts
   key: '{{ site.github.repository_nwo }}'
-  get: (key) -> if key then key.split('.').reduce(((acc, part) => acc && acc[part]), storage.get_object()) else storage.get_object()
-  get_object: () -> JSON.parse Base64.decode localStorage.getItem(storage.key) || 'e30='
-  set_object: (obj) -> localStorage.setItem(storage.key, Base64.encode JSON.stringify obj)
+  get: (key) ->
+    return if key
+      key.split('.').reduce(
+        ((acc, part) => acc && acc[part]), storage.get_object()
+      )
+    else storage.get_object()
+  get_object: ->
+    try JSON.parse(Base64.decode(localStorage.getItem(storage.key))) catch e then {}
+  set_object: (obj) ->
+    localStorage.setItem(storage.key, Base64.encode JSON.stringify obj)
   push: (key, element) -> storage.set key, (storage.get(key) || []).concat [element]
   concat: (key, array) -> storage.set key, (storage.get(key) || []).concat array
   assign: (key, object) -> storage.set key, Object.assign(storage.get(key) || {}, object)
   set: (key, value) ->
     if key
-      if value and not jQuery.isEmptyObject value
+      if value and !jQuery.isEmptyObject value
         obj = storage.get_object()
         obj[key] = value
         storage.set_object obj
@@ -29,25 +37,15 @@ storage =
     console.groupEnd()
     return
 
-$(document).on "click", "a[log-storage]", (e) ->
-  e.preventDefault()
-  storage.console()
-  return
+# Link to log storage in the console
+$(document).on "click", "a[log-storage]", (e) -> storage.console()
 
 {%- capture api -%}
 ## Storage
 
 Hashed localStorage object with key `owner/repository`.
 
-If unlogged is empty or store the DETAILS state:
-```json
-{
-  details: {
-    "page-title-1|detail-summary-1": false,
-    "page-title-2|detail-summary-2": true
-  }
-}
-```
+If unlogged is empty `null`
 
 If logged:
 ```json
@@ -65,6 +63,7 @@ If logged:
   repository: {
     fork: true/false,
     parent: false/repository_object
+  }
 }
 ```
 
@@ -110,7 +109,7 @@ storage.clear("key")
 ```
 **CONSOLE**
 ```coffee
-# Show storage objects in web console
+# Show storage objects in console
 storage.console()
 ```
 {%- endcapture -%}

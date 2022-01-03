@@ -5,14 +5,19 @@
 
 ## Setup
 
-`_config.yml`
-
 ```yml
-baseurl: /eu
-permalink: pretty
-remote_theme: giovian/ui@main
+#_config.yml
 
-# optional
-timezone: Europe/Rome
+# language
+language: 'en-US'
+
+# InView
+inview:
+  in:
+    element: 'h2'
+    attribute: 'id'
+  out:
+    element: '#markdown-toc a'
+    attribute: 'href'
 ```
 {:.minimal}

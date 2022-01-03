@@ -23,25 +23,3 @@
 [class*='color-']
   background: var(--bg)
   color: var(--fg)
-
-// prefers-color-scheme
-// --------------------------------------
-@media not all and (prefers-color-scheme)
-  .prefers-color-scheme::after
-    content: "not-supported"
-
-@media (prefers-color-scheme)
-  .prefers-color-scheme::after
-    content: "supported"
-
-@media (prefers-color-scheme: light)
-  .prefers-color-scheme::after
-    content: "light"
-
-@media (prefers-color-scheme: dark)
-  .prefers-color-scheme::after
-    content: "dark"
-
-@media (prefers-color-scheme: no-preference)
-  .prefers-color-scheme::after
-    content: "no-preference"

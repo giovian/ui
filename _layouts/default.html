@@ -1,27 +1,19 @@
-<!DOCTYPE html>
-<html
-  id="page-top"
-  class="{{ page.classes | join: " " }}">
+{%- include page/init.html -%}<!DOCTYPE html>
+<html id="page-top" lang='{{ site.language | default: "en_US" }}'>
 
 <head>
 {% include page/head.html %}
 </head>
 
-{%- assign top = page.top -%}
-{%- if page.top == nil -%}{%- assign top = 'header,nav' | split: ',' -%}{%- endif -%}
-{%- assign navigation = page.navigation -%}
-{%- if page.navigation == nil -%}{%- assign navigation = 'pages,collections,login' | split: ',' -%}{%- endif -%}
-{%- assign sidebar = page.sidebar -%}
-{%- if page.sidebar == nil -%}{%- assign sidebar = 'navigation,toc,meta_links' | split: ',' -%}{%- endif -%}
-{%- assign footer = page.footer -%}
-{%- if page.footer == nil -%}{%- assign footer = true -%}{%- endif -%}
-
 <body
+  class="{{ page.class | join: " " }}"
   site-pages="{{ site.html_pages.size | plus: site.documents.size }}"
   page-title="{{ page.title | slugify }}"
   page-collection="{{ page.collection }}"
   page-top="{{ top | join: ',' }}"
-  page.navigation="{{ navigation | join: ',' }}">
+  page-navigation="{{ navigation | join: ',' }}"
+  page-sidebar="{{ sidebar | join: ',' }}"
+  page-footer="{{ footer | inspect }}">
 
 {% for item in top %}{% include page/{{ item }}.html %}{% endfor %}
 

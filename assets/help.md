@@ -7,7 +7,7 @@ order: 1000
 # Help
 <div class="grid">
   <div markdown="1">
-**Repository by Jekyll GitHub Metadata**
+**Repository**
 - <https://github.com/{{ site.github.repository_nwo }}>
 - Owner type `{{ repo.owner.type }}`
 - Page type `{% if site.github.is_user_page %}User{% endif %}{% if site.github.is_project_page %}Project{% endif %}`
@@ -29,7 +29,7 @@ order: 1000
   {% include widgets/login.html %}
 </ul>
 **Local storage**
-- [Log](#){:log-storage=''} in console
+- [Log](#){:log-storage='' .prevent-default} in console
 </div>
   <div>
 <div apply-if-parent='hidden|html:not(.role-admin)' markdown="1">

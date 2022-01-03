@@ -101,6 +101,7 @@ $('form.document').each ->
       form.find('[data-type="button"]').before adder
       return # End schema request
     get_schema.always -> form.removeAttr 'disabled'
+    get_schema.fail -> form.find('.color-red.hidden').show()
     return # End load_schema function
 
   # Populate form

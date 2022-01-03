@@ -16,3 +16,4 @@ defaults:
       layout: default
       top: []
       footer: false
+      sidebar: [toc,navigation,meta_links]

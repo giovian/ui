@@ -8,18 +8,7 @@ order: 10
 * toc
 {:toc}
 
-## Favicon
-
-The favicon files are expected to be `/favicon.ico` and `/favicon.png`.
-
-Specify different paths in `_config.yml`
-```yml
-favicon:
-  ico: "ico-file-path"
-  png: "png-file-path"
-```
-
-Changing favicon files require updating the browser cache opening the file directly: [ico file]({{ 'favicon.ico' | absolute_url }}), [png file]({{ 'favicon.png' | absolute_url }}).
+{% include widgets/api.html include='page/favicon' %}
 
 ## Theme
 
@@ -77,68 +66,10 @@ css:
 
 Possible themes are in {% include widgets/github_link.html path='_sass/syntax' %}. 
 
-## Sidebar
-
-The main page content use `flexbox` to show an optional sidebar.
-
-```html
-<main>
-  <div class="wrapper">
-    <aside><!-- Sidebar --></aside>
-    <section><!-- Page content --></section>
-  </div>
-</main>
-```
-
-The sidebar will be populated with widgets included from the folder `_includes/widgets/`.
-
-Select the widgets with a YAML array `sidebar: [...]`{:.language-yml}:
-
-<div class="grid">
-<div markdown="1">
-For every page
-
-```yml
-# _config.yml
-defaults:
-  - scope:
-      path: ""
-    values:
-      sidebar: [...]
-```
-</div>
-<div markdown="1">
-For pages in collections
-
-```yml
-# _config.yml
-defaults:
-  - scope:
-      type: my-collection
-    values:
-      sidebar: [...]
-```
-</div>
-</div>
-
-For singular pages, in the _front-matter_
-
-```yml
----
-sidebar: [...]
----
-```
-
-To add custom content, create a `_includes/widgets/sidebar.html` file and include it in the array: `sidebar: [sidebar]`{:.language-yml}
-
-To choose sidebar side add `$sidebar-side: left/right`{:.language-sass} in the {% include widgets/github_link.html path='_sass/variabiles.sass' %} file (default is `right`).
-
-The default sidebar width is `0.3` times the main content, customize with `$sidebar-width`{:.language-sass}.
-
-If the sidebar is empty (no widgets) it will collapse.
-
+{% include widgets/api.html include='page/sidebar' %}
 {% include widgets/api.html include='page/navigation' %}
 {% include widgets/api.html include='page/footer' %}
+{% include widgets/api.html include='page/init' %}
 
 ## Collections
 
@@ -148,6 +79,7 @@ Minimum configuration on `_config.yml` for pages in the folder `_myCollection`
 collections:
   myCollection:
     output: true
+    # title: Title
 
 defaults:
   - scope:

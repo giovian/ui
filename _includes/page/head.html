@@ -4,12 +4,8 @@
 <!-- MANIFEST -->
 <link rel='manifest' href='{{ "/assets/manifest.json" | absolute_url }}' />
 
-<!-- FAVICON.ico -->
-{%- assign static_files_paths = site.static_files | map: 'path' -%}{% if static_files_paths contains '/favicon.ico' %}<link rel='icon' href='{{ "favicon.ico" | absolute_url }}'>{% elsif site.favicon.ico %}<link rel='icon' href='{{ site.favicon.ico | absolute_url }}'>{% endif %}
-<!-- FAVICON.png -->
-{% if static_files_paths contains '/favicon.png' %}<link rel='apple-touch-icon' href='{{ "favicon.png" | absolute_url }}'>
-<link rel='icon' type='image/png' href='{{ "favicon.png" | absolute_url }}'>{% elsif site.favicon.png %}<link rel='apple-touch-icon' href='{{ site.favicon.png | absolute_url }}'>
-<link rel='icon' type='image/png' href='{{ site.favicon.png | absolute_url }}'>{% endif %}
+<!-- FAVICON -->
+{% include page/favicon.html %}
 
 <!-- REPOSITORY -->
 <meta name='site_build' content='{{ site.time }}'>
