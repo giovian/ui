@@ -129,7 +129,6 @@ $('form.schema').each ->
       input.attr 'data-value-type', (i, v) -> if type is 'integer' then 'number' else type
       input.val enum_value
       enum_div.find('label').text enum_value
-      enum_inject.prepend enum_div
       # Append enum DIV
       $(@).parents('details').find('[enum-inject]').prepend enum_div
     return # End add-property
