@@ -2,16 +2,23 @@ notification = (code, cls, persist = false) ->
   # Create notification SPAN
   span = $('<span/>').append code
   color_class = "#{if cls then "color-#{cls}" else 'bg-secondary'}"
-  $('#notification').empty().attr('class','').addClass(color_class).append span
-  # Timer to fade and expire
-  if persist then return
-  span.delay(3000).fadeOut 'slow', ->
-    span.remove()
-    $('#notification').removeClass color_class
-    return # End fadeout delay
-  # Log notification in console as well
-  console.log $("<b>#{code}</b>").text(), new Date().toLocaleTimeString('it-IT')
+  $('.notification').each ->
+    container = $(@)
+    container.empty().attr('class','notification').addClass(color_class).append span
+    # Log notification in console as well
+    console.log $("<b>#{code}</b>").text(), new Date().toLocaleTimeString('it-IT')
+    # Timer to fade and expire
+    if persist then return
+
+    span.delay(3000).fadeOut 'slow', ->
+      span.remove()
+      container.removeClass color_class
+      return # End fadeout delay
+
+    return # Notification elements loop
+
   return # end notification
+
 {%- capture api -%}
 ## Notification
 

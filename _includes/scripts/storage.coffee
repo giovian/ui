@@ -38,7 +38,9 @@ storage =
     return
 
 # Link to log storage in the console
-$(document).on "click", "a[log-storage]", (e) -> storage.console()
+$(document).on "click", "a[log-storage]", (e) ->
+  e.preventDefault()
+  storage.console()
 
 {%- capture api -%}
 ## Storage

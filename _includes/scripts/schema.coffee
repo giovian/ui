@@ -5,12 +5,21 @@ get_template = (id, prepend) ->
   template = $ $(id).clone().prop('content')
   if prepend
     # Update labels [for]
-    template.find('label[for]').each -> $(@).attr 'for', (i, val) -> "#{prepend}[#{val}]"
+    template.find('label[for]').each ->
+      $(@).attr 'for', (i, val) -> "#{prepend}[#{val}]"
     # Update inputs [name]
     template.find(':input[name]').attr 'name', (i, val) -> "#{prepend}[#{val}]"
     # Update switches
     template.find('a[data-add="enum"]').attr 'data-prepend', prepend
   return template
+
+# Reset FORMs TABs
+reset_form_tabs = (tab) ->
+  reset_tabs tab
+  $(tab).find('div[data-tab="enum"] div[enum-inject]:not(:empty)').each ->
+    console.log @
+    # if !$(@).is(':empty') then enum_link.trigger 'click'
+  return
 
 #
 # PROPERTY inject helper function
@@ -37,11 +46,13 @@ get_property = (key, value) ->
         # Reduce the prepend virulence
         input.attr 'name', (i, v) -> v.replace('[[enum][]]', '[enum][]')
         # Set attributes and values
-        input.attr 'data-value-type', (i, v) -> if property_type is 'integer' then 'number' else property_type
+        input.attr 'data-value-type', (i, v) ->
+          if property_type is 'integer' then 'number' else property_type
         input.val enum_value
         enum_div.find('label').text enum_value
         enum_inject.append enum_div
   # Append property
+  selected_template.find('[tab-container]').each -> reset_form_tabs @
   template_property.find('[type-inject]').append selected_template
   return template_property # End property inject
 
@@ -53,6 +64,7 @@ $('form.schema').each ->
 
   load_schema = ->
     path = form.attr 'data-schema'
+    form.find('[name="$id"]').val path
     # Prepend user folder if repository is forked
     if storage.get("repository.fork")
       path = "user/#{storage.get 'login.user'}/#{path}"
@@ -70,18 +82,17 @@ $('form.schema').each ->
       for own key, value of schema.items.properties
         form.find('[properties-inject]').append get_property(key, value)
       # Loop tab DIVs
-      form.find('div[tab-container]').each ->
-        # Reveal first TAB
-        $(@).find('a[data-tab]:first').trigger 'click'
-        # Check for enum fields
-        enum_link = $(@).find 'a[data-tab="enum"]'
-        $(@).find('div[data-tab="enum"] div[enum-inject]').each ->
-          # If enum values are present, reveal enum tab
-          if !$(@).is(':empty') then enum_link.trigger 'click'
-          return
-        return
+      # form.find('div[tab-container]').each ->
+      #   # Reveal first TAB
+      #   $(@).find('a[data-tab]:first').trigger 'click'
+      #   # Check for enum fields
+      #   enum_link = $(@).find 'a[data-tab="enum"]'
+      #   $(@).find('div[data-tab="enum"] div[enum-inject]').each ->
+      #     # If enum values are present, reveal enum tab
+      #     if !$(@).is(':empty') then enum_link.trigger 'click'
+      #     return
+      #   return
       return # Form is populated
-    get_schema.fail -> form.find('[name="$id"]').val form.attr('data-schema')
     get_schema.always -> form.removeAttr 'disabled'
     return # End load_schema function
 

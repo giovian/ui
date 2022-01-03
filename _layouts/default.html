@@ -9,12 +9,14 @@
   class="{{ page.class | join: " " }}"
   site-pages="{{ site.html_pages.size | plus: site.documents.size }}"
   page-title="{{ page.title | slugify }}"
+  page-order="{{ page.order }}"
   page-collection="{{ page.collection }}"
   page-top="{{ top | join: ',' }}"
   page-navigation="{{ navigation | join: ',' }}"
   page-sidebar="{{ sidebar | join: ',' }}"
   page-footer="{{ footer | inspect }}">
 
+<div class="notification" apply-if-parent='hidden|body[page-top*=nav]'></div>
 {% for item in top %}{% include page/{{ item }}.html %}{% endfor %}
 
 <main>

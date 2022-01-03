@@ -1,6 +1,6 @@
 details
 
-  margin-bottom: $space/2
+  @extend .mvh
 
   // Clear both
   &::after
@@ -9,17 +9,15 @@ details
     content: ""
   
   summary
-    display: inline list-item
-
-    // Cursor and outline
     cursor: pointer
     outline: none
-    // Colors
+
+    & > *
+      display: inline
 
     &:hover
       color: var(--fg-secondary)
 
     // Headers on summray
     h1, h2, h3, h4, h5, h6
-      display: inline
       padding: 0

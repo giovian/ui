@@ -1,4 +1,4 @@
-<form class='prevent-default schema'{% if include.schema %} data-schema='{{ include.schema }}'{% endif %}>
+<form class='schema'{% if include.schema %} data-schema='{{ include.schema }}'{% endif %}>
   <h3>Schema{% if include.schema %} <code>{{ include.schema }}</code>{% endif %}</h3>
 
   <input type='hidden' name='$schema' value='https://json-schema.org/draft/2020-12/schema'>
@@ -99,8 +99,8 @@
   </div>
   <div tab-container>
     <div data-type='tab' tab-links>
-      <a href="#" class='prevent-default' data-tab='attributes'>Attributes</a>
-      <a href="#" class='prevent-default' data-tab='enum'>Enum</a>
+      <a href="#" data-tab='attributes'>Attributes</a>
+      <a href="#" data-tab='enum'>Enum</a>
     </div>
     <div data-tab='attributes'>
       <div data-type='string'>
@@ -145,8 +145,8 @@
   </div>
   <div tab-container>
     <div data-type='tab' tab-links>
-      <a href="#" class='prevent-default' data-tab='attributes'>Attributes</a>
-      <a href="#" class='prevent-default' data-tab='enum'>Enum</a>
+      <a href="#" data-tab='attributes'>Attributes</a>
+      <a href="#" data-tab='enum'>Enum</a>
     </div>
     <div data-tab='attributes'>
       <div data-type='number'>
@@ -195,8 +195,8 @@
   </div>
   <div tab-container>
     <div data-type='tab' tab-links>
-      <a href="#" class='prevent-default' data-tab='attributes'>Attributes</a>
-      <a href="#" class='prevent-default' data-tab='enum'>Enum</a>
+      <a href="#" data-tab='attributes'>Attributes</a>
+      <a href="#" data-tab='enum'>Enum</a>
     </div>
     <div data-tab='attributes'>
       <div data-type='number'>

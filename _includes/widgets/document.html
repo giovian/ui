@@ -1,5 +1,5 @@
 {% if include.schema %}
-<form class='prevent-default document'{% if include.schema %} data-schema='{{ include.schema }}'{% endif %}{% if include.document %} data-document='{{ include.document }}'{% endif %}>
+<form class='document'{% if include.schema %} data-schema='{{ include.schema }}'{% endif %}{% if include.document %} data-document='{{ include.document }}'{% endif %}>
   <h3>Document{% if include.schema %} <code>{{ include.schema }}</code>{% endif %}</h3>
 
   <div inject></div>

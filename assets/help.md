@@ -29,7 +29,7 @@ order: 1000
   {% include widgets/login.html %}
 </ul>
 **Local storage**
-- [Log](#){:log-storage='' .prevent-default} in console
+- [Log](#){:log-storage=''} in console
 </div>
   <div>
 <div apply-if-parent='hidden|html:not(.role-admin)' markdown="1">
@@ -37,6 +37,14 @@ order: 1000
 <ul github-api-url='repos/pages/builds/latest' github-api-text='Latest' github-api-out='status, created_at'></ul>
 **Request a build**
 <ul github-api-url='repos/pages/builds' github-api-method='POST' github-api-out='status'></ul>
+**Page order**
+{% assign html_pages = site.html_pages | sort: "order" %}
+{% for item in html_pages %}- `{{ item.order | inspect }}` {{ item.title }}
+{% endfor %}
+**Collection order**
+{% assign sorted_collections = site.collections | sort: "order" %}
+{% for item in sorted_collections %}- `{{ item.order | inspect }}` {{ item.title | default: item.label }} ({{ item.docs.size }})
+{% endfor %}
 </div>
   </div>
 </div>

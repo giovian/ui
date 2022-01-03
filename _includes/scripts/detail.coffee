@@ -36,4 +36,8 @@ details: {
   "forms|Table of contents": false
 }
 ```
+<details>
+<summary>Example</summary>
+Content
+</details>
 {%- endcapture -%}
