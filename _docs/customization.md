@@ -87,3 +87,4 @@ defaults:
     values:
       layout: default
 ```
+{:.minimal}

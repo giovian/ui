@@ -43,28 +43,36 @@ Manage Show/Hide TABs with links
 ```html
 <div tab-container>
   <div tab-links>
-    <a href="#" data-tab>1</a>
-    <a href="#" data-tab>2</a>
+    <a href="#" data-tab>First tab</a>
+    <a href="#" data-tab>Second tab</a>
+    <a href="#" data-tab>Third tab</a>
   </div>
   <div data-tab>
-    <h1>Uno</h1>
+    <p>First content</p>
   </div>
   <div data-tab>
-    <h1>Due</h1>
+    <p>Second content</p>
+  </div>
+  <div data-tab>
+    <p>Third content</p>
   </div>
 </div>
 ```
-Visible TBs are stored in `storage`.
+Render:
 <div tab-container>
   <div tab-links>
-    <a href="#" data-tab>1</a>
-    <a href="#" data-tab>2</a>
+    <a href="#" data-tab>First tab</a>
+    <a href="#" data-tab>Second tab</a>
+    <a href="#" data-tab>Third tab</a>
   </div>
   <div data-tab>
-    <h1>Uno</h1>
+    <p>First content</p>
   </div>
   <div data-tab>
-    <h1>Due</h1>
+    <p>Second content</p>
+  </div>
+  <div data-tab>
+    <p>Third content</p>
   </div>
 </div>
 {%- endcapture -%}

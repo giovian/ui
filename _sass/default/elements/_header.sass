@@ -1,4 +1,8 @@
-header
+body[page-top*='header'] header
   @extend .border-bottom
   h1
     @extend .mz
+
+// Top border
+body:not([page-top*='header'])
+  border-bottom: $border-medium solid var(--link)

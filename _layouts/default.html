@@ -18,12 +18,13 @@
 
 <div class='notification'></div>
 {% for item in top %}{% include page/{{ item }}.html %}{% endfor %}
+{% unless top contains 'header' %}<header></header>{% endunless %}
 
 <main>
 {% include page/main.html %}
 </main>
 
-{%- if footer -%}{% include page/footer.html %}{%- endif -%}
+{% if footer %}{% include page/footer.html %}{% else %}<footer></footer>{% endif %}
 
 </body>
 </html>

@@ -7,8 +7,11 @@ code, kbd, pre, samp
   // Spacing
   margin: 0
 
-.api .highlighter-rouge
-  @extend .minimal
+// Minimal
+div.minimal.highlighter-rouge div.highlight
+  @extend .inline-flex
+.api > div.highlighter-rouge div.highlight
+  @extend .inline-flex
 
 // Code blocks inside lists
 li > .highlighter-rouge 
@@ -23,11 +26,7 @@ pre.highlight, .highlight pre
   // Fix for mobile
   white-space: pre-wrap
   word-wrap: break-word
-  overflow: auto
-
-// Minimal
-div.minimal.highlighter-rouge div.highlight
-  display: inline-flex
+  overflow: autox
 
 //
 // INLINE
