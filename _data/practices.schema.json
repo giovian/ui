@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "practices",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "date": {
+        "type": "string",
+        "format": "date",
+        "default": "today"
+      },
+      "serie": {
+        "type": "integer",
+        "enum": [
+          4,
+          3,
+          2,
+          1
+        ]
+      }
+    }
+  }
+}
