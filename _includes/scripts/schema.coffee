@@ -130,7 +130,7 @@ $('form.schema').each ->
       input.val enum_value
       enum_div.find('label').text enum_value
       # Append enum DIV
-      $(@).parents('details').find('[enum-inject]').prepend enum_div
+      $(@).parents('details').find('[enum-inject]').append enum_div
     return # End add-property
 
   # REMOVE PROPERTY

@@ -4,6 +4,7 @@ notification = (code, cls, persist = false) ->
   div = $ "<div class='#{color_class}'><span>#{code}</span></div>"
   $('.notification').each ->
     container = $(@)
+    if persist then container.empty()
     container.append div
     # Log notification in console as well
     console.log $("<b>#{code}</b>").text(), new Date().toLocaleTimeString('it-IT')
