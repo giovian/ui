@@ -125,7 +125,7 @@ $('form.document').each ->
   form.on 'submit', ->
 
     # Check user is logged
-    if !$('html').hasClass 'logged' or !$('html').hasClass('role-admin')
+    if !login.logged_admin()
       notification 'You need to login as `admin`', 'red'
       return
 

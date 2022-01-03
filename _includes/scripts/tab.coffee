@@ -1,12 +1,13 @@
 #
 # Reset functions
 # --------------------------------------
-reset_tabs = (tab) ->
+reset_tabs = (tab, index=0) ->
   container = $(tab)
-  # Activate first link
-  container.find('a[data-tab]:first-of-type').addClass 'active'
-  # Show first tab
-  container.find('div[data-tab]:not(:first)').addClass 'hidden'
+  # Activate index link
+  container.find('a[data-tab]').eq(index).addClass 'active'
+  # Hide non-index tabs
+  container.find('div[data-tab]').each (i,e) ->
+    if i isnt index then $(@).addClass 'hidden'
   return
 
 #
@@ -29,11 +30,8 @@ $(document).on "click", "a[data-tab]", (event) ->
   link.addClass 'active'
 
   # Show/hide TABs
-  container.find('div[data-tab]').addClass 'hidden'
-  container.find('div[data-tab]').eq(link.index()).removeClass 'hidden'
-
-  # Store configuration
-  console.log $('[tab-container]').index('[tab-container]'), link.parents('[tab-container]').index(), link.text()
+  container.find('div[data-tab]').each (i,e) ->
+    if i isnt link.index() then $(@).addClass 'hidden' else $(@).removeClass 'hidden'
 
   return # End link click event
 

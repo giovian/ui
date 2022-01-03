@@ -15,10 +15,8 @@ get_template = (id, prepend) ->
 
 # Reset FORMs TABs
 reset_form_tabs = (tab) ->
-  reset_tabs tab
-  $(tab).find('div[data-tab="enum"] div[enum-inject]:not(:empty)').each ->
-    console.log @
-    # if !$(@).is(':empty') then enum_link.trigger 'click'
+  if $(tab).find('div[data-tab="enum"] div[enum-inject]:not(:empty)').length then index=1 else index=0
+  reset_tabs tab, index
   return
 
 #
@@ -81,17 +79,6 @@ $('form.schema').each ->
       # Loop items.properties
       for own key, value of schema.items.properties
         form.find('[properties-inject]').append get_property(key, value)
-      # Loop tab DIVs
-      # form.find('div[tab-container]').each ->
-      #   # Reveal first TAB
-      #   $(@).find('a[data-tab]:first').trigger 'click'
-      #   # Check for enum fields
-      #   enum_link = $(@).find 'a[data-tab="enum"]'
-      #   $(@).find('div[data-tab="enum"] div[enum-inject]').each ->
-      #     # If enum values are present, reveal enum tab
-      #     if !$(@).is(':empty') then enum_link.trigger 'click'
-      #     return
-      #   return
       return # Form is populated
     get_schema.always -> form.removeAttr 'disabled'
     return # End load_schema function
@@ -169,7 +156,7 @@ $('form.schema').each ->
   form.on 'submit', ->
 
     # Check user is logged
-    if !$('html').hasClass('logged') or !$('html').hasClass('role-admin')
+    if !login.logged_admin()
       notification 'You need to login as `admin`', 'red'
       return
 
@@ -198,7 +185,10 @@ $('form.schema').each ->
           data: JSON.stringify load
         put.done -> notification 'Schema created', 'green'
         put.always -> form.removeAttr 'disabled'
-      else form.removeAttr 'disabled'
+      else
+        form.removeAttr 'disabled'
+        # Reset eventual Document
+        $('body').find("form.document[data-schema=#{form.find('[name="$id"]').val()}]").trigger 'reset'
       return # End new file
 
     # File present, overwrite with sha reference
@@ -216,8 +206,7 @@ $('form.schema').each ->
       put.always ->
         form.removeAttr 'disabled'
         # Reset eventual Document
-        $('body').find("form.document[data-schema=#{form.find('[name="$id"]').val()}]")
-          .trigger 'reset'
+        $('body').find("form.document[data-schema=#{form.find('[name="$id"]').val()}]").trigger 'reset'
       return # End overwrite
 
     return # End submit handler
