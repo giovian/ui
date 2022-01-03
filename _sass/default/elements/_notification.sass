@@ -2,9 +2,8 @@ body > .notification
   position: fixed
   top: 0
   width: 100%
-  z-index: 1000
-  @extend .pvh, .ph, .border-bottom
-  &:empty
-    @extend .hidden
-  & > span
-    @extend .wrapper, .block
+  z-index: $z-index-notification
+  & > div
+    @extend .border-bottom
+    & > span
+      @extend .wrapper, .block, .p-around

@@ -1,22 +1,22 @@
 {%- include page/init.html -%}<!DOCTYPE html>
-<html id="page-top" lang='{{ site.language | default: "en_US" }}'>
+<html id='page-top' lang='{{ site.language | default: 'en_US' }}'>
 
 <head>
 {% include page/head.html %}
 </head>
 
 <body
-  class="{{ page.class | join: " " }}"
-  site-pages="{{ site.html_pages.size | plus: site.documents.size }}"
-  page-title="{{ page.title | slugify }}"
-  page-order="{{ page.order }}"
-  page-collection="{{ page.collection }}"
-  page-top="{{ top | join: ',' }}"
-  page-navigation="{{ navigation | join: ',' }}"
-  page-sidebar="{{ sidebar | join: ',' }}"
-  page-footer="{{ footer | inspect }}">
+  class='{{ page.class | join: ' ' }}'
+  site-pages='{{ site.html_pages.size | plus: site.documents.size }}'
+  page-title='{{ page.title | slugify }}'
+  page-order='{{ page.order }}'
+  page-collection='{{ page.collection }}'
+  page-top='{{ top | join: ',' }}'
+  page-navigation='{{ navigation | join: ',' }}'
+  page-sidebar='{{ sidebar | join: ',' }}'
+  page-footer='{{ footer | inspect }}'>
 
-<div class="notification" apply-if-parent='hidden|body[page-top*=nav]'></div>
+<div class='notification'></div>
 {% for item in top %}{% include page/{{ item }}.html %}{% endfor %}
 
 <main>

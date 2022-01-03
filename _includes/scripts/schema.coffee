@@ -109,7 +109,7 @@ $('form.schema').each ->
     property_name = prompt 'Property name'
     # Inject property
     if property_name
-      form.find('[properties-inject]').prepend get_property(property_name)
+      form.find('[properties-inject]').append get_property(property_name)
     return # End add-property
 
   # ADD ENUM VALUE

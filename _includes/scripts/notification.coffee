@@ -1,21 +1,16 @@
 notification = (code, cls, persist = false) ->
   # Create notification SPAN
-  span = $('<span/>').append code
   color_class = "#{if cls then "color-#{cls}" else 'bg-secondary'}"
+  div = $ "<div class='#{color_class}'><span>#{code}</span></div>"
   $('.notification').each ->
     container = $(@)
-    container.empty().attr('class','notification').addClass(color_class).append span
+    container.append div
     # Log notification in console as well
     console.log $("<b>#{code}</b>").text(), new Date().toLocaleTimeString('it-IT')
     # Timer to fade and expire
-    if persist then return
+    if !persist then div.delay(3000).slideUp 'slow', -> div.remove()
 
-    span.delay(3000).fadeOut 'slow', ->
-      span.remove()
-      container.removeClass color_class
-      return # End fadeout delay
-
-    return # Notification elements loop
+    return # Containers loop
 
   return # end notification
 
