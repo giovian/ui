@@ -121,7 +121,7 @@ $('form.schema').each ->
       # Get value type
       type = $(@).parents('[data-type]').attr 'data-type'
       # Prepare enum DIV
-      enum_div = get_template '#template-enum', (@).attr('data-prepend')
+      enum_div = get_template '#template-enum', $(@).attr('data-prepend')
       input = enum_div.find('input')
       # Reduce the prepend virulence
       input.attr 'name', (i, v) -> v.replace('[[enum][]]', '[enum][]')
