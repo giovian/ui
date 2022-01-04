@@ -1,4 +1,4 @@
-<form class='schema'{% if include.schema %} data-schema='{{ include.schema }}'{% endif %}>
+<form class='prevent-default schema'{% if include.schema %} data-schema='{{ include.schema }}'{% endif %}>
   <h3>Schema{% if include.schema %} <code>{{ include.schema }}</code>{% endif %}</h3>
 
   <input type='hidden' name='$schema' value='https://json-schema.org/draft/2020-12/schema'>
@@ -38,7 +38,7 @@
   <input type='hidden' name='items[type]' value='object'>
 
   <div data-type='array'>
-    <label class='fg-secondary'>Item properties <a href='#add' data-add='property' class='prevent-default'>add</a></label>
+    <label class='fg-secondary'>Item properties <a href='#add-property' data-add='property' class='prevent-default'>add</a></label>
   </div>
 
   <div properties-inject></div>
@@ -55,7 +55,7 @@
 -->
 <template id='template-property'>
   <details class='border-top'>
-    <summary><a href='#remove' data-remove='property' class='prevent-default'>remove</a></summary>
+    <summary><a href='#remove-property' data-remove='property' class='prevent-default'>remove</a></summary>
     <div data-type='string'>
       <label for='title'>Title</label>
       <input type='text' autocomplete='off' name='title'>
@@ -125,7 +125,7 @@
     </div>
     <div data-tab="enum">
       <div data-type='number'>
-        <label class='fg-secondary'>Enum values <a href='#add' data-add='enum' class='prevent-default'>add</a></label>
+        <label class='fg-secondary'>Enum values <a href='#add-emun' data-add='enum' class='prevent-default'>add</a></label>
       </div>
       <div enum-inject></div>
     </div>
@@ -175,7 +175,7 @@
     </div>
     <div data-tab="enum">
       <div data-type='number'>
-        <label class='fg-secondary'>Enum values <a href='#add' data-add='enum' class='prevent-default'>add</a></label>
+        <label class='fg-secondary'>Enum values <a href='#add-emun' data-add='enum' class='prevent-default'>add</a></label>
       </div>
       <div enum-inject></div>
     </div>
@@ -225,7 +225,7 @@
     </div>
     <div data-tab="enum">
       <div data-type='number'>
-        <label class='fg-secondary'>Enum values <a href='#add' data-add='enum' class='prevent-default'>add</a></label>
+        <label class='fg-secondary'>Enum values <a href='#add-enum' data-add='enum' class='prevent-default'>add</a></label>
       </div>
       <div enum-inject></div>
     </div>
@@ -257,7 +257,7 @@
 <template id="template-enum">
   <div data-type='string'>
     <label></label>
-    <a href='#remove' data-remove='enum' class='prevent-default'>remove</a>
+    <a href='#remove-enum' data-remove='enum' class='prevent-default'>remove</a>
     <input name='[enum][]' value='' type='hidden' data-value-type=''>
   </div>
 </template>

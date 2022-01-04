@@ -22,9 +22,7 @@ $('form').each ->
   form.find("input[type=range]").each -> range_enable $(@)
 
   # Required asterix
-  form.find('input[required]').each ->
-    $(@).prev('label').append '*'
-    return # end Required loop
+  form.find('input[required]').each -> $(@).prev('label').append '*'
 
   #
   # FORM EVENTS
@@ -44,9 +42,7 @@ $('form').each ->
     return # end Reset handler
 
   # Submit
-  form.on "submit", (e) ->
-    e.preventDefault()
-    console.log form.serializeJSON() # jsyaml.dump
+  form.on "submit", -> console.log form.serializeJSON() # jsyaml.dump
 
   return # end FORM loop
 {%- capture api -%}

@@ -22,7 +22,7 @@ login.login_link.on 'click', (e) ->
 
 login.permissions = ->
   notification 'Checking permissions'
-  repo = $.get '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}'
+  repo = $.get github_api_url
   repo.done (data) ->
     storage.assign('login',
       role: (if data.permissions.admin then 'admin' else 'guest')
@@ -44,7 +44,7 @@ login.logout_link.on 'click', ->
 login.setLogin = ->
   $('html').removeClass 'role-admin role-guest logged'
   $('html').removeAttr 'user'
-  storage.clear()
+  storage.clear 'login'
   apply_family()
   true
 

@@ -36,13 +36,11 @@ $('form.document').each ->
             field.attr 'type', 'range'
         when 'boolean'
           data_type = 'select'
-          field = $('<select/>',
-            class: 'inline'
-            'data-value-type': 'boolean'
-          ).append [
-            $ '<option/>', {value: true, text: 'True'}
-            $ '<option/>', {value: false, text: 'False'}
-          ]
+          field = $('<select class="inline" data-value-type="boolean"></select>')
+            .append [
+              $ '<option value="true">True</option>'
+              $ '<option value="false">False</option>'
+            ]
         else notification "Property type `#{value.type}` to do", 'red', true
 
       # Complete field attributes
@@ -85,7 +83,7 @@ $('form.document').each ->
     # Prepend user folder if repository is forked
     if storage.get("repository.fork")
       path = "user/#{storage.get 'login.user'}/#{path}"
-    schema_url = "{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}/contents/_data/#{path}.schema.json"
+    schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
     form.attr 'disabled', ''
     get_schema = $.get schema_url
     get_schema.done (data, status) ->
@@ -93,12 +91,9 @@ $('form.document').each ->
       schema = JSON.parse Base64.decode(data.content) # jsyaml.load
       if schema.type isnt 'array'
         notification "schema type `#{schema.type}` to do", 'red', true
-      form.find('[inject]').append create_item(schema)
+      form.find('[inject]').append create_item schema
       # Append item adder
-      adder = $('<div data-type="item"></div>')
-        .append($('<label class="fg-secondary">Add item</label>'))
-        .append($('<a href="#add" class="prevent-default" data-add="item">add</a>'))
-      form.find('[data-type="button"]').before adder
+      form.find('[data-type="button"]').before get_template '#template-add-item'
       return # End schema request
     get_schema.always -> form.removeAttr 'disabled'
     get_schema.fail -> form.find('.color-red.hidden').show()
@@ -152,7 +147,7 @@ $('form.document').each ->
     # Prepend user folder if repository is forked
     if storage.get("repository.fork")
       path = "user/#{storage.get 'login.user'}/#{path}"
-    document_url = "{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}/contents/_data/#{path}.csv"
+    document_url = "#{github_api_url}/contents/_data/#{path}.csv"
     form.attr 'disabled', ''
 
     # Check if document exist

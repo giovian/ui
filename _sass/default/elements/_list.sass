@@ -1,6 +1,11 @@
 ul
   // Reset markers
   list-style-type: initial
+  ul
+    padding-left: $space*2
+
+ul[github-api-url] li:not(:first-of-type)
+  color: var(--fg-secondary)
 
 dl
   dt

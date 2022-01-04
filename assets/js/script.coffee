@@ -14,9 +14,9 @@
 # WIDGETS
 
 {% include scripts/notification.coffee %}   # Use datetime
+{% include scripts/github_api.coffee %}     # Perform GitHub API REST requests
 {% include scripts/login.coffee %}          # Use notification, apply_family, storage
 {% include scripts/detail.coffee %}         # Use storage
-{% include scripts/github_api.coffee %}     # Perform GitHub API REST requests
 
 # FUNCTIONS
 

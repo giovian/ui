@@ -1,19 +1,18 @@
-{%- assign static_files_paths = site.static_files | map: 'path' -%}{% if static_files_paths contains '/favicon.ico' %}<link rel='icon' href='{{ "favicon.ico" | absolute_url }}'>{% elsif site.favicon.ico %}<link rel='icon' href='{{ site.favicon.ico | absolute_url }}'>{% endif %}
+{% assign favicon_ico_path = site.static_files | where_exp: "item", "item.path contains 'favicon.ico'" | map: 'path' | first | default: site.favicon.ico | absolute_url %}{% if favicon_ico_path %}<link rel='icon' href='{{ favicon_ico_path }}'>{% endif %}
 <!-- FAVICON.png -->
-{% if static_files_paths contains '/favicon.png' %}<link rel='apple-touch-icon' href='{{ "favicon.png" | absolute_url }}'>
-<link rel='icon' type='image/png' href='{{ "favicon.png" | absolute_url }}'>{% elsif site.favicon.png %}<link rel='apple-touch-icon' href='{{ site.favicon.png | absolute_url }}'>
-<link rel='icon' type='image/png' href='{{ site.favicon.png | absolute_url }}'>{% endif %}
+{% assign favicon_png_path = site.static_files | where_exp: "item", "item.path contains 'favicon.png'" | map: 'path' | first | default: site.favicon.png | absolute_url %}{% if favicon_png_path %}<link rel='apple-touch-icon' href='{{ favicon_png_path }}'>
+<link rel='icon' type='image/png' href='{{ favicon_png_path }}'>{% endif %}
+
 {%- capture api -%}
 ## Favicon
 
-The favicon files are expected to be `/favicon.ico` and `/favicon.png`.
+Expected favicon files are `/favicon.ico` and `/favicon.png`, different files can be specified in the `_config.yml` file.
 
-Specify different paths in `_config.yml`
 ```yml
 favicon:
-  ico: "ico-file-path"
-  png: "png-file-path"
+  ico: relative_file_path
+  png: relative_file_path
 ```
 
-Changing favicon files require updating the browser cache opening the file directly: [ico file]({{ 'favicon.ico' | absolute_url }}), [png file]({{ 'favicon.png' | absolute_url }}).
+Changing favicon files require updating the browser cache opening the file directly{% if favicon_ico_path %} [ICO]({{ favicon_ico_path }}){% endif %}{% if favicon_png_path %} [PNG]({{ favicon_png_path }}){% endif %}.
 {%- endcapture -%}

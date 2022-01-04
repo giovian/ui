@@ -66,7 +66,7 @@ $('form.schema').each ->
     # Prepend user folder if repository is forked
     if storage.get("repository.fork")
       path = "user/#{storage.get 'login.user'}/#{path}"
-    schema_url = "{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}/contents/_data/#{path}.schema.json"
+    schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
     form.attr 'disabled', ''
     get_schema = $.get schema_url
     get_schema.done (data, status) ->
@@ -166,7 +166,7 @@ $('form.schema').each ->
     # Prepend user folder if repository is forked
     if storage.get("repository.fork")
       path = "user/#{storage.get 'login.user'}/#{path}"
-    schema_url = "{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}/contents/_data/#{path}.schema.json"
+    schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
     notification 'Check if file exist'
     form.attr 'disabled', ''
 

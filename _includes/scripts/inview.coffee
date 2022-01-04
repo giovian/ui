@@ -1,13 +1,16 @@
-config_default = {
+# Default attributes
+inview_default = {{ site.inview | jsonify }} || {
   in:
-    element: '{{ page.inview.in.element | default: "h2" }}'
-    attribute: '{{ page.inview.in.attribute | default: "id" }}'
+    element: "h2"
+    attribute: "id"
   out:
-    element: '{{ page.inview.out.element | default: "#markdown-toc a" }}'
-    attribute: '{{ page.inview.out.attribute | default: "href" }}'
+    element: "#markdown-toc a"
+    attribute: "href"
+  options: {}
 }
-inview = ((configuration = {}, options = {}) ->
-  config = $.extend {}, config_default, configuration
+
+# In view function
+inview = (config = inview_default) ->
   if 'IntersectionObserver' of window
     callback = (entries) ->
       entries.forEach (entry) ->
@@ -19,16 +22,22 @@ inview = ((configuration = {}, options = {}) ->
       return # end callback
 
     # start observing
-    $(config.in.element).each -> new IntersectionObserver(callback, options).observe @
+    $(config.in.element).each ->
+      new IntersectionObserver(callback, config.options).observe @
 
-  return)() # end inview
+  return # end inview
+
+# Initial call only if elements are presents
+inview_init = (->
+  if $(inview_default.in.element).length and $(inview_default.out.element).length
+    inview())()
 
 {%- capture api -%}
 ## In view
 
 Observer for elements inside viewport.
 ```coffee
-inview(config, options)
+inview(config)
 ```
 
 Will check if an `config.in.element` is inside the viewport and apply an `.inview`{:.language-sass} class to the `config.out.element` whom `config.out.attribute` contains `config.in.attribute`.
@@ -42,19 +51,18 @@ config = {
   out:
     element: "#markdown-toc a"
     attribute: "href"
+  options: {}
 }
 ```
 If a table of contents is present, when an `h2` title is inside the viewport, the corresponding TOC link will have an `.inview`{:.language-sass} class.
 
 **Example `options` object (default `{}`)**
-```js
-options = {
-  root: document
-  rootMargin: "0px"
-  threshold: 0
-}
+```yml
+inview:
+  options:
+    rootMargin: "-100% 0% 0% 0%"
 ```
-Configure in YAML with Jekyll
+Configure in `_config.yml`
 ```yml
 inview:
   in:
@@ -63,5 +71,7 @@ inview:
   out:
     element: '#markdown-toc a'
     attribute: 'href'
+  options:
+    rootMargin: "-100% 0% 0% 0%"
 ```
 {%- endcapture -%}

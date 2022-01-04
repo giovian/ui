@@ -1,5 +1,5 @@
 {% if include.schema %}
-<form class='document'{% if include.schema %} data-schema='{{ include.schema }}'{% endif %}{% if include.document %} data-document='{{ include.document }}'{% endif %}>
+<form class='prevent-default document'{% if include.schema %} data-schema='{{ include.schema }}'{% endif %}{% if include.document %} data-document='{{ include.document }}'{% endif %}>
   <h3>Document{% if include.schema %} <code>{{ include.schema }}</code>{% endif %}</h3>
 
   <div inject></div>
@@ -11,6 +11,16 @@
     <input type='reset'>
   </div>
 </form>
+
+<!--
+          ENUM TEMPLATE
+-->
+<template id="template-add-item">
+  <div data-type="item">
+    <label class="fg-secondary">Add item</label>
+    <a href="#add-item" class="prevent-default" data-add="item">add</a>
+  </div>
+</template>
 
 {% else %}
 Missing `schema` options in `{% raw %}{% include 'widgets/document.html' %}{% endraw %}`{:.language-liquid}

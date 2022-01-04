@@ -1,12 +1,11 @@
+reduce_object = (key, obj) -> key.split('.').reduce(
+  ((acc, part) => acc && acc[part]), obj
+)
 storage =
   # Shorcuts
   key: '{{ site.github.repository_nwo }}'
   get: (key) ->
-    return if key
-      key.split('.').reduce(
-        ((acc, part) => acc && acc[part]), storage.get_object()
-      )
-    else storage.get_object()
+    return if key then reduce_object key, storage.get_object() else storage.get_object()
   get_object: ->
     try JSON.parse(Base64.decode(localStorage.getItem(storage.key))) catch e then {}
   set_object: (obj) ->
