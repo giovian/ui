@@ -25,10 +25,11 @@ order: 1000
   - `{{ p.order | inspect }}` {{ p.title }}{% endfor %}
 {% endfor %}
 {% if site.remote_theme %}
-
-**Remote by Jekyll GitHub Metadata**
+**Remote theme**
 - Theme <{{ site.remote_theme | split: '@' | first | prepend: 'https://github.com/' }}>
 - Plugin <https://github.com/benbalter/jekyll-remote-theme> {{ site.github.versions["jekyll-remote-theme"] }}
+**Releases**
+<ul github-api-url='repos/{{ site.remote_theme | split: '@' | first }}/releases' github-api-out='tag_name,name,published_at'></ul>
 {% endif %}
 </div>
 <div markdown="1">
@@ -39,10 +40,10 @@ order: 1000
 </ul>
 <div apply-if-parent='hidden|html:not(.role-admin)' markdown="1">
 **Builds**
-<ul github-api-url='repos/pages/builds/latest' github-api-text='Latest' github-api-out='status, created_at'></ul>
-<ul github-api-url='repos/pages/builds' github-api-method='POST' github-api-out='status' github-api-text='Request new build'></ul>
+<ul github-api-url-repo='pages/builds/latest' github-api-text='Latest' github-api-out='status, created_at'></ul>
+<ul github-api-url-repo='pages/builds' github-api-method='POST' github-api-out='status' github-api-text='Request new build'></ul>
 **Rate limit**
-<ul github-api-url='rate_limit' github-api-text="Remaining and used" github-api-out='rate.remaining,rate.used'></ul>
+<ul github-api-url='rate_limit' github-api-text="Remaining and used" github-api-out='rate.used,rate.remaining,resources.search.used,resources.search.remaining'></ul>
 **Local storage**
 - [Log](#){:log-storage=''} in console
 </div>

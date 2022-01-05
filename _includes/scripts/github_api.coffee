@@ -1,9 +1,9 @@
 github_api_url = '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}'
 
-$('ul[github-api-url]').each ->
+$('ul[github-api-url],ul[github-api-url-repo]').each ->
   # Variabiles
   ul = $ @
-  url = ul.attr('github-api-url').replace 'repos', 'repos/{{ site.github.repository_nwo }}'
+  url = ul.attr('github-api-url') || "repos/{{ site.github.repository_nwo }}/#{ul.attr 'github-api-url-repo'}"
   out = ul.attr('github-api-out') || 'created_at'
   method = ul.attr('github-api-method') || 'GET'
   # Create link
@@ -63,17 +63,18 @@ request = (event) ->
 {%- capture api -%}
 ## GitHub API
 
-The GitHub API REST requests interface is a LIST element `<ul>`{:.language-html} with `github-api-url` attribute.
+The GitHub API REST requests interface is a LIST element `<ul>`{:.language-html} with `github-api-url` or `github-api-url-repo` attribute.
 
 If the response is an array, the output is a nested list.
 ```html
-<ul github-api-url='repos/pages/builds'></ul>
+<ul github-api-url='rate_limit'></ul>
+<ul github-api-url-repo='pages/builds'></ul>
 ```
 
 **Attributes**
 
-- `github-api-url`: the endpoint for the request.  
-  `repos` will be replaced with 'repos/' + the repository full name.
+- `github-api-url`: endpoint for the request.  
+- `github-api-url-repo`: endpoint for the request for the present repository {{ site.github.repository_nwo }}.  
 - `github-api-method`: default to `GET`
 - `github-api-out`: comma separated list of response properties to show.  
   Default to `created_at`
