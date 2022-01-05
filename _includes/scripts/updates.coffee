@@ -17,15 +17,15 @@ checks = ->
   if '{{ site.remote_theme }}' isnt ''
     [remote, branch] = '{{ site.remote_theme }}'.split '@'
     ajax_data = if branch then {sha: branch} else {}
-    latest = $.get "{{ site.github.api_url }}/repos/#{remote}/commits",
+    latest = $.get "{{ site.github.api_url }}/repos/#{remote}/releases/latest",
       data: ajax_data
     latest.done (data) ->
-      # Compare online and stored remote commit SHA
-      if data[0].sha isnt storage.get 'repository.remote_sha'
-        # Update SHA on storage
-        storage.assign 'repository', {remote_sha: data[0].sha}
+      # Compare online and stored remote theme latest release `tag_name`
+      if data[0].tag_name isnt storage.get 'repository.remote_theme_tag_name'
+        # Update Release on storage
+        storage.assign 'repository', {remote_theme_tag_name: data[0].tag_name}
         # Request a build
-        notification 'New remote theme SHA', '', true
+        notification 'New remote theme Release', ''
       return # End remote SHA check
 
   # Schedule next check
@@ -46,8 +46,8 @@ Updates are checked every minute after pageload, only if the user is logged as `
 Compare Jekyll `site.time` with GitHub latest built creation time.  
 If they are different, show a notification link.  
 
-**Remote theme SHA**  
-Compare the remote theme latest commit with previous stored SHA.  
+**Remote theme Latest Release Tag Name**  
+Compare the remote theme latest release tag name with previous stored tag name.  
 If they are different, show a notification.  
 
 This script is not active in `development` environment.
