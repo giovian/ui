@@ -128,3 +128,12 @@ storage.get("repository.fork") = true
 ```
 {:.minimal}
 {% include widgets/document.html schema='practices' %}
+
+# CSV
+
+{% include widgets/csv.html file='practices' %}
+
+```liquid
+{% raw %}{% include widgets/csv.html file='practices' %}{% endraw %}
+```
+{:.minimal}

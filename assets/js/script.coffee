@@ -27,6 +27,7 @@
 {% include scripts/form.coffee %}           # Form engine
 {% include scripts/schema.coffee %}         # Manage array schema engine
 {% include scripts/document.coffee %}       # Manage document from schema
+{% include scripts/csv.coffee %}            # Table from CSV data file
 
 # CUSTOM
 
