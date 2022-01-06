@@ -1,7 +1,7 @@
 # Default attributes
 inview_default = {{ site.inview | jsonify }} || {
   in:
-    element: "h2"
+    element: "h2, h3"
     attribute: "id"
   out:
     element: "#markdown-toc a"
@@ -11,14 +11,27 @@ inview_default = {{ site.inview | jsonify }} || {
 
 # In view function
 inview = (config = inview_default) ->
+  # check if `IntersectionObserver` is supported
   if 'IntersectionObserver' of window
     callback = (entries) ->
       entries.forEach (entry) ->
         attribute = $(entry.target).attr config.in.attribute
         in_view = entry.isIntersecting
-        ele = $("#{config.out.element}[#{config.out.attribute}*=#{attribute}]")
-        if in_view then ele.addClass 'inview' else ele.removeClass 'inview'
+
+        # Add class for exact value `attribute`
+        ele_normal = $("#{config.out.element}[#{config.out.attribute}='#{attribute}']")
+        if in_view
+          ele_normal.addClass 'inview'
+        else ele_normal.removeClass 'inview'
+
+        # Add class for anchor value `#attribute`
+        ele_anchor = $("#{config.out.element}[#{config.out.attribute}='##{attribute}']")
+        if in_view
+          ele_anchor.addClass 'inview'
+        else ele_anchor.removeClass 'inview'
+
         return # end entries loop
+
       return # end callback
 
     # start observing
@@ -42,11 +55,13 @@ inview(config)
 
 Will check if an `config.in.element` is inside the viewport and apply an `.inview`{:.language-sass} class to the `config.out.element` whom `config.out.attribute` contains `config.in.attribute`.
 
+Caveat: `config.out.attribute` can contain exact `config.in.attribute` or the anchor version `#config.in.attribute`.
+
 **Default `config` object**
 ```js
 config = {
   in:
-    element: "h2"
+    element: "h2, h3"
     attribute: "id"
   out:
     element: "#markdown-toc a"
@@ -54,7 +69,7 @@ config = {
   options: {}
 }
 ```
-If a table of contents is present, when an `h2` title is inside the viewport, the corresponding TOC link will have an `.inview`{:.language-sass} class.
+If a table of contents is present, when an `h2` or `h3` element is inside the viewport, the corresponding TOC link will have an `.inview`{:.language-sass} class.
 
 **Example `options` object (default `{}`)**
 ```yml
