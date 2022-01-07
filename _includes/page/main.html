@@ -1,6 +1,9 @@
-<div class="wrapper" apply-if-children="no-sidebar|aside.sidebar:empty">
-  {% include page/sidebar.html %}
+<main>
+{% if nav %}{% include page/nav.html %}{% endif %}
+<div class="wrapper">
   <section>
     {{ content }}
   </section>
 </div>
+{% if footer %}{% include page/footer.html %}{% endif %}
+</main>

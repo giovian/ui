@@ -1,29 +1,33 @@
 {%- include page/init.html -%}<!DOCTYPE html>
-<html id='page-top' lang='{{ site.language | default: 'en_US' }}'>
+<html
+  id='page-top'
+  lang='{{ site.language | default: 'en_US' }}'
+  mode='{{ mode }}'>
 
 <head>
 {% include page/head.html %}
 </head>
 
 <body
-  class='{{ page.class | join: ' ' }}'
+  class='{{ page.class | default: site.class }}'
   site-pages='{{ site.html_pages.size | plus: site.documents.size }}'
   page-title='{{ page.title | slugify }}'
   page-order='{{ page.order }}'
   page-collection='{{ page.collection }}'
-  page-top='{{ top | join: ',' }}'
+  collection-order='{{ page.collection.order }}'
+  page-header='{{ header | inspect }}'
+  page-nav='{{ nav | inspect }}'
   page-navigation='{{ navigation | join: ',' }}'
   page-sidebar='{{ sidebar | join: ',' }}'
   page-footer='{{ footer | inspect }}'>
 
 <div class='notification'></div>
-{% for item in top %}{% include page/{{ item }}.html %}{% endfor %}
+{% if header %}{% include page/header.html %}{% endif %}
 
-<main>
-{% include page/main.html %}
-</main>
-
-{% if footer %}{% include page/footer.html %}{% endif %}
+<div class="flex">
+  {% include page/sidebar.html %}
+  {% include page/main.html %}
+</div>
 
 </body>
 </html>

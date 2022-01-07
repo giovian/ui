@@ -1,7 +1,7 @@
 notification = (code, cls, persist = false) ->
   # Create notification SPAN
-  color_class = "#{if cls then "color-#{cls}" else 'bg-secondary'}"
-  div = $ "<div class='#{color_class}'><span>#{code}</span></div>"
+  color_class = cls || 'bg-secondary'
+  div = $ "<div class='#{color_class}'><div class='spacer'></div><span>#{code}</span></div>"
   $('.notification').each ->
     container = $(@)
     if persist then container.empty()
