@@ -8,7 +8,7 @@ nav
 
   // COLORS
   background: var(--bg)
-  @extend .border-bottom, .shadow
+  @extend .border-bottom
 
   .wrapper
 
@@ -34,6 +34,8 @@ nav
 
       // LIST ELEMENTS
       li
+
+        @extend .mbz
 
         // SPANS AND LINKS
         span
@@ -63,7 +65,7 @@ nav
               padding: $space/2 $space*.7
 
 //
-// Navigation Sidebar Widget
+// Navigation Dropdown color
 // --------------------------------------
 ul.navigation li span
   color: var(--fg-secondary)

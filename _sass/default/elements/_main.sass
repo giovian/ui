@@ -1,21 +1,4 @@
 main
-
-  .wrapper
-    padding: $space*3 $space
-
-    // Sidebar
-    display: flex
-
-    // Right sidebar
-    @if $sidebar-side == right
-      flex-direction: row-reverse
-    @if $sidebar-side == left
-      flex-direction: row
-
-    // Necessary to stick
-    align-items: flex-start
-
-    // GAP
-    gap: $space*2
-    &.no-sidebar
-      gap: 0
+  flex-grow: 1
+  & > .wrapper
+    @extend .pv

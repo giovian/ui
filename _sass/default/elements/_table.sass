@@ -2,10 +2,11 @@ table
   
   // Spacing
   border-spacing: 0
-  @extend .mvh, .rounded, .border
+  @extend .mv, .rounded, .border
 
 th, td
   padding: $space/2
+  @extend .bg, .fg
 
 thead:last-of-type th,
 tbody:not(:last-child) td,
@@ -17,9 +18,8 @@ tr.no-border
   td, th
     @extend .no-border
 
-th,
-tfoot td
-  background: var(--bg-secondary)
+thead th, tfoot td
+  @extend .bg-secondary
 
 tbody:nth-of-type(2n) td
   background: var(--bg-secondary)
@@ -30,6 +30,6 @@ table.csv
     @extend .fg-secondary
   td[data-value-type='integer'], td[data-value-type='number']
     text-align: right
-    @extend .color-green, .fg
+    @extend .blue, .fg
   span[datetime]
     text-transform: capitalize

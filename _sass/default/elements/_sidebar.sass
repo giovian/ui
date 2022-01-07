@@ -1,29 +1,15 @@
-main .wrapper
+aside.sidebar
 
-  & > section:first-of-type
-    // <number> 1 0 (grow shrink basis)
-    flex: 1
-    // Prevent sidebar jump when section is shorter
-    min-height: 20em
+  @extend .border-right, .bg, .fg
+  border-color: var(--bg-secondary) !important
 
-  & > aside
+  height: 100vh
+  width: $sidebar-width
 
-    // WIDTH
-    flex: $sidebar-width
+  position: sticky
+  top: 0
 
-    // Hide if empty
-    &:empty
-      flex: initial
+  overflow-y: auto
 
-    // Lists
-    ul
-      list-style-type: none
-      padding-left: $space
-
-// STICKY Sidebar
-@if $sidebar-sticky
-  main .wrapper > aside
-    position: sticky
-    top: 3.1em
-  body[page-top*='nav'] main .wrapper > aside
-    top: 6.3em
+  &:empty
+    @extend .hidden

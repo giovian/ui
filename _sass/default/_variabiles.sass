@@ -1,5 +1,7 @@
-// LAYOUT
-$max-width:               60em !default
+// Widths
+$main-width:              45em !default
+$sidebar-width:           15em !default
+$mobile-width:            700px !default
 
 // FONTS
 $font:                    sans-serif !default
@@ -9,12 +11,6 @@ $font-code:               monospace !default
 $headings-font:           sans-serif !default
 $headings-weight:         normal !default
 $headings-margins:        0.67 0.83 1 1.33 1.67 2.33 !default
-
-// SIDEBAR
-$sidebar-side:            right !default
-$sidebar-sticky:          true !default
-// initial = 0 1 auto (grow shrink basis)
-$sidebar-width:           0.3 !default
 
 // NAVIGATION
 $nav-sticky:              true !default
@@ -27,9 +23,42 @@ $border-small:            1px !default
 $border-medium:           2px !default
 $border-big:              5px !default
 
-// Mobile
-$mobile-width:            700px !default
-
 // Z-index
 $z-index-nav:             1000 !default
 $z-index-notification:    2000 !default
+
+//
+// COLORS
+// --------------------------------------
+
+//
+// DARK MODE
+// --------------------------------------
+// Colors
+$blue-dark:     DodgerBlue !default
+$red-dark:      Red !default
+$green-dark:    LimeGreen !default
+$orange-dark:   Orange !default
+$pink-dark:     Fuchsia !default
+// Links
+$link-dark:     $blue-dark !default
+// As a list
+$colors-dark: (blue: $blue-dark, red: $red-dark, green: $green-dark, orange: $orange-dark, pink: $pink-dark) !default
+// Colors shades
+$color-lightness-dark: (bg: 7%, fg: 83%, bg_secondary: 11%, fg_secondary: 58%, border: 21%) !default
+
+//
+// LIGHT MODE
+// --------------------------------------
+// Colors
+$blue-light:     MediumBlue !default
+$red-light:      FireBrick !default
+$green-light:    DarkGreen !default
+$orange-light:   OrangeRed !default
+$pink-light:     Fuchsia !default
+// Links
+$link-light:     $blue-light !default
+// As a list
+$colors-light: (blue: $blue-light, red: $red-light, green: $green-light, orange: $orange-light, pink: $pink-light) !default
+// Colors shades
+$color-lightness-light: (bg: 94%, fg: 17%, bg_secondary: 91%, fg_secondary: 50%, border: 79%) !default

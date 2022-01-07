@@ -1,4 +1,15 @@
+//
+// GLOBAL DETAILS
+// --------------------------------------
 details
+  summary
+    cursor: pointer
+    @extend .p-around
+
+//
+// MAIN DETAILS
+// --------------------------------------
+main details
 
   @extend .mvh
 
@@ -9,15 +20,26 @@ details
     content: ""
   
   summary
-    cursor: pointer
     outline: none
-
-    & > *
-      display: inline
-
     &:hover
       color: var(--fg-secondary)
+    & > *
+      display: inline
 
     // Headers on summray
     h1, h2, h3, h4, h5, h6
       padding: 0
+
+//
+// SIDEBAR DETAILS
+// --------------------------------------
+.sidebar
+  details
+    summary
+      @extend .bg-secondary, .fg-secondary
+      &:hover
+        color: var(--link) !important
+      &:active
+        color: var(--fg-secondary) !important
+    &[open] summary
+      @extend .fg

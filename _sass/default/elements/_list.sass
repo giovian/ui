@@ -4,15 +4,22 @@ ul
   ul
     padding-left: $space*2
 
-ul[github-api-url], ul[github-api-url-repo]
-  & > li:not(:first-of-type), & > ul li
-    color: var(--fg-secondary)
+//
+// MAIN lists
+// --------------------------------------
+main li
+  margin-bottom: $space/3
+  
+//
+// SIDEBAR lists
+// --------------------------------------
+.sidebar
+  ul
+    list-style-type: none
+    padding-left: $space*1.5
 
 dl
   dt
     font-weight: bold
   dd
     margin-left: $space*1.5
-
-section li
-  margin-bottom: $space/3

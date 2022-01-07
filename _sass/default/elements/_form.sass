@@ -21,8 +21,7 @@ input[type=color]
 
 // BG Secondary
 input, textarea, select,
-  background: var(--bg-secondary)
-  color: var(--fg)
+  @extend .fg, .bg-secondary
 
 // TWEAKS
 // --------------------------------------
@@ -59,7 +58,8 @@ select[multiple] option[value=""]:only-of-type
 // Inside FORMS
 // --------------------------------------
 form
-  @extend .border, .mv, .rounded, .inline-block
+  @extend .border, .mv, .rounded
+  display: table
   
   // Do not clip rounded corners
   overflow: hidden
@@ -100,7 +100,7 @@ form
     @extend .border-top
   // Enabled
   button:enabled, input[type=button], input[type=reset], input[type=submit]
-    @extend .button
+    @extend .button, .bg, .fg
     margin: 0
   // Disabled
   input:disabled, button:disabled, select:disabled, input[readonly]
@@ -127,9 +127,9 @@ form
 
   // Special
   input[type=submit]:not([disabled])
-    @extend .color-green
+    @extend .green
   input[type=reset]:not([disabled])
-    @extend .color-red
+    @extend .red
 
   //
   // DISPLAY

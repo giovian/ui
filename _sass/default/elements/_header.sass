@@ -1,4 +1,10 @@
 header
   @extend .border-bottom
+  & > .wrapper
+    width: 100%
   h1
     @extend .mz
+
+// Whit no sidebar
+body[page-sidebar=''] header .wrapper
+  width: $main-width

@@ -4,14 +4,18 @@ code, kbd, pre, samp
 
 .highlighter-rouge, .highlight
   @extend .rounded
+  background: var(--bg-secondary) !important
   // Spacing
   margin: 0
 
 // Minimal
-div.minimal.highlighter-rouge div.highlight
-  @extend .inline-flex
-.api > div.highlighter-rouge div.highlight
-  @extend .inline-flex
+div.minimal.highlighter-rouge, div.minimal.highlighter-rouge div.highlight
+  @extend .inline
+div.minimal.highlighter-rouge pre
+  @extend .inline-block
+// API is minimal
+.api > div.highlighter-rouge
+  @extend .minimal
 
 // Code blocks inside lists
 li > .highlighter-rouge 
@@ -32,15 +36,6 @@ pre.highlight, .highlight pre
 // INLINE
 // --------------------------------------
 *:not(pre) > code
-
-  @extend .highlight
-  border-radius: $border-medium !important
-
+  @extend .rounded-medium, .highlight
   // Spacing
-  padding: $space*.1 $space*.2
-
-  // Colors
-  background-color: $code-background
-  color: $code-color
-  &:not(.highlighter-rouge) span:not([datetime])
-    color: var(--fg)
+  padding: $space*.1 $space*.3

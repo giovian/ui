@@ -4,10 +4,13 @@
 @import variabiles
 
 // Import syntax
-@import {{ site.css.syntax | default: 'rouge/molokai_custom' | prepend: 'syntax/' }}
+[mode='dark']
+  @import {{ site.css.syntax.dark | default: 'rouge/molokai_custom' | prepend: 'syntax/' }}
+[mode='light']
+  @import {{ site.css.syntax.light | default: 'rouge/github' | prepend: 'syntax/' }}
 
 // Import theme
-@import {{ site.css.theme | default: 'dark' }}
+@import {{ site.css.theme | default: 'default' }}
 
 // Import custom CSS rules
 @import custom

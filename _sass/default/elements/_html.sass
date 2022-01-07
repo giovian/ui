@@ -1,13 +1,4 @@
 html
   overflow-y: scroll
   scroll-behavior: smooth
-
-  // Colors
-  background: var(--bg)
-  color: var(--fg)
-
-  // Sticky scroll
-  @if $nav-sticky
-    \:target
-      scroll-margin-top: 4.3em
-      scroll-snap-margin-top: 4.3em
+  @extend .bg, .fg

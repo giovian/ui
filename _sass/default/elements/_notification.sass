@@ -1,9 +1,14 @@
-body > .notification
+.notification
   position: fixed
   top: 0
   width: 100%
   z-index: $z-index-notification
   & > div
-    @extend .border-bottom
+    @extend .border-bottom, .shadow, .flex
+    .spacer
+      width: $sidebar-width
     & > span
       @extend .wrapper, .block, .p-around
+
+body[page-sidebar=''] .spacer
+  @extend .hidden

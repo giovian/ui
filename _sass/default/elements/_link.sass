@@ -19,3 +19,19 @@ a, a .highlight, a > code
   &[disabled], &.disabled
     pointer-events: none
     color: var(--fg-secondary) !important
+
+//
+// SIDEBAR Widgets
+// --------------------------------------
+.sidebar details a
+  color: var(--fg-secondary) !important
+  &:hover
+    color: var(--fg) !important
+  &:active, &.active
+    color: var(--link) !important
+
+//
+// Table of Contents INVIEW links
+// --------------------------------------
+#markdown-toc a.inview
+  color: var(--link) !important

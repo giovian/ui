@@ -1,25 +1,72 @@
-// Default lightness
-
+//
+// ROOT COLORS
+// --------------------------------------
 \:root
-  --link:         #{$link-color}
-  --bg:           hsl(0, 0%, #{map-get($lightness, bg)})
-  --fg:           hsl(0, 0%, #{map-get($lightness, fg)})
-  --bg-secondary: hsl(0, 0%, #{map-get($lightness, bg_secondary)})
-  --fg-secondary: hsl(0, 0%, #{map-get($lightness, fg_secondary)})
-  --border:       hsl(0, 0%, #{map-get($lightness, border)})
+  --blue_1: MediumBlue
+  --blue_2: Blue
+  --blue_3: DodgerBlue
+  --red_1: FireBrick
+  --red_2: Red
+  --green_1: DarkGreen
+  --green_2: LimeGreen
+  --orange_1: OrangeRed
+  --orange_2: Orange
+  --pink: Fuchsia
+  --grey_1: hsl(0, 0%,  4%)
+  --grey_2: hsl(0, 0%,  9%)
+  --grey_3: hsl(0, 0%, 17%)
+  --grey_4: hsl(0, 0%, 21%)
+  --grey_5: hsl(0, 0%, 50%)
+  --grey_6: hsl(0, 0%, 56%)
+  --grey_7: hsl(0, 0%, 79%)
+  --grey_8: hsl(0, 0%, 83%)
+  --grey_9: hsl(0, 0%, 93%)
+  --grey_10: hsl(0, 0%, 98%)
 
-// Colors and lightness
+//
+// DARK MODE
+// --------------------------------------
 
-@each $color-name, $color-value in $colors
-  $hue: hue($color-value)
-  .color-#{$color-name}
-    --link:         #{$color-value}
-    --bg:           #{hsl($hue, 28%, map-get($color-lightness, bg))}
-    --fg:           #{hsl($hue, 17%, map-get($color-lightness, fg))}
-    --bg-secondary: #{hsl($hue, 21%, map-get($color-lightness, bg_secondary))}
-    --fg-secondary: #{hsl($hue,  9%, map-get($color-lightness, fg_secondary))}
-    --border:       #{hsl($hue, 12%, map-get($color-lightness, border))}
+[mode='dark']
+  --bg: hsl(0, 0%, 4%)
+  --bg-secondary: hsl(0, 0%, 9%)
+  --fg: hsl(0, 0%, 83%)
+  --fg-secondary: hsl(0, 0%, 56%)
+  --border: hsl(0, 0%, 21%)
+  --link: #{$link-dark}
 
-[class*='color-']
-  background: var(--bg)
-  color: var(--fg)
+  // Color classes
+  @each $color-name, $color-value in $colors-dark
+    $hue: hue($color-value)
+    .#{$color-name}
+      --link:         #{$color-value}
+      --bg:           #{hsl($hue, 28%, map-get($color-lightness-dark, bg))}
+      --fg:           #{hsl($hue, 20%, map-get($color-lightness-dark, fg))}
+      --bg-secondary: #{hsl($hue, 21%, map-get($color-lightness-dark, bg_secondary))}
+      --fg-secondary: #{hsl($hue,  9%, map-get($color-lightness-dark, fg_secondary))}
+      --border:       #{hsl($hue, 12%, map-get($color-lightness-dark, border))}
+      @extend .bg, .fg
+
+//
+// LIGHT MODE
+// --------------------------------------
+
+[mode='light']
+  --bg: hsl(0, 0%, 98%)
+  --bg-secondary: hsl(0, 0%, 93%)
+  --fg: hsl(0, 0%, 17%)
+  --fg-secondary: hsl(0, 0%, 50%)
+  --border: hsl(0, 0%, 79%)
+  --link: #{$link-light}
+
+  // Color classes
+  @each $color-name, $color-value in $colors-light
+    $hue: hue($color-value)
+    .#{$color-name}
+      --link:         #{$color-value}
+      --bg:           #{hsl($hue, 28%, map-get($color-lightness-light, bg))}
+      --fg:           #{hsl($hue, 17%, map-get($color-lightness-light, fg))}
+      --bg-secondary: #{hsl($hue, 21%, map-get($color-lightness-light, bg_secondary))}
+      --fg-secondary: #{hsl($hue,  9%, map-get($color-lightness-light, fg_secondary))}
+      --border:       #{hsl($hue, 12%, map-get($color-lightness-light, border))}
+      @extend .bg, .fg
