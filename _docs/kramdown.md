@@ -82,12 +82,12 @@ Default TABLES have a border, rounded corners and shaded headers. A class color 
     <tr>
       <td><code>code</code></td>
       {% for color in colors %}
-        <td class="color-{{ color }}">.color-{{ color }}</td>
+        <td class="{{ color }}">.{{ color }}</td>
       {% endfor %}
     </tr>
     {% for color in colors %}
-      <tr class="color-{{ color }}">
-        <td colspan=6>.color-{{ color }} <code>code</code></td>
+      <tr class="{{ color }}">
+        <td colspan=6>.{{ color }} <code>code</code></td>
       </tr>
     {% endfor %}
   </tbody>

@@ -1,5 +1,5 @@
 <ul class="navigation">
-  {% for item in navigation %}{% include page/navigation/{{ item }}.html %}{% endfor %}
+  {%- for item in navigation -%}{% include page/navigation/{{ item | strip }}.html %}{%- endfor -%}
 </ul>
 {%- capture api -%}
 ## Navigation
@@ -8,7 +8,7 @@ Render the website navigation as unordered list with dropdowns.
 
 - `pages`: `{% raw %}{{ site.html_pages }}{% endraw %}`{:.language-liquid} sorted by `order` liquid variabile
 - `collections`: `{% raw %}{{ site.collections }}{% endraw %}`{:.language-liquid} dropdowns sorted by `order` liquid variabile
-- `login`: links
+- `login`: login/logout links
 - `help`: link to Help page
 
 ```liquid
