@@ -1,55 +1,62 @@
-{% comment %}
--------------------- TOP (header,nav)
-{% endcomment %}
-{%- assign top = page.top -%}
-{%- if page.top == nil -%}{%- assign top = 'nav' | split: ',' -%}{%- endif -%}
-{% comment %}
--------------------- NAVIGATION (pages,help,collections,login)
-{% endcomment %}
+{% comment %} -------------------- MODE (dark/light) {% endcomment %}
+{%- assign mode = page.mode -%}
+{%- if mode == nil -%}{%- assign mode = site.mode -%}{%- endif -%}
+{%- if mode == nil -%}{%- assign mode = 'dark' -%}{%- endif -%}
+
+{% comment %} -------------------- TOP NAV (boolean) {% endcomment %}
+{%- assign nav = page.nav -%}
+{%- if nav == nil -%}{%- assign nav = site.nav -%}{%- endif -%}
+{%- if nav == nil -%}{%- assign nav = false -%}{%- endif -%}
+
+{% comment %} -------------------- HEADER (boolean) {% endcomment %}
+{%- assign header = page.header -%}
+{%- if header == nil -%}{%- assign header = site.header -%}{%- endif -%}
+{%- if header == nil -%}{%- assign header = false -%}{%- endif -%}
+
+{% comment %} ----------- NAVIGATION (pages,help,collections,login) {% endcomment %}
 {%- assign navigation = page.navigation -%}
-{%- if page.navigation == nil -%}{%- assign navigation = 'pages,collections,login' | split: ',' -%}{%- endif -%}
-{% comment %}
--------------------- SIDEBAR (navigation,toc,meta_links)
-{% endcomment %}
+{%- if navigation == nil -%}{%- assign navigation = site.navigation -%}{%- endif -%}
+{%- if navigation == nil -%}{%- assign navigation = 'pages, collections, login' | split: ',' -%}{%- endif -%}
+
+{% comment %} -------------------- SIDEBAR (toc,navigation,meta) {% endcomment %}
 {%- assign sidebar = page.sidebar -%}
-{%- if page.sidebar == nil -%}{%- assign sidebar = 'toc' | split: ',' -%}{%- endif -%}
-{% comment %}
--------------------- FOOTER (false/true)
-{% endcomment %}
-{%- assign footer = page.footer -%}
-{%- if page.footer == nil -%}{%- assign footer = true -%}{%- endif -%}
+{%- if sidebar == nil -%}{%- assign sidebar = site.sidebar -%}{%- endif -%}
+{%- if sidebar == nil -%}{%- assign sidebar = 'toc, navigation, meta' | split: ',' -%}{%- endif -%}
+
+{% comment %} -------------------- FOOTER (boolean) {% endcomment %}
+{%- assign footer = page.footer | default: site.footer-%}
+{%- if footer == nil -%}{%- assign footer = false -%}{%- endif -%}
 
 {%- capture api -%}
-## Pages
+## Page attributes
 
-Page default values
+Page attributes with default values
 
 ```yml
----
-top: [nav] # header
-navigation: [pages,collections,login] # help
-sidebar: [top] # navigation, meta_links
-footer: true # false
+# Dark or light color scheme
+mode: dark # light
+# Header at the top of pages
+header: false # true
+# Top nav bar
+nav: false # true
+# Links order for the navigation
+navigation: [pages, collections, login] # help
+# Widgets for the sidebar
+sidebar: [toc, navigation, meta]
+# Footer at the bottom of pages
+footer: false # true
+# Classes for the page
 class: '' # space separated list
----
 ```
 
-Page attributes can be set in different modes:
+Can be set in different modes:
 
-<div class="grid">
-<div markdown="1">
-For every page
+For the whole site
 
 ```yml
 # _config.yml
-defaults:
-  - scope:
-      path: ""
-    values:
-      attribute: value
+attribute: value
 ```
-</div>
-<div markdown="1">
 For pages in collections
 
 ```yml
@@ -60,8 +67,6 @@ defaults:
     values:
       attribute: value
 ```
-</div>
-</div>
 
 For singular pages, in the _front-matter_
 

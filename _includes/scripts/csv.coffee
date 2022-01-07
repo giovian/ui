@@ -16,8 +16,7 @@ fill_table = (data, schema, table) ->
   # Rows
   for row_data, j in csv
     # Create row
-    row = $('<tr/>', {'data-row': j+1})
-      .append "<td>#{j+1}</td>"
+    row = $('<tr/>', {'data-row': j+1}).append "<td>#{j+1}</td>"
     # Loop row values
     for value, i in row_data.split ','
       value_properties = schema.items.properties[headers[i]]
