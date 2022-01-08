@@ -5,6 +5,7 @@
 {%- if extension.size == 1 -%}{%- assign include_file = include_file | append: '.html' -%}{%- endif -%}
 {%- capture include_content -%}{% include {{include_file}} %}{%- endcapture -%}
 {% else %}
+{%- assign include_file = 'widgets/api' -%}
 {%- capture api -%}
 ## API
 Capture, markdownify and render the liquid `api` variabile of an include file.
@@ -35,5 +36,5 @@ Description
 <div class='api' markdown='1'>
 {{ api | mardowify }}
 
-{% if api %}File: {% assign absolute_path = include_file | prepend: '_includes/' %}{% include widgets/github_link.html path=absolute_path %}{% endif %}
+{% if api %}File: {% assign absolute_path = include_file | prepend: '_includes/' %}{% include widgets/github_link.html path=absolute_path remote=true %}{% endif %}
 </div>

@@ -8,11 +8,9 @@ Require the [markdown table of contents]({{ 'docs/kramdown/#table-of-contents' |
 ```liquid
 {% raw %}{% include widgets/toc.html %}{% endraw %}
 ```
-The [toc]({{ 'docs/scripts/#toc' | absolute_url }}) script will move the markdown generated toc inside the widget.
-
+The [toc]({{ 'docs/scripts/#toc' | absolute_url }}) script will move the markdown generated toc inside the widget.  
 To have the widget on the sidebar, include the widget in the YAML `sidebar` array:
 ```yml
-sidebar:
-  - toc
+sidebar: [toc]
 ```
 {%- endcapture -%}

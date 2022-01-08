@@ -71,7 +71,7 @@ Every instance can have a `default` pre-filled value, should validate against th
 ### Numbers
 
 - `number`
-- `integer`: negative and zero fractional are ok)  
+- `integer`: negative and zero fractional are ok.  
   `<input>`{:.language-html} use `step="1" pattern="\d+"` attributes
 
 **Validation keywords**
@@ -103,14 +103,16 @@ They map `keys` to `values`, each of these pairs is conventionally referred to a
   ```
 - Conditional property definition:  
   ```json
-  "if": {
-    "properties": { "country": { "const": "United States of America" } }
-  },
-  "then": {
-    "properties": { "postal_code": { "pattern": "[0-9]{5}(-[0-9]{4})?" } }
-  },
-  "else": {
-    "properties": { "postal_code": { "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]" } }
+  {
+    "if": {
+      "properties": { "country": { "const": "United States of America" } }
+    },
+    "then": {
+      "properties": { "postal_code": { "pattern": "[0-9]{5}(-[0-9]{4})?" } }
+    },
+    "else": {
+      "properties": { "postal_code": { "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]" } }
+    }
   }
   ```
 
@@ -176,39 +178,7 @@ A schema in the file `_data/schema.json` will have `$id: {{ site.github.reposito
   parse("1+2+3"); 
   ```
 
-## Experimental UI
-
-**Columns**
-
-`columns` is a nested array, every first order item is an array of properties pertaining to that column.
-
-```js
-{
-  "columns": [
-    [col1-1, col1-2],
-    [col2-1]
-  ]
-}
-```
-
-Or simple attribute: `col: 2`
-
-**Colors**
-
-`colors` is an object, the properties are theme colors and are arrays of properties pertaining to that color.
-
-```js
-{
-  "colors": {
-    "blue": [prop-1, prop-2],
-    "red": [prop-3]
-  }
-}
-```
-
-Or simple attributes: `ink: black, background: black`
-
-**To do**
+## To do
 
 - `$def` property definitions and reuse
 - `default` keyword

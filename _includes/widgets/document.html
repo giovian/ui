@@ -29,7 +29,7 @@ Missing `schema` options in `{% raw %}{% include 'widgets/document.html' %}{% en
 ## Document
 
 Render a FORM to manage a document from a JSON schema.  
-Require [form]({{ 'docs/scripts/#form' | absolute_url }}) and [document]({{ 'docs/scripts/#document' | absolute_url }})
+Require [form]({{ 'docs/scripts/#form' | absolute_url }}) and [document]({{ 'docs/scripts/#document' | absolute_url }}) scripts.
 
 ```liquid
 {% raw %}{% include widgets/document.html schema='schema-$id' %}{% endraw %}
@@ -37,6 +37,5 @@ Require [form]({{ 'docs/scripts/#form' | absolute_url }}) and [document]({{ 'doc
 
 **Includes**
 
-- `schema`: `$id` value of the JSON schema for the document.  
-  Required
+- `schema`: (required) `$id` value of the JSON schema for the document.
 {%- endcapture -%}
