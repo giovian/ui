@@ -35,7 +35,7 @@ Exclude headers from the TOC with the class `no_toc`.
 ```
 {:.minimal}
 
-Check [toc widget]({{ 'docs/widgets#table-of-contents' | absolute_url }}) to put the TOC in the sidebar.
+Check [toc widget]({{ 'docs/widgets#table-of-contents' | absolute_url }}){: remote='true'} to put the TOC in the sidebar.
 
 ## Code
 

@@ -5,7 +5,7 @@
 {%- if extension.size == 1 -%}{%- assign include_file = include_file | append: '.html' -%}{%- endif -%}
 {%- capture include_content -%}{% include {{include_file}} %}{%- endcapture -%}
 {% else %}
-{%- assign include_file = 'widgets/api' -%}
+{%- assign include_file = 'widgets/api.html' -%}
 {%- capture api -%}
 ## API
 Capture, markdownify and render the liquid `api` variabile of an include file.

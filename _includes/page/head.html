@@ -7,10 +7,9 @@
 <!-- FAVICON -->
 {% include page/favicon.html %}
 
-<!-- REPOSITORY -->
-<meta name='site_build' content='{{ site.time }}'>
-<meta name='remote-theme-version' content='{% include version.html %}'>
-{% if site.remote_theme %}<meta name='remote_theme' content='{{ site.remote_theme }}'>
+{% if site.remote_theme %}<!-- REMOTE THEME -->
+<meta name='remote_theme_nwo' content='{{ site.remote_theme | split: "@" | first }}'>
+<meta name='remote_theme_branch' content='{{ site.remote_theme | split: "@" | lst }}'>
 {% endif %}
 <!-- SEO -->
 {% include page/seo.html %}
@@ -19,6 +18,7 @@
 <link rel='stylesheet' href='{{ "assets/css/stylesheet.css" | absolute_url }}?build={{ site.time | date: "%s" }}'>
 
 <!-- SCRIPTS -->
+<!-- jQuery 3.6.0 https://api.jquery.com/ -->
 <script src='{{ "assets/js/jquery.3.6.0.min.js" | absolute_url }}'></script>
 
 <!-- base64.js 3.7.2 https://github.com/dankogai/js-base64 -->
@@ -30,4 +30,5 @@
 <!-- js-yaml.js 4.1.0 https://github.com/nodeca/js-yaml -->
 <script src='{{ "assets/js/js-yaml.min.js" | absolute_url }}'></script>
 
+<!-- assets/js/script.coffee -->
 <script src='{{ "assets/js/script.js" | absolute_url }}?build={{ site.time | date: "%s" }}' defer></script>

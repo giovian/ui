@@ -10,7 +10,7 @@ order: 10
 
 ## Theme
 
-The style {% include widgets/github_link.html path='_sass/default/_variabiles.sass' text='variabiles' %} can be overridden creating the file `_sass/variabiles.sass`.  
+The style {% include widgets/github_link.html path='_sass/default/_variabiles.sass' text='variabiles' remote=true %} can be overridden creating the file `_sass/variabiles.sass`.  
 Custom sass can be added creating the file `_sass/custom.sass`.  
 Theme can be set in the `_config.yml` file with the `css.theme` value, default to `default`.
 
@@ -72,7 +72,7 @@ css:
 ```
 {:.minimal}
 
-Possible syntax themes are in {% include widgets/github_link.html path='_sass/syntax' %}.
+Possible syntax themes are in {% include widgets/github_link.html path='_sass/syntax' remote=true %}.
 
 {% include widgets/api.html include='page/sidebar' %}
 {% include widgets/api.html include='page/navigation' %}
