@@ -1,0 +1,98 @@
+//
+// BIG SCREEN
+// --------------------------------------
+@media (min-width: $big-screen)
+  .wrapper
+    width: $main-width-big
+
+//
+// SMALL SCREEN
+// --------------------------------------
+@media (max-width: $small-screen)
+
+  .wrapper
+    width: 100%
+
+  main
+    height: auto
+    overflow-y: auto
+    position: static
+    & > .wrapper
+      padding-inline: $space
+
+  aside.sidebar
+    position: static
+    height: auto
+    width: 100%
+    border-bottom: $border-small solid var(--bg-secondary)
+
+  //
+  // NAV
+  // --------------------------------------
+  nav
+    // Remove sticky
+    position: static !important
+
+    .wrapper
+      // Stack elements vertically (left)
+      flex-direction: column
+      align-items: start
+
+      & > ul
+        display: block
+        margin-left: 0
+        padding-left: $space
+        padding-bottom: $space
+        li
+          a, span
+            padding: 0
+          ul
+            display: block
+            position: static
+            background: var(--bg)
+            padding-left: $space
+            li
+              a, span
+                padding: 0
+
+  // Stack grid columns
+  .grid
+    grid-template-columns: 1fr
+  .flex
+    flex-direction: column
+
+  //
+  // Footer
+  // --------------------------------------
+  footer .wrapper
+    padding: $space
+
+    // Stack lists
+    flex-direction: column
+    // Lists alignment
+    ul
+      text-align: left !important
+
+  //
+  // Headings
+  // --------------------------------------
+  // Spacing
+  @for $index from 1 through length($headings-margins)
+    $margin: nth($headings-margins, $index)
+    h#{$index}
+      margin-top: #{$margin*2}em
+
+  // Tables
+  table, thead, tbody, tfoot, th, td, tr
+    display: block
+  td, th
+    text-align: left !important
+    border-bottom-width: 0px !important
+    &:last-child
+      border-bottom-width: 1px !important
+  table:not(.no-border)
+    thead:first-child tr:first-child th:first-child
+      border-radius: $border-big $border-big 0 0
+    tfoot:last-child tr:last-child td:last-child,
+    tbody:last-child tr:last-child td:last-child,
+      border-radius: 0 0 $border-big $border-big

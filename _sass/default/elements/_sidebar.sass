@@ -1,14 +1,11 @@
 aside.sidebar
 
-  @extend .border-right, .bg, .fg
-  border-color: var(--bg-secondary) !important
+  @extend .border-right, .border-secondary, .bg, .fg
 
-  height: 100vh
   width: $sidebar-width
-
+  height: 100vh
   position: sticky
   top: 0
-
   overflow-y: auto
 
   &:empty
