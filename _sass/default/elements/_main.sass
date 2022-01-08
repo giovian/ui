@@ -5,8 +5,14 @@ main
   height: 100vh
   position: sticky
   top: 0
-  overflow-y: auto
+  overflow-y: scroll
   scroll-behavior: smooth
+
+  // Sticky nav anchor links offset
+  @if $nav-sticky
+  \:target
+    scroll-margin-top: 2.6em
+    scroll-snap-margin-top: 2.6em
 
   & > .wrapper
     @extend .pv
