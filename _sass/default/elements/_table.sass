@@ -26,10 +26,15 @@ tbody:nth-of-type(2n) td
 
 // CSV tables
 table.csv
-  tbody tr td:first-child
-    @extend .fg-secondary
-  td[data-value-type='integer'], td[data-value-type='number']
-    text-align: right
-    @extend .blue, .fg
-  span[datetime]
-    text-transform: capitalize
+  thead
+    th:first-child
+      @extend .right
+  tbody
+    td
+      @extend .right
+    td:first-child
+      @extend .fg-secondary
+    td[data-value-type='integer'], td[data-value-type='number']
+      @extend .blue
+    span[datetime]
+      text-transform: capitalize

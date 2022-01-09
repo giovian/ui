@@ -1,3 +1,6 @@
+#
+# Fill CSV TABLE function
+# --------------------------------------
 fill_table = (data, schema, table) ->
 
   # Get filter
@@ -5,10 +8,13 @@ fill_table = (data, schema, table) ->
   # Loop CSV data
   csv = Base64.decode(data.content).split '\n'
   headers = csv.shift().split ','
-  # Headers
-  table.find('thead').empty().append $('<tr/>').append $('<th/>', {text: csv.length})
+  # Count header (empty from loading)
+  table.find('thead').empty().append $('<tr/>').append $("<th id='count'><span>#{csv.length}</span> </th>").append $ '<a/>', {text: '▲', href: '#up', class: 'prevent-default'}
+  # Set width style
+  table.find('#count').css 'width', "#{csv.length.toString().length+1}em"
+  # Loop headers and populate filter
   for head in headers
-    table.find('thead tr').append "<th>#{head}</th>"
+    table.find('thead tr').append "<th id='#{head}'>#{head}</th>"
     filter.find('select').append $('<option/>', {value: head, text: head})
   # Append filter
   table.before filter
@@ -18,18 +24,19 @@ fill_table = (data, schema, table) ->
     # Create row
     row = $('<tr/>', {'data-row': j+1}).append "<td>#{j+1}</td>"
     # Loop row values
+    widths = []
     for value, i in row_data.split ','
       value_properties = schema.items.properties[headers[i]]
       content = value
       # Check value type
       if value_properties.format is 'date' and value
         date = new Date(value).toLocaleDateString("{{ site.language | default: 'en-US' }}",{weekday: 'short', day: '2-digit', month: 'short', year: 'numeric'})
-        content = $ '<span/>', {text: date, datetime: value}
+        content = $ '<span/>', {text: value, datetime: value}
         datetime content
       # Append cell
       row.append $('<td/>', {
           'data-value-type': value_properties.type
-          'data-column': headers[i]
+          'headers': headers[i]
         }).append content
 
     # End row loop, append
@@ -38,6 +45,9 @@ fill_table = (data, schema, table) ->
   # End file loop
   return # Table populated
 
+#
+# CSV TABLEs loop
+# --------------------------------------
 $('table.csv[data-file!=""]').each ->
   table = $ @
   table.find('thead').append '<tr class="no-border"><th>Loading</th></tr>'
@@ -55,6 +65,19 @@ $('table.csv[data-file!=""]').each ->
 
   return # End CSV tables loop
 
+#
+# Events
+# --------------------------------------
+
+# Hide last borders
+hide_last_borders = (table) ->
+  table.find('tr').removeClass 'no-border'
+  # Remove bottom border from last visible row and thead if no match
+  table.find('tr:not(.hidden):last').addClass 'no-border'
+  if !table.find('tbody tr:not(.hidden)').length
+    table.find('thead tr').addClass 'no-border'
+  return
+
 # Filter event
 $(document).on 'input', 'select[name=column], input[name=value]', ->
   filter = $(@).parents 'div.filter'
@@ -62,19 +85,37 @@ $(document).on 'input', 'select[name=column], input[name=value]', ->
   value = filter.find('input[name=value]').val()
   table = filter.next 'table'
   # Reset from last filter
-  table.find('tr').removeClass 'hidden no-border'
-  table.find('thead:first th:first').text table.find('tbody tr').length
-  if !value then return
+  table.find('tr').removeClass 'hidden'
+  table.find('#count span').text table.find('tbody tr').length
+
+  if !value
+    hide_last_borders table
+    return
   found = 0
   # Hide rows without a match in cells
-  table.find("td[data-column*='#{column}']").each ->
+  table.find("td[headers='#{column}']").each ->
     if !$(@).text().includes value
       $(@).parents('tr').addClass 'hidden'
     else found++
     return # End cells loop
-  # Remove bottom border from last visible row and thead if no match
-  table.find('tr:not(.hidden):last').addClass 'no-border'
-  if !found then table.find('thead tr').addClass 'no-border'
+  hide_last_borders table
+
   # Update found counter
-  table.find('thead:first th:first').text found
+  table.find('#count span').text found
   return # End filter event
+
+# Sort event
+$(document).on 'click', '#count a', ->
+  link = $ @
+  table = link.parents 'table'
+  tbody = table.find 'tbody'
+  if link.attr('href') is '#up'
+    link.attr 'href', '#down'
+    link.text '▼'
+    tbody.find('tr').each -> tbody.prepend $ @
+  else
+    link.attr 'href', '#up'
+    link.text '▲'
+    tbody.find('tr').each -> tbody.prepend $ @
+  hide_last_borders table
+  return # End sort event
