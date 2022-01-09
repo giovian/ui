@@ -57,12 +57,34 @@ select[multiple] option[value=""]:only-of-type
 //
 // Inside FORMS
 // --------------------------------------
-form
-  @extend .border, .mv, .rounded
+main form
+  @extend .mv, .border, .rounded
   display: table
-  
-  // Do not clip rounded corners
-  overflow: hidden
+
+  // BORDERS
+  & > h3, & > p
+    @extend .border-bottom
+  div.grid > div:not(:last-child)
+    @extend .border-right
+  div[data-type=button]
+    @extend .border-top
+
+.sidebar form
+  h3
+    font-size: 1em
+    @extend .p-around
+  input
+    max-width: 100%
+
+form
+
+  // BORDERS
+  div.item
+    @extend .border-bottom
+    &:not(:last-of-type)
+      @extend .border-secondary
+  div[data-type=array]
+    @extend .border-top
 
   // Grid has no GAP
   div.grid
@@ -81,14 +103,8 @@ form
     @extend .fg-secondary
 
   //
-  // BORDERS MARGINS and BLOCK
+  // DETAILS MARGINS
   // --------------------------------------
-  & > h3, & > p, div.item
-    @extend .border-bottom
-  div.grid > div:not(:last-child)
-    @extend .border-right
-  div[data-type=array]
-    @extend .border-top
   details
     @extend .mz
 
@@ -97,10 +113,9 @@ form
   // --------------------------------------
   div[data-type=button]
     padding: $space/2
-    @extend .border-top
   // Enabled
   button:enabled, input[type=button], input[type=reset], input[type=submit]
-    @extend .button, .bg, .fg
+    @extend .button
     margin: 0
   // Disabled
   input:disabled, button:disabled, select:disabled, input[readonly]
@@ -117,8 +132,7 @@ form
   // BG Secondary
   & > h3, & > h4,
   [data-type=button], .button:hover
-    background: var(--bg-secondary)
-    color: var(--fg)
+    background: var(--bg-secondary) !important
 
   // Normal
   .button, .button:active

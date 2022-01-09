@@ -4,7 +4,7 @@
   <input type='hidden' name='$schema' value='https://json-schema.org/draft/2020-12/schema'>
 
   <div data-type='string'>
-    <label for='$id' markdown=1>`$id`: file path (no extension)</label>
+    <label for='$id'><code>$id</code> file path (no extension)</label>
     <input type='text' autocomplete='off' name='$id' required>
     <span markdown=1>URI-reference inside `_data/`</span>
   </div>
@@ -54,7 +54,7 @@
           PROPERTY TEMPLATE
 -->
 <template id='template-property'>
-  <details class='border-top'>
+  <details>
     <summary><a href='#remove-property' data-remove='property' class='prevent-default'>remove</a></summary>
     <div data-type='string'>
       <label for='title'>Title</label>

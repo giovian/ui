@@ -31,12 +31,19 @@ main details
       padding: 0
 
 //
+// FORM DETAILS
+// --------------------------------------
+form details
+  @extend .border-top, .border-secondary
+
+//
 // SIDEBAR DETAILS
 // --------------------------------------
 .sidebar
+  & > details summary
+    @extend .bg-secondary, .fg-secondary
   details
     summary
-      @extend .bg-secondary, .fg-secondary
       &:hover
         color: var(--link) !important
       &:active
