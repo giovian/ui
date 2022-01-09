@@ -21,9 +21,9 @@ checks = ->
       data: ajax_data
     latest.done (data) ->
       # Compare online and stored remote theme latest release `tag_name`
-      if data[0].tag_name isnt storage.get 'repository.remote_theme_tag_name'
+      if data.tag_name isnt storage.get 'repository.remote_theme_tag_name'
         # Update Release on storage
-        storage.assign 'repository', {remote_theme_tag_name: data[0].tag_name}
+        storage.assign 'repository', {remote_theme_tag_name: data.tag_name}
         # Request a build
         notification 'New remote theme Release', ''
       return # End remote SHA check

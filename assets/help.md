@@ -28,6 +28,7 @@ order: 1000
 **Remote theme**
 - Theme <{{ site.remote_theme | split: '@' | first | prepend: 'https://github.com/' }}>
 - Plugin <https://github.com/benbalter/jekyll-remote-theme> {{ site.github.versions["jekyll-remote-theme"] }}
+
 **Releases**
 <ul github-api-url='repos/{{ site.remote_theme | split: '@' | first }}/releases' github-api-out='tag_name,name,published_at'></ul>
 {% endif %}
