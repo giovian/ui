@@ -3,6 +3,7 @@ layout: null
 ---
 {
   "name": "{{ site.github.repository_nwo }}",
+  "short_name": "{{ site.github.project_title }}",
   "description": "{{ site.description | default: site.github.project_tagline }}",
   "display": "standalone",
   "manifest_version": 2

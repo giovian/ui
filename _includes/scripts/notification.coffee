@@ -28,7 +28,6 @@ notification('text', 'color', persist)
 **Arguments**
 
 - `text`: text to show
-- `color`: added as class with prepended `.color-`{:.language-sass}.  
-  Default to `.bg-secondary`{:.language-sass}
+- `color`: added as class, default to `.bg-secondary`{:.language-sass}
 - `persist`: boolean, if `true` the notification will not fade out
 {%- endcapture -%}

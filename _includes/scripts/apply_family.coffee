@@ -33,7 +33,7 @@ The function `apply_family()` is initially called after login check (even if no 
 <!-- paragraph will have `hidden` class if has any parent with class `logged` -->
 <p apply-if-parent="hidden|.logged">...</p>
 
-<!-- table will have `no-border color-red` classes if has any children with class `past` -->
-<table apply-if-children="no-border color-red|.past">...</table>
+<!-- table will have `no-border red` classes if has any children with class `past` -->
+<table apply-if-children="no-border red|.past">...</table>
 ```
 {%- endcapture -%}
