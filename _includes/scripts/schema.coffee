@@ -188,7 +188,7 @@ $('form.schema').each ->
       else
         form.removeAttr 'disabled'
         # Reset eventual Document
-        $('body').find("form.document[data-schema=#{form.find('[name="$id"]').val()}]").trigger 'reset'
+        $('body').find("form.document[data-schema='#{path}']").trigger 'reset'
       return # End new file
 
     # File present, overwrite with sha reference
@@ -206,7 +206,7 @@ $('form.schema').each ->
       put.always ->
         form.removeAttr 'disabled'
         # Reset eventual Document
-        $('body').find("form.document[data-schema=#{form.find('[name="$id"]').val()}]").trigger 'reset'
+        $('body').find("form.document[data-schema='#{path}']").trigger 'reset'
       return # End overwrite
 
     return # End submit handler
@@ -216,7 +216,7 @@ $('form.schema').each ->
 ## Schema
 
 Manage a schema FORM of `type=array`.  
-Needs [schema]({{ 'docs/widgets/#schema' | absolute_url }}) widget.
+Needs [schema]({{ 'docs/widgets/#schema' | absolute_url }}){: remote=''} widget.
 
 **FORM**
 

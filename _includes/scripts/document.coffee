@@ -1,5 +1,9 @@
-$('form.document').each ->
+$('form.document[data-schema!=""]').each ->
   form = $ @
+  path = form.attr 'data-schema'
+  # Prepend user folder if repository is forked
+  if storage.get "repository.fork"
+    path = "user/#{storage.get 'login.user'}/#{path}"
   schema = {}
 
   create_item = ->
@@ -69,20 +73,16 @@ $('form.document').each ->
       div.append [label, " ", field]
       # Append output element for RANGE
       if value.format is 'range'
-        div.append $('<output/>', {for: key})
+        div.append $ '<output/>', {for: key}
         range_enable field
       # Append description SPAN
-      if value.description then div.append $('<span/>': {text: value.description})
+      if value.description then div.append $ '<span/>', {text: value.description}
       # Append DIV to ITEM
       item.append div
     # End properties loop
     return item # End create_item
 
   load_schema = ->
-    path = form.attr 'data-schema'
-    # Prepend user folder if repository is forked
-    if storage.get("repository.fork")
-      path = "user/#{storage.get 'login.user'}/#{path}"
     schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
     form.attr 'disabled', ''
     get_schema = $.get schema_url
@@ -99,8 +99,8 @@ $('form.document').each ->
     get_schema.fail -> form.find('.color-red.hidden').show()
     return # End load_schema function
 
-  # Populate form
-  if form.attr 'data-schema' then load_schema()
+  # Initial form population
+  load_schema()
 
   # ADD PROPERTY
   form.on 'click', 'a[data-add="item"]', ->
@@ -143,10 +143,6 @@ $('form.document').each ->
     rows_csv = (row.join(',') for row in rows).join('\n')
 
     # Prepare for requests
-    path = form.attr('data-document') || form.attr('data-schema')
-    # Prepend user folder if repository is forked
-    if storage.get("repository.fork")
-      path = "user/#{storage.get 'login.user'}/#{path}"
     document_url = "#{github_api_url}/contents/_data/#{path}.csv"
     form.attr 'disabled', ''
 
@@ -166,7 +162,11 @@ $('form.document').each ->
         put = $.ajax document_url,
           method: 'PUT'
           data: JSON.stringify load
-        put.done -> notification 'Document created', 'green'
+        put.done ->
+          notification 'Document created', 'green'
+          # Update eventual CSV table
+          $("table.csv[data-file='#{form.attr 'data-schema'}']").each -> load_csv_table @
+          return # End document created
         put.always ->
           form.removeAttr 'disabled'
           form.trigger 'reset'
@@ -174,7 +174,7 @@ $('form.document').each ->
       else form.removeAttr 'disabled'
       return # End file don't exist case
 
-    # File present, ovwrwrite with SHA reference
+    # File present, overwrite with SHA reference
     get_document.done (data, status) ->
       # Encode csv file
       encoded_content = Base64.encode [Base64.decode(data.content), rows_csv].join('\n')
@@ -188,7 +188,11 @@ $('form.document').each ->
       put = $.ajax document_url,
         method: 'PUT'
         data: JSON.stringify load
-      put.done -> notification 'Document edited', 'green'
+      put.done ->
+        notification 'Document edited', 'green'
+        # Update eventual CSV table
+        $("table.csv[data-file='#{form.attr 'data-schema'}']").each -> load_csv_table @
+        return # End document update
       put.always ->
         form.removeAttr 'disabled'
         form.trigger 'reset'

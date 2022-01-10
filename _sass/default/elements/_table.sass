@@ -18,11 +18,8 @@ tr.no-border
   td, th
     @extend .no-border
 
-thead th, tfoot td
+thead th, tfoot td, tbody:nth-of-type(2n) td
   @extend .bg-secondary
-
-tbody:nth-of-type(2n) td
-  background: var(--bg-secondary)
 
 // CSV tables
 table.csv
@@ -34,7 +31,3 @@ table.csv
       @extend .right
     td:first-child
       @extend .fg-secondary
-    td[data-value-type='integer'], td[data-value-type='number']
-      @extend .blue
-    span[datetime]
-      text-transform: capitalize

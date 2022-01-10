@@ -46,24 +46,33 @@ fill_table = (data, schema, table) ->
   return # Table populated
 
 #
-# CSV TABLEs loop
+# Load CSV File
 # --------------------------------------
-$('table.csv[data-file!=""]').each ->
-  table = $ @
+load_csv_table = (element) ->
+  table = $ element
   table.find('thead').append '<tr class="no-border"><th>Loading</th></tr>'
 
-  # Get files
+  # Get file names
   csv_file = "#{table.attr 'data-file'}.csv"
   schema_file = csv_file.replace '.csv', '.schema.json'
 
   # Load schema and CSV
   get_schema = $.get "#{github_api_url}/contents/_data/#{schema_file}"
   get_schema.done (data, status) ->
+    # Decode schema
     schema = JSON.parse Base64.decode(data.content)
+    # Load document file
     get_csv = $.get "#{github_api_url}/contents/_data/#{csv_file}"
-    get_csv.done (data, status) -> fill_table data, schema, table  
+    # Fill table
+    get_csv.done (data, status) -> fill_table data, schema, table
+    return # End schema file load
 
   return # End CSV tables loop
+
+#
+# CSV TABLEs loop
+# --------------------------------------
+$('table.csv[data-file!=""]').each -> load_csv_table @
 
 #
 # Events
@@ -119,3 +128,10 @@ $(document).on 'click', '#count a', ->
     tbody.find('tr').each -> tbody.prepend $ @
   hide_last_borders table
   return # End sort event
+
+{%- capture api -%}
+## CSV
+
+Manage a [CSV table widget]({{ 'docs/widgets/#csv-table' | absolute_url }}){: remote=''}, populate the relative `table.csv[data-file]`.
+
+{%- endcapture -%}

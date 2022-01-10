@@ -13,20 +13,21 @@ checks = ->
       notification "<a href='#{new_url}'>New build</a>", '', true
     return # End latest callback
 
-  # Check remote theme, if used
+  # Check remote theme
   if '{{ site.remote_theme }}' isnt ''
     [remote, branch] = '{{ site.remote_theme }}'.split '@'
     ajax_data = if branch then {sha: branch} else {}
     latest = $.get "{{ site.github.api_url }}/repos/#{remote}/releases/latest",
       data: ajax_data
     latest.done (data) ->
-      # Compare online and stored remote theme latest release `tag_name`
-      if data.tag_name isnt storage.get 'repository.remote_theme_tag_name'
-        # Update Release on storage
-        storage.assign 'repository', {remote_theme_tag_name: data.tag_name}
-        # Request a build
-        notification 'New remote theme Release', ''
-      return # End remote SHA check
+      # Compare online and hardcoded version
+      if data.tag_name isnt '{{ include version.html }}'
+        # Update hardcoded version
+        update_version = $.ajax "#{github_api_url}/contents/_includes/version.html",
+          method: 'PUT'
+          data: JSON.stringify {message: 'Bump remote theme version', content: Base64.encode data.tag_name}
+        update_version.done -> notification 'Remote theme release updated'
+      return # End remote TAG check
 
   # Schedule next check
   setTimeout checks, 60 * 1000
@@ -40,15 +41,16 @@ if '{{ site.github.environment }}' isnt 'development' and login.logged_admin()
 {%- capture api -%}
 ## Updates
 
-Updates are checked every minute after pageload, only if the user is logged as `admin`.  
+Updates are checked every minute after pageload, only if the user is logged as `admin`.
 
-**Latest build**  
+**Latest build**
+
 Compare Jekyll `site.time` with GitHub latest built creation time.  
-If they are different, show a notification link.  
+If they are different, show a notification link.
 
 **Remote theme Latest Release Tag Name**  
 Compare the remote theme latest release tag name with previous stored tag name.  
-If they are different, show a notification.  
+If they are different, show a notification.
 
 This script is not active in `development` environment.
 {%- endcapture -%}
