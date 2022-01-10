@@ -20,7 +20,7 @@ checks = ->
     latest_tag = $.get "{{ site.github.api_url }}/repos/#{remote}/releases/latest",
       data: ajax_data
     latest_tag.done (data) ->
-      varsion_url = "#{github_api_url}/contents/_includes/version.html"
+      version_url = "#{github_api_url}/contents/_includes/version.html"
       get_version = $.get version_url
       get_version.done (version_file, status) ->
         # Compare online and hardcoded version
