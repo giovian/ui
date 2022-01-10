@@ -5,19 +5,30 @@ fill_table = (data, schema, table) ->
 
   # Get filter
   filter = get_template '#template-filter'
+  # Get sort
+  sort = table.attr 'data-sort'
   # Loop CSV data
   csv = Base64.decode(data.content).split '\n'
   headers = csv.shift().split ','
   # Count header (empty from loading)
-  table.find('thead').empty().append $('<tr/>').append $("<th id='count'><span>#{csv.length}</span> </th>").append $ '<a/>', {text: '▲', href: '#up', class: 'prevent-default'}
+  header_cell = get_template '#template-sort-header'
+  header_cell.find('#count span').text csv.length
+  table.find('thead').empty().append header_cell
+  apply_family()
   # Set width style
-  table.find('#count').css 'width', "#{csv.length.toString().length+1}em"
+  table.find('#count').css 'width', "#{csv.length.toString().length+2}em"
+  
   # Loop headers and populate filter
   for head in headers
     table.find('thead tr').append "<th id='#{head}'>#{head}</th>"
     filter.find('select').append $('<option/>', {value: head, text: head})
-  # Append filter if not already present
-  if !table.prev('.filter').length then table.before filter
+  # Append filter if not already present or reset
+  filter_found = table.prev '.filter'
+  if !filter_found.length
+    table.before filter
+  else
+    filter_found.find('select[name=column]').selectedIndex = null
+    filter_found.find('input').val ''
 
   # Reset if already populated
   table.find('tbody').empty()
@@ -26,7 +37,6 @@ fill_table = (data, schema, table) ->
     # Create row
     row = $('<tr/>', {'data-row': j+1}).append "<td>#{j+1}</td>"
     # Loop row values
-    widths = []
     for value, i in row_data.split ','
       value_properties = schema.items.properties[headers[i]]
       content = value
@@ -42,7 +52,9 @@ fill_table = (data, schema, table) ->
         }).append content
 
     # End row loop, append
-    table.find('tbody').append row
+    if table.attr('data-sort') is 'up'
+      table.find('tbody').append row
+    else table.find('tbody').prepend row
 
   # End file loop
   return # Table populated
@@ -116,19 +128,17 @@ $(document).on 'input', 'select[name=column], input[name=value]', ->
   return # End filter event
 
 # Sort event
-$(document).on 'click', '#count a', ->
+$('table.csv[data-file!=""]').on 'click', '#count a', ->
   link = $ @
   table = link.parents 'table'
   tbody = table.find 'tbody'
   if link.attr('href') is '#up'
-    link.attr 'href', '#down'
-    link.text '▼'
-    tbody.find('tr').each -> tbody.prepend $ @
+    table.attr 'data-sort', 'down'
   else
-    link.attr 'href', '#up'
-    link.text '▲'
-    tbody.find('tr').each -> tbody.prepend $ @
+    table.attr 'data-sort', 'up'
+  tbody.find('tr').each -> tbody.prepend $ @
   hide_last_borders table
+  apply_family()
   return # End sort event
 
 {%- capture api -%}

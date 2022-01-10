@@ -1,18 +1,3 @@
-#
-# TEMPLATE helper function
-# --------------------------------------
-get_template = (id, prepend) ->
-  template = $ $(id).clone().prop('content')
-  if prepend
-    # Update labels [for]
-    template.find('label[for]').each ->
-      $(@).attr 'for', (i, val) -> "#{prepend}[#{val}]"
-    # Update inputs [name]
-    template.find(':input[name]').attr 'name', (i, val) -> "#{prepend}[#{val}]"
-    # Update switches
-    template.find('a[data-add="enum"]').attr 'data-prepend', prepend
-  return template
-
 # Reset FORMs TABs
 reset_form_tabs = (tab) ->
   if $(tab).find('div[data-tab="enum"] div[enum-inject]:not(:empty)').length then index=1 else index=0
@@ -60,34 +45,11 @@ get_property = (key, value) ->
 $('form.schema').each ->
   form = $ @
 
-  load_schema = ->
-    path = form.attr 'data-schema'
-    form.find('[name="$id"]').val path
-    # Prepend user folder if repository is forked
-    if storage.get("repository.fork")
-      path = "user/#{storage.get 'login.user'}/#{path}"
-    schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
-    form.attr 'disabled', ''
-    get_schema = $.get schema_url
-    get_schema.done (data, status) ->
-      # Get schema: decode from base 64 and parse as yaml
-      schema = JSON.parse Base64.decode(data.content) # jsyaml.load
-      # Populate fields
-      form.find('[name="title"]').val schema.title
-      form.find('[name="$id"]').val schema['$id']
-      form.find('[name="description"]').val schema.description
-      # Loop items.properties
-      for own key, value of schema.items.properties
-        form.find('[properties-inject]').append get_property(key, value)
-      return # Form is populated
-    get_schema.always -> form.removeAttr 'disabled'
-    return # End load_schema function
-
   # Populate form
-  if form.attr 'data-schema' then load_schema()
+  if form.attr 'data-schema' then form_load_schema form
 
   #
-  # CREATE SCHEMA
+  # EVENTS
   # --------------------------------------
 
   # ADD PROPERTY
@@ -149,7 +111,7 @@ $('form.schema').each ->
     # Reset .create-schema forms
     form.find('[properties-inject]').empty()
     # Load schema
-    if form.attr 'data-schema' then load_schema()
+    if form.attr 'data-schema' then form_load_schema form
     return # end Reset handler
 
   # Submit
@@ -163,9 +125,6 @@ $('form.schema').each ->
     # Write data
     encoded_content = Base64.encode JSON.stringify(form.serializeJSON(), null, 2)
     path = form.find('[name="$id"]').val()
-    # Prepend user folder if repository is forked
-    if storage.get("repository.fork")
-      path = "user/#{storage.get 'login.user'}/#{path}"
     schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
     notification 'Check if file exist'
     form.attr 'disabled', ''

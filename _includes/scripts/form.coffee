@@ -4,13 +4,141 @@
 $.serializeJSON.defaultOptions.skipFalsyValuesForTypes = 'string,number,boolean,date'.split ','
 
 #
+# TEMPLATE helper function
+# --------------------------------------
+get_template = (id, prepend) ->
+  template = $ $(id).clone().prop('content')
+  if prepend
+    # Update labels [for]
+    template.find('label[for]').each ->
+      $(@).attr 'for', (i, val) -> "#{prepend}[#{val}]"
+    # Update inputs [name]
+    template.find(':input[name]').attr 'name', (i, val) -> "#{prepend}[#{val}]"
+    # Update switches
+    template.find('a[data-add="enum"]').attr 'data-prepend', prepend
+  return template
+
+#
 # Enable RANGE OUTPUT
 # --------------------------------------
-range_enable = (range) ->
+input_range_enable = (range) ->
   $(range).on "input", (e) -> $(e.target).next("output").val $(e.target).val()
   # Initial update
   $(range).trigger "input"
   return # end Range loop
+
+#
+# Document form CREATE ITEM function
+# --------------------------------------
+form_create_item = (form) ->
+  schema = form.data 'schema_json'
+  item = $ '<div/>', {class: 'item'}
+  # Loop items properties
+  for own key, value of schema.items.properties
+    # Default variabiles
+    field = $ '<input/>', {type: 'text'}
+    data_type = 'string'
+
+    # Check enum SELECT
+    if value.enum?.length
+      field = $ '<select/>', {class: 'inline'}
+      for option in value.enum
+        field.append $ '<option/>', {value: option, text: option}
+
+    # Check property type and format
+    switch value.type
+      when 'string'
+        switch value.format
+          when 'textarea'
+            field = $ '<textarea/>', {'data-skip-falsy': true, spellcheck: false}
+            data_type = 'textarea'
+          when 'date' then field.attr 'type','date'
+          when 'uri' then field.attr 'type', 'url'
+          when 'date-time' then field.attr 'type', 'datetime-local'
+          when 'email', 'color', 'time' then field.attr 'type', value.format
+      when 'number', 'integer'
+        data_type = 'number'
+        field.attr 'type', 'number'
+        field.attr 'data-value-type', 'number'
+        if value.format is 'range'
+          data_type = 'range'
+          field.attr 'type', 'range'
+      when 'boolean'
+        data_type = 'select'
+        field = $('<select class="inline" data-value-type="boolean"></select>')
+          .append [
+            $ '<option value="true">True</option>'
+            $ '<option value="false">False</option>'
+          ]
+      else notification "Property type `#{value.type}` to do", 'red', true
+
+    # Complete field attributes
+    field.attr 'name', "#{key}"
+    # Classes
+    if value.class then field.addClass value.class
+    # String
+    if value.maxLength then field.attr 'maxlength', value.maxLength
+    if value.minLength then field.attr 'minlength', value.minLength
+    if value.pattern then field.attr 'pattern', value.pattern
+    # Number
+    if value.minimum then field.attr 'min', value.minimum
+    if value.maximum then field.attr 'max', value.maximum
+    # Default
+    if value.default
+      if value.format is 'date' and value.default is 'today'
+        # Today date with leading zeros
+        field.val new Date().toLocaleDateString('en-CA')
+      else field.val value.default
+    # Prepare elements
+    label = $ '<label/>', {text: value.title || key, for: "#{key}"}
+    div = $ '<div/>', {'data-type': data_type}
+    # Integer
+    if value.type is 'integer' then field.attr 'step', 1
+    # Append label and field to DIV, add whitespace for inline SELECTs
+    div.append [label, " ", field]
+    # Append output element for RANGE
+    if value.format is 'range'
+      div.append $ '<output/>', {for: key}
+      input_range_enable field
+    # Append description SPAN
+    if value.description then div.append $ '<span/>', {text: value.description}
+    # Append DIV to ITEM
+    item.append div
+  # End properties loop
+  return item # End create_item
+
+#
+# FORM LOAD SCHEMA function
+# --------------------------------------
+form_load_schema = (form) ->
+  path = form.attr 'data-schema'
+  # Default schema $id if it's a new schema
+  form.find('[name="$id"]').val path
+  schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
+  form.attr 'disabled', ''
+  # Request schema file
+  get_schema = $.get schema_url
+  get_schema.done (data, status) ->
+    # Get schema content and save on DOM element as data
+    schema = JSON.parse Base64.decode(data.content)
+    form.data 'schema_json', schema
+    if schema.type isnt 'array'
+      notification "schema type `#{schema.type}` to do", 'red'
+    if form.hasClass 'schema'
+      # Populate fields
+      form.find('[name="title"]').val schema.title
+      form.find('[name="$id"]').val schema['$id']
+      form.find('[name="description"]').val schema.description
+      # Loop items.properties
+      for own key, value of schema.items.properties
+        form.find('[properties-inject]').append get_property(key, value)
+    if form.hasClass 'document'
+      form.find('[inject]').append form_create_item form
+      # Append item adder
+      form.find('[data-type="button"]').before get_template '#template-add-item'
+    return # Form is populated
+  get_schema.always -> form.removeAttr 'disabled'
+  return # End load_schema function
 
 #
 # ACTIVATION function
@@ -19,7 +147,7 @@ $('form').each ->
   form = $ @
 
   # Update range output
-  form.find("input[type=range]").each -> range_enable $(@)
+  form.find("input[type=range]").each -> input_range_enable $(@)
 
   # Required asterix
   form.find('input[required]').each -> $(@).prev('label').append '*'
