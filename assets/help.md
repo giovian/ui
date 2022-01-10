@@ -8,29 +8,30 @@ order: 1000
 <div class="grid">
   <div markdown="1">
 **Repository**
-- <https://github.com/{{ site.github.repository_nwo }}>
+- [{{ site.github.repository_nwo }}]({{ site.github.repository_url }})
 - Owner type `{{ repo.owner.type }}`
 - Page type `{% if site.github.is_user_page %}User{% endif %}{% if site.github.is_project_page %}Project{% endif %}`
 - Release `{{ site.github.releases | first | map: 'tag_name' | default: '-' }}` `{{ site.github.releases | first | map: 'name' | default: '-' }}`
 - Created <code>{% include widgets/datetime.html datetime=repo.created_at replace=true %}</code>
 - Modified <code>{% include widgets/datetime.html datetime=repo.modified_at replace=true %}</code>
-- Site build <code>{% include widgets/datetime.html datettime=site.time replace=true %}</code>
+- Site build <code>{% include widgets/datetime.html datetime=site.time replace=true %}</code>
 {% assign html_pages = site.html_pages | sort: "order" %}
 {% assign sorted_collections = site.collections | sort: "order" %}
 **Pages order**
-{% for item in html_pages %}- `{{ item.order | inspect }}` {{ item.title }}
+{% for item in html_pages %}- `{{ item.order | inspect }}` {{ item.title | default: item.name }}
 {% endfor %}
 **Collections order**
 {% for item in sorted_collections %}- `{{ item.order | inspect }}` {{ item.title | default: item.label }} ({{ item.docs.size }} documents){% assign collection_docs = item.docs | sort: "order" %}{% for p in collection_docs %}
-  - `{{ p.order | inspect }}` {{ p.title }}{% endfor %}
+  - `{{ p.order | inspect }}` {{ p.title | default: p.path }}{% endfor %}
 {% endfor %}
 {% if site.remote_theme %}
 **Remote theme**
-- Theme <{{ site.remote_theme | split: '@' | first | prepend: 'https://github.com/' }}>
-- Plugin <https://github.com/benbalter/jekyll-remote-theme> {{ site.github.versions["jekyll-remote-theme"] }}
+- Repository [{{ site.remote_theme | split: '@' | first }}]({{ site.remote_theme | split: '@' | first | prepend: 'https://github.com/' }})
+- Plugin [benbalter/jekyll-remote-theme](https://github.com/benbalter/jekyll-remote-theme) {{ site.github.versions["jekyll-remote-theme"] }}
+- Hardcoded version `{%- capture version -%}{{ include version.html }}{%- endcapture -%}{{ version | default: '-'}}`
 
-**Releases**
-<ul github-api-url='repos/{{ site.remote_theme | split: '@' | first }}/releases' github-api-out='tag_name,name,published_at'></ul>
+**Latest remote theme release**
+<ul github-api-url='repos/{{ site.remote_theme | split: '@' | first }}/releases/latest' github-api-out='tag_name,name,published_at'></ul>
 {% endif %}
 </div>
 <div markdown="1">

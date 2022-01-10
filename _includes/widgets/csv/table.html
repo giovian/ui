@@ -1,0 +1,26 @@
+<table class='csv' data-file='{{ include.file }}'>
+  <thead></thead>
+  <tbody></tbody>
+</table>
+<template id='template-filter'>
+  <div class='filter'>
+    <label for='column'>Filter</label>
+    <select class='inline' name='column'></select>
+    <input type='text' name='value' placeholder='Value'>
+  </div>
+</template>
+{%- capture api -%}
+## CSV Table
+
+Render a table from a CSV data file with sorting and filter features.  
+The TABLE will have a `csv` class and a `data-file` attribute.  
+Require the [csv]({{ 'docs/scripts/#csv' | absolute_url }}) script.
+
+```liquid
+{% raw %}{% include widgets/csv/table.html file='data_file_name' %}{% endraw %}
+```
+
+**Includes**
+
+- `file`: (required) filename of the CSV (no extension)
+{%- endcapture -%}

@@ -2,7 +2,8 @@
 layout: null
 ---
 {
-  "name": "{{ site.description | default: site.github.project_tagline }}",
-  "short_name": "{{ site.github.project_title }}",
-  "display": "standalone"
+  "name": "{{ site.github.repository_nwo }}",
+  "description": "{{ site.description | default: site.github.project_tagline }}",
+  "display": "standalone",
+  "manifest_version": 2
 }

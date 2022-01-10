@@ -9,7 +9,7 @@
 
 {% if site.remote_theme %}<!-- REMOTE THEME -->
 <meta name='remote_theme_nwo' content='{{ site.remote_theme | split: "@" | first }}'>
-<meta name='remote_theme_branch' content='{{ site.remote_theme | split: "@" | lst }}'>
+<meta name='remote_theme_branch' content='{{ site.remote_theme | split: "@" | last }}'>
 {% endif %}
 <!-- SEO -->
 {% include page/seo.html %}

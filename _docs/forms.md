@@ -131,7 +131,7 @@ storage.get("repository.fork") = true
 
 # CSV
 
-{% include widgets/csv.html file='practices' %}
+{% include widgets/csv/table.html file='practices' %}
 
 ```liquid
 {% raw %}{% include widgets/csv.html file='practices' %}{% endraw %}
