@@ -2,8 +2,8 @@
 checks = ->
 
   # Check latest build
-  latest = $.get '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}/pages/builds/latest'
-  latest.done (data) ->
+  latest_build = $.get '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}/pages/builds/latest'
+  latest_build.done (data) ->
     created_at = new Date(data.created_at).getTime() / 1000
     # Compare latest build created_at and site.time
     if data.status is 'built' and created_at > {{ site.time | date: "%s" }}
@@ -17,9 +17,9 @@ checks = ->
   if '{{ site.remote_theme }}' isnt ''
     [remote, branch] = '{{ site.remote_theme }}'.split '@'
     ajax_data = if branch then {sha: branch} else {}
-    latest = $.get "{{ site.github.api_url }}/repos/#{remote}/releases/latest",
+    latest_tag = $.get "{{ site.github.api_url }}/repos/#{remote}/releases/latest",
       data: ajax_data
-    latest.done (data) ->
+    latest_tag.done (data) ->
       varsion_url = "#{github_api_url}/contents/_includes/version.html"
       get_version = $.get version_url
       get_version.done (version_file, status) ->
