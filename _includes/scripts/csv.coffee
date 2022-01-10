@@ -16,10 +16,12 @@ fill_table = (data, schema, table) ->
   for head in headers
     table.find('thead tr').append "<th id='#{head}'>#{head}</th>"
     filter.find('select').append $('<option/>', {value: head, text: head})
-  # Append filter
-  table.before filter
+  # Append filter if not already present
+  if !table.prev('.filter').length then table.before filter
 
-  # Rows
+  # Reset if already populated
+  table.find('tbody').empty()
+  # Rows loop
   for row_data, j in csv
     # Create row
     row = $('<tr/>', {'data-row': j+1}).append "<td>#{j+1}</td>"

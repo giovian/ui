@@ -55,7 +55,7 @@ select[multiple] option[value=""]:only-of-type
   min-width: $space*5
 
 //
-// Inside FORMS
+// FORMS
 // --------------------------------------
 main form
   @extend .mv, .border, .rounded
@@ -70,6 +70,8 @@ main form
     @extend .border-top
 
 .sidebar form
+  @extend .border-bottom
+  border-color: var(--bg)
   h3
     font-size: 1em
     @extend .p-around

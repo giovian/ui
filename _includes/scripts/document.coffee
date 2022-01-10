@@ -191,7 +191,9 @@ $('form.document[data-schema!=""]').each ->
       put.done ->
         notification 'Document edited', 'green'
         # Update eventual CSV table
-        $("table.csv[data-file='#{form.attr 'data-schema'}']").each -> load_csv_table @
+        $("table.csv[data-file='#{form.attr 'data-schema'}']").each ->
+          fill_table load, schema, @
+          return # End CSV table update
         return # End document update
       put.always ->
         form.removeAttr 'disabled'

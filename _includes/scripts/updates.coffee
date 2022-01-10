@@ -20,13 +20,21 @@ checks = ->
     latest = $.get "{{ site.github.api_url }}/repos/#{remote}/releases/latest",
       data: ajax_data
     latest.done (data) ->
-      # Compare online and hardcoded version
-      if data.tag_name isnt '{{ include version.html }}'
-        # Update hardcoded version
-        update_version = $.ajax "#{github_api_url}/contents/_includes/version.html",
-          method: 'PUT'
-          data: JSON.stringify {message: 'Bump remote theme version', content: Base64.encode data.tag_name}
-        update_version.done -> notification 'Remote theme release updated'
+      varsion_url = "#{github_api_url}/contents/_includes/version.html"
+      get_version = $.get version_url
+      get_version.done (version_file, status) ->
+        # Compare online and hardcoded version
+        if data.tag_name isnt Base64.decode version_file.content
+          # Update hardcoded version
+          update_version = $.ajax version_url,
+            method: 'PUT'
+            data: JSON.stringify {
+              message: 'Bump remote theme version'
+              content: Base64.encode data.tag_name
+              sha: version_file.sha
+            }
+          update_version.done -> notification 'Remote theme release updated'
+        return # End getting version file
       return # End remote TAG check
 
   # Schedule next check

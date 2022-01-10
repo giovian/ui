@@ -27,7 +27,7 @@ storage =
       delete obj[key]
       storage.set_object obj
     else
-      localStorage.removeItem(storage.key)
+      localStorage.setItem storage.key, Base64.encode('{}')
     return storage
   console: ->
     console.group storage.key
