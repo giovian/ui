@@ -2,7 +2,7 @@
 checks = ->
 
   # Check latest build
-  latest_build = $.get '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}/pages/builds/latest'
+  latest_build = $.get "#{github_api_url}/pages/builds/latest"
   latest_build.done (data) ->
     created_at = new Date(data.created_at).getTime() / 1000
     # Compare latest build created_at and site.time
