@@ -1,5 +1,6 @@
 github_api_url = '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}'
 
+# For every lists: create link for the request and append it as first item
 $('ul[github-api-url],ul[github-api-url-repo]').each ->
   # Variabiles
   ul = $ @
@@ -16,11 +17,30 @@ $('ul[github-api-url],ul[github-api-url-repo]').each ->
     'class': 'prevent-default'
   )
   # Link event and append
-  link.on 'click', (e) -> request e
+  link.on 'click', (e) -> github_api_request e
   ul.append $('<li/>').append(link)
   return # end widgets loop
 
-request = (event) ->
+# Given a data array and an array of property names, return a list items array
+github_api_response_list = (data, out_array) ->
+  li_array = []
+  for out, j in out_array
+    property = out.trim().replace /\[(.+)\]/, ''
+    raw_value = reduce_object property, data
+    if typeof raw_value is 'string'
+      if Date.parse raw_value then raw_value = time_diff raw_value
+      if raw_value.startsWith 'https://github.com/'
+        raw_value = "<a href='#{raw_value}'>#{raw_value.slice 19}</a>"
+    if Array.isArray raw_value
+      for d, i in raw_value
+        li_array.push "<li>Item #{i}</li>"
+        sublist = github_api_response_list d, out.trim().match(/\[(.+)\]/)[1].split(',')
+        inner_list = $('<ul/>').append sublist
+        li_array.push inner_list
+    else li_array.push "<li>#{property} <code>#{raw_value}</code></li>"
+  return li_array # End response list
+
+github_api_request = (event) ->
   # Variabiles
   link = $ event.target
   list = link.parents 'ul'
@@ -29,35 +49,16 @@ request = (event) ->
   api = $.ajax "{{ site.github.api_url }}/#{link.attr('href').replace '#', ''}",
     method: link.attr 'github-api-method'
   api.done (data, status) ->
-    # Check if is Array
-    if Array.isArray data
-      # Loop array
-      for d, i in data
-        list.append "<li>Item #{i}</li>"
-        inner_list = $ '<ul/>'
-        # Loop out properties
-        for out in link.attr('github-api-out').split ','
-          property = out.trim()
-          raw_value = reduce_object(property, d)
-          value = if typeof raw_value is 'string' and Date.parse raw_value
-              time_diff raw_value
-            else raw_value
-          inner_list.append "<li>#{property} <code>#{value}</code></li>"
-        list.append inner_list
-    else
-      for out in link.attr('github-api-out').split ','
-        property = out.trim()
-        raw_value = reduce_object(property, data)
-        value = if typeof raw_value is 'string' and Date.parse raw_value
-            time_diff raw_value
-          else raw_value
-        list.append "<li>#{property} <code>#{value}</code></li>"
-
+    # For every data (object or array) append a list looping out properties
+    if !Array.isArray data then data = [data]
+    data.map (d) ->
+      list.append github_api_response_list d, link.attr('github-api-out').split ','
     return # End API response process
 
   # Output error
-  api.fail (request, status, error)-> list.append "<li>#{status}: <code>#{request.status}</code> #{request.responseJSON?.message || error}</li>"
+  api.fail (request, status, error) -> list.append "<li>#{status}: <code>#{request.status}</code> #{request.responseJSON?.message || error}</li>"
   api.always -> link.removeAttr 'disabled'
+
   return # End API request
 
 {%- capture api -%}

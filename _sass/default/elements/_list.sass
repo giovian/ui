@@ -20,8 +20,7 @@ footer li
     list-style-type: none
     padding-inline: $space*1
 
-dl
-  dt
-    font-weight: bold
-  dd
-    margin-left: $space*1.5
+// Consecutive `github-api` lists
+ul[github-api-url], ul[github-api-url-repo]
+  & + ul[github-api-url], & + ul[github-api-url-repo]
+    margin-top: -$space/3*2

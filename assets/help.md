@@ -44,6 +44,8 @@ order: 1000
 **Builds**
 <ul github-api-url-repo='pages/builds/latest' github-api-text='Latest' github-api-out='status, created_at'></ul>
 <ul github-api-url-repo='pages/builds' github-api-method='POST' github-api-out='status' github-api-text='Request new build'></ul>
+**Repository using {{ site.github.repository_nwo }}**
+<ul github-api-url='search/code?q={{ site.github.repository_nwo }}+in:file+language:yml+filename:_config+path:/' github-api-out='total_count,items[repository.html_url]' github-api-text='Search'></ul>
 **Rate limit**
 <ul github-api-url='rate_limit' github-api-text="Remaining and used" github-api-out='rate.used,rate.remaining,resources.search.used,resources.search.remaining'></ul>
 **Local storage**
