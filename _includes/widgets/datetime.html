@@ -1,9 +1,9 @@
-{%- assign datetime = include.datetime | default: "now" | date_to_xmlschema -%}
-{%- if include.time -%}{%- assign time = include.time | append: ":00" | slice: 0, 8 -%}{%- assign datetime = datetime | append: "T" | append: time -%}{%- endif -%}
+{%- assign datetime = include.datetime | default: 'now' | date_to_xmlschema -%}
+{%- if include.time -%}{%- assign time = include.time | append: ':00' | slice: 0, 8 -%}{%- assign datetime = datetime | append: 'T' | append: time -%}{%- endif -%}
 {%- assign cropped = datetime | date_to_rfc822 -%}
 {%- assign text = include.text | default: cropped -%}
 {%- assign title = include.title | default: cropped -%}
-<span datetime="{{ datetime }}"{% if include.embed %} embed="true"{% endif %}{% if include.replace %} replace="true"{% endif %} title="{{ title }}" original-text="{{ text }}">{{ text }}</span>
+<span datetime='{{ datetime }}'{% if include.embed %} embed='true'{% endif %}{% if include.replace %} replace='true'{% endif %} title='{{ title }}' original-text='{{ text }}'>{{ text }}</span>
 {%- capture api -%}
 ## Datetime
 
@@ -15,10 +15,10 @@ Render a SPAN element with a countdown or countup to a _datetime_.
 
 **Includes**
 
-- `datetime`: the datetime, default "now"
-- `time`: hour time in the for "hh:mm" or "hh:mm:ss"
-- `text`: text to show, default is datetime in the form yyyy-mm-ddThh:mm:ss+hh:mm
-- `title`: title attribute on hover, default to datetime in the form yyyy-mm-ddThh:mm:ss+hh:mm
+- `datetime`: the datetime, default `now`
+- `time`: hour time in the for `hh:mm` or `hh:mm:ss`
+- `text`: text to show, default is datetime in the form `yyyy-mm-ddThh:mm:ss+hh:mm`
+- `title`: title attribute on hover, default to datetime in the form `yyyy-mm-ddThh:mm:ss+hh:mm`
 - `embed`: append countdown or countup to the text
 - `replace`: will replace the date with countdown/countup
 {%- endcapture -%}
