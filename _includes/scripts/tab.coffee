@@ -1,8 +1,10 @@
 #
 # Reset functions
 # --------------------------------------
-reset_tabs = (tab, index=0) ->
+reset_tabs = (tab, link_index) ->
   container = $(tab)
+  id = [$('body').attr('page-title'), $('[tab-container]').index(container)].join '|'
+  index = link_index || storage.get("tabs.#{id}") || 0
   # Activate index link
   container.find('a[data-tab]').eq(index).addClass 'active'
   # Hide non-index tabs
@@ -33,12 +35,18 @@ $(document).on "click", "a[data-tab]", (event) ->
   container.find('div[data-tab]').each (i,e) ->
     if i isnt link.index() then $(@).addClass 'hidden' else $(@).removeClass 'hidden'
 
+  # Save TAB link click on storage
+  id = [$('body').attr('page-title'), $('[tab-container]').index(container)].join '|'
+  if link.index() > 0
+    storage.assign 'tabs', {"#{id}": link.index()}
+  else storage.clear "tabs.#{id}"
+
   return # End link click event
 
 {%- capture api -%}
 ## TABs
 
-Manage Show/Hide TABs with links
+Manage Show/Hide TABs with links and save the state on `storage`.
 
 ```html
 <div tab-container>

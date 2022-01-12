@@ -1,11 +1,15 @@
-reduce_object = (key, obj) -> key.split('.').reduce(
-  ((acc, part) => acc && acc[part]), obj
-)
+# Reduce object from key notation helper
+reduce_object = (key, obj) -> key.split('.').reduce ((acc, part) => acc && acc[part]), obj
+
+# Storage object
 storage =
   # Shorcuts
   key: '{{ site.github.repository_nwo }}'
   get: (key) ->
-    return if key then reduce_object key, storage.get_object() else storage.get_object()
+    return if key then reduce_object key, storage.check_object() else storage.check_object()
+  check_object: ->
+    obj = storage.get_object()
+    return if Object.keys(obj).length then obj else {}
   get_object: ->
     try JSON.parse(Base64.decode(localStorage.getItem(storage.key))) catch e then {}
   set_object: (obj) ->
@@ -15,16 +19,26 @@ storage =
   assign: (key, object) -> storage.set key, Object.assign(storage.get(key) || {}, object)
   set: (key, value) ->
     if key
-      if value and !jQuery.isEmptyObject value
-        obj = storage.get_object()
+      if value isnt undefined and value isnt {}
+        obj = storage.check_object()
         obj[key] = value
         storage.set_object obj
       else storage.clear key
     return storage
   clear: (key) ->
     if key
-      obj = storage.get_object()
+      obj = storage.check_object()
       delete obj[key]
+      keys = key.split '.'
+      keys.reduce ((acc, part, index) ->
+        if index is keys.length-1
+          delete acc[part]
+          return true
+        if !Object.keys(acc[part]?).length
+          delete acc[part]
+          return true
+        return acc[part]
+      ), obj
       storage.set_object obj
     else
       localStorage.setItem storage.key, Base64.encode('{}')
@@ -34,7 +48,7 @@ storage =
     console.log localStorage.getItem storage.key
     console.log storage.get()
     console.groupEnd()
-    return
+    return storage
 
 # Link to log storage in the console
 $(document).on "click", "a[log-storage]", (e) ->

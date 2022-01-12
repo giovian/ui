@@ -6,7 +6,8 @@ fill_table = (data, schema, table) ->
   # Get filter
   filter = get_template '#template-filter'
   # Get sort
-  sort = table.attr 'data-sort'
+  id = [$('body').attr('page-title'), $('table.csv').index(table)].join '|'
+  table.attr 'data-sort', (i, v) -> storage.get("sort.#{id}") || v
   # Loop CSV data
   csv = Base64.decode(data.content).split '\n'
   headers = csv.shift().split ','
@@ -23,12 +24,7 @@ fill_table = (data, schema, table) ->
     table.find('thead tr').append "<th id='#{head}'>#{head}</th>"
     filter.find('select').append $('<option/>', {value: head, text: head})
   # Append filter if not already present or reset
-  filter_found = table.prev '.filter'
-  if !filter_found.length
-    table.before filter
-  else
-    filter_found.find('select[name=column]').selectedIndex = null
-    filter_found.find('input').val ''
+  if !table.prev('.filter').length then table.before filter
 
   # Reset if already populated
   table.find('tbody').empty()
@@ -57,6 +53,13 @@ fill_table = (data, schema, table) ->
     else table.find('tbody').prepend row
 
   # End file loop
+  # Check filter saved state
+  if storage.get "filters.#{id}"
+    [selected_index, input_value] = storage.get("filters.#{id}").split '|'
+    filter = table.prev '.filter'
+    filter.find('select[name=column]').prop 'selectedIndex', selected_index
+    filter.find('input[name=value]').val input_value
+    filter.find('input[name=value]').trigger 'input'
   return # Table populated
 
 #
@@ -102,10 +105,19 @@ hide_last_borders = (table) ->
   return
 
 # Filter event
-$(document).on 'input', 'select[name=column], input[name=value]', ->
+$(document).on 'input', '.filter select[name=column], .filter input[name=value]', ->
   filter = $(@).parents 'div.filter'
-  column = filter.find('select[name=column]').val()
+  select = filter.find 'select[name=column]'
+  selected_index = select.prop 'selectedIndex'
+  column = select.val()
   value = filter.find('input[name=value]').val()
+  id = [
+    $('body').attr('page-title')
+    $('.filter').index filter
+  ].join '|'
+  if selected_index isnt 0 or value isnt ''
+    storage.assign 'filters', {"#{id}": "#{selected_index}|#{value}"}
+  else storage.clear "filters.#{id}"
   table = filter.next 'table'
   # Reset from last filter
   table.find('tr').removeClass 'hidden'
@@ -127,23 +139,37 @@ $(document).on 'input', 'select[name=column], input[name=value]', ->
   table.find('#count span').text found
   return # End filter event
 
+# Reset filter event
+$(document).on 'click', '.filter a[href="#reset"]', (e) ->
+  e.preventDefault()
+  filter = $(e.target).parents '.filter'
+  filter.find('select[name=column]').prop 'selectedIndex', null
+  filter.find('input').val ''
+  filter.find('select[name=column]').trigger 'input'
+  return # End reset event
+
 # Sort event
 $('table.csv[data-file!=""]').on 'click', '#count a', ->
   link = $ @
   table = link.parents 'table'
   tbody = table.find 'tbody'
+  id = [$('body').attr('page-title'), $('table.csv').index(table)].join '|'
   if link.attr('href') is '#up'
     table.attr 'data-sort', 'down'
+    # Save sort in storage
+    storage.assign 'sort', {"#{id}": 'down'}
   else
     table.attr 'data-sort', 'up'
+    storage.clear "sort.#{id}"
   tbody.find('tr').each -> tbody.prepend $ @
+  # Update bottom borders
   hide_last_borders table
+  # Update sort links visibility
   apply_family()
   return # End sort event
 
 {%- capture api -%}
 ## CSV
 
-Manage a [CSV table widget]({{ 'docs/widgets/#csv-table' | absolute_url }}){: remote=''}, populate the relative `table.csv[data-file]`.
-
+Manage a [CSV table widget]({{ 'docs/widgets/#csv-table' | absolute_url }}){: remote=''}, populate the relative `table.csv[data-file]` and store state on `storage`.
 {%- endcapture -%}
