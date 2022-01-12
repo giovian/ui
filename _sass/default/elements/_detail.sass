@@ -42,6 +42,8 @@ form details
   & > details summary
     @extend .bg-secondary, .fg-secondary
   details
+    &:not([open])
+      margin-bottom: $border-medium
     summary
       &:hover
         color: var(--link) !important

@@ -31,7 +31,7 @@ order: 30
 {% assign past_month = now | minus: month %}
 {% assign past_year = now | minus: year %}
 **Basic**
-- Empty {% include widgets/datetime.html %}
+- Default {% include widgets/datetime.html %}
 - Embed {% include widgets/datetime.html embed=true %}
 - Replace {% include widgets/datetime.html replace=true %}
 <div class="grid">

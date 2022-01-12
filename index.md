@@ -7,4 +7,4 @@
 
 - right sidebar
 - `new build` no for `version.html` or `_data` paths
-- refactor datetime
+- CSV edit and delete links
