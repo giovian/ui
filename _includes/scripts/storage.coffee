@@ -31,12 +31,8 @@ storage =
       delete obj[key]
       keys = key.split '.'
       keys.reduce ((acc, part, index) ->
-        if index is keys.length-1
-          delete acc[part]
-          return true
-        if !Object.keys(acc[part]?).length
-          delete acc[part]
-          return true
+        if index is keys.length-1 then delete acc[part]
+        if !Object.keys(acc).length then delete obj[keys[index-1]]
         return acc[part]
       ), obj
       storage.set_object obj

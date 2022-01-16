@@ -43,7 +43,6 @@ login.logout_link.on 'click', ->
 
 login.setLogin = ->
   $('html').removeClass 'role-admin role-guest logged'
-  $('html').removeAttr 'user'
   login.login_link.removeAttr 'disabled'
   storage.clear 'login'
   apply_family()
@@ -51,7 +50,6 @@ login.setLogin = ->
 
 login.setLogout = ->
   $('html').addClass "role-#{login.storage()['role']} logged"
-  $('html').attr 'user', login.storage()['user']
   login.login_link.removeAttr 'disabled'
   login.logout_link.attr 'title', login.text()
   apply_family()

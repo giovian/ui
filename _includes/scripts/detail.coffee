@@ -18,10 +18,7 @@ $('details').each ->
     open = !detail.attr? 'open'
     if storage.get('details')?[id] is undefined
       storage.assign 'details', {"#{id}": open}
-    else
-      obj = storage.get 'details'
-      delete obj[id]
-      storage.set 'details', obj
+    else storage.clear "details.#{id}"
     return
 
   return # End DETAILS loop

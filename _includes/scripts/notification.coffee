@@ -7,7 +7,7 @@ notification = (code, cls, persist = false) ->
     if persist then container.empty()
     container.append div
     # Log notification in console as well
-    console.log $("<b>#{code}</b>").text(), new Date().toLocaleTimeString('it-IT')
+    console.log $("<b>#{code}</b>").text(), new Date().toLocaleTimeString("{{ site.language | default: 'en-US' }}")
     # Timer to fade and expire
     if !persist then div.delay(3000).slideUp 'slow', -> div.remove()
 
