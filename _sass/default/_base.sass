@@ -13,12 +13,12 @@ abbr
   cursor: help
 
 // Not for clickable elements
-a, button, summary
+a, button, summary, 
   &[title]
     cursor: pointer
 
 // Default cursor
-[datetime]
+[datetime], span[title]
   cursor: default
 
 // Inserted and deleted

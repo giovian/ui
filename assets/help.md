@@ -27,9 +27,8 @@ order: 1000
 {% if site.remote_theme %}
 **Remote theme**
 - Repository [{{ site.remote_theme | split: '@' | first }}]({{ site.remote_theme | split: '@' | first }})
-- Branch {{ site.remote_theme | split: '@' | last | default: '-' }}
+- Branch `{{ site.remote_theme | split: '@' | last | default: '-' }}`
 - Plugin [jekyll-remote-theme](https://github.com/benbalter/jekyll-remote-theme) {{ site.github.versions["jekyll-remote-theme"] }}
-- Hardcoded version `{%- capture version -%}{% include version.html %}{%- endcapture -%}{{ version | default: '-'}}`
 
 **Latest remote theme release**
 <ul github-api-url='repos/{{ site.remote_theme | split: '@' | first }}/releases/latest' github-api-out='tag_name,name,published_at'></ul>

@@ -32,7 +32,7 @@ $('form.document[data-schema!=""]').each ->
 
     # Parse FORM
     # Check empty object
-    if !Object.keys(form.serializeJSON()) then return
+    if !Object.keys form.serializeJSON() then return
     # Loop fields
     head = []
     rows = []
