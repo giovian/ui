@@ -24,7 +24,8 @@
 {%- if sidebar == nil -%}{%- assign sidebar = 'toc, navigation, meta' | split: ',' -%}{%- endif -%}
 
 {% comment %} -------------------- FOOTER (boolean) {% endcomment %}
-{%- assign footer = page.footer | default: site.footer-%}
+{%- assign footer = page.footer -%}
+{%- if footer == nil -%}{%- assign footer = site.footer -%}{%- endif -%}
 {%- if footer == nil -%}{%- assign footer = false -%}{%- endif -%}
 
 {%- capture api -%}
