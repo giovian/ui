@@ -48,8 +48,8 @@ order: 1000
 <ul github-api-url='search/code?q=giovian/ui+in:file+language:yml+filename:_config+path:/' github-api-out='total_count,items[repository.html_url]' github-api-text='Search'></ul>
 **Rate limit**
 <ul github-api-url='rate_limit' github-api-text="Remaining and used" github-api-out='rate.used,rate.remaining,resources.search.used,resources.search.remaining'></ul>
+</div>
 **Local storage**
 - [Log](#){:log-storage=''} in console
 </div>
-  </div>
 </div>

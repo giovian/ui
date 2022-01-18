@@ -119,6 +119,7 @@ form_load_schema = (form) ->
   # Request schema file
   get_schema = $.get schema_url
   get_schema.done (data, status) ->
+    data = cache data, schema_url
     # Get schema content and save on DOM element as data
     schema = JSON.parse Base64.decode(data.content)
     form.data 'schema_json', schema

@@ -71,7 +71,7 @@ $('form.document[data-schema!=""]').each ->
         put.done ->
           notification 'Document created', 'green'
           # Update eventual CSV table
-          $("table.csv[data-file='#{form.attr 'data-schema'}']").each ->
+          $("table[csv-table][data-file='#{form.attr 'data-schema'}']").each ->
             fill_table load, form.data('schema_url'), $ @
             return # End CSV table update
           return # End document created
@@ -83,7 +83,8 @@ $('form.document[data-schema!=""]').each ->
       return # End file don't exist case
 
     # File present, overwrite with SHA reference
-    get_document.done (data, status) ->
+    get_document.done (data) ->
+      data = cache data, document_url
       # Encode csv file
       encoded_content = Base64.encode [Base64.decode(data.content), rows_csv].join('\n')
       # Prepare commit
@@ -99,7 +100,7 @@ $('form.document[data-schema!=""]').each ->
       put.done ->
         notification 'Document edited', 'green'
         # Update eventual CSV table
-        $("table.csv[data-file='#{form.attr 'data-schema'}']").each ->
+        $("table[csv-table][data-file='#{form.attr 'data-schema'}']").each ->
           fill_table load, form.data('schema_json'), $ @
           return # End CSV table update
         return # End document update

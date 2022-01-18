@@ -17,9 +17,10 @@ $('ul[github-api-url],ul[github-api-url-repo]').each ->
     'class': 'prevent-default'
   )
   # Link event and append
-  link.on 'click', (e) -> github_api_request e
   ul.append $('<li/>').append(link)
   return # end widgets loop
+
+$(document).on 'click', 'a[github-api-out]', (e) -> github_api_request e
 
 # Given a data array and an array of property names, return a list items array
 github_api_response_list = (data, out_array) ->
@@ -46,9 +47,11 @@ github_api_request = (event) ->
   list = link.parents 'ul'
   # Send request
   link.attr 'disabled', true
-  api = $.ajax "{{ site.github.api_url }}/#{link.attr('href').replace '#', ''}",
+  ajax_url = "{{ site.github.api_url }}/#{link.attr('href').replace '#', ''}"
+  api = $.ajax ajax_url,
     method: link.attr 'github-api-method'
-  api.done (data, status) ->
+  api.done (data) ->
+    data = cache data, ajax_url
     # For every data (object or array) append a list looping out properties
     if !Array.isArray data then data = [data]
     data.map (d) ->
@@ -79,5 +82,5 @@ If the response is an array, the output is a nested list.
 - `github-api-method`: default to `GET`
 - `github-api-out`: comma separated list of response properties to show.  
   Default to `created_at`
-- `github-api-text`: optional text for the link. Default to the endpoint
+- `github-api-text`: text for the link. Default to the endpoint
 {%- endcapture -%}

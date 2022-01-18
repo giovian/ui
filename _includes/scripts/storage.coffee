@@ -37,7 +37,7 @@ storage =
       ), obj
       storage.set_object obj
     else
-      localStorage.setItem storage.key, Base64.encode('{}')
+      localStorage.removeItem storage.key
     return storage
   console: ->
     console.group storage.key

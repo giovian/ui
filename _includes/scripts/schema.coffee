@@ -151,7 +151,8 @@ $('form.schema').each ->
       return # End new file
 
     # File present, overwrite with sha reference
-    get_schema.done (data, status) ->
+    get_schema.done (data) ->
+      data = cache data, schema_url
       load =
         message: 'Edit schema'
         sha: data.sha

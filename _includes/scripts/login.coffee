@@ -4,7 +4,8 @@ login =
   storage: () -> storage.get('login') || {}
   text: -> "Logged as #{login.storage()['user']} (#{login.storage()['role']})"
 
-login.logged_admin = -> storage.get('login.token') and storage.get('login.role') is 'admin'
+login.logged = -> storage.get('login.token')
+login.logged_admin = -> login.logged() and storage.get('login.role') is 'admin'
 
 login.login_link.on 'click', (e) ->
   token = prompt "Paste a GitHub personal token"
@@ -12,8 +13,10 @@ login.login_link.on 'click', (e) ->
   storage.set 'login', {'token': token}
   notification 'Verifying'
   login.login_link.attr 'disabled', ''
-  auth = $.get '{{ site.github.api_url }}/user'
+  user_url = '{{ site.github.api_url }}/user'
+  auth = $.get user_url
   auth.done (data) ->
+    data = cache data, user_url
     storage.assign 'login', {'user': data.login, 'logged': new Date()}
     login.permissions()
     return # End token check
@@ -24,6 +27,7 @@ login.permissions = ->
   notification 'Checking permissions'
   repo = $.get github_api_url
   repo.done (data) ->
+    data = cache data, github_api_url
     storage.assign('login',
       role: (if data.permissions.admin then 'admin' else 'guest')
     ).assign 'repository',
@@ -44,7 +48,7 @@ login.logout_link.on 'click', ->
 login.setLogin = ->
   $('html').removeClass 'role-admin role-guest logged'
   login.login_link.removeAttr 'disabled'
-  storage.clear 'login'
+  storage.clear()
   apply_family()
   true
 

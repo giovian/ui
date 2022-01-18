@@ -2,13 +2,17 @@
 checks = ->
 
   # Check latest build
-  latest_build = $.get "#{github_api_url}/pages/builds/latest"
+  latest_url = 
+  latest_build = $.get latest_url
   latest_build.done (data) ->
+    data = cache data, latest_url
     created_at = +new Date(data.created_at) / 1000
     # Compare latest build created_at and site.time
     if data.status is 'built' and created_at > {{ site.time | date: "%s" }}
+      loc = window.location
+      new_url = loc.origin + loc.pathname + '?created_at=' + data.created_at + loc.hash
       # Refresh with the latest built creation unix time
-      notification "New build #{time_diff data.created_at}", ''
+      notification "New build #{time_diff data.created_at} <a href='#{new_url}'>Refresh</a>"
     return # End latest callback
 
   # Check remote theme
@@ -16,9 +20,11 @@ checks = ->
     [remote, branch] = '{{ site.remote_theme }}'.split '@'
     ajax_data = if branch then {sha: branch} else {}
     # Get latest release
-    latest_tag = $.get "{{ site.github.api_url }}/repos/#{remote}/releases/latest",
+    latest_url = "{{ site.github.api_url }}/repos/#{remote}/releases/latest"
+    latest_tag = $.get latest_url,
       data: ajax_data
     latest_tag.done (data) ->
+      data = cache data, latest_url
       published_at = +new Date(data.published_at)
       # Compare latest release published_at with storage.repository.remote_release
       if published_at > storage.get 'repository.remote_release'
