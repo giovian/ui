@@ -59,8 +59,6 @@ datetime = (e) ->
   $(e).removeClass 'past future'
     .addClass if ms.diff(date) > 0 then 'past' else 'future'
 
-  apply_family()
-
   [moment, update] = time_diff date, true
 
   # Embed or add title attribute
@@ -72,6 +70,8 @@ datetime = (e) ->
     $(e).text moment
   else
     $(e).attr "title", moment
+
+  apply_family()
 
   # Return a setTimeout function
   setTimeout datetime, update, e
