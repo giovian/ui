@@ -1,0 +1,35 @@
+<table csv-table data-file='{{ include.file }}' data-sort='up'>
+  <thead class='filter'>
+    <tr>
+      <th>
+        <label for='column'>Filter</label>
+        <select class='inline' name='column'></select>
+        <input type='text' name='value' placeholder='Value'>
+      </th>
+    </tr>
+  </thead>
+  <thead>
+    <tr>
+      <th id='count'>
+        <span></span>
+        <a href='#up' class='prevent-default' apply-if-parent="hidden|table[data-sort='down']">▲</a><a href='#down' class='prevent-default' apply-if-parent="hidden|table[data-sort='up']">▼</a>
+      </th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+{%- capture api -%}
+## CSV Table
+
+Render a table from a CSV data file with sorting and filter features.  
+The TABLE will have `csv-table` and `data-file` attribute.  
+Require the [CSV Table script]({{ 'docs/scripts/#csv-table' | absolute_url }}) script.
+
+```liquid
+{% raw %}{% include widgets/csv-table.html file='data_file_name' %}{% endraw %}
+```
+
+**Includes**
+
+- `file`: (required) filename of the CSV (no extension)
+{%- endcapture -%}

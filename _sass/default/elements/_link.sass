@@ -39,6 +39,10 @@ a, a .highlight, a > code
 //
 // CSV TABLE
 // --------------------------------------
-#count a
-  font-size: 80%
-  vertical-align: text-top
+table[csv-table]
+  #count a
+    font-size: 80%
+    vertical-align: text-top
+  a
+    &[href='#edit'], &[href='#delete']
+      font-variant: all-small-caps

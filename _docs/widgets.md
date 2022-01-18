@@ -60,14 +60,6 @@ order: 30
 {% include widgets/api.html include='widgets/navigation' %}
 {% include widgets/api.html include='widgets/schema' %}
 {% include widgets/api.html include='widgets/document' %}
-{% include widgets/api.html include='widgets/csv/table' %}
+{% include widgets/api.html include='widgets/csv-table' %}
+{% include widgets/api.html include='widgets/csv-blocks' %}
 {% include widgets/api.html include='widgets/toc' %}
-
-## Version
-
-The file {% include widgets/github_link.html path='_includes/version.html' %} contains only an hardcoded version string. When the repository is used as `remote_theme` this string can be included.
-
-```liquid
-{% raw %}{% include version.html %}{% endraw %}
-```
-{:.minimal}

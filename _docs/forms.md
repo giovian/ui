@@ -129,11 +129,22 @@ storage.get("repository.fork") = true
 {:.minimal}
 {% include widgets/document.html schema='practices' %}
 
-# CSV
+## CSV
 
-{% include widgets/csv/table.html file='practices' %}
+### Table
+
+{% include widgets/csv-table.html file='practices' %}
 
 ```liquid
-{% raw %}{% include widgets/csv.html file='practices' %}{% endraw %}
+{% raw %}{% include widgets/csv-table.html file='practices' %}{% endraw %}
+```
+{:.minimal}
+
+### Blocks
+
+{% include widgets/csv-blocks.html file='practices' %}
+
+```liquid
+{% raw %}{% include widgets/csv-blocks.html file='practices' %}{% endraw %}
 ```
 {:.minimal}
