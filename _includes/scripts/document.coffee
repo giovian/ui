@@ -1,3 +1,17 @@
+update_tables_blocks = (load, schema, schema_file) ->
+
+  # Update eventual CSV table
+  $("table[csv-table][data-file='#{schema_file}']").each ->
+    fill_table load, schema, $ @
+    return # End tables update
+
+  # Update eventual CSV blocks
+  $("div[csv-blocks][data-file='#{schema_file}']").each ->
+    fill_blocks load, schema, $ @
+    return # End blocks update
+
+  return # End updates tablesand blocks
+
 $('form.document[data-schema!=""]').each ->
   form = $ @
   path = form.attr 'data-schema'
@@ -70,10 +84,7 @@ $('form.document[data-schema!=""]').each ->
           data: JSON.stringify load
         put.done ->
           notification 'Document created', 'green'
-          # Update eventual CSV table
-          $("table[csv-table][data-file='#{form.attr 'data-schema'}']").each ->
-            fill_table load, form.data('schema_url'), $ @
-            return # End CSV table update
+          update_tables_blocks load, form.data('schema_json').path
           return # End document created
         put.always ->
           form.removeAttr 'disabled'
@@ -99,10 +110,7 @@ $('form.document[data-schema!=""]').each ->
         data: JSON.stringify load
       put.done ->
         notification 'Document edited', 'green'
-        # Update eventual CSV table
-        $("table[csv-table][data-file='#{form.attr 'data-schema'}']").each ->
-          fill_table load, form.data('schema_json'), $ @
-          return # End CSV table update
+        update_tables_blocks load, form.data('schema_json'), path
         return # End document update
       put.always ->
         form.removeAttr 'disabled'

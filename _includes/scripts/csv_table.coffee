@@ -60,7 +60,18 @@ fill_table = (data, schema, table) ->
     filter.find('select[name=column]').prop 'selectedIndex', selected_index
     filter.find('input[name=value]').val input_value
     filter.find('input[name=value]').trigger 'input'
+  # Update borders
+  hide_last_borders table
   return # Table populated
+
+# Hide last borders
+hide_last_borders = (table) ->
+  table.find('tr').removeClass 'no-border'
+  # Remove bottom border from last visible row and thead if no match
+  table.find('tr:not(.hidden):last').addClass 'no-border'
+  if !table.find('tbody tr:not(.hidden)').length
+    table.find('thead:last-of-type tr').addClass 'no-border'
+  return
 
 #
 # Load CSV File
@@ -99,17 +110,8 @@ $('table[csv-table][data-file!=""]').each -> load_csv_table @
 # Events
 # --------------------------------------
 
-# Hide last borders
-hide_last_borders = (table) ->
-  table.find('tr').removeClass 'no-border'
-  # Remove bottom border from last visible row and thead if no match
-  table.find('tr:not(.hidden):last').addClass 'no-border'
-  if !table.find('tbody tr:not(.hidden)').length
-    table.find('thead:not(.filter) tr').addClass 'no-border'
-  return
-
 # Filter event
-$(document).on 'input', '.filter select[name=column], .filter input[name=value]', ->
+$('.filter').on 'input', 'select[name=column], input[name=value]', ->
   filter = $(@).parents '.filter'
   table = filter.parents 'table'
   select = filter.find 'select[name=column]'
@@ -127,9 +129,7 @@ $(document).on 'input', '.filter select[name=column], .filter input[name=value]'
   table.find('tbody tr').removeClass 'hidden'
   table.find('#count span').text table.find('tbody tr').length
 
-  if !value
-    hide_last_borders table
-    return
+  if !value then return
   found = 0
   # Hide rows without a match in cells
   table.find("td[headers='#{column}']").each ->
@@ -163,6 +163,35 @@ $('table[csv-table][data-file!=""]').on 'click', '#count a', ->
   # Update sort links visibility
   apply_family()
   return # End sort event
+
+# Delete event
+$(document).on 'click', "[csv-table] a[href='#delete']", ->
+  link = $ @
+  row = link.parents('tr')
+  number = row.children('td:first-child').text()
+  if !login.logged_admin() then return
+  row.addClass 'orange'
+  if !confirm "Delete row #{number}?"
+    row.removeClass 'orange'
+    return
+  # delete element `number` in csv array
+  return # End delete event
+
+# Edit event
+$(document).on 'click', "[csv-table] a[href='#edit']", ->
+  link = $ @
+  row = link.parents 'tr'
+  table = row.parents 'table'
+  document_file = table.attr 'data-file'
+  number = row.children('td:first-child').text()
+  if !login.logged_admin() then return
+  row.addClass 'orange'
+  form = $(document).find("form.document[data-schema='#{document_file}']")[0]
+  if form
+    console.log 'edit'
+  else
+    console.log 'inject'
+  return # End delete event
 
 {%- capture api -%}
 ## CSV Table

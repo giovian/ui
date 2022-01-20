@@ -2,7 +2,8 @@
 # Fill CSV BLOCKS function
 # --------------------------------------
 fill_blocks = (data, schema, div) ->
-
+  # Reset if already populated
+  div.empty()
   # Loop CSV data
   csv = Base64.decode(data.content).split '\n'
   headers = csv.shift().split ','
