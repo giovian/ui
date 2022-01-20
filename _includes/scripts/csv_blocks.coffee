@@ -9,11 +9,11 @@ fill_blocks = (data, schema, div) ->
   blocks = div.attr('data-blocks') || 14
   width = Math.floor div.width() / blocks
   today = +new Date()
-  running = today - (blocks * ms.day())
+  running = today - ((blocks-1) * ms.day())
   for days in [1..blocks]
-    entry = new Date(running).toLocaleDateString 'en-CA'
-    block = $ '<div/>', {title: entry}
-    if csv.some((e) -> e.includes entry)
+    day = new Date(running).toLocaleDateString 'en-CA'
+    block = $ '<div/>', {title: day}
+    if csv.some((e) -> e.includes day)
       block.addClass 'present'
     running += ms.day()
     div.append block.css({width: width, height: width})

@@ -1,4 +1,4 @@
-<div csv-blocks data-file='{{ include.file }}'></div>
+<div csv-blocks data-file='{{ include.file }}'{% if include.blocks %} data-blocks='{{ include.blocks }}'{% endif %}></div>
 {%- capture api -%}
 ## CSV Blocks
 
@@ -13,4 +13,5 @@ Require the [SCV Blocks script]({{ 'docs/scripts/#csv-blocks' | absolute_url }})
 **Includes**
 
 - `file`: (required) filename of the CSV (no extension)
+- `blocks`: (optionsl) number of blocks, default to 14
 {%- endcapture -%}

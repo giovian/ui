@@ -2,17 +2,21 @@ table
   
   // Spacing
   border-spacing: 0
-  @extend .mv, .rounded, .border
+  @extend .mv
+
+  // Borders
+  &:not(.no-border)
+    @extend .rounded, .border
+    thead:last-of-type th,
+    tbody:not(:last-child) td,
+    tbody:last-child tr:not(:last-child) td,
+    tfoot:last-child tr:not(:last-child) td
+      @extend .border-bottom
+
 
 th, td
   padding: $space/2
   @extend .bg, .fg
-
-thead:last-of-type th,
-tbody:not(:last-child) td,
-tbody:last-child tr:not(:last-child) td,
-tfoot:last-child tr:not(:last-child) td
-  @extend .border-bottom
 
 tr.no-border
   td, th
@@ -26,10 +30,10 @@ table[csv-table]
   thead
     th:first-child
       @extend .right
-    &.filter tr th
-      @extend .border-bottom
   tbody
     td
       @extend .right
     td:first-child
       @extend .fg-secondary, .bg-secondary
+  &:not(.no-border) thead.filter tr th
+    @extend .border-bottom
