@@ -20,8 +20,8 @@ checks = ->
 
   return # End checks
 
-# Start checks
-if '{{ site.github.environment }}' isnt 'development'
+# Start checks, pages API is for authenticated users
+if '{{ site.github.environment }}' isnt 'development' and login.logged()
   setTimeout checks, 2 * 1000
 
 {%- capture api -%}
