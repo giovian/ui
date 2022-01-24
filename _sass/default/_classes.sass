@@ -27,7 +27,7 @@
 
 // Display
 .hidden, [hidden], template
-  display: none
+  display: none !important
 .show
   display: initial
 .inline
@@ -57,6 +57,11 @@
 // BUTTONS
 .button
   cursor: pointer
+
+// DISABLED ELEMENTS
+[disabled]
+  cursor: wait
+  opacity: .5
 
 // MARGINS
 // Margin vertical

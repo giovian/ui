@@ -5,14 +5,31 @@ table
   @extend .mv
 
   // Borders
-  &:not(.no-border)
-    @extend .rounded, .border
+  &.border
     thead:last-of-type th,
     tbody:not(:last-child) td,
     tbody:last-child tr:not(:last-child) td,
     tfoot:last-child tr:not(:last-child) td
       @extend .border-bottom
+  &.border-secondary
+    thead:last-of-type th,
+    tbody:not(:last-child) td,
+    tbody:last-child tr:not(:last-child) td,
+    tfoot:last-child tr:not(:last-child) td
+      @extend .border-secondary
 
+  // Rounded
+  &.rounded
+    thead:first-child, tbody:first-child
+      th:first-child, td:first-child
+        border-top-left-radius: $border-big
+      th:last-child, td:last-child
+        border-top-right-radius: $border-big
+    thead:last-child, tbody:last-child, tfoot:last-child
+      th:first-child, td:first-child
+        border-bottom-left-radius: $border-big
+      th:last-child, td:last-child
+        border-bottom-right-radius: $border-big
 
 th, td
   padding: $space/2
@@ -27,13 +44,9 @@ thead:not(.filter) th, tfoot td, tbody:nth-of-type(2n) td
 
 // CSV tables
 table[csv-table]
-  thead
-    th:first-child
-      @extend .right
-  tbody
-    td
-      @extend .right
-    td:first-child
-      @extend .fg-secondary, .bg-secondary
-  &:not(.no-border) thead.filter tr th
+  thead th#count, tbody td:not(:last-child)
+    @extend .right
+  tbody td:first-child
+    @extend .fg-secondary, .bg-secondary
+  &.border thead.filter tr th
     @extend .border-bottom

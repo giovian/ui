@@ -69,16 +69,16 @@ Use `|----` for a new `<tbody>`{:.language-html} and `|====` for a table footer 
 |====
 | Foot1 | Foot2 | Foot3
 
-Default TABLES have a border, rounded corners and shaded headers. A class color can be applied on rows or cells.
+TABLES can be styled with the classes `.border .border-secondary .rounded`. Headers, even bodies and footers have a secondary background. A class color can be applied to tables, rows or cells.
 
 {% assign colors = "blue,green,red,orange,pink" | split: "," %}
-<table>
+<table class='border rounded'>
   <thead>
     <tr>
       <th colspan=6>Colors</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class='border-secondary'>
     <tr>
       <td><code>code</code></td>
       {% for color in colors %}

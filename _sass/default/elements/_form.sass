@@ -4,12 +4,23 @@ input, select, textarea, button, option
   font-size: inherit
   line-height: inherit
 
-// BORDERS MARGINS and BLOCK
+// MARGINS
 // --------------------------------------
 input:not([type=range]), textarea, select
-  @extend .border, .rounded-medium
   margin-top: $space*.2
   margin-bottom: $space*.1
+
+// Override default browser BORDERS
+input:not([type=range]), textarea, select, .button
+  @extend .border, .border-secondary
+
+// Mini rounded
+input:not([type=range]), textarea, select
+  @extend .rounded-medium
+
+// BUTTONS
+button:enabled, input[type=button], input[type=reset], input[type=submit]
+  @extend .button
 
 // RESET and PADDINGS
 input:not([type=range]), textarea, select
@@ -58,16 +69,29 @@ select[multiple] option[value=""]:only-of-type
 // FORMS
 // --------------------------------------
 main form
-  @extend .mv, .border, .rounded
+  @extend .mv, .border-right, .border-left, .border-secondary
   display: table
 
-  // BORDERS
+// BORDERS
+form.border
   & > h3, & > p
     @extend .border-bottom
   div.grid > div:not(:last-child)
     @extend .border-right
-  div[data-type=button]
+  div[data-type=button], div[data-type=array]
     @extend .border-top
+  div.item:not(:last-of-type)
+    @extend .border-bottom, .border-secondary
+
+form.rounded
+  .button
+    @extend .rounded
+  h3:first-child
+    border-top-left-radius: $border-big
+    border-top-right-radius: $border-big
+  div:last-child
+    border-bottom-left-radius: $border-big
+    border-bottom-right-radius: $border-big
 
 .sidebar form
   margin-bottom: $border-medium
@@ -78,14 +102,6 @@ main form
     max-width: 100%
 
 form
-
-  // BORDERS
-  div.item
-    @extend .border-bottom
-    &:not(:last-of-type)
-      @extend .border-secondary
-  div[data-type=array]
-    @extend .border-top
 
   // Grid has no GAP
   div.grid
@@ -116,15 +132,14 @@ form
     padding: $space/2
   // Enabled
   button:enabled, input[type=button], input[type=reset], input[type=submit]
-    @extend .button
     margin: 0
   // Disabled
   input:disabled, button:disabled, select:disabled, input[readonly]
     @extend .disabled
-  // FONT SIZE and BORDER
+  // BUTTON
   .button
     font-size: 92%
-    @extend .border, .p-around, .rounded
+    @extend .p-around
 
   //
   // COLORS
@@ -178,8 +193,6 @@ form
   // DISABLED (Loading state)
   // --------------------------------------
   &[disabled]
-    cursor: wait
-    opacity: .5
     input, button, select
       pointer-events: none
       @extend .disabled
