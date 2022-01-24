@@ -20,12 +20,12 @@ fill_table = (data, schema, table) ->
   # Apply family for sort links
   apply_family()
 
-  # Loop headers and populate filter
+  # Loop headers and populate filter select
   for head in headers
     header.find('tr').append "<th id='#{head}'>#{head}</th>"
-    filter.find('select').append $('<option/>', {value: head, text: head})
-  # Links column
-  header.find('tr').append "<th></th>"
+    filter.find('select').append $ '<option/>', {value: head, text: head}
+  # Edit and delete links column
+  header.find('tr').append $ '<th/>'
 
   # Reset if already populated
   table.find('tbody').empty()
@@ -47,7 +47,7 @@ fill_table = (data, schema, table) ->
         text: content
 
     # End row loop, Edit remove links
-    row.append $ '<td><a href="#edit">Edit</a> <a href="#delete">Delete</a></td>'
+    row.append get_template '#template-service-links-cell'
     # Append row
     if table.attr('data-sort') is 'up'
       table.find('tbody').append row
@@ -62,6 +62,7 @@ fill_table = (data, schema, table) ->
     filter.find('input[name=value]').trigger 'input'
   # Update borders
   hide_last_borders table
+
   return # Table populated
 
 # Hide last borders
@@ -78,6 +79,7 @@ hide_last_borders = (table) ->
 # --------------------------------------
 load_csv_table = (element) ->
   table = $ element
+  table.attr 'disabled', ''
   # Get file names
   csv_file = "#{table.attr 'data-file'}.csv"
   schema_file = csv_file.replace '.csv', '.schema.json'
@@ -87,8 +89,9 @@ load_csv_table = (element) ->
   get_schema = $.get schema_url
   get_schema.done (data) ->
     data = cache data, schema_url
-    # Decode schema
+    # Decode and store schema
     schema = JSON.parse Base64.decode(data.content)
+    table.data 'schema_json', schema
     # Load document file
     document_url = "#{github_api_url}/contents/_data/#{csv_file}"
     get_csv = $.get document_url
@@ -97,7 +100,9 @@ load_csv_table = (element) ->
       data = cache data, document_url
       fill_table data, schema, table
       return # End get_csv
-    return # End schema file load
+    get_csv.always -> table.removeAttr 'disabled'
+    return # End schema file loaded
+  get_schema.fail -> table.removeAttr 'disabled'
 
   return # End CSV tables loop
 
@@ -112,12 +117,15 @@ $('table[csv-table][data-file!=""]').each -> load_csv_table @
 
 # Filter event
 $('.filter').on 'input', 'select[name=column], input[name=value]', ->
+  # Get elements
   filter = $(@).parents '.filter'
   table = filter.parents 'table'
   select = filter.find 'select[name=column]'
+  # Get values
   selected_index = select.prop 'selectedIndex'
   column = select.val()
   value = filter.find('input[name=value]').val()
+  # Save state in storage
   id = [
     $('body').attr('page-title')
     $('table[csv-table]').index table
@@ -167,30 +175,80 @@ $('table[csv-table][data-file!=""]').on 'click', '#count a', ->
 # Delete event
 $(document).on 'click', "[csv-table] a[href='#delete']", ->
   link = $ @
-  row = link.parents('tr')
-  number = row.children('td:first-child').text()
-  if !login.logged_admin() then return
+  row = link.parents 'tr'
+  table = row.parents 'table[csv-table]'
+  index = +row.children('td:first-child').text()
   row.addClass 'orange'
-  if !confirm "Delete row #{number}?"
+  if !confirm "Delete row #{index}?"
     row.removeClass 'orange'
     return
-  # delete element `number` in csv array
+  # delete element `index` in csv array
+  document_file = table.attr 'data-file'
+  document_url = "#{github_api_url}/contents/_data/#{document_file}.csv"
+  stored_data = storage.get('github_api')[document_url].data
+  # Retrieve array and remove row
+  csv = Base64.decode(stored_data.content).split '\n'
+  csv.splice index, 1
+  # Store new content for future deletes
+  stored_data.content = Base64.encode csv.join '\n'
+  # Prepare commit
+  load =
+    message: 'Delete entry'
+    sha: stored_data.sha
+    content: stored_data.content
+  # Commit edited file
+  notification load.message
+  table.attr 'disabled', ''
+  put = $.ajax document_url,
+    method: 'PUT'
+    data: JSON.stringify load
+  put.done (data) ->
+    notification 'Entry deleted', 'green'
+    # Save new SHA for future deletes
+    stored_data.sha = data.content.sha
+    storage.assign 'github_api', {"#{document_url}":
+      data: stored_data
+    }
+    # Update table and eventual blocks
+    update_tables_blocks load, table.data('schema_json'), document_file
+    return # End document update
+  put.always -> table.removeAttr 'disabled'
+
   return # End delete event
 
 # Edit event
 $(document).on 'click', "[csv-table] a[href='#edit']", ->
   link = $ @
   row = link.parents 'tr'
-  table = row.parents 'table'
+  index = +row.children('td:first-child').text()
+  # Retrieve data
+  table = row.parents 'table[csv-table]'
   document_file = table.attr 'data-file'
-  number = row.children('td:first-child').text()
-  if !login.logged_admin() then return
+  document_url = "#{github_api_url}/contents/_data/#{document_file}.csv"
+  stored_data = storage.get('github_api')[document_url].data
+  csv = Base64.decode(stored_data.content).split '\n'
+  values = csv[index].split ','
+  head = csv[0].split ','
+  # Apply highlight class
+  table.find('tr').removeClass 'orange'
   row.addClass 'orange'
-  form = $(document).find("form.document[data-schema='#{document_file}']")[0]
-  if form
-    console.log 'edit'
-  else
-    console.log 'inject'
+  # Check Document FORM is present
+  form = $ $(document).find("form.document[data-schema='#{document_file}']")[0]
+  if !Object.keys(form).length
+    alert "Include 'widgets/document.html' form in the page"
+    row.removeClass 'orange'
+    return # End delete event
+  # Update edit index
+  form.find('[name=index]').val index
+  # Keep only 1 item
+  form.find('[inject] div.item:not(:first-child)').remove()
+  # Remove Add Item link
+  form.find('a[data-add=item]').parents('[data-type=item]').remove()
+  # Loop head properties and update values
+  for property, i in head
+    form.find("[name='#{property}']").val values[i]
+  # Scroll FORM into view
+  form[0].scrollIntoView()
   return # End delete event
 
 {%- capture api -%}

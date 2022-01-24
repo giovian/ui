@@ -43,6 +43,6 @@ table[csv-table]
   #count a
     font-size: 80%
     vertical-align: text-top
-  a
-    &[href='#edit'], &[href='#delete']
-      font-variant: all-small-caps
+html:not(.role-admin)
+  a[href='#edit'], a[href='#delete']
+    @extend .hidden

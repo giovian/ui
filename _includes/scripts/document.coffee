@@ -1,17 +1,20 @@
-update_tables_blocks = (load, schema, schema_file) ->
+update_tables_blocks = (load, schema, document_file) ->
 
   # Update eventual CSV table
-  $("table[csv-table][data-file='#{schema_file}']").each ->
+  $("table[csv-table][data-file='#{document_file}']").each ->
     fill_table load, schema, $ @
     return # End tables update
 
   # Update eventual CSV blocks
-  $("div[csv-blocks][data-file='#{schema_file}']").each ->
+  $("div[csv-blocks][data-file='#{document_file}']").each ->
     fill_blocks load, schema, $ @
     return # End blocks update
 
   return # End updates tablesand blocks
 
+#
+# Loop Document FORMs
+# --------------------------------------
 $('form.document[data-schema!=""]').each ->
   form = $ @
   path = form.attr 'data-schema'
@@ -32,6 +35,9 @@ $('form.document[data-schema!=""]').each ->
     # Remove appended items and items adder, reset item index
     form.find('[inject]').empty()
     form.find('[data-type="item"]').remove()
+    form.find('[name=index]').val ''
+    # If form was editing from a csv TABLE, reset class
+    $(document).find("table[csv-table][data-file='#{form.attr 'data-schema'}'] tr.orange").removeClass 'orange'
     # Load schema
     if form.attr 'data-schema' then form_load_schema form
     return # end Reset handler
@@ -46,7 +52,7 @@ $('form.document[data-schema!=""]').each ->
 
     # Parse FORM
     # Check empty object
-    if !Object.keys form.serializeJSON() then return
+    if !Object.keys(form.serializeJSON()).length then return
     # Loop fields
     head = []
     rows = []
@@ -59,10 +65,8 @@ $('form.document[data-schema!=""]').each ->
         rows[i].push $(field).val()
         return # End FIELDS loop
       return # End item DIVs loop
-    head_csv = head.join(',')
-    rows_csv = (row.join(',') for row in rows).join('\n')
-    # Encode csv file
-    encoded_content = Base64.encode [head_csv, rows_csv].join('\n')
+    head_csv = head.join ','
+    rows_csv = (row.join(',') for row in rows).join '\n'
 
     # Prepare for requests
     document_url = "#{github_api_url}/contents/_data/#{path}.csv"
@@ -76,7 +80,7 @@ $('form.document[data-schema!=""]').each ->
         # Prepare commit
         load =
           message: 'Create document'
-          content: encoded_content
+          content: Base64.encode [head_csv, rows_csv].join('\n')
         # Commit new file
         notification load.message
         put = $.ajax document_url,
@@ -96,8 +100,14 @@ $('form.document[data-schema!=""]').each ->
     # File present, overwrite with SHA reference
     get_document.done (data) ->
       data = cache data, document_url
-      # Encode csv file
-      encoded_content = Base64.encode [Base64.decode(data.content), rows_csv].join('\n')
+      # Encode csv file, append or update row
+      if !form.find('[name=index]').val()
+        encoded_content = Base64.encode [Base64.decode(data.content), rows_csv].join('\n')
+      else
+        csv_array = Base64.decode(data.content).split '\n'
+        # Update row
+        csv_array[+form.find('[name=index]').val()] = rows_csv
+        encoded_content = Base64.encode csv_array.join('\n')
       # Prepare commit
       load =
         message: 'Edit document'

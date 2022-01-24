@@ -2,6 +2,9 @@
 <form class='prevent-default document'{% if include.schema %} data-schema='{{ include.schema }}'{% endif %}{% if include.document %} data-document='{{ include.document }}'{% endif %}>
   <h3>Document{% if include.schema %} <code>{{ include.schema }}</code>{% endif %}</h3>
 
+  <!-- Editing index -->
+  <input data-value-type='skip' type="hidden" name="index" value="">
+
   <div inject></div>
 
 <!-- BUTTONS -->
@@ -15,7 +18,7 @@
           ENUM TEMPLATE
 -->
 <template id="template-add-item">
-  <div data-type="item">
+  <div data-type="item" class='border-top'>
     <label class="fg-secondary">Add item</label>
     <a href="#add-item" class="prevent-default" data-add="item">add</a>
   </div>
