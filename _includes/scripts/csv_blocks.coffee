@@ -1,57 +1,32 @@
 #
 # Fill CSV BLOCKS function
 # --------------------------------------
-fill_blocks = (data, schema, div) ->
-  # Reset if already populated
+fill_blocks = (div) ->
+  # Create data array without headers
+  csv_data = get_github_api_data "#{div.attr 'data-file'}.csv"
+  csv = Base64.decode(csv_data.content).split('\n').slice 1
+  # Prepare DIV
   div.empty()
-  # Loop CSV data
-  csv = Base64.decode(data.content).split '\n'
-  headers = csv.shift().split ','
-  blocks = div.attr('data-blocks') || 14
+  blocks = +div.attr 'data-blocks'
   width = Math.floor div.width() / blocks
-  today = +new Date()
-  running = today - ((blocks-1) * ms.day())
+  # Loop days
+  running = +new Date() - ((blocks-1) * ms.day())
   for days in [1..blocks]
     day = new Date(running).toLocaleDateString 'en-CA'
     block = $ '<div/>', {title: day}
-    if csv.some((e) -> e.includes day)
+    index = csv.findIndex (e) -> e.includes day
+    if index isnt -1
+      block.attr 'title', csv[index].replace ',', ', '
       block.addClass 'present'
     running += ms.day()
     div.append block.css({width: width, height: width})
   return # End Blocks fill
 
 #
-# Load CSV File
-# --------------------------------------
-load_csv_blocks = (element) ->
-  div = $ element
-  # Get file names
-  csv_file = "#{div.attr 'data-file'}.csv"
-  schema_file = csv_file.replace '.csv', '.schema.json'
-  
-  # Load schema and CSV
-  schema_url = "#{github_api_url}/contents/_data/#{schema_file}"
-  get_schema = $.get schema_url
-  get_schema.done (data) ->
-    data = cache data, schema_url
-    # Decode schema
-    schema = JSON.parse Base64.decode(data.content)
-    # Load document file
-    document_url = "#{github_api_url}/contents/_data/#{csv_file}"
-    get_csv = $.get document_url
-    # Fill table
-    get_csv.done (data) ->
-      data = cache data, document_url
-      fill_blocks data, schema, div
-      return # End get document
-    return # End schema file load
-  
-  return # End CSV tables loop
-
-#
 # CSV Blocks loop
 # --------------------------------------
-$('div[csv-blocks][data-file!=""]').each -> load_csv_blocks @
+$('div[csv-blocks][data-file!=""]').each ->
+  load_schema_document @, fill_blocks
 
 {%- capture api -%}
 ## CSV Blocks

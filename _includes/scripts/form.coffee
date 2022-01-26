@@ -31,7 +31,8 @@ input_range_enable = (range) ->
 # Document form CREATE ITEM function
 # --------------------------------------
 form_create_item = (form) ->
-  schema = form.data 'schema_json'
+  schema_data = get_github_api_data "#{form.attr 'data-file'}.schema.json"
+  schema = JSON.parse Base64.decode schema_data.content
   item = $ '<div/>', {class: 'item'}
   # Loop items properties
   for own key, value of schema.items.properties
@@ -108,10 +109,10 @@ form_create_item = (form) ->
   return item # End create_item
 
 #
-# FORM LOAD SCHEMA function
+# FORM LOAD SCHEMA function for schema FORM
 # --------------------------------------
 form_load_schema = (form) ->
-  path = form.attr 'data-schema'
+  path = form.attr 'data-file'
   # Default schema $id if it's a new schema
   form.find('[name="$id"]').val path
   schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
@@ -122,7 +123,6 @@ form_load_schema = (form) ->
     data = cache data, schema_url
     # Get schema content and save on DOM element as data
     schema = JSON.parse Base64.decode(data.content)
-    form.data 'schema_json', schema
     if schema.type isnt 'array'
       notification "schema type `#{schema.type}` to do", 'red'
     if form.hasClass 'schema'
@@ -140,6 +140,33 @@ form_load_schema = (form) ->
     return # Form is populated
   get_schema.always -> form.removeAttr 'disabled'
   return # End load_schema function
+
+#
+# Load Schema and Document for CSV
+# --------------------------------------
+load_schema_document = (el, callback) ->
+  element = $ el
+  element.attr 'disabled', ''
+
+  # Get file names
+  document_url = "#{github_api_url}/contents/_data/#{element.attr 'data-file'}.csv"
+  schema_url = "#{github_api_url}/contents/_data/#{element.attr 'data-file'}.schema.json"
+  
+  # Load schema
+  get_schema = $.get schema_url
+  get_schema.done (data) ->
+    data = cache data, schema_url
+    # Load document
+    get_document = $.get document_url
+    get_document.done (data) ->
+      data = cache data, document_url
+      callback element
+      return # End get document
+    get_document.always -> element.removeAttr 'disabled'
+    return # End schema file load
+  get_schema.fail -> element.removeAttr 'disabled'
+
+  return # End CSV tables loop
 
 #
 # ACTIVATION function

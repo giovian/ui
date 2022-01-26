@@ -1,13 +1,17 @@
 #
 # Fill CSV TABLE function
 # --------------------------------------
-fill_table = (data, schema, table) ->
-
+fill_table = (table) ->
   # Get sort
   id = [$('body').attr('page-title'), $('table[csv-table]').index(table)].join '|'
   table.attr 'data-sort', (i, v) -> storage.get("sort.#{id}") || v
-  # Create header
-  csv = Base64.decode(data.content).split '\n'
+  # Get document data
+  csv_data = get_github_api_data "#{table.attr 'data-file'}.csv"
+  csv = Base64.decode(csv_data.content).split '\n'
+  # Get schema data
+  schema_data = get_github_api_data "#{table.attr 'data-file'}.schema.json"
+  schema = JSON.parse Base64.decode(schema_data.content)
+  # Get headers
   headers = csv.shift().split ','
   # Set filter colspan plus #count, plus links
   filter = table.find 'thead.filter'
@@ -75,41 +79,10 @@ hide_last_borders = (table) ->
   return
 
 #
-# Load CSV File
-# --------------------------------------
-load_csv_table = (element) ->
-  table = $ element
-  table.attr 'disabled', ''
-  # Get file names
-  csv_file = "#{table.attr 'data-file'}.csv"
-  schema_file = csv_file.replace '.csv', '.schema.json'
-
-  # Load schema and CSV
-  schema_url = "#{github_api_url}/contents/_data/#{schema_file}"
-  get_schema = $.get schema_url
-  get_schema.done (data) ->
-    data = cache data, schema_url
-    # Decode and store schema
-    schema = JSON.parse Base64.decode(data.content)
-    table.data 'schema_json', schema
-    # Load document file
-    document_url = "#{github_api_url}/contents/_data/#{csv_file}"
-    get_csv = $.get document_url
-    # Fill table
-    get_csv.done (data) ->
-      data = cache data, document_url
-      fill_table data, schema, table
-      return # End get_csv
-    get_csv.always -> table.removeAttr 'disabled'
-    return # End schema file loaded
-  get_schema.fail -> table.removeAttr 'disabled'
-
-  return # End CSV tables loop
-
-#
 # CSV TABLEs loop
 # --------------------------------------
-$('table[csv-table][data-file!=""]').each -> load_csv_table @
+$('table[csv-table][data-file!=""]').each ->
+  load_schema_document @, fill_table
 
 #
 # Events
@@ -178,14 +151,14 @@ $(document).on 'click', "[csv-table] a[href='#delete']", ->
   row = link.parents 'tr'
   table = row.parents 'table[csv-table]'
   index = +row.children('td:first-child').text()
-  row.addClass 'orange'
+  row.attr 'disabled', ''
   if !confirm "Delete row #{index}?"
-    row.removeClass 'orange'
+    row.removeAttr 'disabled'
     return
   # delete element `index` in csv array
   document_file = table.attr 'data-file'
   document_url = "#{github_api_url}/contents/_data/#{document_file}.csv"
-  stored_data = storage.get('github_api')[document_url].data
+  stored_data = get_github_api_data document_url
   # Retrieve array and remove row
   csv = Base64.decode(stored_data.content).split '\n'
   csv.splice index, 1
@@ -206,11 +179,9 @@ $(document).on 'click', "[csv-table] a[href='#delete']", ->
     notification 'Entry deleted', 'green'
     # Save new SHA for future deletes
     stored_data.sha = data.content.sha
-    storage.assign 'github_api', {"#{document_url}":
-      data: stored_data
-    }
+    set_github_api_data document_url, stored_data
     # Update table and eventual blocks
-    update_tables_blocks load, table.data('schema_json'), document_file
+    update_csv document_file
     return # End document update
   put.always -> table.removeAttr 'disabled'
 
@@ -225,18 +196,18 @@ $(document).on 'click', "[csv-table] a[href='#edit']", ->
   table = row.parents 'table[csv-table]'
   document_file = table.attr 'data-file'
   document_url = "#{github_api_url}/contents/_data/#{document_file}.csv"
-  stored_data = storage.get('github_api')[document_url].data
+  stored_data = get_github_api_data document_url
   csv = Base64.decode(stored_data.content).split '\n'
   values = csv[index].split ','
   head = csv[0].split ','
   # Apply highlight class
-  table.find('tr').removeClass 'orange'
-  row.addClass 'orange'
+  table.find('tr').removeAttr 'disabled'
+  row.attr 'disabled', ''
   # Check Document FORM is present
-  form = $ $(document).find("form.document[data-schema='#{document_file}']")[0]
+  form = $ $(document).find("form.document[data-file='#{document_file}']")[0]
   if !Object.keys(form).length
     alert "Include 'widgets/document.html' form in the page"
-    row.removeClass 'orange'
+    row.removeAttr 'disabled'
     return # End delete event
   # Update edit index
   form.find('[name=index]').val index

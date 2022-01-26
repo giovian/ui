@@ -1,0 +1,20 @@
+{% if include.file == nil %}> Missing `file` for `csv-calendar`
+{:.red}{% else %}
+<div csv-calendar data-file='{{ include.file }}' data-months='{{ include.months | default: 1 }}'></div>
+{% endif %}
+{%- capture api -%}
+## CSV Calendar
+
+Render a calendar from a CSV data file.  
+The DIV will have a `csv-calendar` and a `data-file` attribute.  
+Require the [SCV Calendar script]({{ 'docs/scripts/#csv-calendar' | absolute_url }}) script.
+
+```liquid
+{% raw %}{% include widgets/csv-calendar.html file='data_file_name' %}{% endraw %}
+```
+
+**Includes**
+
+- `file`: (required) filename of the CSV (no extension)
+- `months`: (optionsl) number of months to show, default to 1
+{%- endcapture -%}

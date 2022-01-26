@@ -28,4 +28,5 @@ order: 40
 {% include widgets/api.html include='scripts/document.coffee' %}
 {% include widgets/api.html include='scripts/csv_table.coffee' %}
 {% include widgets/api.html include='scripts/csv_blocks.coffee' %}
+{% include widgets/api.html include='scripts/csv_calendar.coffee' %}
 {% include widgets/api.html include='scripts/github_api.coffee' %}

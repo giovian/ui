@@ -1,13 +1,18 @@
-update_tables_blocks = (load, schema, document_file) ->
+update_csv = (document_file) ->
 
   # Update eventual CSV table
   $("table[csv-table][data-file='#{document_file}']").each ->
-    fill_table load, schema, $ @
+    fill_table $ @
     return # End tables update
 
   # Update eventual CSV blocks
   $("div[csv-blocks][data-file='#{document_file}']").each ->
-    fill_blocks load, schema, $ @
+    fill_blocks $ @
+    return # End blocks update
+
+  # Update eventual CSV calendar
+  $("div[csv-calendar][data-file='#{document_file}']").each ->
+    fill_calendar $ @
     return # End blocks update
 
   return # End updates tablesand blocks
@@ -15,9 +20,9 @@ update_tables_blocks = (load, schema, document_file) ->
 #
 # Loop Document FORMs
 # --------------------------------------
-$('form.document[data-schema!=""]').each ->
+$('form.document[data-file!=""]').each ->
   form = $ @
-  path = form.attr 'data-schema'
+  path = form.attr 'data-file'
   # Prepend user folder if repository is forked
   if storage.get "repository.fork"
     path = "user/#{storage.get 'login.user'}/#{path}"
@@ -37,9 +42,9 @@ $('form.document[data-schema!=""]').each ->
     form.find('[data-type="item"]').remove()
     form.find('[name=index]').val ''
     # If form was editing from a csv TABLE, reset class
-    $(document).find("table[csv-table][data-file='#{form.attr 'data-schema'}'] tr.orange").removeClass 'orange'
+    $(document).find("table[csv-table][data-file='#{form.attr 'data-file'}'] tr[disabled]").removeAttr 'disabled'
     # Load schema
-    if form.attr 'data-schema' then form_load_schema form
+    if form.attr 'data-file' then form_load_schema form
     return # end Reset handler
 
   # Submit
@@ -88,7 +93,12 @@ $('form.document[data-schema!=""]').each ->
           data: JSON.stringify load
         put.done ->
           notification 'Document created', 'green'
-          update_tables_blocks load, form.data('schema_json').path
+          # Save new SHA for future deletes
+          stored_data =
+            sha: data.content.sha
+            content: encoded_content
+          set_github_api_data document_url, stored_data
+          update_csv "#{form.attr 'data-file'}"
           return # End document created
         put.always ->
           form.removeAttr 'disabled'
@@ -118,9 +128,14 @@ $('form.document[data-schema!=""]').each ->
       put = $.ajax document_url,
         method: 'PUT'
         data: JSON.stringify load
-      put.done ->
+      put.done (data) ->
         notification 'Document edited', 'green'
-        update_tables_blocks load, form.data('schema_json'), path
+        # Save new SHA for future deletes
+        stored_data =
+          sha: data.content.sha
+          content: encoded_content
+        set_github_api_data document_url, stored_data
+        update_csv "#{form.attr 'data-file'}"
         return # End document update
       put.always ->
         form.removeAttr 'disabled'
@@ -140,5 +155,5 @@ Needs [document]({{ 'docs/widgets/#document' | absolute_url }}){: remote=''} wid
 **FORM**
 
 - Class `document`
-- Attribute `data-schema`: URI-reference of the schema to load (no extension)
+- Attribute `data-file`: URI-reference of the schema to load (no extension)
 {%- endcapture -%}
