@@ -1,0 +1,43 @@
+// CSV tables
+[csv-table]
+  thead th#count, tbody td:not(:last-child)
+    @extend .right
+  tbody td:first-child
+    @extend .fg-secondary, .bg-secondary
+  &.border thead.filter tr th
+    @extend .border-bottom
+  &.border-secondary thead.filter tr th
+    @extend .border-secondary
+
+// CSV Blocks
+[csv-blocks]
+  @extend .mv
+
+  // Blocks
+  > div
+    @extend .inline-block, .bg-secondary, .border
+
+    // Use border color `bg` to create a gap included in div width
+    border-color: var(--bg) !important
+    border-width: $border-medium !important
+    box-sizing: border-box
+
+// CSV Calendars
+[csv-calendar]
+  display: grid
+  grid-template-columns: repeat(2, 1fr)
+  [month]
+    display: grid
+    grid-template-columns: repeat(7, 1fr)
+  [day]
+    @extend .bg-secondary, .border
+    border-color: var(--bg) !important
+    border-width: $border-medium !important
+    box-sizing: border-box
+
+// GENERAL
+// Highlighted blocks
+.present
+  background: var(--border) !important
+.today
+  @extend .green

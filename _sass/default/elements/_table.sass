@@ -26,10 +26,11 @@ table
       th:last-child, td:last-child
         border-top-right-radius: $border-big
     thead:last-child, tbody:last-child, tfoot:last-child
-      th:first-child, td:first-child
-        border-bottom-left-radius: $border-big
-      th:last-child, td:last-child
-        border-bottom-right-radius: $border-big
+      tr:last-child
+        th:first-child, td:first-child
+          border-bottom-left-radius: $border-big
+        th:last-child, td:last-child
+          border-bottom-right-radius: $border-big
 
 th, td
   padding: $space/2
@@ -41,12 +42,3 @@ tr.no-border
 
 thead:not(.filter) th, tfoot td, tbody:nth-of-type(2n) td
   @extend .bg-secondary
-
-// CSV tables
-table[csv-table]
-  thead th#count, tbody td:not(:last-child)
-    @extend .right
-  tbody td:first-child
-    @extend .fg-secondary, .bg-secondary
-  &.border thead.filter tr th
-    @extend .border-bottom

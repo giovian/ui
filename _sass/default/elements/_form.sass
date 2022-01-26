@@ -69,8 +69,10 @@ select[multiple] option[value=""]:only-of-type
 // FORMS
 // --------------------------------------
 main form
-  @extend .mv, .border-right, .border-left, .border-secondary
   display: table
+  @extend .mv, .border-right, .border-left, .border-secondary
+  [data-type=button]
+    @extend .bg-secondary
 
 // BORDERS
 form.border
@@ -80,8 +82,6 @@ form.border
     @extend .border-right
   div[data-type=button], div[data-type=array]
     @extend .border-top
-  div.item:not(:last-of-type)
-    @extend .border-bottom, .border-secondary
 
 form.rounded
   .button
@@ -95,6 +95,8 @@ form.rounded
 
 .sidebar form
   margin-bottom: $border-medium
+  [data-type=button]
+    @extend .border-bottom, .border-top, .border-secondary
   h3
     font-size: 1em
     @extend .p-around
@@ -111,6 +113,10 @@ form
   div[data-type], & > h3, & > p, details summary
     padding: $space/2 $space*.7
     margin: 0
+
+  // Borders
+  div.item
+    @extend .border-bottom, .border-secondary
 
   //
   // LABELS & SPANS
@@ -146,8 +152,7 @@ form
   // --------------------------------------
 
   // BG Secondary
-  & > h3, & > h4,
-  [data-type=button], .button:hover
+  & > h3, & > h4, .button:hover
     background: var(--bg-secondary) !important
 
   // Normal
