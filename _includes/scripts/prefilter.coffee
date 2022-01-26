@@ -35,10 +35,6 @@ $(document).ajaxSuccess (event, request, ajaxOptions, data) ->
     }
   return # End ajax Success
 
-# Retrieve cached data
-cache = (data, url) ->
-  return data || storage.get('github_api')?[url].data
-
 {%- capture api -%}
 ## Ajax prefilter
 

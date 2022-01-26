@@ -47,9 +47,13 @@ storage =
     return storage
 
 # Link to log storage in the console
-$(document).on "click", "a[log-storage]", (e) ->
+$(document).on 'click', 'a[log-storage]', (e) ->
   e.preventDefault()
   storage.console()
+
+# Retrieve cached data
+cache = (data, url) ->
+  return data || storage.get('github_api')?[url].data
 
 {%- capture api -%}
 ## Storage
