@@ -1,5 +1,6 @@
-<form class='prevent-default schema'{% if include.schema %} data-schema='{{ include.schema }}'{% endif %}>
-  <h3>Schema{% if include.schema %} <code>{{ include.schema }}</code>{% endif %}</h3>
+{% if include.file %}
+<form class='prevent-default schema' data-file='{{ include.file }}'>
+  <h3>Schema{% if include.file %} <code>{{ include.file }}</code>{% endif %}</h3>
 
   <input type='hidden' name='$schema' value='https://json-schema.org/draft/2020-12/schema'>
 
@@ -261,7 +262,11 @@
     <input name='[enum][]' value='' type='hidden' data-value-type=''>
   </div>
 </template>
-
+{% else %}
+<blockquote class="red">
+  Missing <code>file</code> in <code>widgets/schema.html</code>
+</blockquote>
+{% endif %}
 {%- capture api -%}
 ## Schema
 
@@ -287,5 +292,5 @@ Form to create an array schema, require [form]({{ 'docs/scripts/#form' | absolut
 
 **Includes**
 
-- `schema`: (optional) URI-reference of the schema to load (no extension)
+- `file`: (optional) URI-reference of the schema to load (no extension)
 {%- endcapture -%}

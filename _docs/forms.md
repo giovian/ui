@@ -116,18 +116,18 @@ storage.get("repository.fork") = true
 ## Schema FORM
 
 ```liquid
-{% raw %}{% include widgets/schema.html schema='practices' %}{% endraw %}
+{% raw %}{% include widgets/schema.html file='practices' %}{% endraw %}
 ```
 {:.minimal}
-{% include widgets/schema.html schema='practices' %}
+{% include widgets/schema.html file='practices' %}
 
 ## Document FORM
 
 ```liquid
-{% raw %}{% include widgets/document.html schema='practices' %}{% endraw %}
+{% raw %}{% include widgets/document.html file='practices' %}{% endraw %}
 ```
 {:.minimal}
-{% include widgets/document.html schema='practices' %}
+{% include widgets/document.html file='practices' %}
 
 ## CSV
 

@@ -46,14 +46,14 @@ $('form.schema').each ->
   form = $ @
 
   # Populate form
-  if form.attr 'data-schema' then form_load_schema form
+  if form.attr 'data-file' then form_load_schema form
 
   #
   # EVENTS
   # --------------------------------------
 
   # ADD PROPERTY
-  form.on 'click', 'a[data-add="property"]', ->
+  form.on 'click', 'a[data-add=property]', ->
     # Prompt property name
     property_name = prompt 'Property name'
     # Inject property
@@ -62,7 +62,7 @@ $('form.schema').each ->
     return # End add-property
 
   # ADD ENUM VALUE
-  form.on 'click', 'a[data-add="enum"]', ->
+  form.on 'click', 'a[data-add=enum]', ->
     # Enum value
     enum_value = prompt 'Enum value'
     # Inject property
@@ -83,13 +83,13 @@ $('form.schema').each ->
     return # End add-property
 
   # REMOVE PROPERTY
-  form.on 'click', 'a[data-remove="property"]', -> $(@).parents('details').remove()
+  form.on 'click', 'a[data-remove=property]', -> $(@).parents('details').remove()
 
   # REMOVE ENUM VALUE
-  form.on 'click', 'a[data-remove="enum"]', -> $(@).parents('[data-type]').remove()
+  form.on 'click', 'a[data-remove=enum]', -> $(@).parents('[data-type]').remove()
 
   # Change property type
-  form.on 'change', 'select[name*="type"]', ->
+  form.on 'change', 'select[name*=type]', ->
     # Get parent
     parent = $(@).attr('name').replace '[type]', ''
     selected_template = get_template "#template-#{$(@).val()}", parent
@@ -108,10 +108,10 @@ $('form.schema').each ->
 
   # Reset
   form.on 'reset', ->
-    # Reset .create-schema forms
+    # Reset inject properties forms
     form.find('[properties-inject]').empty()
     # Load schema
-    if form.attr 'data-schema' then form_load_schema form
+    if form.attr 'data-file' then form_load_schema form
     return # end Reset handler
 
   # Submit
@@ -147,7 +147,7 @@ $('form.schema').each ->
       else
         form.removeAttr 'disabled'
         # Reset eventual Document
-        $('body').find("form.document[data-schema='#{path}']").trigger 'reset'
+        $('body').find("form.document[data-file='#{path}']").trigger 'reset'
       return # End new file
 
     # File present, overwrite with sha reference
@@ -166,7 +166,7 @@ $('form.schema').each ->
       put.always ->
         form.removeAttr 'disabled'
         # Reset eventual Document
-        $('body').find("form.document[data-schema='#{path}']").trigger 'reset'
+        $('body').find("form.document[data-file='#{path}']").trigger 'reset'
       return # End overwrite
 
     return # End submit handler
@@ -181,5 +181,5 @@ Needs [schema]({{ 'docs/widgets/#schema' | absolute_url }}){: remote=''} widget.
 **FORM**
 
 - Class `schema`
-- Attribute `data-schema`: URI-reference of the schema to load (no extension)
+- Attribute `data-file`: URI-reference of the schema to load (no extension)
 {%- endcapture -%}
