@@ -19,6 +19,10 @@
           3,
           4
         ]
+      },
+      "duration": {
+        "type": "string",
+        "format": "duration"
       }
     }
   }
