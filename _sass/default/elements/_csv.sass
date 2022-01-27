@@ -14,7 +14,7 @@
   @extend .mv
 
   // Blocks
-  > div
+  [title]
     @extend .inline-block, .bg-secondary, .border
 
     // Use border color `bg` to create a gap included in div width
@@ -24,6 +24,7 @@
 
 // CSV Calendars
 [csv-calendar]
+  @extend .mv
   display: grid
   grid-template-columns: repeat(2, 1fr)
   [month]

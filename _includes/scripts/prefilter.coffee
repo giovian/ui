@@ -9,18 +9,18 @@ $.ajaxPrefilter (options, ajaxOptions, request) ->
   if options.url.startsWith '{{ site.github.api_url }}'
     # Recommended Accept header
     options.headers = {'Accept': 'application/vnd.github.v3+json'}
+    # Check cached version
+    if (ajaxOptions.type || options.method).toLowerCase() is 'get'
+      entry = storage.get('github_api')?[options.url]
+      # Set If-Modified-Since header
+      if entry
+        options.headers['If-Modified-Since'] = entry.ifModified
+        options.ifModified = true
+        options.cache = true
     # Check personal token
     if login.logged()
       # Add GitHub token
       options.headers['Authorization'] = "token #{storage.get 'login.token'}"
-      # Check cached version
-      if (ajaxOptions.type || options.method).toLowerCase() is 'get'
-        entry = storage.get('github_api')?[options.url]
-        # Set If-Modified-Since header
-        if entry
-          options.headers['If-Modified-Since'] = entry.ifModified
-          options.ifModified = true
-          options.cache = true
 
   return # end Prefilter
 

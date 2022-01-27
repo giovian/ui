@@ -160,7 +160,7 @@ load_schema_document = (el, callback) ->
     get_document = $.get document_url
     get_document.done (data) ->
       data = cache data, document_url
-      callback element
+      callback element, data
       return # End get document
     get_document.always -> element.removeAttr 'disabled'
     return # End schema file load

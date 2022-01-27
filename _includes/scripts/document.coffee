@@ -1,18 +1,18 @@
-update_csv = (document_file) ->
+update_csv = (document_file, data) ->
 
   # Update eventual CSV table
   $("table[csv-table][data-file='#{document_file}']").each ->
-    fill_table $ @
+    fill_table $(@), data
     return # End tables update
 
   # Update eventual CSV blocks
   $("div[csv-blocks][data-file='#{document_file}']").each ->
-    fill_blocks $ @
+    fill_blocks $(@), data
     return # End blocks update
 
   # Update eventual CSV calendar
   $("div[csv-calendar][data-file='#{document_file}']").each ->
-    fill_calendar $ @
+    fill_calendar $(@), data
     return # End blocks update
 
   return # End updates tablesand blocks
@@ -98,7 +98,7 @@ $('form.document[data-file!=""]').each ->
             sha: data.content.sha
             content: encoded_content
           set_github_api_data document_url, stored_data
-          update_csv "#{form.attr 'data-file'}"
+          update_csv "#{form.attr 'data-file'}", stored_data
           return # End document created
         put.always ->
           form.removeAttr 'disabled'
@@ -135,7 +135,7 @@ $('form.document[data-file!=""]').each ->
           sha: data.content.sha
           content: encoded_content
         set_github_api_data document_url, stored_data
-        update_csv "#{form.attr 'data-file'}"
+        update_csv "#{form.attr 'data-file'}", stored_data
         return # End document update
       put.always ->
         form.removeAttr 'disabled'

@@ -48,7 +48,7 @@ login.logout_link.on 'click', ->
 login.setLogin = ->
   $('html').removeClass 'role-admin role-guest logged'
   login.login_link.removeAttr 'disabled'
-  storage.clear()
+  storage.clear('login').clear 'repository'
   apply_family()
   true
 

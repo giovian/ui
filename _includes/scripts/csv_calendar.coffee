@@ -1,10 +1,9 @@
 #
 # Fill CSV BLOCKS function
 # --------------------------------------
-fill_calendar = (div) ->
+fill_calendar = (div, data) ->
   # Create data array without headers
-  csv_data = get_github_api_data "#{div.attr 'data-file'}.csv"
-  csv = Base64.decode(csv_data.content).split('\n').slice 1
+  csv = Base64.decode(data.content).split('\n').slice 1
   # Prepare DIV
   div.empty()
   months = +div.attr 'data-months'

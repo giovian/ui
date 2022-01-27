@@ -1,13 +1,12 @@
 #
 # Fill CSV TABLE function
 # --------------------------------------
-fill_table = (table) ->
+fill_table = (table, data) ->
   # Get sort
   id = [$('body').attr('page-title'), $('table[csv-table]').index(table)].join '|'
   table.attr 'data-sort', (i, v) -> storage.get("sort.#{id}") || v
   # Get document data
-  csv_data = get_github_api_data "#{table.attr 'data-file'}.csv"
-  csv = Base64.decode(csv_data.content).split '\n'
+  csv = Base64.decode(data.content).split '\n'
   # Get schema data
   schema_data = get_github_api_data "#{table.attr 'data-file'}.schema.json"
   schema = JSON.parse Base64.decode(schema_data.content)
@@ -181,7 +180,7 @@ $(document).on 'click', "[csv-table] a[href='#delete']", ->
     stored_data.sha = data.content.sha
     set_github_api_data document_url, stored_data
     # Update table and eventual blocks
-    update_csv document_file
+    update_csv document_file, stored_data
     return # End document update
   put.always -> table.removeAttr 'disabled'
 

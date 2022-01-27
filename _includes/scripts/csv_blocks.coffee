@@ -1,10 +1,9 @@
 #
 # Fill CSV BLOCKS function
 # --------------------------------------
-fill_blocks = (div) ->
+fill_blocks = (div, data) ->
   # Create data array without headers
-  csv_data = get_github_api_data "#{div.attr 'data-file'}.csv"
-  csv = Base64.decode(csv_data.content).split('\n').slice 1
+  csv = Base64.decode(data.content).split('\n').slice 1
   # Prepare DIV
   div.empty()
   blocks = +div.attr 'data-blocks'
@@ -18,8 +17,12 @@ fill_blocks = (div) ->
     if index isnt -1
       block.attr 'title', csv[index].replace ',', ', '
       block.addClass 'present'
+    if day is new Date().toLocaleDateString 'en-CA'
+      block.addClass 'today'
     running += ms.day()
-    div.append block.css({width: width, height: width})
+    div.append block.css
+      width: width
+      height: width
   return # End Blocks fill
 
 #

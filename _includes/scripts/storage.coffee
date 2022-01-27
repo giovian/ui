@@ -16,7 +16,8 @@ storage =
     localStorage.setItem(storage.key, Base64.encode JSON.stringify obj)
   push: (key, element) -> storage.set key, (storage.get(key) || []).concat [element]
   concat: (key, array) -> storage.set key, (storage.get(key) || []).concat array
-  assign: (key, object) -> storage.set key, Object.assign(storage.get(key) || {}, object)
+  assign: (key, object) ->
+    storage.set key, Object.assign(storage.get(key) || {}, object)
   set: (key, value) ->
     if key
       if value isnt undefined and value isnt {}
