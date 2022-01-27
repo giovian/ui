@@ -29,9 +29,13 @@ fill_calendar = (div, data) ->
         month_div.css 'align-content', 'end'
       div.append month_div
     # Create day DIV
+    text = day.toLocaleDateString "{{ site.language | default: 'en-US' }}",
+      weekday: 'narrow'
+      day: 'numeric'
     day_div = $ '<div/>',
       day: day.getDate()
       title: day_formatted
+      text: text
     # Style day DIV
     day_div.css
       width: "#{width_days}px"
@@ -41,7 +45,7 @@ fill_calendar = (div, data) ->
     index = csv.findIndex (e) -> e.includes day_formatted
     # Check if day is present in document
     if index isnt -1
-      day_div.attr 'title', csv[index].replace ',', ', '
+      day_div.attr 'title', csv[index].replace /,/g, ', '
       day_div.addClass 'present'
     # Check if it is today
     if day_formatted is new Date().toLocaleDateString 'en-CA'

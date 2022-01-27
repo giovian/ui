@@ -1,4 +1,4 @@
-<table csv-table data-file='{{ include.file }}' data-sort='up'>
+<table csv-table data-file='{{ include.file }}' data-sort='up' class='{{ include.class }}'>
   <thead class='filter left'>
     <tr>
       <th>
@@ -39,4 +39,5 @@ Require the [CSV Table script]({{ 'docs/scripts/#csv-table' | absolute_url }}) s
 **Includes**
 
 - `file`: (required) filename of the CSV (no extension)
+- `class`: (optional) space separated list of table classes
 {%- endcapture -%}

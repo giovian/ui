@@ -18,7 +18,7 @@ fill_table = (table, data) ->
   # Count header (empty from loading)
   header = table.find 'thead:not(.filter)'
   header.find('#count span').text csv.length
-  header.find('#count').css 'width', "#{csv.length.toString().length+2}em"
+  header.find('#count').css 'width', "#{csv.length.toString().length+2}.1em"
   header.find('th:not(#count)').remove()
   # Apply family for sort links
   apply_family()

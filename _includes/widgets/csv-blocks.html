@@ -3,7 +3,7 @@
   Missing <code>file</code> in <code>widgets/csv-blocks.html</code>
 </blockquote>
 {% else %}
-<div csv-blocks data-file='{{ include.file }}' data-blocks='{{ include.blocks | default: 14 }}'></div>
+<div csv-blocks data-file='{{ include.file }}' data-blocks='{{ include.blocks | default: 14 }}' data-flow='{{ include.flow | default: "past" }}'></div>
 {% endif %}
 {%- capture api -%}
 ## CSV Blocks
@@ -19,5 +19,6 @@ Require the [SCV Blocks script]({{ 'docs/scripts/#csv-blocks' | absolute_url }})
 **Includes**
 
 - `file`: (required) filename of the CSV (no extension)
-- `blocks`: (optionsl) number of blocks, default to 14
+- `blocks`: (optional) number of blocks, default to 14
+- `flow`: (optional) can be `future`, default to `past`
 {%- endcapture -%}

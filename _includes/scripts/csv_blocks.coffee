@@ -9,17 +9,23 @@ fill_blocks = (div, data) ->
   blocks = +div.attr 'data-blocks'
   width = Math.floor div.width() / blocks
   # Loop days
-  running = +new Date() - ((blocks-1) * ms.day())
+  multi = if div.attr('data-flow') is 'future' then 1 else -1
+  running = +new Date() + multi * ((blocks-1) * ms.day())
   for days in [1..blocks]
     day = new Date(running).toLocaleDateString 'en-CA'
-    block = $ '<div/>', {title: day}
+    text = new Date(running).toLocaleDateString "{{ site.language | default: 'en-US' }}",
+      weekday: 'narrow'
+      day: 'numeric'
+    block = $ '<div/>',
+      title: day
+      text: text
     index = csv.findIndex (e) -> e.includes day
     if index isnt -1
-      block.attr 'title', csv[index].replace ',', ', '
+      block.attr 'title', csv[index].replace /,/g, ', '
       block.addClass 'present'
     if day is new Date().toLocaleDateString 'en-CA'
       block.addClass 'today'
-    running += ms.day()
+    running += (multi*-1) * ms.day()
     div.append block.css
       width: width
       height: width
