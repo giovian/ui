@@ -94,9 +94,8 @@ form.rounded
     border-bottom-right-radius: $border-big
 
 .sidebar form
-  margin-bottom: $border-medium
   [data-type=button]
-    @extend .border-bottom, .border-top, .border-secondary
+    @extend .border-top, .border-secondary
   h3
     font-size: 1em
     @extend .p-around
@@ -111,7 +110,7 @@ form
 
   // Spacing
   div[data-type], & > h3, & > p, details summary
-    padding: $space/2 $space*.7
+    @extend .p-around-small
     margin: 0
 
   // Borders
@@ -122,7 +121,7 @@ form
   // LABELS & SPANS
   // --------------------------------------
   span
-    font-size: 85%
+    font-size: $font-size-mini
     @extend .fg-secondary
 
   //
@@ -134,8 +133,6 @@ form
   //
   // BUTTONS
   // --------------------------------------
-  div[data-type=button]
-    padding: $space/2
   // Enabled
   button:enabled, input[type=button], input[type=reset], input[type=submit]
     margin: 0
@@ -144,7 +141,7 @@ form
     @extend .disabled
   // BUTTON
   .button
-    font-size: 92%
+    font-size: $font-size-small
     @extend .p-around
 
   //

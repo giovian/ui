@@ -2,7 +2,7 @@ table
   
   // Spacing
   border-spacing: 0
-  @extend .mv, .border-top, .border-bottom, .border-left, .border-right
+  @extend .mv, .border-top, .border-bottom, .border-left, .border-right, .border-secondary
 
   // Borders
   &.border
@@ -33,8 +33,7 @@ table
           border-bottom-right-radius: $border-big
 
 th, td
-  padding: $space/2
-  @extend .bg, .fg
+  @extend .bg, .fg, .p-around-small
 
 tr.no-border
   td, th

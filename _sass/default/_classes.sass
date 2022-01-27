@@ -8,6 +8,8 @@
   background: var(--bg)
 .bg-secondary
   background: var(--bg-secondary)
+.bg-stripe
+  background: repeating-linear-gradient(-45deg, var(--bg), var(--bg) $space, var(--bg-secondary) $space, var(--bg-secondary) $space*2) !important
 .fg
   color: var(--fg)
 .fg-secondary
@@ -38,10 +40,19 @@
   display: inline-flex
 .block
   display: block
+// GRIDS
+.grid
+  display: grid
+  grid-template-columns: 1fr 1fr
+  gap: 1em
+.flex
+  display: flex
 
 // PADDINGS
 .p-around
   padding: $space*.7 $space
+.p-around-small
+  padding: $space/2 $space*.7
 .pv
   padding-block: $space
 .pvh
@@ -113,11 +124,3 @@
   border-radius: $border-medium
 .rounded-small
   border-radius: $border-small
-
-// GRIDS
-.grid
-  display: grid
-  grid-template-columns: 1fr 1fr
-  gap: 1em
-.flex
-  display: flex

@@ -11,11 +11,17 @@
 
 // CSV Blocks
 [csv-blocks]
-  @extend .mv
+  @extend .mv, .flex
+  &[data-flow=future]
+    flex-direction: row-reverse
 
   // Blocks
   [title]
-    @extend .inline-block, .bg-secondary, .border
+    @extend .bg-secondary, .border, .flex, .fg-secondary
+    cursor: default
+    font-size: $font-size-mini
+    justify-content: center
+    align-items: center
 
     // Use border color `bg` to create a gap included in div width
     border-color: var(--bg) !important
@@ -25,13 +31,21 @@
 // CSV Calendars
 [csv-calendar]
   @extend .mv
+  font-size: $font-size-mini
   display: grid
   grid-template-columns: repeat(2, 1fr)
   [month]
+    @extend .border
     display: grid
     grid-template-columns: repeat(7, 1fr)
+    border-color: var(--bg) !important
+    border-width: $border-medium !important
+    box-sizing: border-box
   [day]
-    @extend .bg-secondary, .border
+    @extend .fg-secondary, .bg-secondary, .border, .flex
+    cursor: default
+    justify-content: center
+    align-items: center
     border-color: var(--bg) !important
     border-width: $border-medium !important
     box-sizing: border-box
@@ -39,6 +53,9 @@
 // GENERAL
 // Highlighted blocks
 .present
+  // Override .bg-secondary
   background: var(--border) !important
 .today
-  @extend .green
+  font-weight: bolder
+  // Override .fg-secondary
+  color: var(--fg) !important
