@@ -142,7 +142,16 @@ $('form.schema').each ->
         put = $.ajax schema_url,
           method: 'PUT'
           data: JSON.stringify load
-        put.done -> notification 'Schema created', 'green'
+        put.done (data) ->
+          notification 'Schema created', 'green'
+          stored_data =
+            sha: data.content.sha
+            content: encoded_content
+          # Save data for the future
+          set_github_api_data document_url, stored_data
+          # Update other elements
+          update_csv "#{form.attr 'data-file'}", stored_data
+          return # End create schema
         put.always -> form.removeAttr 'disabled'
       else
         form.removeAttr 'disabled'
@@ -162,7 +171,17 @@ $('form.schema').each ->
       put = $.ajax schema_url,
         method: 'PUT'
         data: JSON.stringify load
-      put.done -> notification 'Schema edited', 'green'
+      put.done (data) ->
+        notification 'Schema edited', 'green'
+        # Store data for the future
+        stored_data =
+          sha: data.content.sha
+          content: encoded_content
+        # Save data for the future
+        set_github_api_data document_url, stored_data
+        # Update other elements
+        update_csv "#{form.attr 'data-file'}", stored_data
+        return # End schema update
       put.always ->
         form.removeAttr 'disabled'
         # Reset eventual Document

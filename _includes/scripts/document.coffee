@@ -91,13 +91,15 @@ $('form.document[data-file!=""]').each ->
         put = $.ajax document_url,
           method: 'PUT'
           data: JSON.stringify load
-        put.done ->
+        put.done (data) ->
           notification 'Document created', 'green'
           # Save new SHA for future deletes
           stored_data =
             sha: data.content.sha
             content: encoded_content
+          # Save data for the future
           set_github_api_data document_url, stored_data
+          # Update other elements
           update_csv "#{form.attr 'data-file'}", stored_data
           return # End document created
         put.always ->
@@ -110,11 +112,14 @@ $('form.document[data-file!=""]').each ->
     # File present, overwrite with SHA reference
     get_document.done (data) ->
       data = cache data, document_url
+      # Prepare old array
+      csv_array = Base64.decode(data.content).split '\n'
+      csv_array[0] = head_csv
       # Encode csv file, append or update row
       if !form.find('[name=index]').val()
-        encoded_content = Base64.encode [Base64.decode(data.content), rows_csv].join('\n')
+        csv_array.push rows_csv
+        encoded_content = Base64.encode csv_array.join('\n')
       else
-        csv_array = Base64.decode(data.content).split '\n'
         # Update row
         csv_array[+form.find('[name=index]').val()] = rows_csv
         encoded_content = Base64.encode csv_array.join('\n')
@@ -130,11 +135,12 @@ $('form.document[data-file!=""]').each ->
         data: JSON.stringify load
       put.done (data) ->
         notification 'Document edited', 'green'
-        # Save new SHA for future deletes
+        # Save new SHA for the future
         stored_data =
           sha: data.content.sha
           content: encoded_content
         set_github_api_data document_url, stored_data
+        # Update other elements
         update_csv "#{form.attr 'data-file'}", stored_data
         return # End document update
       put.always ->
