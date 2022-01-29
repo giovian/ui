@@ -156,7 +156,7 @@ $('form.document[data-file!=""]').each ->
 ## Document
 
 Manage a document FORM from a schema of `type=array`.  
-Needs [document]({{ 'docs/widgets/#document' | absolute_url }}){: remote=''} widget.
+Needs [document]({{ 'docs/widgets/#document' | absolute_url }}) widget.
 
 **FORM**
 

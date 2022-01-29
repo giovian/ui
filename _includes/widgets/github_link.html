@@ -1,4 +1,4 @@
-<a href='{% include widgets/github_url.html path=include.path %}' title='{% include widgets/github_url.html path=include.path %}'{% if include.remote %} remote{% endif %}>{{ include.text | default: include.path | default: site.github.repository_url }}</a>
+<a href='{% include widgets/github_url.html path=include.path %}' title='{% include widgets/github_url.html path=include.path %}'>{{ include.text | default: include.path | default: site.github.repository_url }}</a>
 {%- capture api -%}
 ## GitHub link
 
@@ -14,5 +14,4 @@ Render a markdown link to a file in this GitHub repository given the file path.
 Default to the repository URL.
 - `text`: optional (string) text for the link, default to `path`.  
   With no path default to the repository URL.
-- `remote`: optional (boolean) if `true` the link point to the remote theme repository.
 {%- endcapture -%}

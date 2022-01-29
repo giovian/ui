@@ -36,5 +36,5 @@ Description
 <div class='api' markdown='1'>
 {{ api | mardowify }}
 
-{% if api %}File: {% assign absolute_path = include_file | prepend: '_includes/' %}{% include widgets/github_link.html path=absolute_path remote=true %}{% endif %}
+{% if api %}File: {% assign absolute_path = include_file | prepend: '_includes/' %}{% include widgets/github_link.html path=absolute_path %}{% endif %}
 </div>

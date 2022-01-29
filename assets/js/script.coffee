@@ -10,6 +10,7 @@
 {% include scripts/prefilter.coffee %}      # Prefilter for Ajax calls
 {% include scripts/toc.coffee %}            # Move toc to sidebar
 {% include scripts/slug.coffee %}           # Function for string slug
+{% include scripts/api_links.coffee %}      # Redirect API links on remote
 
 # WIDGETS
 
