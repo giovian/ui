@@ -1,5 +1,11 @@
 # Dispatch
-checks = ->
+updates = ->
+
+  # Schedule next check
+  setTimeout checks, 60 * 1000
+
+  # Abort if browsing site
+  if focus then return
 
   # Check latest build
   latest_url = github_api_url + "/pages/builds/latest"
@@ -15,19 +21,16 @@ checks = ->
       if !focus then window.location.href = new_url
     return # End latest callback
 
-  # Schedule next check
-  setTimeout checks, 60 * 1000
-
   return # End checks
 
 # Start checks, pages API is for authenticated users
 if '{{ site.github.environment }}' isnt 'development' and login.logged()
-  setTimeout checks, 2 * 1000
+  setTimeout updates, 60 * 1000
 
 {%- capture api -%}
 ## Updates
 
-Updates are checked 2 seconds after pageload and then every minute.
+Updates are checked every minute after pageload, only if window is blurred.
 
 **Latest build**
 

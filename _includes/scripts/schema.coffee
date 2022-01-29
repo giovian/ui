@@ -148,9 +148,7 @@ $('form.schema').each ->
             sha: data.content.sha
             content: encoded_content
           # Save data for the future
-          set_github_api_data document_url, stored_data
-          # Update other elements
-          update_csv "#{form.attr 'data-file'}", stored_data
+          set_github_api_data schema_url, stored_data
           return # End create schema
         put.always -> form.removeAttr 'disabled'
       else
@@ -178,9 +176,7 @@ $('form.schema').each ->
           sha: data.content.sha
           content: encoded_content
         # Save data for the future
-        set_github_api_data document_url, stored_data
-        # Update other elements
-        update_csv "#{form.attr 'data-file'}", stored_data
+        set_github_api_data schema_url, stored_data
         return # End schema update
       put.always ->
         form.removeAttr 'disabled'
@@ -195,7 +191,7 @@ $('form.schema').each ->
 ## Schema
 
 Manage a schema FORM of `type=array`.  
-Needs [schema]({{ 'docs/widgets/#schema' | absolute_url }}){: remote=''} widget.
+Needs [schema]({{ 'docs/widgets/#schema' | absolute_url }}) widget.
 
 **FORM**
 
