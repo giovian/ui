@@ -4,6 +4,8 @@
     @extend .right
   tbody td:first-child
     @extend .fg-secondary, .bg-secondary
+  tbody tr.duration
+    opacity: .5
   &.border thead.filter tr th
     @extend .border-bottom
   &.border-secondary thead.filter tr th
@@ -17,7 +19,7 @@
 
   // Blocks
   [title]
-    @extend .bg-secondary, .border, .flex, .fg-secondary
+    @extend .bg-secondary, .border, .flex, .fg-secondary, .rounded
     cursor: default
     font-size: $font-size-mini
     justify-content: center
@@ -42,7 +44,7 @@
     border-width: $border-medium !important
     box-sizing: border-box
   [day]
-    @extend .fg-secondary, .bg-secondary, .border, .flex
+    @extend .fg-secondary, .bg-secondary, .border, .flex, .rounded
     cursor: default
     justify-content: center
     align-items: center
@@ -51,11 +53,12 @@
     box-sizing: border-box
 
 // GENERAL
-// Highlighted blocks
-.present
-  // Override .bg-secondary
-  background: var(--border) !important
-.today
-  font-weight: bolder
-  // Override .fg-secondary
-  color: var(--fg) !important
+// Highlighted
+[csv-calendar] [day], [csv-blocks] [title]
+  &.present
+    // Override .bg-secondary
+    background: var(--border) !important
+// Today
+[csv-calendar] [day], [csv-blocks] [title]
+  &.today
+    border-color: var(--fg-secondary) !important

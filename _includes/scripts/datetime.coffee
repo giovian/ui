@@ -12,6 +12,15 @@ ms =
   s: (value) -> if value > 1 then 's' else ''
   get_value: (date, unit) -> Math.round ms.absolute(date) / unit
 
+# Convert ISO8601 duration string in milliseconds
+duration_ms = (string) ->
+  duration = 0
+  ms_array = [null, ms.year(), ms.month(), ms.week(), ms.day(), null, ms.hour(), ms.minute(), ms.second]
+  array = string.match(/^P(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(\d+H)?(\d+M)?(\d+S)?)?$/) || []
+  for e, i in ms_array
+    if e and array[i] then duration += e * +array[i].slice 0, -1
+  return duration
+
 time_diff = (date, return_update) ->
   abs = ms.absolute date
   switch
@@ -171,5 +180,5 @@ span = $ "<span/>",
   text: text
 datetime(span)
 ```
-There is a liquid widget: [datetime]({{ 'docs/widgets/#datetime' | absolute_url }}){:remote='true'}.
+There is a liquid widget: [datetime]({{ 'docs/widgets/#datetime' | absolute_url }}).
 {%- endcapture -%}

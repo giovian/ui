@@ -10,6 +10,10 @@ fill_table = (table, data) ->
   # Get schema data
   schema_data = get_github_api_data "#{table.attr 'data-file'}.schema.json"
   schema = JSON.parse Base64.decode(schema_data.content)
+  # Array of indexes for duration values
+  duration_index_array = (index for property, index in Object.keys(schema.items.properties) when schema.items.properties[property].format is 'duration')
+  # Array of indexes for date values
+  date_index_array = (index for property, index in Object.keys(schema.items.properties) when schema.items.properties[property].format is 'date')
   # Get headers
   headers = csv.shift().split ','
   # Set filter colspan plus #count, plus links
@@ -33,21 +37,36 @@ fill_table = (table, data) ->
   # Reset if already populated
   table.find('tbody').empty()
   # Rows loop
+  ghost = []
   for row_data, j in csv
     # Create row
     row = $('<tr/>').append "<td>#{j+1}</td>"
+    row_values = row_data.split ','
+    # Apply datetime to row
+    if date_index_array.length
+      date_string = row_values[date_index_array[0]]
+      datetime row.attr 'datetime', date_string
+      # Check duration value
+      if duration_index_array.length
+        duration_string = row_values[duration_index_array[0]]
+        if duration_string.startsWith 'P'
+          duration = duration_ms duration_string
+          # Loop from event to today
+          running = +new Date(date_string)
+          today = +new Date()
+          while running < today
+            running += duration
+          # Create and store ghost event
+          # Array shallow copy
+          new_values = row_values.slice 0
+          new_values[date_index_array[0]] = new Date(running).toLocaleDateString 'en-CA'
+          ghost.push new_values.join ','
     # Loop row values
-    for value, i in row_data.split ','
-      value_properties = schema.items.properties[headers[i]]
-      content = value
-      # Apply datetime to row
-      if value_properties.format is 'date' and value
-        datetime row.attr 'datetime', value
+    for value, i in row_values
       # Append cell
       row.append $ '<td/>',
-        'data-value-type': value_properties.type
         headers: headers[i]
-        text: content
+        text: value
 
     # End row loop, Edit remove links
     row.append get_template '#template-service-links-cell'
@@ -55,8 +74,27 @@ fill_table = (table, data) ->
     if table.attr('data-sort') is 'up'
       table.find('tbody').append row
     else table.find('tbody').prepend row
-
   # End file loop
+
+  # Loop ghost values
+  if ghost.length
+    for entry in ghost
+      # Prepare row
+      row = $('<tr/>').append '<td/>'
+      row_values = entry.split ','
+      date_string = row_values[date_index_array[0]]
+      datetime row.attr 'datetime', date_string
+      # Loop values and append cells
+      for value, i in row_values
+        row.append $ '<td/>',
+          headers: headers[i]
+          text: value
+      # Add empty service links cell
+      row.append '<td/>'
+      # Prepend row
+      table.find('tbody').prepend row.addClass 'duration'
+  # End ghost loop
+
   # Check filter saved state
   if storage.get "filters.#{id}"
     [selected_index, input_value] = storage.get("filters.#{id}").split '|'
@@ -137,7 +175,8 @@ $('table[csv-table][data-file!=""]').on 'click', '#count a', ->
   else
     table.attr 'data-sort', 'up'
     storage.clear "sort.#{id}"
-  tbody.find('tr').each -> tbody.prepend $ @
+  tbody.find('tr:not(.duration)').each -> tbody.prepend $ @
+  tbody.find('tr.duration').each -> tbody.prepend $ @
   # Update bottom borders
   hide_last_borders table
   # Update sort links visibility
@@ -224,5 +263,5 @@ $(document).on 'click', "[csv-table] a[href='#edit']", ->
 {%- capture api -%}
 ## CSV Table
 
-Manage a [CSV table widget]({{ 'docs/widgets/#csv-table' | absolute_url }}){: remote=''}, populate the relative `table[csv-table][data-file]` and store state on `storage`.
+Manage a [CSV table widget]({{ 'docs/widgets/#csv-table' | absolute_url }}), populate the relative `table[csv-table][data-file]` and store state on `storage`.
 {%- endcapture -%}
