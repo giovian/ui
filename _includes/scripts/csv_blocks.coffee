@@ -26,16 +26,17 @@ fill_blocks = (div, data) ->
     values = row.split ','
     # Check every row for duration
     # Only the first duration value will be used
-    if values[duration_index_array[0]].startsWith 'P'
-      duration = duration_ms values[duration_index_array[0]]
-      # Get event date and start loop from first repetition
-      # Only the first date value will be used
-      calendar_date = +new Date(values[date_index_array[0]])
-      calendar_date += duration
-      while calendar_date < Math.max end, running
-        values[date_index_array[0]] = new Date(calendar_date).toLocaleDateString 'en-CA'
-        ghost.push values.join ','
+    if duration_index_array.length and date_index_array.length
+      if values[duration_index_array[0]].startsWith 'P'
+        duration = duration_ms values[duration_index_array[0]]
+        # Get event date and start loop from first repetition
+        # Only the first date value will be used
+        calendar_date = +new Date(values[date_index_array[0]])
         calendar_date += duration
+        while calendar_date < Math.max end, running
+          values[date_index_array[0]] = new Date(calendar_date).toLocaleDateString 'en-CA'
+          ghost.push values.join ','
+          calendar_date += duration
   # End csv duration loop
   # Loop days inside blocks range
   while flow * running >= flow * end
