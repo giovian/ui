@@ -2,7 +2,7 @@
 updates = ->
 
   # Schedule next check
-  setTimeout checks, 60 * 1000
+  setTimeout updates, 60 * 1000
 
   # Abort if browsing site
   if focus then return
