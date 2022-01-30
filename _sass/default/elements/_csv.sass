@@ -2,6 +2,8 @@
 [csv-table]
   thead th#count, tbody td:not(:last-child)
     @extend .right
+  thead th[relative-time]
+    cursor: pointer
   tbody td:first-child
     @extend .fg-secondary, .bg-secondary
   tbody tr.duration

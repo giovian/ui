@@ -28,8 +28,16 @@ fill_table = (table, data) ->
   apply_family()
 
   # Loop headers and populate filter select
-  for head in headers
-    header.find('tr').append "<th id='#{head}'>#{head}</th>"
+  for head, j in headers
+    head_cell = $ '<th/>',
+      id: head
+      text: head
+    # Relative-time function
+    if date_index_array.length
+      if j is date_index_array[0]
+        head_cell.attr 'relative-time', ''
+        head_cell.css 'width', '8em'
+    header.find('tr').append head_cell
     filter.find('select').append $ '<option/>', {value: head, text: head}
   # Edit and delete links column
   header.find('tr').append $ '<th/>'
@@ -42,31 +50,33 @@ fill_table = (table, data) ->
     # Create row
     row = $('<tr/>').append "<td>#{j+1}</td>"
     row_values = row_data.split ','
-    # Apply datetime to row
-    if date_index_array.length
-      date_string = row_values[date_index_array[0]]
-      datetime row.attr 'datetime', date_string
-      # Check duration value
-      if duration_index_array.length
-        duration_string = row_values[duration_index_array[0]]
-        if duration_string.startsWith 'P'
-          duration = duration_ms duration_string
-          # Loop from event to today
-          running = +new Date(date_string)
-          today = +new Date()
-          while running < today
-            running += duration
-          # Create and store ghost event
-          # Array shallow copy
-          new_values = row_values.slice 0
-          new_values[date_index_array[0]] = new Date(running).toLocaleDateString 'en-CA'
-          ghost.push new_values.join ','
     # Loop row values
     for value, i in row_values
-      # Append cell
-      row.append $ '<td/>',
+      # Prepare cell
+      cell = $ '<td/>',
         headers: headers[i]
         text: value
+      # Apply datetime to row
+      if date_index_array.length
+        if date_index_array[0] is i then datetime cell.attr 'datetime', value
+      # Check duration value
+      if duration_index_array.length and date_index_array.length
+        if duration_index_array[0] is i
+          if value.startsWith 'P'
+            duration = duration_ms value
+            # Loop from event to today
+            running = +new Date(row_values[date_index_array[0]])
+            today = +new Date()
+            if running < today
+              while running < today
+                running += duration
+              # Create and store ghost event
+              # Array shallow copy
+              new_values = row_values.slice 0
+              new_values[date_index_array[0]] = new Date(running).toLocaleDateString 'en-CA'
+              ghost.push new_values.join ','
+      # Append cell
+      row.append cell
 
     # End row loop, Edit remove links
     row.append get_template '#template-service-links-cell'
@@ -82,13 +92,15 @@ fill_table = (table, data) ->
       # Prepare row
       row = $('<tr/>').append '<td/>'
       row_values = entry.split ','
-      date_string = row_values[date_index_array[0]]
-      datetime row.attr 'datetime', date_string
       # Loop values and append cells
       for value, i in row_values
-        row.append $ '<td/>',
+        cell = $ '<td/>',
           headers: headers[i]
           text: value
+        if i is date_index_array[0]
+          datetime cell.attr 'datetime', value
+          cell.attr 'relative-time', ''
+        row.append cell
       # Add empty service links cell
       row.append '<td/>'
       # Prepend row
@@ -259,6 +271,19 @@ $(document).on 'click', "[csv-table] a[href='#edit']", ->
   # Scroll FORM into view
   form[0].scrollIntoView()
   return # End delete event
+
+# Relative-time event
+$(document).on 'click', "[csv-table] th[relative-time]", ->
+  table = $(@).parents 'table[csv-table]'
+  table.find('td[datetime]').each ->
+    cell = $ @
+    if cell.attr 'old-title'
+      cell.text cell.attr 'old-title'
+      cell.removeAttr 'old-title'
+    else
+      cell.attr 'old-title', cell.text()
+      cell.text cell.attr 'title'
+  return # End relative-time event
 
 {%- capture api -%}
 ## CSV Table
