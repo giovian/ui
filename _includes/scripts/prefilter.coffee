@@ -39,10 +39,14 @@ $(document).ajaxSuccess (event, request, ajaxOptions, data) ->
 ## Ajax prefilter
 
 - Show a notification in case of error
+
 **For request to GitHub API**
+
 - Set `Accept` header (and `Authorization` headers if user is logged)
+
+**For `get` requests**
+
 - Set `If-Modified-Since` header if data are cached in storage
-- Save `last-modified` response header for `get` requests
-- Cache data for `get` requests
-- Return cached data if possible
+- Save `last-modified` response header
+- Cache data
 {%- endcapture -%}
