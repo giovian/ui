@@ -96,7 +96,7 @@ $('form.document[data-file!=""]').each ->
           # Save new SHA for future deletes
           stored_data =
             sha: data.content.sha
-            content: encoded_content
+            content: load
           # Save data for the future
           set_github_api_data document_url, stored_data
           # Update other elements
