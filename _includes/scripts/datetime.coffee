@@ -61,24 +61,25 @@ time_diff = (date, return_update) ->
 
 datetime = (e) ->
 
-  date = $(e).attr 'datetime'
+  el = $ e
+  date = el.attr 'datetime'
   abs = ms.absolute date
 
   # Past or Future
-  $(e).removeClass 'past future'
+  el.removeClass 'past future'
     .addClass if ms.diff(date) > 0 then 'past' else 'future'
 
   [moment, update] = time_diff date, true
 
   # Embed or add title attribute
-  if $(e).attr "embed"
-    $(e).attr "title", (i, t) -> t || $(e).text()
-    $(e).text "#{$(e).attr 'original-text'} (#{moment})"
+  if el.attr "embed"
+    el.attr "title", (i, t) -> t || el.text()
+    el.text "#{el.attr('original-text') || el.text()} (#{moment})"
   else if $(e).attr "replace"
-    $(e).attr "title", (i, t) -> t || $(e).text()
-    $(e).text moment
+    el.attr "title", (i, t) -> t || el.text()
+    el.text moment
   else
-    $(e).attr "title", moment
+    el.attr "title", moment
 
   apply_family()
 

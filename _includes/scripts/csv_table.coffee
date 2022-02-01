@@ -36,11 +36,6 @@ fill_table = (table, data) ->
     head_cell = $ '<th/>',
       id: head
       text: head
-    # Relative-time function
-    if date_index_array.length
-      if j is date_index_array[0]
-        head_cell.attr 'relative-time', ''
-        head_cell.css 'min-width', '8em'
     header.find('tr').append head_cell
     filter.find('select').append $ '<option/>', {value: head, text: head}
   # Edit and delete links column
@@ -58,9 +53,10 @@ fill_table = (table, data) ->
       cell = $ '<td/>',
         headers: headers[i]
         text: value
-      # Apply datetime to row
+        value: value
+      # Apply datetime to cell
       if date_index_array.length
-        if date_index_array[0] is i then datetime cell.attr 'datetime', value
+        if date_index_array[0] is i then datetime cell.attr {'datetime': value, 'embed': true}
       # Check duration value
       if duration_index_array.length and date_index_array.length
         if duration_index_array[0] is i
@@ -100,8 +96,7 @@ fill_table = (table, data) ->
           headers: headers[i]
           text: value
         if i is date_index_array[0]
-          datetime cell.attr 'datetime', value
-          cell.attr 'relative-time', ''
+          datetime cell.attr {'datetime': value, 'embed': true}
         row.append cell
       # Add empty service links cell
       row.append '<td/>'
@@ -273,20 +268,6 @@ $(document).on 'click', "[csv-table] a[href='#edit']", ->
   # Scroll FORM into view
   form[0].scrollIntoView()
   return # End delete event
-
-# Relative-time event
-$(document).on 'click', "[csv-table] th[relative-time]", (e) ->
-  e.preventDefault()
-  table = $(@).parents 'table[csv-table]'
-  table.find('td[datetime]').each ->
-    cell = $ @
-    if cell.attr 'old-title'
-      cell.text cell.attr 'old-title'
-      cell.removeAttr 'old-title'
-    else
-      cell.attr 'old-title', cell.text()
-      cell.text cell.attr 'title'
-  return # End relative-time event
 
 {%- capture api -%}
 ## CSV Table
