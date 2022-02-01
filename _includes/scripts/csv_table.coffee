@@ -22,10 +22,14 @@ fill_table = (table, data) ->
   # Count header (empty from loading)
   header = table.find 'thead:not(.filter)'
   header.find('#count span').text csv.length
-  header.find('#count').css 'width', "#{csv.length.toString().length+2}.1em"
+  header.find('#count').css 'min-width', "#{csv.length.toString().length+2}.1em"
   header.find('th:not(#count)').remove()
   # Apply family for sort links
   apply_family()
+
+  # Reset if already populated
+  table.find('tbody').empty()
+  filter.find('select').empty()
 
   # Loop headers and populate filter select
   for head, j in headers
@@ -36,14 +40,12 @@ fill_table = (table, data) ->
     if date_index_array.length
       if j is date_index_array[0]
         head_cell.attr 'relative-time', ''
-        head_cell.css 'width', '8em'
+        head_cell.css 'min-width', '8em'
     header.find('tr').append head_cell
     filter.find('select').append $ '<option/>', {value: head, text: head}
   # Edit and delete links column
   header.find('tr').append $ '<th/>'
 
-  # Reset if already populated
-  table.find('tbody').empty()
   # Rows loop
   ghost = []
   for row_data, j in csv
@@ -273,7 +275,8 @@ $(document).on 'click', "[csv-table] a[href='#edit']", ->
   return # End delete event
 
 # Relative-time event
-$(document).on 'click', "[csv-table] th[relative-time]", ->
+$(document).on 'click', "[csv-table] th[relative-time]", (e) ->
+  e.preventDefault()
   table = $(@).parents 'table[csv-table]'
   table.find('td[datetime]').each ->
     cell = $ @

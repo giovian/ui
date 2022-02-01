@@ -58,8 +58,8 @@ output
   left: $space*.3
 
 // RANGE and SELECT cursor
-input[type=range], select
-  cursor: pointer !important
+input, select
+  @extend .pointer
 
 // Empty multiple select min-width
 select[multiple] option[value=""]:only-of-type
@@ -118,11 +118,17 @@ form
     @extend .border-bottom, .border-secondary
 
   //
-  // LABELS & SPANS
+  // SPANS
   // --------------------------------------
   span
     font-size: $font-size-mini
     @extend .fg-secondary
+
+  //
+  // LABELS
+  // --------------------------------------
+  label[for]
+    @extend .pointer
 
   //
   // DETAILS MARGINS

@@ -6,37 +6,33 @@
 
   <div data-type='string'>
     <label for='$id'><code>$id</code> file path (no extension)</label>
-    <input type='text' autocomplete='off' name='$id' required>
+    <input type='text' autocomplete='off' name='$id' id='$id' required>
     <span>URI-reference inside <code>_data/</code></span>
   </div>
 
 <!-- ANNOTATIONS -->
   <div data-type='string'>
     <label for='title'>Title</label>
-    <input type='text' autocomplete='off' name='title'>
+    <input type='text' autocomplete='off' name='title' id='title'>
   </div>
   <div data-type='string'>
     <label for='description'>Description</label>
-    <input type='text' autocomplete='off' name='description'>
+    <input type='text' autocomplete='off' name='description' id='description'>
   </div>
 
   <div data-type='select'>
-    <label for='type'>Type</label>
-    <select name='type' class='inline'>
+    <label>Type</label>
+    <select name='type' id='type' class='inline'>
       <option value='array'>Array</option>
     </select>
   </div>
 
   <div data-type='select'>
-    <label for='items[type]'>Items type</label>
-    <select name='items[type]' class='inline'>
+    <label>Items type</label>
+    <select name='items[type]' id='items[type]' class='inline'>
       <option value='object'>Object</option>
     </select>
   </div>
-
-  <!-- HIDDEN -->
-
-  <input type='hidden' name='items[type]' value='object'>
 
   <div data-type='array'>
     <label class='fg-secondary'>Item properties <a href='#add-property' data-add='property' class='prevent-default'>add</a></label>
@@ -59,16 +55,16 @@
     <summary><a href='#remove-property' data-remove='property' class='prevent-default'>remove</a></summary>
     <div data-type='string'>
       <label for='title'>Title</label>
-      <input type='text' autocomplete='off' name='title'>
+      <input type='text' autocomplete='off' name='title' id='title'>
     </div>
     <div data-type='string'>
       <label for='description'>Description</label>
-      <input type='text' autocomplete='off' name='description'>
+      <input type='text' autocomplete='off' name='description' id='description'>
     </div>
   <!-- PROPERTY TYPE -->
     <div data-type='select'>
-      <label for='type'>Type</label>
-      <select name='type' required class='inline'>
+      <label>Type</label>
+      <select name='type' id='type' required class='inline'>
         <option value='string'>String</option>
         <option value='number'>Number</option>
         <option value='integer'>Integer</option>
@@ -85,8 +81,8 @@
 -->
 <template id='template-string'>
   <div data-type='string'>
-    <label for='format'>Format</label>
-    <select name='format' class='inline'>
+    <label>Format</label>
+    <select name='format' id='format' class='inline'>
       <option value=''></option>
       <option value='textarea'>Textarea</option>
       <option value='color'>Color</option>
@@ -106,21 +102,21 @@
     <div data-tab='attributes'>
       <div data-type='string'>
         <label for='default'>Default</label>
-        <input type='string' name='default' autocomplete='off' data-value-type='string'>
+        <input type='string' name='default' id='default' autocomplete='off' data-value-type='string'>
       </div>
       <div data-type='number'>
         <label for='minLength'>Min length</label>
-        <input type='number' name='minLength' data-value-type='number'>
+        <input type='number' name='minLength' id='minLength' data-value-type='number'>
         <span>Inclusive limit</span>
       </div>
       <div data-type='number'>
         <label for='maxLength'>Max length</label>
-        <input type='number' name='maxLength' data-value-type='number'>
+        <input type='number' name='maxLength' id='maxLength' data-value-type='number'>
         <span>Inclusive limit</span>
       </div>
       <div data-type='string'>
         <label for='class'>Class</label>
-        <input type='text' autocomplete='off' name='class'>
+        <input type='text' autocomplete='off' name='class' id='class'>
         <span>Space separated class list</span>
       </div>
     </div>
@@ -138,8 +134,8 @@
 -->
 <template id='template-number'>
   <div data-type='string'>
-    <label for='format'>Format</label>
-    <select name='format' class='inline'>
+    <label>Format</label>
+    <select name='format' id='format' class='inline'>
       <option value=''></option>
       <option value='range'>Range</option>
     </select>
@@ -152,25 +148,25 @@
     <div data-tab='attributes'>
       <div data-type='number'>
         <label for='default'>Default</label>
-        <input type='number' name='default' autocomplete='off' data-value-type='number'>
+        <input type='number' name='default' id='default' autocomplete='off' data-value-type='number'>
       </div>
       <div data-type='number'>
         <label for='minimum'>Minimun</label>
-        <input type='number' name='minimum' data-value-type='number'>
+        <input type='number' name='minimum' id='minimum' data-value-type='number'>
         <span>Inclusive limit</span>
       </div>
       <div data-type='number'>
         <label for='maximum'>Maximum</label>
-        <input type='number' name='maximum' data-value-type='number'>
+        <input type='number' name='maximum' id='maximum' data-value-type='number'>
         <span>Inclusive limit</span>
       </div>
       <div data-type='string'>
         <label for='units'>Units</label>
-        <input type='text' autocomplete='off' name='units'>
+        <input type='text' autocomplete='off' name='units' id='units'>
       </div>
       <div data-type='string'>
         <label for='class'>Class</label>
-        <input type='text' autocomplete='off' name='class'>
+        <input type='text' autocomplete='off' name='class' id='class'>
         <span>Space separated class list</span>
       </div>
     </div>
@@ -188,8 +184,8 @@
 -->
 <template id='template-integer'>
   <div data-type='string'>
-    <label for='format'>Format</label>
-    <select name='format' class='inline'>
+    <label>Format</label>
+    <select name='format' id='format' class='inline'>
       <option value=''></option>
       <option value='range'>Range</option>
     </select>
@@ -202,25 +198,25 @@
     <div data-tab='attributes'>
       <div data-type='number'>
         <label for='default'>Default</label>
-        <input type='number' name='default' autocomplete='off' data-value-type='number'>
+        <input type='number' name='default' id='default' autocomplete='off' data-value-type='number'>
       </div>
       <div data-type='number'>
         <label for='minimum'>Minimun</label>
-        <input type='number' name='minimum' data-value-type='number'>
+        <input type='number' name='minimum' id='minimum' data-value-type='number'>
         <span>Inclusive limit</span>
       </div>
       <div data-type='number'>
         <label for='maximum'>Maximum</label>
-        <input type='number' name='maximum' data-value-type='number'>
+        <input type='number' name='maximum' id='maximum' data-value-type='number'>
         <span>Inclusive limit</span>
       </div>
       <div data-type='string'>
         <label for='units'>Units</label>
-        <input type='text' autocomplete='off' name='units'>
+        <input type='text' autocomplete='off' name='units' id='units'>
       </div>
       <div data-type='string'>
         <label for='class'>Class</label>
-        <input type='text' autocomplete='off' name='class'>
+        <input type='text' autocomplete='off' name='class' id='class'>
         <span>Space separated class list</span>
       </div>
     </div>
@@ -238,8 +234,8 @@
 -->
 <template id='template-boolean'>
   <div data-type='string'>
-    <label for='default'>Default</label>
-    <select name='default' class='inline' data-value-type='boolean'>
+    <label>Default</label>
+    <select name='default' id='default' class='inline' data-value-type='boolean'>
       <option value=''></option>
       <option value='true'>True</option>
       <option value='false'>False</option>
@@ -247,7 +243,7 @@
   </div>
   <div data-type='string'>
     <label for='class'>Class</label>
-    <input type='text' autocomplete='off' name='class'>
+    <input type='text' autocomplete='off' name='class' id='class'>
     <span>Space separated class list</span>
   </div>
 </template>
@@ -259,7 +255,7 @@
   <div data-type='string'>
     <label></label>
     <a href='#remove-enum' data-remove='enum' class='prevent-default'>remove</a>
-    <input name='[enum][]' value='' type='hidden' data-value-type=''>
+    <input name='[enum][]' id='[enum][]' value='' type='hidden' data-value-type=''>
   </div>
 </template>
 {% else %}

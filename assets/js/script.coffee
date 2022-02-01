@@ -23,14 +23,14 @@
 
 {% include scripts/focus.coffee %}          # Check website browser tab is focused
 {% include scripts/inview.coffee %}         # In view Observer
-{% include scripts/updates.coffee %}        # Check repository and remote theme updates
+{% include scripts/updates.coffee %}        # Check site builds updates
 {% include scripts/tab.coffee %}            # Manage TABs
 {% include scripts/form.coffee %}           # Form engine
 {% include scripts/schema.coffee %}         # Manage array schema engine
 {% include scripts/document.coffee %}       # Manage document from schema
 {% include scripts/csv_table.coffee %}      # Table from CSV data file
 {% include scripts/csv_blocks.coffee %}     # Blocks from CSV data file
-{% include scripts/csv_calendar.coffee %}     # Calendar from CSV data file
+{% include scripts/csv_calendar.coffee %}   # Calendar from CSV data file
 
 # CUSTOM
 

@@ -28,6 +28,7 @@ get_property = (key, value) ->
         input = enum_div.find('input')
         # Reduce the prepend virulence
         input.attr 'name', (i, v) -> v.replace('[[enum][]]', '[enum][]')
+        input.attr 'id', (i, v) -> v.replace('[[enum][]]', '[enum][]')
         # Set attributes and values
         input.attr 'data-value-type', (i, v) ->
           if property_type is 'integer' then 'number' else property_type
@@ -74,6 +75,7 @@ $('form.schema').each ->
       input = enum_div.find('input')
       # Reduce the prepend virulence
       input.attr 'name', (i, v) -> v.replace('[[enum][]]', '[enum][]')
+      input.attr 'id', (i, v) -> v.replace('[[enum][]]', '[enum][]')
       # Set attributes and values
       input.attr 'data-value-type', (i, v) -> if type is 'integer' then 'number' else type
       input.val enum_value

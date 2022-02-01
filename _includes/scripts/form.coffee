@@ -14,6 +14,7 @@ get_template = (id, prepend) ->
       $(@).attr 'for', (i, val) -> "#{prepend}[#{val}]"
     # Update inputs [name]
     template.find(':input[name]').attr 'name', (i, val) -> "#{prepend}[#{val}]"
+    template.find(':input[name]').attr 'id', (i, val) -> "#{prepend}[#{val}]"
     # Update switches
     template.find('a[data-add="enum"]').attr 'data-prepend', prepend
   return template
@@ -31,6 +32,7 @@ input_range_enable = (range) ->
 # Document form CREATE ITEM function
 # --------------------------------------
 form_create_item = (form) ->
+  unique_id = +new Date()
   schema_data = get_github_api_data "#{form.attr 'data-file'}.schema.json"
   schema = JSON.parse Base64.decode schema_data.content
   item = $ '<div/>', {class: 'item'}
@@ -75,6 +77,7 @@ form_create_item = (form) ->
 
     # Complete field attributes
     field.attr 'name', "#{key}"
+    field.attr 'id', "#{key}-#{unique_id}"
     # Classes
     if value.class then field.addClass value.class
     # String
@@ -91,7 +94,8 @@ form_create_item = (form) ->
         field.val new Date().toLocaleDateString('en-CA')
       else field.val value.default
     # Prepare elements
-    label = $ '<label/>', {text: value.title || key, for: "#{key}"}
+    label = $ '<label/>', {text: value.title || key}
+    if field.prop('tagName') isnt 'SELECT' then label.attr 'for', "#{key}-#{unique_id}"
     div = $ '<div/>', {'data-type': data_type}
     # Integer
     if value.type is 'integer' then field.attr 'step', 1
