@@ -31,27 +31,27 @@ order: 30
 {% assign past_month = now | minus: month %}
 {% assign past_year = now | minus: year %}
 **Basic**
-- Default {% include widgets/datetime.html %}
-- Embed {% include widgets/datetime.html embed=true %}
-- Replace {% include widgets/datetime.html replace=true %}
+- Default: {% include widgets/datetime.html %}
+- Embed: {% include widgets/datetime.html embed=true %}
+- Replace: {% include widgets/datetime.html replace=true %}
 <div class="grid">
 <div markdown=1>
 **Future**
-- Minute {% include widgets/datetime.html replace=1 datetime=future_minute %}
-- Hour {% include widgets/datetime.html replace=1 datetime=future_hour %}
-- Day {% include widgets/datetime.html replace=1 datetime=future_day %}
-- Week {% include widgets/datetime.html replace=1 datetime=future_week %}
-- Month {% include widgets/datetime.html replace=1 datetime=future_month %}
-- Year {% include widgets/datetime.html replace=1 datetime=future_year %}
+- Minute: {% include widgets/datetime.html replace=1 datetime=future_minute %}
+- Hour: {% include widgets/datetime.html replace=1 datetime=future_hour %}
+- Day: {% include widgets/datetime.html replace=1 datetime=future_day %}
+- Week: {% include widgets/datetime.html replace=1 datetime=future_week %}
+- Month: {% include widgets/datetime.html replace=1 datetime=future_month %}
+- Year: {% include widgets/datetime.html replace=1 datetime=future_year %}
 </div>
 <div markdown=1>
 **Past**
-- Minute {% include widgets/datetime.html replace=1 datetime=past_minute %}
-- Hour {% include widgets/datetime.html replace=1 datetime=past_hour %}
-- Day {% include widgets/datetime.html replace=1 datetime=past_day %}
-- Week {% include widgets/datetime.html replace=1 datetime=past_week %}
-- Month {% include widgets/datetime.html replace=1 datetime=past_month %}
-- Year {% include widgets/datetime.html replace=1 datetime=past_year %}
+- Minute: {% include widgets/datetime.html replace=1 datetime=past_minute %}
+- Hour: {% include widgets/datetime.html replace=1 datetime=past_hour %}
+- Day: {% include widgets/datetime.html replace=1 datetime=past_day %}
+- Week: {% include widgets/datetime.html replace=1 datetime=past_week %}
+- Month: {% include widgets/datetime.html replace=1 datetime=past_month %}
+- Year: {% include widgets/datetime.html replace=1 datetime=past_year %}
 </div>
 </div>
 {% include widgets/api.html include='widgets/github_url' %}
