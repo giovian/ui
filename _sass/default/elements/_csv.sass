@@ -1,9 +1,9 @@
 // CSV tables
 [csv-table]
-  thead th#count, tbody td:not(:last-child)
+  thead th#count, tbody td:not(:last-child):not([datetime])
     @extend .right
-  thead th[relative-time]
-    @extend .pointer
+  tbody td[datetime]
+    @extend .left
   tbody td:first-child
     @extend .fg-secondary, .bg-secondary
   tbody tr.duration
@@ -21,9 +21,8 @@
 
   // Blocks
   [title]
-    @extend .bg-secondary, .border, .flex, .fg-secondary, .rounded
+    @extend .bg-secondary, .border, .flex, .fg-secondary, .rounded, .font-mini
     cursor: default
-    font-size: $font-size-mini
     justify-content: center
     align-items: center
 
@@ -34,8 +33,7 @@
 
 // CSV Calendars
 [csv-calendar]
-  @extend .mv
-  font-size: $font-size-mini
+  @extend .mv, .font-mini
   display: grid
   grid-template-columns: repeat(2, 1fr)
   [month]
