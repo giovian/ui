@@ -74,7 +74,7 @@ datetime = (e) ->
   # Embed or add title attribute
   if el.attr "embed"
     el.attr "title", (i, t) -> t || el.text()
-    el.text "#{el.attr('original-text') || el.text()} (#{moment})"
+    el.text "#{el.attr 'original-text'} (#{moment})"
   else if $(e).attr "replace"
     el.attr "title", (i, t) -> t || el.text()
     el.text moment

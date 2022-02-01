@@ -56,7 +56,9 @@ fill_table = (table, data) ->
         value: value
       # Apply datetime to cell
       if date_index_array.length
-        if date_index_array[0] is i then datetime cell.attr {'datetime': value, 'embed': true}
+        if date_index_array[0] is i
+          cell.attr 'original-text': value
+          datetime cell.attr {'datetime': value, 'embed': true}
       # Check duration value
       if duration_index_array.length and date_index_array.length
         if duration_index_array[0] is i
@@ -96,6 +98,7 @@ fill_table = (table, data) ->
           headers: headers[i]
           text: value
         if i is date_index_array[0]
+          cell.attr 'original-text': value
           datetime cell.attr {'datetime': value, 'embed': true}
         row.append cell
       # Add empty service links cell
