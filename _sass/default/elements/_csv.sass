@@ -1,19 +1,28 @@
+//
 // CSV tables
+// --------------------------------------
 [csv-table]
+
+  // Alignment
   thead th#count, tbody td:not(:last-child):not([datetime])
     @extend .right
-  tbody td[datetime]
-    @extend .left
+
+  // Date and repetition cells
+  tbody
+    td[datetime]
+      @extend .left
+      span[relative-time]
+        @extend .fg-secondary
+    tr.duration
+      opacity: .5
+
+  // Counter cells
   tbody td:first-child
     @extend .fg-secondary, .bg-secondary
-  tbody tr.duration
-    opacity: .5
-  &.border thead.filter tr th
-    @extend .border-bottom
-  &.border-secondary thead.filter tr th
-    @extend .border-secondary
 
+//
 // CSV Blocks
+// --------------------------------------
 [csv-blocks]
   @extend .mv, .flex
   &[data-flow=future]
@@ -31,7 +40,9 @@
     border-width: $border-medium !important
     box-sizing: border-box
 
+//
 // CSV Calendars
+// --------------------------------------
 [csv-calendar]
   @extend .mv, .font-mini
   display: grid
