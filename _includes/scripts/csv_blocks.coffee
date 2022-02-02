@@ -53,13 +53,13 @@ fill_blocks = (div, data) ->
     index = ghost.findIndex (e) -> e.includes day_formatted
     if index isnt -1
       block.attr 'title', ghost[index].split(',').map((e, i) ->
-        if e then "#{headers[i]}: #{e}").join '\n'
+        if e then "#{schema.items.properties[headers[i]].title || headers[i]}: #{e}").join '\n'
       block.addClass 'present'
     # Check if ghost is present in document
     index = csv.findIndex (e) -> e.includes day_formatted
     if index isnt -1
       block.attr 'title', csv[index].split(',').map((e, i) ->
-        if e then "#{headers[i]}: #{e}").join '\n'
+        if e then "#{schema.items.properties[headers[i]].title || headers[i]}: #{e}").join '\n'
       block.addClass 'present'
     # Check if it is today
     if day_formatted is new Date().toLocaleDateString 'en-CA'

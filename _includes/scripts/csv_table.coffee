@@ -35,7 +35,9 @@ fill_table = (table, data) ->
   for head, j in headers
     head_cell = $ '<th/>',
       id: head
-      text: head
+      text: schema.items.properties[head].title || head
+    if schema.items.properties[head].description
+      head_cell.attr 'title', schema.items.properties[head].description
     header.find('tr').append head_cell
     filter.find('select').append $ '<option/>', {value: head, text: head}
   # Edit and delete links column
@@ -88,7 +90,10 @@ fill_table = (table, data) ->
 
   # Loop ghost values
   if ghost.length
-    for entry in ghost
+    # Sort ghost events, next bottom rows
+    ghost_sorted = ghost.sort (a, b) =>
+      if a.split(',')[date_index_array[0]] > b.split(',')[date_index_array[0]] then 1 else -1
+    for entry in ghost_sorted
       # Prepare row
       row = $('<tr/>').append '<td/>'
       row_values = entry.split ','

@@ -12,7 +12,7 @@ fill_calendar = (div, data) ->
   duration_index_array = (index for property, index in Object.keys(schema.items.properties) when schema.items.properties[property].format is 'duration')
   # Array of indexes for date values
   date_index_array = (index for property, index in Object.keys(schema.items.properties) when schema.items.properties[property].format is 'date')
-  # Prepare DIV
+  # Prepare calendar DIV
   div.empty()
   months = +div.attr 'data-months'
   width_months = Math.floor div.width() / 2
@@ -76,13 +76,13 @@ fill_calendar = (div, data) ->
     index = ghost.findIndex (e) -> e.includes day_formatted
     if index isnt -1
       day_div.attr 'title', ghost[index].split(',').map((e, i) ->
-        if e then "#{headers[i]}: #{e}").join '\n'
+        if e then "#{schema.items.properties[headers[i]].title || headers[i]}: #{e}").join '\n'
       day_div.addClass 'present'
     # Check if day is present in document
     index = csv.findIndex (e) -> e.includes day_formatted
     if index isnt -1
       day_div.attr 'title', csv[index].split(',').map((e, i) ->
-        if e then "#{headers[i]}: #{e}").join '\n'
+        if e then "#{schema.items.properties[headers[i]].title || headers[i]}: #{e}").join '\n'
       day_div.addClass 'present'
     # Check if it is today
     if day_formatted is new Date().toLocaleDateString 'en-CA'

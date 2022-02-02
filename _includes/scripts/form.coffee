@@ -105,8 +105,8 @@ form_create_item = (form) ->
     if value.format is 'range'
       div.append $ '<output/>', {for: key}
       input_range_enable field
-    # Append description SPAN
-    if value.description then div.append $ '<span/>', {text: value.description}
+    # Append description SPAN, prepend a space for inline cases
+    if value.description then div.append [' ', $ '<span/>', {text: value.description}]
     # Append DIV to ITEM
     item.append div
   # End properties loop
