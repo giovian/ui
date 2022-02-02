@@ -6,6 +6,8 @@
     "type": "object",
     "properties": {
       "date": {
+        "title": "Event day",
+        "description": "Temporal coordinate",
         "type": "string",
         "format": "date",
         "default": "today",
