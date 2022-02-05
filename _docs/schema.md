@@ -44,6 +44,18 @@ Primitive types of an instance are `string, number, array, object, boolean, null
 
 Every instance can have a `default` pre-filled value, should validate against the schema in which it resides, but that isn’t required.
 
+Example of `const` changing Keywords
+
+```json
+{
+  "oneOf": [
+    {"const": "foo", "title": "Pick Foo"},
+    {"const": "bar", "title": "Pick Bar"},
+    {"const": "whatever", "title": "Don't Care"}
+  ]
+}
+```
+
 ### String
 
 **Validation keywords**

@@ -6,4 +6,4 @@
 **To do**
 
 - right sidebar
-- check limited repetitions
+- better `datetime` for dates in github_api
