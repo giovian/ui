@@ -1,5 +1,5 @@
 {% if include.file %}
-<form class='prevent-default document' data-file='{{ include.file }}'>
+<form mode='light' class='prevent-default document' data-file='{{ include.file }}'>
   <h3>Document{% if include.file %} <code>{{ include.file }}</code>{% endif %}</h3>
 
   <!-- Editing index -->
@@ -9,8 +9,8 @@
 
 <!-- BUTTONS -->
   <div data-type='button'>
-    <input type='submit' value='Save'>
-    <input type='reset'>
+    <input class='green' type='submit' value='Save'>
+    <input class='red' type='reset'>
   </div>
 </form>
 

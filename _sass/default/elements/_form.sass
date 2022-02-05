@@ -12,7 +12,9 @@ input:not([type=range]), textarea, select
 
 // Override default browser BORDERS
 input:not([type=range]), textarea, select, .button
-  @extend .border, .border-secondary
+  @extend .border
+input:not([type=range]):not([type=submit]):not([type=reset]):not([type=button]), textarea, select
+  @extend .border-secondary
 
 // Mini rounded
 input:not([type=range]), textarea, select
@@ -152,20 +154,16 @@ form
   // COLORS
   // --------------------------------------
 
+  // Normal
+  .button
+    @extend .bg, .fg
+
   // BG Secondary
   & > h3, & > h4, .button:hover
-    background: var(--bg-secondary) !important
+    @extend .bg-secondary
 
-  // Normal
-  .button, .button:active
-    background: var(--bg)
-    color: var(--fg)
-
-  // Special
-  input[type=submit]:not([disabled])
-    @extend .green
-  input[type=reset]:not([disabled])
-    @extend .red
+  .button:active
+    background: var(--bg) !important
 
   //
   // DISPLAY

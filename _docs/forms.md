@@ -77,8 +77,8 @@ order: 60
     </div>
   </div>
   <div data-type="button">
-    <input type="submit" value="Save">
-    <input type="reset">
+    <input class='green' type="submit" value="Save">
+    <input class='red' type="reset">
     <input type="button" value="Button">
   </div>
 </form>

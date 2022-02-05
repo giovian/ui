@@ -34,6 +34,7 @@
   --fg-secondary: hsl(0, 0%, 56%)
   --border: hsl(0, 0%, 21%)
   --link: #{$link-dark}
+  @extend .bg, .fg
 
   // Color classes
   @each $color-name, $color-value in $colors-dark
@@ -58,6 +59,7 @@
   --fg-secondary: hsl(0, 0%, 50%)
   --border: hsl(0, 0%, 79%)
   --link: #{$link-light}
+  @extend .bg, .fg
 
   // Color classes
   @each $color-name, $color-value in $colors-light
