@@ -66,7 +66,7 @@ fill_blocks = (div, data) ->
       block.addClass 'today'
     # Append blocks DIV
     div.append block.css
-      width: width
+      width: "#{100/blocks}%"
       height: width
     running -= flow * ms.day()
   return # End Blocks fill

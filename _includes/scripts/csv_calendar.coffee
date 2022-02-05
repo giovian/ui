@@ -53,8 +53,7 @@ fill_calendar = (div, data) ->
       first_day = "#{day.getFullYear()}-#{day.getMonth()+1}-01"
       first_day_week = new Date(first_day).getDay()
       # Create div
-      month_div = $('<div/>', {month: month}).css
-        'grid-template-rows': "#{width_days}px"
+      month_div = $('<div/>', {month: month})
       # Push bottom if end of month
       month_div.css 'align-content', if day_number is 1 then 'start' else 'end'
       div.append month_div
@@ -68,7 +67,6 @@ fill_calendar = (div, data) ->
       text: text
     # Set size and position
     day_div.css
-      width: "#{width_days}px"
       height: "#{width_days}px"
       'grid-column-start': day.getDay() + 1
       'grid-row-start': Math.ceil (day_number+first_day_week)/7
