@@ -7,16 +7,20 @@ updates = ->
   # Abort if browsing site
   if focus then return
 
-  # Check latest build
-  latest_url = github_api_url + "/pages/builds/latest"
+  latest_url = github_api_url + if login.logged() then '/pages/builds' else '/commits'
   latest_build = $.get latest_url
   latest_build.done (data) ->
     data = cache data, latest_url
-    created_at = +new Date(data.created_at) / 1000
+    latest_date = if login.logged()
+      # Take the first 'built' build
+      element = data.filter((build) -> build.status is 'built')[0]
+      element.updated_at
+    else data[0].commit.author.date
     # Compare latest build created_at and site.time
-    if data.status is 'built' and created_at > {{ site.time | date: "%s" }}
+    console.log +new Date(latest_date) / 1000, {{ site.time | date: "%s" }}
+    if +new Date(latest_date) / 1000 > {{ site.time | date: "%s" }}
       loc = window.location
-      new_url = loc.origin + loc.pathname + '?created_at=' + data.created_at + loc.hash
+      new_url = loc.origin + loc.pathname + '?latest=' + latest_date + loc.hash
       # Refresh with the latest built creation unix time on tab blur
       if !focus then window.location.href = new_url
     return # End latest callback
@@ -24,7 +28,7 @@ updates = ->
   return # End checks
 
 # Start checks, pages API is for authenticated users
-if '{{ site.github.environment }}' isnt 'development' and login.logged()
+if '{{ site.github.environment }}' isnt 'development'
   setTimeout updates, 60 * 1000
 
 {%- capture api -%}
