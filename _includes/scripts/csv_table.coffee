@@ -24,8 +24,6 @@ fill_table = (table, data) ->
   header.find('#count span').text csv.length
   header.find('#count').css 'min-width', "#{csv.length.toString().length+2}.1em"
   header.find('th:not(#count)').remove()
-  # Apply family for sort links
-  apply_family()
 
   # Reset if already populated
   table.find('tbody').empty()
@@ -59,7 +57,6 @@ fill_table = (table, data) ->
       # Apply datetime to cell
       if date_index_array.length
         if date_index_array[0] is i
-          cell.attr 'original-text': value
           datetime cell.attr {'datetime': value, 'embed': true}
       # Check duration value
       if duration_index_array.length and date_index_array.length
@@ -103,7 +100,6 @@ fill_table = (table, data) ->
           headers: headers[i]
           text: value
         if i is date_index_array[0]
-          cell.attr 'original-text': value
           datetime cell.attr {'datetime': value, 'embed': true}
         row.append cell
       # Add empty service links cell
@@ -118,8 +114,16 @@ fill_table = (table, data) ->
     filter.find('select[name=column]').prop 'selectedIndex', selected_index
     filter.find('input[name=value]').val input_value
     filter.find('input[name=value]').trigger 'input'
+
   # Update borders
   hide_last_borders table
+  # Apply family for sort links and today events
+  today_date = new Date().toLocaleDateString 'en-CA'
+  mode = table.attr('mode') || $('html').attr 'mode'
+  table.find("td[datetime*='#{today_date}']")
+    .parents('tr')
+    .attr 'mode', if mode is 'dark' then 'light' else 'dark'
+  apply_family()
 
   return # Table populated
 
