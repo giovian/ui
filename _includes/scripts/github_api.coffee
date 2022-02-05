@@ -42,9 +42,11 @@ github_api_response_list = (data, out_array) ->
     property = out.trim().replace /\[(.+)\]/, ''
     raw_value = reduce_object property, data
     if typeof raw_value is 'string'
-      if Date.parse raw_value then raw_value = time_diff raw_value
+      if Date.parse raw_value then raw_value = "<span title='#{raw_value}'>#{time_diff raw_value}</span>"
       if raw_value.startsWith 'https://github.com/'
         raw_value = "<a href='#{raw_value}'>#{raw_value.slice 19}</a>"
+      if raw_value.startsWith 'https://api.github.com/'
+        raw_value = "<a href='#{raw_value}'>#{raw_value.slice 23}</a>"
     if Array.isArray raw_value
       for d, i in raw_value
         li_array.push "<li>Item #{i}</li>"
