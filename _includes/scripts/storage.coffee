@@ -17,7 +17,7 @@ storage =
   push: (key, element) -> storage.set key, (storage.get(key) || []).concat [element]
   concat: (key, array) -> storage.set key, (storage.get(key) || []).concat array
   assign: (key, object) ->
-    storage.set key, Object.assign(storage.get(key) || {}, object)
+    storage.set key, $.extend(true, storage.get(key) || {}, object)
   set: (key, value) ->
     if key
       if value isnt undefined and value isnt {}
@@ -32,9 +32,9 @@ storage =
       delete obj[key]
       keys = key.split '.'
       keys.reduce ((acc, part, index) ->
-        if index is keys.length-1 then delete acc[part]
-        if !Object.keys(acc).length then delete obj[keys[index-1]]
-        return acc[part]
+        if index is keys.length-1 then delete acc?[part]
+        if !Object.keys(acc || {}).length then delete obj[keys[index-1]]
+        return acc?[part]
       ), obj
       storage.set_object obj
     else

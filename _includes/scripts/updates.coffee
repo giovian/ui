@@ -7,21 +7,23 @@ updates = ->
   # Abort if browsing site or rate_limit low
   if focus or storage.get('rate_limit') < 25 then return
 
+  # Request builds list if authenticated or commit list if guest
   latest_url = github_api_url + if login.logged() then '/pages/builds' else '/commits'
   latest_build = $.get latest_url
   latest_build.done (data) ->
     data = cache data, latest_url
+    # Get latest repository action
     latest_date = if login.logged()
       # Take the first 'built' build
       element = data.filter((build) -> build.status is 'built')[0]
       element.created_at
     else data[0].commit.author.date
-    # Compare latest build created_at and site.time
+    # Compare latest build created_at or commit date, and site.time
     if +new Date(latest_date) / 1000 > {{ site.time | date: "%s" }}
       loc = window.location
       new_url = loc.origin + loc.pathname + '?latest=' + latest_date + loc.hash
-      # Refresh with the latest built creation unix time on tab blur
-      if !focus then window.location.href = new_url
+      # Refresh with the latest repository action
+      window.location.href = new_url
     return # End latest callback
 
   return # End checks
