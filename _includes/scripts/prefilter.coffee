@@ -26,6 +26,8 @@ $.ajaxPrefilter (options, ajaxOptions, request) ->
 
 # Success function to save `last-modified`
 $(document).ajaxSuccess (event, request, ajaxOptions, data) ->
+  if request.getResponseHeader 'x-ratelimit-remaining'
+    storage.set 'rate_limit', +request.getResponseHeader 'x-ratelimit-remaining'
   method = (ajaxOptions.type || ajaxOptions.method).toLowerCase()
   # Store data and last-modified
   if method is 'get' and data and request.getResponseHeader 'last-modified'
