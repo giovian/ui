@@ -42,7 +42,7 @@ Primitive types of an instance are `string, number, array, object, boolean, null
   In the `array` case, will have the `multiple` attribute
 - `const`: restrict the value to a single value (like enum with one item)
 
-Every instance can have a `default` pre-filled value, should validate against the schema in which it resides, but that isn’t required.
+Every instance can have a `default` pre-filled value which should validate against the schema in which it resides, but that isn’t required.
 
 Example of `const` changing Keywords
 
@@ -193,9 +193,7 @@ A schema in the file `_data/schema.json` will have `$id: {{ site.github.reposito
 ## To do
 
 - `$def` property definitions and reuse
-- `default` keyword
 - `enum` and `const` as types
-- `enum` as select input
 - `items` tuple validation
 - Conditional property definition `if`, `then`, `else`
 - Logical subschema definition `allOf`, `anyOf`, `oneOf`, `not`

@@ -61,24 +61,34 @@ cache = (data, url) ->
 
 Hashed localStorage object with key `owner/repository`.
 
-If unlogged is empty `null`
-
-If logged:
-```json
+```js
 {
-  details: {
-    "page-title-1|detail-summary-1": false,
-    "page-title-2|detail-summary-2": true
+  'details': {
+    'page-title|detail-summary': false
   },
-  login: {
-    token: "...",
-    user: "username",
-    logged: "2021-08-18T16:06:38.559Z",
-    role: "admin"/"guest"
+  'sort': {
+    'page-title|form-index': 'down'
   },
-  repository: {
-    fork: true/false,
-    parent: false/repository_object
+  'tabs': {
+    'page-title|tab-container-index': tab-link-index
+  },
+  'github_api': {
+    'api_request_url': {
+      'etag': string,
+      'ifModified': date-string,
+      'data': object or array
+    }
+  },
+  'rate_limit': number,
+  'login': {
+    'token': '...',
+    'user': 'username',
+    'logged': '2021-08-18T16:06:38.559Z',
+    'role': 'admin'/'guest'
+  },
+  'repository': {
+    'fork': true/false,
+    'parent': false/repository object
   }
 }
 ```

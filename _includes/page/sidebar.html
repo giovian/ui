@@ -6,7 +6,8 @@
 
 The sidebar will be populated with widgets included from the folder `_includes/widgets/`.  
 Select the widgets with a YAML array `sidebar: [...]`{:.language-yml}.  
+Default sidebar array is `sidebar: [toc, navigation, meta]`{:.language-yml}.  
 To add custom content, create a `_includes/widgets/sidebar.html` file and include it in the array: `sidebar: [sidebar]`{:.language-yml}.  
-The default sidebar width is `15 em`, customize with `$sidebar-width`{:.language-sass}.  
-If the sidebar is empty `sidebar: []`{:.language-yml} it will collapse.
+To remove the sidebar: `sidebar: []`{:.language-yml}.  
+To customize sidebar width and side, create `_sass/variabiles.sass` and use `$sidebar-width`{:.language-css} (default `15 em`) and `$sidebar-side: right`{:.language-css} (default left).
 {%- endcapture -%}

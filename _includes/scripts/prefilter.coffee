@@ -47,7 +47,7 @@ $(document).ajaxSuccess (event, request, ajaxOptions, data) ->
 {%- capture api -%}
 ## Ajax prefilter
 
-- Show a notification in case of error
+- Show a notification if request fail.
 
 **For request to GitHub API**
 

@@ -99,5 +99,5 @@ $('div[csv-calendar][data-file!=""]').each ->
 {%- capture api -%}
 ## CSV Calendar
 
-Manage a [CSV Calendar widget]({{ 'docs/widgets/#csv-calendar' | absolute_url }}), populate the relative `div[csv-calendar][data-file]`{:.language-css}.
+Manage a [CSV Calendar widget]({{ 'docs/widgets/#csv-calendar' | absolute_url }}), populate the relative `div[csv-calendar][data-file]`.
 {%- endcapture -%}
