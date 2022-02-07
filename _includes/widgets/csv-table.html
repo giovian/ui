@@ -1,3 +1,5 @@
+{% if include.file == nil %}> Missing `file` for `csv-table` widget
+{:.red}{% else %}
 <table csv-table data-file='{{ include.file }}' data-sort='up' class='{{ include.class }}'>
   <thead class='filter left'>
     <tr>
@@ -10,14 +12,18 @@
   </thead>
   <thead>
     <tr class='no-border'>
-      <th id='count'>
-        <span></span>
-        <a href='#up' class='prevent-default' apply-if-parent="hidden|table[data-sort='down']">▲</a><a href='#down' class='prevent-default' apply-if-parent="hidden|table[data-sort='up']">▼</a>
-      </th>
+      <th id='counter'></th>
     </tr>
   </thead>
   <tbody></tbody>
 </table>
+
+<template id="template-sort-links-cell">
+  <th>
+    <span></span>
+    <a href='#up' class='prevent-default' apply-if-parent="hidden|table[data-sort='down']">▲</a><a href='#down' class='prevent-default' apply-if-parent="hidden|table[data-sort='up']">▼</a>
+  </th>
+</template>
 
 <template id="template-service-links-cell">
   <td>
@@ -25,6 +31,8 @@
     <a href='#delete' class='prevent-default' title='Delete'>🗑️</a>
   </td>
 </template>
+{% endif %}
+
 {%- capture api -%}
 ## CSV Table
 

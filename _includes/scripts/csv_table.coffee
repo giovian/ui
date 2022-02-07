@@ -16,14 +16,14 @@ fill_table = (table, data) ->
   date_index_array = (index for property, index in Object.keys(schema.items.properties) when schema.items.properties[property].format is 'date')
   # Get headers
   headers = csv.shift().split ','
-  # Set filter colspan plus #count, plus links
+  # Set filter colspan plus #counter, plus links
   filter = table.find 'thead.filter'
   filter.find('th').attr 'colspan', headers.length + 2
   # Count header (empty from loading)
   header = table.find 'thead:not(.filter)'
-  header.find('#count span').text csv.length
-  header.find('#count').css 'min-width', "#{csv.length.toString().length+2}.1em"
-  header.find('th:not(#count)').remove()
+  header.find('#counter').text csv.length
+  header.find('#counter').css 'min-width', "#{csv.length.toString().length+1}em"
+  header.find('th:not(#counter)').remove()
 
   # Reset if already populated
   table.find('tbody').empty()
@@ -31,14 +31,29 @@ fill_table = (table, data) ->
 
   # Loop headers and populate filter select
   for head, j in headers
-    head_cell = $ '<th/>',
-      id: head
-      text: schema.items.properties[head].title || head
-    if schema.items.properties[head].description
-      head_cell.attr 'title', schema.items.properties[head].description
+
+    if schema.items.properties[head].format is 'date'
+      head_cell = get_template '#template-sort-links-cell'
+      head_cell.find('th').attr 'id', head
+      span = head_cell.find 'span'
+      span.text schema.items.properties[head].title || head
+      if schema.items.properties[head].description
+        span.attr 'title', schema.items.properties[head].description
+    else
+      head_cell = $ '<th/>',
+        id: head
+        text: schema.items.properties[head].title || head
+      if schema.items.properties[head].description
+        head_cell.attr 'title', schema.items.properties[head].description
+
+    # Append cell and filter select option
     header.find('tr').append head_cell
     filter.find('select').append $ '<option/>', {value: head, text: head}
-  # Edit and delete links column
+
+  # Apply family for sort links visibility
+  apply_family()
+
+  # Service links column
   header.find('tr').append $ '<th/>'
 
   # Rows loop
@@ -77,13 +92,14 @@ fill_table = (table, data) ->
       # Append cell
       row.append cell
 
-    # End row loop, Edit remove links
+    # End row loop, edit remove links
     row.append get_template '#template-service-links-cell'
     # Append row
-    if table.attr('data-sort') is 'up'
-      table.find('tbody').append row
-    else table.find('tbody').prepend row
+    table.find('tbody').append row
   # End file loop
+
+  # Update borders
+  hide_last_borders table
 
   # Loop ghost values
   if ghost.length
@@ -92,7 +108,7 @@ fill_table = (table, data) ->
       if a.split(',')[date_index_array[0]] > b.split(',')[date_index_array[0]] then 1 else -1
     for entry in ghost_sorted
       # Prepare row
-      row = $('<tr/>').append '<td/>'
+      row = $('<tr/>', {class: 'duration'}).append '<td/>'
       row_values = entry.split ','
       # Loop values and append cells
       for value, i in row_values
@@ -105,7 +121,7 @@ fill_table = (table, data) ->
       # Add empty service links cell
       row.append '<td/>'
       # Prepend row
-      table.find('tbody').prepend row.addClass 'duration'
+      table.find('tbody').prepend row
   # End ghost loop
 
   # Check filter saved state
@@ -115,15 +131,16 @@ fill_table = (table, data) ->
     filter.find('input[name=value]').val input_value
     filter.find('input[name=value]').trigger 'input'
 
-  # Update borders
-  hide_last_borders table
-  # Apply family for sort links and today events
+  # Highlight today cells
   today_date = new Date().toLocaleDateString 'en-CA'
   mode = table.attr('mode') || $('html').attr 'mode'
   table.find("td[datetime*='#{today_date}']")
     .parents('tr')
     .attr 'mode', if mode is 'dark' then 'light' else 'dark'
-  apply_family()
+
+  # Initial sort table
+  if date_index_array.length
+    sort_table table, headers[date_index_array[0]], table.attr 'data-sort'
 
   return # Table populated
 
@@ -166,7 +183,7 @@ $('.filter').on 'input', 'select[name=column], input[name=value]', ->
   else storage.clear "filters.#{id}"
   # Reset from last filter
   table.find('tbody tr').removeClass 'hidden'
-  table.find('#count span').text table.find('tbody tr').length
+  table.find('#counter').text table.find('tbody tr').length
 
   if !value then return
   found = 0
@@ -180,29 +197,41 @@ $('.filter').on 'input', 'select[name=column], input[name=value]', ->
   hide_last_borders table
 
   # Update found counter
-  table.find('#count span').text found
+  table.find('#counter').text found
   return # End filter event
 
-# Sort event
-$('table[csv-table][data-file!=""]').on 'click', '#count a', ->
+# Sort links events
+$('table[csv-table][data-file!=""]').on 'click', 'a[href="#up"], a[href="#down"]', ->
   link = $ @
+  href = link.attr 'href'
   table = link.parents 'table'
-  tbody = table.find 'tbody'
+  col = link.parents('th').attr 'id'
   id = [$('body').attr('page-title'), $('table[csv-table]').index(table)].join '|'
-  if link.attr('href') is '#up'
-    table.attr 'data-sort', 'down'
+  # Save sort state
+  if href is '#up'
+    table.attr 'data-sort', sort = 'down'
     # Save sort in storage
     storage.assign 'sort', {"#{id}": 'down'}
   else
-    table.attr 'data-sort', 'up'
+    table.attr 'data-sort', sort = 'up'
     storage.clear "sort.#{id}"
-  tbody.find('tr:not(.duration)').each -> tbody.prepend $ @
-  tbody.find('tr.duration').each -> tbody.prepend $ @
-  # Update bottom borders
-  hide_last_borders table
   # Update sort links visibility
   apply_family()
-  return # End sort event
+  sort_table table, col, sort
+  return # End sort links
+
+# Sort function
+sort_table = (table, col, sort) ->
+  multi = if sort is 'down' then -1 else 1
+  rows = table.find('tbody tr:not(.duration)').sort (a, b) ->
+    value_a = $(a).find("td[headers='#{col}']").attr 'value'
+    value_b = $(b).find("td[headers='#{col}']").attr 'value'
+    if value_a is value_b then return 0
+    return if value_a > value_b then multi else -multi
+  table.find('tbody tr:not(.duration)').remove()
+  table.find('tbody').append rows
+  hide_last_borders table
+  return # End sort function
 
 # Delete event
 $(document).on 'click', "[csv-table] a[href='#delete']", ->
