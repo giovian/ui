@@ -1,3 +1,9 @@
+body > div.flex
+  @if $sidebar-side == left
+    flex-direction: row
+  @if $sidebar-side == right
+    flex-direction: row-reverse
+
 aside.sidebar
 
   @extend .border-right, .border-secondary, .bg, .fg

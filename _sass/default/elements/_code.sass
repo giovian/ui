@@ -3,8 +3,7 @@ code, kbd, pre, samp
   font-family: $font-code
 
 .highlighter-rouge, .highlight
-  @extend .rounded
-  background: var(--bg-secondary) !important
+  @extend .rounded-medium, .bg-secondary
   // Spacing
   margin: 0
 
@@ -36,6 +35,6 @@ pre.highlight, .highlight pre
 // INLINE
 // --------------------------------------
 *:not(pre) > code
-  @extend .rounded-medium, .highlight
+  @extend .fg-secondary
   // Spacing
   padding: $space*.1 $space*.3
