@@ -67,15 +67,6 @@ input, select
 select[multiple] option[value=""]:only-of-type
   min-width: $space*5
 
-//
-// FORMS
-// --------------------------------------
-main form
-  display: table
-  @extend .mv, .border-right, .border-left, .border-secondary
-  [data-type=button]
-    @extend .bg-secondary
-
 // BORDERS
 form.border
   & > h3, & > p
@@ -95,15 +86,9 @@ form.rounded
     border-bottom-left-radius: $border-big
     border-bottom-right-radius: $border-big
 
-.sidebar form
-  [data-type=button]
-    @extend .border-top, .border-secondary
-  h3
-    font-size: 1em
-    @extend .p-around
-  input
-    max-width: 100%
-
+//
+// FORMS
+// --------------------------------------
 form
 
   // Grid has no GAP
@@ -200,3 +185,27 @@ form
     input, button, select
       pointer-events: none
       @extend .disabled
+
+//
+// FORMS elsewhere
+// --------------------------------------
+main form
+  display: table
+  @extend .mv, .border-right, .border-left, .border-secondary
+  [data-type=button]
+    @extend .bg-secondary
+
+.sidebar form
+  &:not(:last-child) [data-type=button]
+    @extend .border-top, .border-secondary
+  &:last-child [data-type=button]
+    @extend .bg-secondary
+  h3
+    font-size: 1em
+    @extend .p-around
+  input
+    max-width: 100%
+
+  // Buttons
+  .button
+    @extend .p-around-small

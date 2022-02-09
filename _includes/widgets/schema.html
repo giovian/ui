@@ -1,4 +1,5 @@
-{% if include.file %}
+{% if include.file == nil %}> Missing `file` for `schema` widget
+{:.red}{% else %}
 <form class='prevent-default schema' data-file='{{ include.file }}'>
   <h3>Schema{% if include.file %} <code>{{ include.file }}</code>{% endif %}</h3>
 
@@ -45,8 +46,7 @@
     <input class='green' type='submit' value='Save'>
     <input class='red' type='reset'>
   </div>
-</form>
-
+<!-- TEMPLATES -->
 <!--
           PROPERTY TEMPLATE
 -->
@@ -258,10 +258,7 @@
     <input name='[enum][]' id='[enum][]' value='' type='hidden' data-value-type=''>
   </div>
 </template>
-{% else %}
-<blockquote class="red">
-  Missing <code>file</code> in <code>widgets/schema.html</code>
-</blockquote>
+</form>
 {% endif %}
 {%- capture api -%}
 ## Schema

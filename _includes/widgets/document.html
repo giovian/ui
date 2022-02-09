@@ -1,4 +1,5 @@
-{% if include.file %}
+{% if include.file == nil %}> Missing `file` for `document` widget
+{:.red}{% else %}
 <form class='prevent-default document' data-file='{{ include.file }}'>
   <h3>Document{% if include.file %} <code>{{ include.file }}</code>{% endif %}</h3>
 
@@ -12,7 +13,6 @@
     <input class='green' type='submit' value='Save'>
     <input class='red' type='reset'>
   </div>
-</form>
 
 <!--
           ENUM TEMPLATE
@@ -23,11 +23,7 @@
     <a href="#add-item" class="prevent-default" data-add="item">add</a>
   </div>
 </template>
-
-{% else %}
-<blockquote class="red">
-  Missing <code>file</code> in <code>widgets/document.html</code>
-</blockquote>
+</form>
 {% endif %}
 {%- capture api -%}
 ## Document

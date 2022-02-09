@@ -8,9 +8,8 @@ get_github_api_data = (url) ->
 set_github_api_data = (url, data) ->
   if !url.startsWith github_api_url
     url = "#{github_api_url}/contents/_data/#{url}"
-  storage.assign 'github_api', {"#{url}":
+  storage.assign 'github_api', "#{url}":
     data: data
-  }
   return # End store API data
 
 # For every lists: create link for the request and append it as first item
