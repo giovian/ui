@@ -20,6 +20,11 @@
   tbody td:first-child
     @extend .fg-secondary, .bg-secondary
 
+  // Past future divider
+  tr.past + tr.future, tr.future + tr.past
+    & td
+      @extend .border-top
+
 //
 // CSV Blocks
 // --------------------------------------

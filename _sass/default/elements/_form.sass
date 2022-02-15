@@ -12,9 +12,7 @@ input:not([type=range]), textarea, select
 
 // Override default browser BORDERS
 input:not([type=range]), textarea, select, .button
-  @extend .border
-input:not([type=range]):not([type=submit]):not([type=reset]):not([type=button]), textarea, select
-  @extend .border-secondary
+  @extend .border, .border-secondary
 
 // Mini rounded
 input:not([type=range]), textarea, select
@@ -144,11 +142,15 @@ form
     @extend .bg, .fg
 
   // BG Secondary
-  & > h3, & > h4, .button:hover
+  & > h3, & > h4
     @extend .bg-secondary
 
-  .button:active
-    background: var(--bg) !important
+  .button
+    &:hover
+      @extend .bg-secondary
+      border-color: var(--border)
+    &:active
+      background: var(--bg) !important
 
   //
   // DISPLAY

@@ -21,6 +21,8 @@ duration_ms = (string) ->
     if e and array[i] then duration += e * +array[i].slice 0, -1
   return duration
 
+past_future = (date) -> if ms.diff(date) > 0 then 'past' else 'future'
+
 time_diff = (date, return_update) ->
   abs = ms.absolute date
   switch
@@ -68,7 +70,7 @@ datetime = (e) ->
 
   # Past or Future
   el.removeClass 'past future'
-    .addClass if ms.diff(date) > 0 then 'past' else 'future'
+    .addClass past_future(date)
 
   [moment, update] = time_diff date, true
 
@@ -99,7 +101,8 @@ $("[datetime]").each -> datetime @
 Update an element with `datetime` attribute showing a relative time counter.  
 Relative time replace the element text, be appended or appear on hover (tooltip).  
 Element will have an updated class `future` or `past`.  
-Include a function `time_diff(datetime, return_update)`{:.language-coffee} returning the relative time string and optionally the milliseconds to the next update.
+Include a function `time_diff(datetime, return_update)`{:.language-coffee} returning the relative time string and optionally the milliseconds to the next update.  
+Include a function `past_future(datetime)`{:.language-coffee} returning the relative class `past` or `future`.
 ```coffee
 # Element
 element = $ "<span/>",

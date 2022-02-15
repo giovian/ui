@@ -37,9 +37,19 @@ th, td
   &[title]
     cursor: default
 
-tr.no-border
-  td, th
-    @extend .no-border
+tr
+  &.no-border
+    td, th
+      @extend .no-border
+  &.border, &.border-bottom
+    td, th
+      @extend .border-bottom
+  &.border-top
+    td, th
+      @extend .border-top
+  &.border-secondary
+    td, th
+      @extend .border-secondary
 
 thead:not(.filter) th, tfoot td, tbody:nth-of-type(2n) td
   @extend .bg-secondary

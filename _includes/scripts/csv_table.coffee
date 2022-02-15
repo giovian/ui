@@ -60,7 +60,8 @@ fill_table = (table, data) ->
   ghost = []
   for row_data, j in csv
     # Create row
-    row = $('<tr/>').append "<td>#{j+1}</td>"
+    row = $ '<tr/>'
+    row.append "<td>#{j+1}</td>"
     row_values = row_data.split ','
     # Loop row values
     for value, i in row_values
@@ -69,10 +70,11 @@ fill_table = (table, data) ->
         headers: headers[i]
         text: value
         value: value
-      # Apply datetime to cell
+      # Apply datetime to cell and past_future class to row
       if date_index_array.length
         if date_index_array[0] is i
           datetime cell.attr {'datetime': value, 'embed': true}
+          row.addClass past_future(value)
       # Check duration value
       if duration_index_array.length and date_index_array.length
         if duration_index_array[0] is i
