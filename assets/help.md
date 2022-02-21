@@ -37,10 +37,10 @@ order: 1000
 <div markdown="1">
 **Auth**
 <ul>
-  <li><span apply-if-parent='hidden|html:not(.logged)'>Logged as <span apply-if-parent='hidden|html:not(.role-admin)'>admin</span><span apply-if-parent='hidden|html:not(.role-guest)'>guest</span></span><span apply-if-parent='hidden|.logged'>Not logged</span></li>
+  <li><span class='logged'>Logged as <span class='role-admin'>admin</span><span class='role-guest'>guest</span></span><span class='unlogged'>Not logged</span></li>
   {% include widgets/login.html %}
 </ul>
-<div apply-if-parent='hidden|html:not(.role-admin)' markdown="1">
+<div class='role-admin' markdown="1">
 **Builds**
 <ul github-api-url-repo='pages/builds/latest' github-api-text='Latest' github-api-out='status, created_at'></ul>
 <ul github-api-url-repo='pages/builds' github-api-method='POST' github-api-out='status' github-api-text='Request new build'></ul>

@@ -85,8 +85,6 @@ datetime = (e) ->
   else
     el.attr "title", moment
 
-  apply_family()
-
   # Return a setTimeout function
   setTimeout datetime, update, e
 

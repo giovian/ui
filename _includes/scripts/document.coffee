@@ -1,17 +1,17 @@
 update_csv = (document_file, data) ->
 
   # Update eventual CSV table
-  $("table[csv-table][data-file='#{document_file}']").each ->
+  $(".csv-table[data-file='#{document_file}']").each ->
     fill_table $(@), data
     return # End tables update
 
   # Update eventual CSV blocks
-  $("div[csv-blocks][data-file='#{document_file}']").each ->
+  $(".csv-blocks[data-file='#{document_file}']").each ->
     fill_blocks $(@), data
     return # End blocks update
 
   # Update eventual CSV calendar
-  $("div[csv-calendar][data-file='#{document_file}']").each ->
+  $(".csv-calendar[data-file='#{document_file}']").each ->
     fill_calendar $(@), data
     return # End blocks update
 
@@ -42,7 +42,7 @@ $('form.document[data-file!=""]').each ->
     form.find('[data-type="item"]').remove()
     form.find('[name=index]').val ''
     # If form was editing from a csv TABLE, reset class
-    $(document).find("table[csv-table][data-file='#{form.attr 'data-file'}'] tr[disabled]").removeAttr 'disabled'
+    $(document).find("table.csv-table[data-file='#{form.attr 'data-file'}'] tr[disabled]").removeAttr 'disabled'
     # Load schema
     if form.attr 'data-file' then form_load_schema form
     return # end Reset handler
@@ -51,7 +51,7 @@ $('form.document[data-file!=""]').each ->
   form.on 'submit', ->
 
     # Check user is logged
-    if !login.logged_admin()
+    if !$('html').hasClass 'role-admin'
       notification 'You need to login as `admin`', 'red'
       return
 

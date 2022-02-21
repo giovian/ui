@@ -1,7 +1,7 @@
 //
 // CSV tables
 // --------------------------------------
-[csv-table]
+.csv-table
 
   // Alignment
   thead th#counter, tbody td:not(:last-child):not([datetime])
@@ -13,22 +13,37 @@
       @extend .left
       span[relative-time]
         @extend .fg-secondary
-    tr.duration
-      opacity: .5
+    tr.duration td
+      @extend .bg-secondary
 
   // Counter cells
   tbody td:first-child
     @extend .fg-secondary, .bg-secondary
 
   // Past future divider
-  tr.past + tr.future, tr.future + tr.past
-    & td
-      @extend .border-top
+  &:not(.border)
+    tr.past + tr.future, tr.future + tr.past, tr.duration + tr.past, tr.past + tr.duration
+      & td
+        @extend .border-top
+
+  //
+  // SORT LINKS
+  // --------------------------------------
+  &[data-sort='down'] a[href='#up'], &[data-sort='up'] a[href='#down']
+    @extend .hidden
+
+//
+// SERVICE LINKS
+// --------------------------------------
+// Show only for logged admins
+html:not(.role-admin) .csv-table
+  a[href='#edit'], a[href='#delete']
+    @extend .hidden
 
 //
 // CSV Blocks
 // --------------------------------------
-[csv-blocks]
+.csv-blocks
   @extend .mv, .flex
   &[data-flow=future]
     flex-direction: row-reverse
@@ -48,7 +63,7 @@
 //
 // CSV Calendars
 // --------------------------------------
-[csv-calendar]
+.csv-calendar
   @extend .mv, .font-mini
   display: grid
   grid-template-columns: repeat(2, 1fr)
@@ -70,11 +85,9 @@
 
 // GENERAL
 // Highlighted
-[csv-calendar] [day], [csv-blocks] [title]
+.csv-calendar [day], .csv-blocks [title]
   &.present
     // Override .bg-secondary
     background: var(--border) !important
-// Today
-[csv-calendar] [day], [csv-blocks] [title]
   &.today
     border-color: var(--fg-secondary) !important

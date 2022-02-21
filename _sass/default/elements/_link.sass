@@ -39,14 +39,3 @@ a, a .highlight, a > code
 // --------------------------------------
 #markdown-toc a.inview
   color: var(--link) !important
-
-//
-// CSV TABLE
-// --------------------------------------
-table[csv-table]
-  #count a
-    @extend .font-mini
-    vertical-align: text-top
-html:not(.role-admin)
-  a[href='#edit'], a[href='#delete']
-    @extend .hidden

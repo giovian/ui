@@ -5,7 +5,6 @@ login =
   text: -> "Logged as #{login.storage()['user']} (#{login.storage()['role']})"
 
 login.logged = -> storage.get('login.token')
-login.logged_admin = -> login.logged() and storage.get('login.role') is 'admin'
 
 login.login_link.on 'click', (e) ->
   token = prompt "Paste a GitHub personal token"
@@ -47,16 +46,16 @@ login.logout_link.on 'click', ->
 
 login.setLogin = ->
   $('html').removeClass 'role-admin role-guest logged'
+  $('html').addClass 'unlogged'
   login.login_link.removeAttr 'disabled'
   storage.clear('login').clear 'repository'
-  apply_family()
   true
 
 login.setLogout = ->
+  $('html').removeClass 'unlogged'
   $('html').addClass "role-#{login.storage()['role']} logged"
   login.login_link.removeAttr 'disabled'
   login.logout_link.attr 'title', login.text()
-  apply_family()
   true
 
 # Immediately Invoked Function Expressions
@@ -66,7 +65,5 @@ login.init = (-> if login.storage()['token'] then login.setLogout() else login.s
 
 Manage GitHub login and logout using `localStorage` and the relative links in the login widget.  
 
-When logged, HTML will have a `.logged`{:.language-sass} class and the role classes `.role-admin`{:.language-sass} or `.role-guest`{:.language-sass} depending on write permissions of the logged user.
-
-The function `login.logged_admin()` return a boolean value.
+HTML will have a `.logged`{:.language-sass} or `.unlogged`{:.language-sass} class, and the role classe `.role-admin`{:.language-sass} or `.role-guest`{:.language-sass} depending on write permissions of the logged user.
 {%- endcapture -%}

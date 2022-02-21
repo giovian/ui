@@ -12,7 +12,6 @@ order: 40
 {% include widgets/api.html include='scripts/prevent.coffee' %}
 {% include widgets/api.html include='scripts/prefilter.coffee' %}
 {% include widgets/api.html include='scripts/toc.coffee' %}
-{% include widgets/api.html include='scripts/apply_family.coffee' %}
 {% include widgets/api.html include='scripts/slug.coffee' %}
 {% include widgets/api.html include='scripts/datetime.coffee' %}
 {% include widgets/api.html include='scripts/notification.coffee' %}

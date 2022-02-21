@@ -1,5 +1,4 @@
-<li apply-if-parent="hidden|.logged"><a href="#" class="login-link prevent-default">Login</a></li>
-<li apply-if-parent="hidden|html:not(.logged)"><a href="#" class="logout-link prevent-default">Logout</a></li>
+<li><a href="#" class="login-link unlogged prevent-default">Login</a><a href="#" class="logout-link logged prevent-default">Logout</a></li>
 {%- capture api -%}
 ## Login
 
@@ -10,10 +9,8 @@ Render two list items links `a.login-link`{:.language-sass} and `a.logout-link`{
 ```
 Render
 ```html
-<li apply-if-parent="hidden|.logged">
+<li>
   <a href="#" class="login-link prevent-default">Login</a>
-</li>
-<li apply-if-parent="hidden|html:not(.logged)">
   <a href="#" class="logout-link prevent-default">Logout</a>
 </li>
 ```

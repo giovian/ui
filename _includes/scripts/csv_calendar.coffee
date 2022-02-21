@@ -93,11 +93,11 @@ fill_calendar = (div, data) ->
 #
 # CSV Calendar loop
 # --------------------------------------
-$('div[csv-calendar][data-file!=""]').each ->
+$('.csv-calendar[data-file!=""]').each ->
   load_schema_document @, fill_calendar
 
 {%- capture api -%}
 ## CSV Calendar
 
-Manage a [CSV Calendar widget]({{ 'docs/widgets/#csv-calendar' | absolute_url }}), populate the relative `div[csv-calendar][data-file]`.
+Manage a [CSV Calendar widget]({{ 'docs/widgets/#csv-calendar' | absolute_url }}), populate the relative `.csv-calendar[data-file]`.
 {%- endcapture -%}

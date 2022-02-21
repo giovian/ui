@@ -8,7 +8,7 @@
 </head>
 
 <body
-  class='{{ page.class | default: site.class }}'
+  class='{{ page.class }} {{ site.class }}'
   site-pages='{{ site.html_pages.size | plus: site.documents.size }}'
   page-title='{{ page.title | slugify }}'
   page-order='{{ page.order }}'

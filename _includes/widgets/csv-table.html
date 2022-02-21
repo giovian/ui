@@ -1,6 +1,6 @@
 {% if include.file == nil %}> Missing `file` for `csv-table` widget
 {:.red}{% else %}
-<table csv-table data-file='{{ include.file }}' data-sort='up' class='{{ include.class }}'>
+<table class='csv-table {{ include.class }}' data-file='{{ include.file }}' data-sort='up'>
   <thead class='filter left'>
     <tr>
       <th>
@@ -21,7 +21,7 @@
 <template id="template-sort-links-cell">
   <th>
     <span></span>
-    <a href='#up' class='prevent-default' apply-if-parent="hidden|table[data-sort='down']">▲</a><a href='#down' class='prevent-default' apply-if-parent="hidden|table[data-sort='up']">▼</a>
+    <a href='#up' class='prevent-default'>▲</a><a href='#down' class='prevent-default'>▼</a>
   </th>
 </template>
 

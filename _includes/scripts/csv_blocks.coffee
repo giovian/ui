@@ -74,11 +74,11 @@ fill_blocks = (div, data) ->
 #
 # CSV Blocks loop
 # --------------------------------------
-$('div[csv-blocks][data-file!=""]').each ->
+$('.csv-blocks[data-file!=""]').each ->
   load_schema_document @, fill_blocks
 
 {%- capture api -%}
 ## CSV Blocks
 
-Manage a [CSV blocks widget]({{ 'docs/widgets/#csv-blocks' | absolute_url }}), populate the relative `div[csv-blocks][data-file]`.
+Manage a [CSV blocks widget]({{ 'docs/widgets/#csv-blocks' | absolute_url }}), populate the relative `.csv-blocks[data-file]`.
 {%- endcapture -%}

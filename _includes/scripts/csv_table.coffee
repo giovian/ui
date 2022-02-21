@@ -3,7 +3,7 @@
 # --------------------------------------
 fill_table = (table, data) ->
   # Get sort
-  id = [$('body').attr('page-title'), $('table[csv-table]').index(table)].join '|'
+  id = [$('body').attr('page-title'), $('.csv-table').index(table)].join '|'
   table.attr 'data-sort', (i, v) -> storage.get("sort.#{id}") || v
   # Get document data
   csv = Base64.decode(data.content).split '\n'
@@ -49,9 +49,6 @@ fill_table = (table, data) ->
     # Append cell and filter select option
     header.find('tr').append head_cell
     filter.find('select').append $ '<option/>', {value: head, text: head}
-
-  # Apply family for sort links visibility
-  apply_family()
 
   # Service links column
   header.find('tr').append $ '<th/>'
@@ -100,9 +97,6 @@ fill_table = (table, data) ->
     table.find('tbody').append row
   # End file loop
 
-  # Update borders
-  hide_last_borders table
-
   # Loop ghost values
   if ghost.length
     # Sort ghost events, next bottom rows
@@ -117,6 +111,7 @@ fill_table = (table, data) ->
         cell = $ '<td/>',
           headers: headers[i]
           text: value
+          value: value
         if i is date_index_array[0]
           datetime cell.attr {'datetime': value, 'embed': true}
         row.append cell
@@ -146,19 +141,10 @@ fill_table = (table, data) ->
 
   return # Table populated
 
-# Hide last borders
-hide_last_borders = (table) ->
-  table.find('tr').removeClass 'no-border'
-  # Remove bottom border from last visible row and thead if no match
-  table.find('tr:not(.hidden):last').addClass 'no-border'
-  if !table.find('tbody tr:not(.hidden)').length
-    table.find('thead:last-of-type tr').addClass 'no-border'
-  return
-
 #
 # CSV TABLEs loop
 # --------------------------------------
-$('table[csv-table][data-file!=""]').each ->
+$('.csv-table[data-file!=""]').each ->
   load_schema_document @, fill_table
 
 #
@@ -178,7 +164,7 @@ $('.filter').on 'input', 'select[name=column], input[name=value]', ->
   # Save state in storage
   id = [
     $('body').attr('page-title')
-    $('table[csv-table]').index table
+    $('.csv-table').index table
   ].join '|'
   if selected_index isnt 0 or value isnt ''
     storage.assign 'filters', {"#{id}": "#{selected_index}|#{value}"}
@@ -196,19 +182,17 @@ $('.filter').on 'input', 'select[name=column], input[name=value]', ->
     else found++
     return # End cells loop
 
-  hide_last_borders table
-
   # Update found counter
   table.find('#counter').text found
   return # End filter event
 
 # Sort links events
-$('table[csv-table][data-file!=""]').on 'click', 'a[href="#up"], a[href="#down"]', ->
+$('.csv-table[data-file!=""]').on 'click', 'a[href="#up"], a[href="#down"]', ->
   link = $ @
   href = link.attr 'href'
   table = link.parents 'table'
   col = link.parents('th').attr 'id'
-  id = [$('body').attr('page-title'), $('table[csv-table]').index(table)].join '|'
+  id = [$('body').attr('page-title'), $('.csv-table').index(table)].join '|'
   # Save sort state
   if href is '#up'
     table.attr 'data-sort', sort = 'down'
@@ -218,28 +202,26 @@ $('table[csv-table][data-file!=""]').on 'click', 'a[href="#up"], a[href="#down"]
     table.attr 'data-sort', sort = 'up'
     storage.clear "sort.#{id}"
   # Update sort links visibility
-  apply_family()
   sort_table table, col, sort
   return # End sort links
 
 # Sort function
 sort_table = (table, col, sort) ->
   multi = if sort is 'down' then -1 else 1
-  rows = table.find('tbody tr:not(.duration)').sort (a, b) ->
+  rows = table.find('tbody tr').sort (a, b) ->
     value_a = $(a).find("td[headers='#{col}']").attr 'value'
     value_b = $(b).find("td[headers='#{col}']").attr 'value'
     if value_a is value_b then return 0
     return if value_a > value_b then multi else -multi
-  table.find('tbody tr:not(.duration)').remove()
+  table.find('tbody tr').remove()
   table.find('tbody').append rows
-  hide_last_borders table
   return # End sort function
 
 # Delete event
-$(document).on 'click', "[csv-table] a[href='#delete']", ->
+$(document).on 'click', ".csv-table a[href='#delete']", ->
   link = $ @
   row = link.parents 'tr'
-  table = row.parents 'table[csv-table]'
+  table = row.parents '.csv-table'
   index = +row.children('td:first-child').text()
   row.attr 'disabled', ''
   if !confirm "Delete row #{index}?"
@@ -278,12 +260,12 @@ $(document).on 'click', "[csv-table] a[href='#delete']", ->
   return # End delete event
 
 # Edit event
-$(document).on 'click', "[csv-table] a[href='#edit']", ->
+$(document).on 'click', ".csv-table a[href='#edit']", ->
   link = $ @
   row = link.parents 'tr'
   index = +row.children('td:first-child').text()
   # Retrieve data
-  table = row.parents 'table[csv-table]'
+  table = row.parents '.csv-table'
   document_file = table.attr 'data-file'
   document_url = "#{github_api_url}/contents/_data/#{document_file}.csv"
   stored_data = get_github_api_data document_url
@@ -315,5 +297,5 @@ $(document).on 'click', "[csv-table] a[href='#edit']", ->
 {%- capture api -%}
 ## CSV Table
 
-Manage a [CSV table widget]({{ 'docs/widgets/#csv-table' | absolute_url }}), populate the relative `table[csv-table][data-file]` and store state on `storage`.
+Manage a [CSV table widget]({{ 'docs/widgets/#csv-table' | absolute_url }}), populate the relative `.csv-table[data-file]` and store state on `storage`.
 {%- endcapture -%}

@@ -130,3 +130,16 @@
   border-radius: $border-medium
 .rounded-small
   border-radius: $border-small
+
+
+//
+// LOGGED CLASSES
+// --------------------------------------
+html.logged .unlogged, html.unlogged .logged
+  @extend .hidden
+
+//
+// ROLE CLASSES
+// --------------------------------------
+html.role-admin .role-guest, html.role-guest .role-admin
+  @extend .hidden

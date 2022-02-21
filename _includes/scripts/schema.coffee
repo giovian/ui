@@ -119,8 +119,8 @@ $('form.schema').each ->
   # Submit
   form.on 'submit', ->
 
-    # Check user is logged
-    if !login.logged_admin()
+    # Check user is admin
+    if !$('html').hasClass 'role-admin'
       notification 'You need to login as `admin`', 'red'
       return
 

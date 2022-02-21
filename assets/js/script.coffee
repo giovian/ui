@@ -5,8 +5,7 @@
 
 {% include scripts/prevent.coffee %}        # Prevent default events for links and forms
 {% include scripts/storage.coffee %}        # Hashed storage system for localStorage
-{% include scripts/apply_family.coffee %}   # Apply classes to parents/childrens
-{% include scripts/datetime.coffee %}       # Use apply_family
+{% include scripts/datetime.coffee %}       # Relative time functions
 {% include scripts/prefilter.coffee %}      # Prefilter for Ajax calls
 {% include scripts/toc.coffee %}            # Move toc to sidebar
 {% include scripts/slug.coffee %}           # Function for string slug
