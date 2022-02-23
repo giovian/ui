@@ -63,6 +63,10 @@ form_create_item = (form) ->
         data_type = 'number'
         field.attr 'type', 'number'
         field.attr 'data-value-type', 'number'
+        # Decimal values
+        if value.type is 'number'
+          field.attr 'step', 'any'
+        # Range type
         if value.format is 'range'
           data_type = 'range'
           field.attr 'type', 'range'
