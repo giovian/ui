@@ -8,10 +8,12 @@
   background: var(--bg)
 .bg-secondary
   background: var(--bg-secondary)
+.bg-border
+  background: var(--border) !important
 .bg-stripe
   background: repeating-linear-gradient(-45deg, var(--bg), var(--bg) $space, var(--bg-secondary) $space, var(--bg-secondary) $space*2) !important
 .fg
-  color: var(--fg)
+  color: var(--fg) !important
 .fg-secondary
   color: var(--fg-secondary)
 
@@ -123,6 +125,10 @@
   @extend .border-left, .border-right
 .border-secondary
   border-color: var(--bg-secondary)
+.border-bg
+  border-color: var(--bg)
+.border-fg-secondary
+  border-color: var(--fg-secondary) !important
 // Rounded
 .rounded
   border-radius: $border-big

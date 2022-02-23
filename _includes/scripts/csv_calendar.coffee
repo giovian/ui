@@ -93,7 +93,7 @@ fill_calendar = (div, data) ->
 #
 # CSV Calendar loop
 # --------------------------------------
-$('.csv-calendar[data-file!=""]').each ->
+$('.csv-calendar[data-file]').each ->
   load_schema_document @, fill_calendar
 
 {%- capture api -%}

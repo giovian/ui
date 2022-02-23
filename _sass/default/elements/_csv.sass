@@ -32,6 +32,11 @@
   &[data-sort='down'] a[href='#up'], &[data-sort='up'] a[href='#down']
     @extend .hidden
 
+  // FILTER SELECT
+  th >
+    select, input
+      @extend .inline, .bg, .no-border
+
 //
 // SERVICE LINKS
 // --------------------------------------
@@ -39,6 +44,27 @@
 html:not(.role-admin) .csv-table
   a[href='#edit'], a[href='#delete']
     @extend .hidden
+
+//
+// BLOCK general for BLOCKS and CALENDARS
+// --------------------------------------
+.box
+  @extend .border, .border-bg, .flex, .fg-secondary, .rounded, .font-mini
+  cursor: default
+  // Size
+  min-height: 3em
+  // Content
+  justify-content: center
+  align-items: center
+  // Use border to create a gap included in div width
+  border-width: $border-medium !important
+  box-sizing: border-box
+  // Grow Shrink Basis
+  flex: 1 1 0
+
+  // Off block
+  &:not(.off)
+    @extend .bg-secondary
 
 //
 // CSV Blocks
@@ -49,45 +75,32 @@ html:not(.role-admin) .csv-table
     flex-direction: row-reverse
 
   // Blocks
-  [title]
-    @extend .bg-secondary, .border, .flex, .fg-secondary, .rounded, .font-mini
-    cursor: default
-    justify-content: center
-    align-items: center
-
-    // Use border color `bg` to create a gap included in div width
-    border-color: var(--bg) !important
-    border-width: $border-medium !important
-    box-sizing: border-box
+  > div
+    @extend .box
 
 //
 // CSV Calendars
 // --------------------------------------
 .csv-calendar
-  @extend .mv, .font-mini
+  @extend .mv
   display: grid
   grid-template-columns: repeat(2, 1fr)
-  [month]
+  // month
+  > div
     @extend .border
     display: grid
     grid-template-columns: repeat(7, 1fr)
     border-color: var(--bg) !important
     border-width: $border-medium !important
     box-sizing: border-box
-  [day]
-    @extend .fg-secondary, .bg-secondary, .border, .flex, .rounded
-    cursor: default
-    justify-content: center
-    align-items: center
-    border-color: var(--bg) !important
-    border-width: $border-medium !important
-    box-sizing: border-box
+    // day
+    > div
+      @extend .box
 
 // GENERAL
 // Highlighted
-.csv-calendar [day], .csv-blocks [title]
+.csv-calendar > div > div, .csv-blocks > div
   &.present
-    // Override .bg-secondary
-    background: var(--border) !important
+    @extend .fg, .bg-border
   &.today
-    border-color: var(--fg-secondary) !important
+    @extend .border-fg-secondary
