@@ -1,0 +1,26 @@
+{%- assign labels = include.labels | split: ',' -%}
+{%- assign titles = include.titles | split: ',' -%}
+{%- assign widths = include.widths | split: ',' -%}
+{%- assign classes = include.classes | split: ',' -%}
+<div class="bar">
+  {% for bar in labels %}<div class='{{ classes[forloop.index0] }}' title='{{ titles[forloop.index0] | default: widths[forloop.index0] }}' {% if widths[forloop.index0] %}style='width: {{ widths[forloop.index0] }}'{% else %}style='flex-grow: 1; background: var(--bg);'{% endif %}>
+    {{ bar }}
+  </div>{% endfor %}
+</div>
+
+{%- capture api -%}
+## Bar
+
+Render a horizontal bar.
+
+```liquid
+{% raw %}{% include widgets/bar.html %}{% endraw %}
+```
+
+**Includes**
+
+- `labels`: (required) comma separated list of labels
+- `widths`: (required) comma separated list of widths, boxes without width will flex-grow
+- `classes`: (optional) comma separated list of classes (or space separated list of classes), boxes without width will have class `off`
+- `titles`: (optional) comma separated list of titles for cursor hover tooltip
+{%- endcapture -%}

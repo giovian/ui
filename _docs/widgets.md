@@ -63,4 +63,10 @@ order: 30
 {% include widgets/api.html include='widgets/csv-table' %}
 {% include widgets/api.html include='widgets/csv-blocks' %}
 {% include widgets/api.html include='widgets/csv-calendar' %}
+{% include widgets/api.html include='widgets/bar' %}
+**Example**
+```liquid
+{% raw %}{% include widgets/bar.html labels='Default 25%, Light 15%, Border 15%, Green 20%, Red 15%, Off' titles=', bg-border, border-fg-secondary fg, green, red' classes=', bg-border, border-fg-secondary fg, green, red' widths='25%, 15%, 15%, 20%, 15%' %}{% endraw %}
+```
+{% include widgets/bar.html labels='Default 25%,Light 15%,Border 15%,Green 20%,Red 15%,Off' titles=',bg-border,border-fg-secondary fg,green,red' classes=',bg-border,border-fg-secondary fg,green,red' widths='25%,15%,15%,20%,15%' %}
 {% include widgets/api.html include='widgets/toc' %}
