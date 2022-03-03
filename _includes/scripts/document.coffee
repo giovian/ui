@@ -20,7 +20,7 @@ update_csv = (document_file, data) ->
 #
 # Loop Document FORMs
 # --------------------------------------
-$('form.document[data-file!=""]').each ->
+$('form.document[data-file]').each ->
   form = $ @
   path = form.attr 'data-file'
   # Prepend user folder if repository is forked
@@ -101,11 +101,9 @@ $('form.document[data-file!=""]').each ->
           set_github_api_data document_url, stored_data
           # Update other elements
           update_csv "#{form.attr 'data-file'}", stored_data
-          return # End document created
-        put.always ->
-          form.removeAttr 'disabled'
           form.trigger 'reset'
-          return
+          return # End document created
+        put.always -> form.removeAttr 'disabled'
       else form.removeAttr 'disabled'
       return # End file don't exist case
 
@@ -142,11 +140,9 @@ $('form.document[data-file!=""]').each ->
         set_github_api_data document_url, stored_data
         # Update other elements
         update_csv "#{form.attr 'data-file'}", stored_data
-        return # End document update
-      put.always ->
-        form.removeAttr 'disabled'
         form.trigger 'reset'
-        return # End request finished
+        return # End document update
+      put.always -> form.removeAttr 'disabled'
       return # End update file
 
     return # End SUBMIT

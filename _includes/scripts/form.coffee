@@ -77,7 +77,7 @@ form_create_item = (form) ->
             $ '<option value="true">True</option>'
             $ '<option value="false">False</option>'
           ]
-      else notification "Property type `#{value.type}` to do", 'red', true
+      else notification "Property type `#{value.type}` to do", 'red'
 
     # Complete field attributes
     field.attr 'name', "#{key}"
@@ -95,14 +95,12 @@ form_create_item = (form) ->
     if value.default
       if value.format is 'date' and value.default is 'today'
         # Today date with leading zeros
-        field.val new Date().toLocaleDateString('en-CA')
+        field.val new Date().toLocaleDateString 'en-CA'
       else field.val value.default
     # Prepare elements
     label = $ '<label/>', {text: value.title || key}
     if field.prop('tagName') isnt 'SELECT' then label.attr 'for', "#{key}-#{unique_id}"
     div = $ '<div/>', {'data-type': data_type}
-    # Integer
-    if value.type is 'integer' then field.attr 'step', 1
     # Append label and field to DIV, add whitespace for inline SELECTs
     div.append [label, " ", field]
     # Append output element for RANGE
