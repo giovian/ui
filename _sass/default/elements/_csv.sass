@@ -82,14 +82,13 @@ html:not(.role-admin) .csv-table
 // CSV Calendars
 // --------------------------------------
 .csv-calendar
-  @extend .mv
-  display: grid
-  grid-template-columns: repeat(2, 1fr)
+  @extend .mv, .grid
+  grid-template-columns: repeat(2, 1fr) !important
   // month
   > div
-    @extend .border
-    display: grid
-    grid-template-columns: repeat(7, 1fr)
+    @extend .border, .grid
+    gap: normal !important
+    grid-template-columns: repeat(7, 1fr) !important
     border-color: var(--bg) !important
     border-width: $border-medium !important
     box-sizing: border-box

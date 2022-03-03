@@ -56,9 +56,12 @@
 
   // Stack grid columns
   .grid
-    grid-template-columns: 1fr
+    grid-template-columns: 1fr !important
   .flex
     flex-direction: column
+    // For .flex elements inside a .grid element
+    grid-column-start: auto !important
+    grid-row-start: auto !important
 
   //
   // Footer
