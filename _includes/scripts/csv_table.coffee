@@ -16,23 +16,20 @@ fill_table = (table, data) ->
   date_index_array = (index for property, index in Object.keys(schema.items.properties) when schema.items.properties[property].format is 'date')
   # Get headers
   headers = csv.shift().split ','
-  # Set filter colspan plus #counter, plus links
-  filter = table.find 'thead.filter'
-  filter.find('th').attr 'colspan', headers.length + 2
   # Count header (empty from loading)
-  header = table.find 'thead:not(.filter)'
+  header = table.find 'thead'
   header.find('#counter').text csv.length
   header.find('#counter').css 'min-width', "#{csv.length.toString().length+1}em"
   header.find('th:not(#counter)').remove()
 
   # Reset if already populated
   table.find('tbody').empty()
-  filter.find('select').empty()
 
-  # Loop headers and populate filter select
+  # Loop headers and column filters
   for head, j in headers
 
     if schema.items.properties[head].format is 'date'
+      # Date sortable column head
       head_cell = get_template '#template-sort-links-cell'
       head_cell.find('th').attr 'id', head
       span = head_cell.find 'span'
@@ -40,20 +37,37 @@ fill_table = (table, data) ->
       if schema.items.properties[head].description
         span.attr 'title', schema.items.properties[head].description
     else
+      # fiterable column head
       head_cell = $ '<th/>',
         id: head
-        text: schema.items.properties[head].title || head
+      cell_text = schema.items.properties[head].title || head
+      # Loop every row and store possible value
+      values = []
+      for row_data in csv
+        values.push row_data.split(',')[j]
+      # Create unique options array
+      values = Array.from(new Set(values)).sort()
+      if values.length is 1
+        # Normal cell if no options
+        head_cell.text cell_text
+      else
+        # Options select column head
+        select = $ '<select/>'
+        # First option without value
+        select.append $ '<option/>', {text: cell_text}
+        select.append values.map (v) -> $ '<option/>', {text: v, value: v}
+        head_cell.append select
+      # Add description on mouseover
       if schema.items.properties[head].description
         head_cell.attr 'title', schema.items.properties[head].description
 
-    # Append cell and filter select option
+    # Append header cell
     header.find('tr').append head_cell
-    filter.find('select').append $ '<option/>', {value: head, text: head}
 
   # Service links column
   header.find('tr').append $ '<th/>'
 
-  # Rows loop
+  # Loop and append rows
   ghost = []
   for row_data, j in csv
     # Create row
@@ -79,7 +93,7 @@ fill_table = (table, data) ->
             duration = duration_ms value
             # Loop from event to today
             running = +new Date(row_values[date_index_array[0]])
-            today = +new Date()
+            today = +new Date().setHours 0,0,0,0
             if running < today
               while running < today
                 running += duration
@@ -97,7 +111,7 @@ fill_table = (table, data) ->
     table.find('tbody').append row
   # End file loop
 
-  # Loop ghost values
+  # Loop ghost values and prepend rows
   if ghost.length
     # Sort ghost events, next bottom rows
     ghost_sorted = ghost.sort (a, b) =>
@@ -121,12 +135,20 @@ fill_table = (table, data) ->
       table.find('tbody').prepend row
   # End ghost loop
 
-  # Check filter saved state
-  if storage.get "filters.#{id}"
-    [selected_index, input_value] = storage.get("filters.#{id}").split '|'
-    filter.find('select[name=column]').prop 'selectedIndex', selected_index
-    filter.find('input[name=value]').val input_value
-    filter.find('input[name=value]').trigger 'input'
+  # Check filter saved state for every column
+  table.find('th select').each ->
+    select = $ @
+    column = select.parents('th').attr 'id'
+    id = [
+      $('body').attr('page-title')
+      $('.csv-table').index select.parents('table')
+      column
+    ].join '|'
+    if storage.get("filters.#{id}") isnt undefined
+      [selected_index, value] = storage.get("filters.#{id}").split '|'
+      select.prop 'selectedIndex', selected_index
+      select.trigger 'input'
+    return
 
   # Highlight today cells
   today_date = new Date().toLocaleDateString 'en-CA'
@@ -144,50 +166,48 @@ fill_table = (table, data) ->
 #
 # CSV TABLEs loop
 # --------------------------------------
-$('.csv-table[data-file!=""]').each ->
+$('.csv-table[data-file]').each ->
   load_schema_document @, fill_table
 
 #
 # Events
 # --------------------------------------
 
-# Filter event
-$('.filter').on 'input', 'select[name=column], input[name=value]', ->
-  # Get elements
-  filter = $(@).parents '.filter'
-  table = filter.parents 'table'
-  select = filter.find 'select[name=column]'
-  # Get values
+# Column Filter event
+$('.csv-table[data-file]').on 'input', 'select', ->
+  select = $ @
+  value = select.val()
+  table = select.parents 'table'
+  column = select.parents('th').attr 'id'
   selected_index = select.prop 'selectedIndex'
-  column = select.val()
-  value = filter.find('input[name=value]').val()
   # Save state in storage
   id = [
     $('body').attr('page-title')
     $('.csv-table').index table
+    column
   ].join '|'
-  if selected_index isnt 0 or value isnt ''
+  if selected_index isnt 0
     storage.assign 'filters', {"#{id}": "#{selected_index}|#{value}"}
   else storage.clear "filters.#{id}"
   # Reset from last filter
   table.find('tbody tr').removeClass 'hidden'
   table.find('#counter').text table.find('tbody tr').length
 
-  if !value then return
+  if selected_index is 0 then return
   found = 0
   # Hide rows without a match in cells
   table.find("td[headers='#{column}']").each ->
-    if !$(@).text().includes value
+    if $(@).text() isnt value
       $(@).parents('tr').addClass 'hidden'
     else found++
     return # End cells loop
 
   # Update found counter
   table.find('#counter').text found
-  return # End filter event
+  return # End column filter event
 
 # Sort links events
-$('.csv-table[data-file!=""]').on 'click', 'a[href="#up"], a[href="#down"]', ->
+$('.csv-table[data-file]').on 'click', 'a[href="#up"], a[href="#down"]', ->
   link = $ @
   href = link.attr 'href'
   table = link.parents 'table'

@@ -1,15 +1,6 @@
 {% if include.file == nil %}> Missing `file` for `csv-table` widget
 {:.red}{% else %}
 <table class='csv-table {{ include.class }}' data-file='{{ include.file }}' data-sort='up'>
-  <thead class='filter left'>
-    <tr>
-      <th>
-        <label for='column'>Filter</label>
-        <select class='inline' name='column'></select>
-        <input type='text' name='value' placeholder='Value'>
-      </th>
-    </tr>
-  </thead>
   <thead>
     <tr class='no-border'>
       <th id='counter'></th>
