@@ -11,6 +11,8 @@ ms =
   absolute: (date) -> Math.abs ms.diff(date)
   s: (value) -> if value > 1 then 's' else ''
   get_value: (date, unit) -> Math.round ms.absolute(date) / unit
+  today: (date) -> if (new Date date).setHours(0,0,0,0) is new Date().setHours(0,0,0,0) then 'today' else past_future date
+  past_future: (date) -> if ms.diff(date) > 0 then 'past' else 'future'
 
 # Convert ISO8601 duration string in milliseconds
 duration_ms = (string) ->
@@ -21,7 +23,11 @@ duration_ms = (string) ->
     if e and array[i] then duration += e * +array[i].slice 0, -1
   return duration
 
-past_future = (date) -> if ms.diff(date) > 0 then 'past' else 'future'
+# Apply `past/future` class to elements with attribute `check-past-future='date'`
+$("[check-past-future]").each -> $(@).addClass ms.past_future $(@).attr 'check-past-future'
+
+# Apply `today` class to elements with attribute `check-today='date'`
+$('[check-today]').each -> $(@).addClass ms.today $(@).attr 'check-today'
 
 time_diff = (date, return_update) ->
   abs = ms.absolute date
@@ -70,7 +76,7 @@ datetime = (e) ->
 
   # Past or Future
   el.removeClass 'past future'
-    .addClass past_future(date)
+    .addClass ms.past_future(date)
 
   [moment, update] = time_diff date, true
 
@@ -97,10 +103,11 @@ $("[datetime]").each -> datetime @
 ## Datetime
 
 Update an element with `datetime` attribute showing a relative time counter.  
-Relative time replace the element text, be appended or appear on hover (tooltip).  
+Relative time can: replace the element text, be appended to, or appear on hover (tooltip).  
 Element will have an updated class `future` or `past`.  
 Include a function `time_diff(datetime, return_update)`{:.language-coffee} returning the relative time string and optionally the milliseconds to the next update.  
-Include a function `past_future(datetime)`{:.language-coffee} returning the relative class `past` or `future`.
+Class `past` or `future` is applyed to elements with attribute `[check-past-future='date']`{:.language-html}.
+The class 'today'is applyed to elements with attribute `[check-today]='date'`{:.language-html} if it is the case.
 ```coffee
 # Element
 element = $ "<span/>",

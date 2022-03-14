@@ -85,7 +85,7 @@ fill_table = (table, data) ->
       if date_index_array.length
         if date_index_array[0] is i
           datetime cell.attr {'datetime': value, 'embed': true}
-          row.addClass past_future(value)
+          row.addClass ms.past_future(value)
       # Check duration value
       if duration_index_array.length and date_index_array.length
         if duration_index_array[0] is i
