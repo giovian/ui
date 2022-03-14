@@ -28,12 +28,12 @@ fill_counter = (div, data) ->
   # Append Counted Bar DIV
   percent = Math.floor 100 * counted/days
   div.append $ '<div/>',
-    title: counted
+    title: "#{counted} of #{days}: #{percent}%"
     text: counted
     width: "#{percent}%"
   # Append Empty Bar DIV
   div.append $ '<div/>',
-    title: days-counted
+    title: "#{days-counted} of #{days}: #{100-percent}%"
     text: days-counted
     class: 'off'
     width: "#{100-percent}%"
