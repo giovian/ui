@@ -31,11 +31,11 @@ fill_counter = (div, data) ->
     title: "#{counted} of #{days}: #{percent}%"
     text: counted
     width: "#{percent}%"
+    class: 'bg-border fg'
   # Append Empty Bar DIV
   div.append $ '<div/>',
     title: "#{days-counted} of #{days}: #{100-percent}%"
     text: days-counted
-    class: 'off'
     width: "#{100-percent}%"
   return # End Counter fill
 
