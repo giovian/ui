@@ -26,16 +26,17 @@ fill_counter = (div, data) ->
     if index isnt -1 then counted += 1
     running -= ms.day()
   # Append Counted Bar DIV
+  percent = Math.floor 100 * counted/days
   div.append $ '<div/>',
     title: counted
     text: counted
-    width: "#{counted/(days-counted) * 100}%"
+    width: "#{percent}%"
   # Append Empty Bar DIV
   div.append $ '<div/>',
     title: days-counted
     text: days-counted
     class: 'off'
-    width: "#{(days-counted)/days * 100}%"
+    width: "#{100-percent}%"
   return # End Counter fill
 
 #
