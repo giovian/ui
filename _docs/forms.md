@@ -147,6 +147,18 @@ storage.get("repository.fork") = true
 ```liquid
 {% raw %}{% include widgets/csv-blocks.html file='practices' %}{% endraw %}
 ```
+{:.minimal}
+
+### Counter
+
+
+{% include widgets/csv-counter.html file='practices' start='2022-02-24' days='30' %}
+
+```liquid
+{% raw %}
+{% include widgets/csv-counter.html file='practices' start='2022-02-24' days='30' %}{% endraw %}
+```
+{:.minimal}
 
 ### Calendar
 

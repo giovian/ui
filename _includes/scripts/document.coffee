@@ -10,6 +10,11 @@ update_csv = (document_file, data) ->
     fill_blocks $(@), data
     return # End blocks update
 
+  # Update eventual CSV counter
+  $(".bar[data-file='#{document_file}']").each ->
+    fill_counter $(@), data
+    return # End counter update
+
   # Update eventual CSV calendar
   $(".csv-calendar[data-file='#{document_file}']").each ->
     fill_calendar $(@), data

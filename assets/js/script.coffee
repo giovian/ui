@@ -33,6 +33,7 @@
 {% include scripts/csv_table.coffee %}      # Table from CSV data file
 {% include scripts/csv_blocks.coffee %}     # Blocks from CSV data file
 {% include scripts/csv_calendar.coffee %}   # Calendar from CSV data file
+{% include scripts/csv_counter.coffee %}    # Counter from CSV data file
 
 # CUSTOM
 

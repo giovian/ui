@@ -63,6 +63,7 @@ order: 30
 {% include widgets/api.html include='widgets/csv-table' %}
 {% include widgets/api.html include='widgets/csv-blocks' %}
 {% include widgets/api.html include='widgets/csv-calendar' %}
+{% include widgets/api.html include='widgets/csv-counter' %}
 {% include widgets/api.html include='widgets/bar' %}
 **Example**
 ```liquid

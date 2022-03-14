@@ -1,0 +1,22 @@
+{% if include.file == nil %}> Missing `file` for `csv-counter` widget
+{:.red}{% else %}
+<div class='bar {{ include.class }}' data-file='{{ include.file }}' data-days='{{ include.days | default: 14 }}' {% if include.start %}data-start='{{ include.start }}'{% endif %}></div>
+{% endif %}
+{%- capture api -%}
+## CSV Counter
+
+Render an event counter bar from a CSV data file, conuting events in the last `days` days.  
+The DIV will have `.bar`{:.language-css} class and `[data-file]`{:.language-css} attribute.  
+Require the [SCV Counter script]({{ 'docs/scripts/#csv-counter' | absolute_url }}) script.
+
+```liquid
+{% raw %}{% include widgets/csv-counter.html file='data_file_name' %}{% endraw %}
+```
+
+**Includes**
+
+- `file`: (required) filename of the CSV (no extension)
+- `days`: (optional) number of days, default to 14
+- `start`: (optional) optional data to start counting backwards
+- `class`: (optional) space separated list of classes
+{%- endcapture -%}
