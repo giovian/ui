@@ -23,6 +23,7 @@ fill_counter = (div, data) ->
     day_formatted = day.toLocaleDateString 'en-CA'
     # Check if day_formatted is present in document
     index = csv.findIndex (e) -> e.includes day_formatted
+    console.log day_formatted, index
     if index isnt -1 then counted += 1
     running -= ms.day()
   # Append Counted Bar DIV
