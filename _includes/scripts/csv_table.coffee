@@ -85,7 +85,7 @@ fill_table = (table, data) ->
       if date_index_array.length
         if date_index_array[0] is i
           datetime cell.attr {'datetime': value, 'embed': true}
-          row.addClass ms.past_future(value)
+          row.addClass ms.temporize(value)
       # Check duration value
       if duration_index_array.length and date_index_array.length
         if duration_index_array[0] is i
@@ -128,6 +128,7 @@ fill_table = (table, data) ->
           value: value
         if i is date_index_array[0]
           datetime cell.attr {'datetime': value, 'embed': true}
+          row.addClass ms.temporize(value)
         row.append cell
       # Add empty service links cell
       row.append '<td/>'
@@ -149,13 +150,6 @@ fill_table = (table, data) ->
       select.prop 'selectedIndex', selected_index
       select.trigger 'input'
     return
-
-  # Highlight today cells
-  today_date = new Date().toLocaleDateString 'en-CA'
-  mode = table.attr('mode') || $('html').attr 'mode'
-  table.find("td[datetime*='#{today_date}']")
-    .parents('tr')
-    .attr 'mode', if mode is 'dark' then 'light' else 'dark'
 
   # Initial sort table
   if date_index_array.length

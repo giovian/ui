@@ -26,6 +26,12 @@
       & td
         @extend .border-top
 
+  // Today and Tomorrow
+  tr.today
+    @extend .light
+  tr.tomorrow
+    @extend .orange
+
   //
   // SORT LINKS
   // --------------------------------------
@@ -71,6 +77,8 @@ html:not(.role-admin) .csv-table
 // --------------------------------------
 .csv-blocks
   @extend .mv, .flex
+  // Min height of the .box children
+  min-height: 3em
   &[data-flow=future]
     flex-direction: row-reverse
 
