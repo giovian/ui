@@ -1,6 +1,6 @@
 {% if include.file == nil %}> Missing `file` for `csv-counter` widget
 {:.red}{% else %}
-<div class='bar {{ include.class }}' data-file='{{ include.file }}' data-days='{{ include.days | default: 14 }}' {% if include.start %}data-start='{{ include.start }}'{% endif %}></div>
+<div class='{{ include.class | split: " " | push: "bar" | join: " " }}' data-file='{{ include.file }}' data-days='{{ include.days | default: 14 }}' {% if include.start %}data-start='{{ include.start }}'{% endif %}></div>
 {% endif %}
 {%- capture api -%}
 ## CSV Counter

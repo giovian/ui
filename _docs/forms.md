@@ -155,8 +155,7 @@ storage.get("repository.fork") = true
 {% include widgets/csv-counter.html file='practices' start='2022-02-24' days='30' %}
 
 ```liquid
-{% raw %}
-{% include widgets/csv-counter.html file='practices' start='2022-02-24' days='30' %}{% endraw %}
+{% raw %}{% include widgets/csv-counter.html file='practices' start='2022-02-24' days='30' %}{% endraw %}
 ```
 {:.minimal}
 
