@@ -11,8 +11,14 @@ ms =
   absolute: (date) -> Math.abs ms.diff(date)
   s: (value) -> if value > 1 then 's' else ''
   get_value: (date, unit) -> Math.round ms.absolute(date) / unit
-  today: (date) -> if (new Date date).setHours(0,0,0,0) is new Date().setHours(0,0,0,0) then 'today' else past_future date
+  today: (date) -> if (new Date date).setHours(0,0,0,0) is new Date().setHours(0,0,0,0) then 'today'
+  tomorrow: (date) -> if (new Date date).setHours(0,0,0,0) is new Date().setHours(0,0,0,0) + ms.day() then 'tomorrow'
   past_future: (date) -> if ms.diff(date) > 0 then 'past' else 'future'
+  temporize: (date) -> [
+    ms.today(date)
+    ms.tomorrow(date)
+    ms.past_future(date)
+  ].join ' '
 
 # Convert ISO8601 duration string in milliseconds
 duration_ms = (string) ->
