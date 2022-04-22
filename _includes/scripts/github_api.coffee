@@ -3,7 +3,7 @@ github_api_url = '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo 
 get_github_api_data = (url) ->
   if !url.startsWith github_api_url
     url = "#{github_api_url}/contents/_data/#{url}"
-  return storage.get('github_api')[url].data
+  return storage.get('github_api')?[url].data
 
 set_github_api_data = (url, data) ->
   if !url.startsWith github_api_url
@@ -72,8 +72,7 @@ github_api_request = (event) ->
       list.append github_api_response_list d, link.attr('github-api-out').split ','
     return # End API response process
 
-  # Output error
-  api.fail (request, status, error) -> list.append "<li>#{status}: <code>#{request.status}</code> #{request.responseJSON?.message || error}</li>"
+  # Enable link
   api.always -> link.removeAttr 'disabled'
 
   return # End API request
