@@ -31,7 +31,7 @@ login.permissions = ->
       role: (if data.permissions.admin then 'admin' else 'guest')
     ).assign 'repository',
       fork: data.fork
-      parent: data.parent?.full_name?
+      parent: data.parent?.full_name
     return # End permission check
   repo.always ->
     login.setLogout()
