@@ -13,17 +13,16 @@ fill_counter = (div, data) ->
   # Prepare DIV
   div.empty()
   days = +div.attr 'data-days'
-  running = +Date.parse(div.attr('data-start') || new Date().toLocaleDateString 'en-CA')
-  end = new Date running
-  end = end.setDate(end.getDate()-days)
-  # Loop days inside blocks range
+  # Set start and end of date range
+  running = Date.parse(div.attr('data-start') || new Date().toLocaleDateString 'en-CA')
+  end = running - days * ms.day()
+  # Loop days inside date range
   counted = 0
-  while running >= end
+  while running > end
     day = new Date running
     day_formatted = day.toLocaleDateString 'en-CA'
     # Check if day_formatted is present in document
     index = csv.findIndex (e) -> e.includes day_formatted
-    console.log day_formatted, index
     if index isnt -1 then counted += 1
     running -= ms.day()
   # Append Counted Bar DIV
