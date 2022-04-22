@@ -1,6 +1,16 @@
 # Ajax prefilter
 $.ajaxPrefilter (options, ajaxOptions, request) ->
 
+  # Abort if offline
+  if !navigator.onLine
+    request.abort()
+    notification "error: browser is offline", 'red'
+    return # end Offline check
+
+  # Remove cache if localStorage too big (more than 150k characters)
+  if localStorage.getItem(storage.key).length > 150000
+    storage.clear 'github_api'
+
   # Fail function
   request.fail (request, status, error) ->
     notification "#{status}: #{request.status} #{request.responseJSON?.message || error}", 'red'
@@ -30,10 +40,8 @@ $(document).ajaxSuccess (event, request, ajaxOptions, data) ->
   # Save rate_limit remaining if present
   if request.getResponseHeader 'x-ratelimit-remaining'
     storage.set 'rate_limit', +request.getResponseHeader 'x-ratelimit-remaining'
-  # Get request method
-  method = (ajaxOptions.type || ajaxOptions.method).toLowerCase()
-  # Store data and last-modified if both present
-  if method is 'get' and data
+  # Store data, last-modified and etag if presents
+  if (ajaxOptions.type || ajaxOptions.method).toLowerCase() is 'get' and data
     storage.assign 'github_api', "#{ajaxOptions.url}":
       data: data
     if request.getResponseHeader 'last-modified'
