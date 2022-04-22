@@ -65,5 +65,5 @@ login.init = (-> if login.storage()['token'] then login.setLogout() else login.s
 
 Manage GitHub login and logout using `localStorage` and the relative links in the login widget.  
 
-HTML will have a `.logged`{:.language-sass} or `.unlogged`{:.language-sass} class, and the role classe `.role-admin`{:.language-sass} or `.role-guest`{:.language-sass} depending on write permissions of the logged user.
+HTML will have a `.logged`{:.language-sass} or `.unlogged`{:.language-sass} class, and the role class `.role-admin`{:.language-sass} or `.role-guest`{:.language-sass} depending on write permissions of the logged user.
 {%- endcapture -%}
