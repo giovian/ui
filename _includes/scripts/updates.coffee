@@ -26,8 +26,8 @@ updates = ->
       window.location.href = new_url
     else
       # Build is updated, check if is a fork and user is admin
-      if login.storage()['role'] is 'admin' and login.storage()['repository.fork']
-        console.log 'admin and fork', login.storage()['repository.parent']
+      if login.storage()['role'] is 'admin' and storage.get('repository.fork')
+        console.log 'admin and fork', storage.get('repository.parent')
     return # End latest callback
 
   return # End checks
