@@ -27,7 +27,26 @@ updates = ->
     else
       # Build is updated, check if is a fork and user is admin
       if login.storage()['role'] is 'admin' and storage.get 'repository.fork'
-        console.log 'admin and fork', storage.get('repository.parent')
+        # Get own SHA
+        repo = $.get github_api_url + '/commits'
+        repo.done (data) ->
+          data = cache data, github_api_url
+          repo_sha = data[0].sha
+          # Get upstream SHA
+          upstream_api = "{{ site.github.api_url }}/repos/#{storage.get 'repository.parent'}/commits"
+          upstream = $.get upstream_api
+          upstream.done (data) ->
+            data = cache data, upstream_api
+            # Compare local and remote SHAs
+            if repo_sha isnt data[0].sha
+              # Sync with upstream
+              sync = $.ajax "#{github_api_url}/merge-upstream",
+                method: 'POST'
+                data: JSON.stringify {"branch": "#{storage.get 'repository.default_branch'}"}
+              sync.done (data) ->
+                notification "Synched with upstream branch"
+                return # End sync
+          return # End repo
     return # End latest callback
 
   return # End checks

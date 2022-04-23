@@ -32,6 +32,7 @@ login.permissions = ->
     ).assign 'repository',
       fork: data.fork
       parent: data.parent?.full_name
+      default_branch: data.default_branch
     return # End permission check
   repo.always ->
     login.setLogout()
