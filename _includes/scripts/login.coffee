@@ -1,7 +1,7 @@
 login =
   login_link: $ 'a.login-link'
   logout_link: $ 'a.logout-link'
-  storage: () -> storage.get('login') || {}
+  storage: -> storage.get('login') || {}
   text: -> "Logged as #{login.storage()['user']} (#{login.storage()['role']})"
 
 login.logged = -> storage.get('login.token')
