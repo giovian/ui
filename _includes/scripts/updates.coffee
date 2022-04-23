@@ -12,12 +12,12 @@ updates = ->
   latest_build = $.get latest_url
   latest_build.done (data) ->
     data = cache data, latest_url
-    # Get latest repository action
-    latest_date = if login.logged()
+    # Get latest build/commit date and SHA
+    [latest_date, latest_sha] = if login.logged()
       # Take the first 'built' build
       element = data.filter((build) -> build.status is 'built')[0]
-      element.created_at
-    else data[0].commit.author.date
+      [element.created_at, element.commit]
+    else [data[0].commit.author.date, data[0].sha]
     # Compare latest build created_at or commit date, and site.time
     if +new Date(latest_date) / 1000 > {{ site.time | date: "%s" }}
       loc = window.location
@@ -27,27 +27,21 @@ updates = ->
     else
       # Build is updated, check if is a fork and user is admin
       if login.storage()['role'] is 'admin' and storage.get 'repository.fork'
-        # Get own SHA
-        repo = $.get github_api_url + '/commits'
-        repo.done (data) ->
-          data = cache data, github_api_url
-          repo_sha = data[0].sha
-          # Get upstream SHA
-          upstream_api = "{{ site.github.api_url }}/repos/#{storage.get 'repository.parent'}/commits"
-          upstream = $.get upstream_api
-          upstream.done (data) ->
-            data = cache data, upstream_api
-            # Compare local and remote SHAs
-            if repo_sha isnt data[0].sha
-              # Sync with upstream
-              sync = $.ajax "#{github_api_url}/merge-upstream",
-                method: 'POST'
-                data: JSON.stringify {"branch": "#{storage.get 'repository.default_branch'}"}
-              sync.done (data) ->
-                notification "Synched with upstream branch"
-                return # End sync
-          return # End repo
-    return # End latest callback
+        # Get upstream SHA
+        upstream_api = "{{ site.github.api_url }}/repos/#{storage.get 'repository.parent'}/commits"
+        upstream = $.get upstream_api
+        upstream.done (data) ->
+          data = cache data, upstream_api
+          # Compare local and remote SHAs
+          if latest_sha isnt data[0].sha
+            # Sync with upstream
+            sync = $.ajax "#{github_api_url}/merge-upstream",
+              method: 'POST'
+              data: JSON.stringify {"branch": "#{storage.get 'repository.default_branch'}"}
+            sync.done (data) -> notification "Synched with upstream branch"
+          return # End upstream
+
+    return # End latest_build
 
   return # End checks
 
