@@ -19,7 +19,7 @@ updates = ->
       # Take the first 'built' build
       element = data.filter((build) -> build.status is 'built')[0]
       [+new Date(element.created_at), element.commit]
-    else [+new Date(data[0].commit.author.date), data[0].commit.sha]
+    else [+new Date(data[0].commit.author.date), data[0].sha]
     # Compare latest build created_at or commit date, and site.time
     if latest_date / 1000 > {{ site.time | date: "%s" }}
       # There was a build or a commit after site.time
@@ -38,7 +38,7 @@ updates = ->
           upstream.done (data) ->
             data = cache data, upstream_api
             # Compare SHAs
-            if latest_sha isnt data[0].commit.sha
+            if latest_sha isnt data[0].sha
               # If repository is behind, need sync
               if latest_date < +new Date(data[0].commit.author.date)
                 # Sync with upstream
@@ -46,7 +46,7 @@ updates = ->
                 sync = $.ajax "#{github_api_url}/merge-upstream",
                   method: 'POST'
                   data: JSON.stringify {"branch": "#{storage.get 'repository.default_branch'}"}
-                sync.done (data) -> notification "Synched with upstream branch"
+                sync.done (data) -> notification 'Synched with upstream branch', 'green'
               # If repository is ahead, need pull
               else notification "Needs pull #{latest_date} > #{data[0].commit.author.date}"
             return # End upstream
