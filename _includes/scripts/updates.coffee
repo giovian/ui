@@ -15,13 +15,14 @@ updates = ->
   latest_build.done (data) ->
     data = cache data, latest_url
     # Get latest build/commit date and SHA
-    latest_date = if login.logged()
+    [latest_date, latest_sha] = if login.logged()
       # Take the first 'built' build
       element = data.filter((build) -> build.status is 'built')[0]
-      element.created_at
-    else data[0].commit.author.date
+      [+new Date(element.created_at), element.commit]
+    else [+new Date(data[0].commit.author.date), data[0].commit.sha]
     # Compare latest build created_at or commit date, and site.time
-    if +new Date(latest_date) / 1000 > {{ site.time | date: "%s" }}
+    if latest_date / 1000 > {{ site.time | date: "%s" }}
+      # There was a build or a commit after site.time
       loc = window.location
       new_url = loc.origin + loc.pathname + '?latest=' + latest_date + loc.hash
       # If browser is unfocused refresh page
@@ -31,26 +32,29 @@ updates = ->
       if login.storage()['role'] is 'admin'
         # If it is a fork check if need sync or pull
         if storage.get 'repository.fork'
-          # Get upstream SHA
+          # Get upstream commits
           upstream_api = "{{ site.github.api_url }}/repos/#{storage.get 'repository.parent'}/commits"
           upstream = $.get upstream_api
           upstream.done (data) ->
             data = cache data, upstream_api
-            # Compare commits dates
-            if +new Date(latest_date) < +new Date(data[0].commit.author.date)
-              # Sync with upstream
-              # https://docs.github.com/en/rest/branches/branches#sync-a-fork-branch-with-the-upstream-repository
-              sync = $.ajax "#{github_api_url}/merge-upstream",
-                method: 'POST'
-                data: JSON.stringify {"branch": "#{storage.get 'repository.default_branch'}"}
-              sync.done (data) -> notification "Synched with upstream branch"
-            else notification "Needs pull #{latest_date} > #{data[0].commit.author.date}"
+            # Compare SHAs
+            if latest_sha isnt data[0].commit.sha
+              # If repository is behind, need sync
+              if latest_date < +new Date(data[0].commit.author.date)
+                # Sync with upstream
+                # https://docs.github.com/en/rest/branches/branches#sync-a-fork-branch-with-the-upstream-repository
+                sync = $.ajax "#{github_api_url}/merge-upstream",
+                  method: 'POST'
+                  data: JSON.stringify {"branch": "#{storage.get 'repository.default_branch'}"}
+                sync.done (data) -> notification "Synched with upstream branch"
+              # If repository is ahead, need pull
+              else notification "Needs pull #{latest_date} > #{data[0].commit.author.date}"
             return # End upstream
         # Not a fork, check pulls
         else
           pulls_url = github_api_url + '/pulls'
           pulls = $.get pulls_url
-          pulls.done (date) ->
+          pulls.done (data) ->
             data = cache data, pulls_url
             console.log data.length, data
             return # End pulls
