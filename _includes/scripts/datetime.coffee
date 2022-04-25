@@ -112,8 +112,9 @@ Update an element with `datetime` attribute showing a relative time counter.
 Relative time can: replace the element text, be appended to, or appear on hover (tooltip).  
 Element will have an updated class `future` or `past`.  
 Include a function `time_diff(datetime, return_update)`{:.language-coffee} returning the relative time string and optionally the milliseconds to the next update.  
-Class `past` or `future` is applyed to elements with attribute `[check-past-future='date']`{:.language-html}.
-The class 'today'is applyed to elements with attribute `[check-today]='date'`{:.language-html} if it is the case.
+Class `past` or `future` is applyed to elements with attribute `[check-past-future='date']`{:.language-html}.  
+The class 'today'is applyed to elements with attribute `[check-today]='date'`{:.language-html} if it is the case.  
+The function `ms.temporize(date)`{:.language-coffee} return a space separated class list relative at `today` `tomorrow` `past_future` functions.
 ```coffee
 # Element
 element = $ "<span/>",
