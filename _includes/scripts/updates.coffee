@@ -2,10 +2,12 @@
 updates = ->
 
   # Schedule next check
-  setTimeout updates, 60 * 1000
+  setTimeout updates, ms.minute()
 
-  # Abort if browsing site or rate_limit low
-  if focus or storage.get('rate_limit') < 25 then return
+  # Abort rate_limit low
+  if storage.get('rate_limit') < 25
+    notification "Rate limit low for updates: #{storage.get 'rate_limit'}"
+    return
 
   # Request builds list if authenticated or commit list if guest
   latest_url = github_api_url + if login.logged() then '/pages/builds' else '/commits'
@@ -13,51 +15,62 @@ updates = ->
   latest_build.done (data) ->
     data = cache data, latest_url
     # Get latest build/commit date and SHA
-    [latest_date, latest_sha] = if login.logged()
+    latest_date = if login.logged()
       # Take the first 'built' build
       element = data.filter((build) -> build.status is 'built')[0]
-      [element.created_at, element.commit]
-    else [data[0].commit.author.date, data[0].sha]
+      element.created_at
+    else data[0].commit.author.date
     # Compare latest build created_at or commit date, and site.time
     if +new Date(latest_date) / 1000 > {{ site.time | date: "%s" }}
       loc = window.location
       new_url = loc.origin + loc.pathname + '?latest=' + latest_date + loc.hash
-      # Refresh with the latest repository action
-      window.location.href = new_url
+      # If browser is unfocused refresh page
+      if !focus then window.location.href = new_url
     else
-      # Build is updated, check if is a fork and user is admin
-      if login.storage()['role'] is 'admin' and storage.get 'repository.fork'
-        # Get upstream SHA
-        upstream_api = "{{ site.github.api_url }}/repos/#{storage.get 'repository.parent'}/commits"
-        upstream = $.get upstream_api
-        upstream.done (data) ->
-          data = cache data, upstream_api
-          # Compare local and remote SHAs
-          if latest_sha isnt data[0].sha
-            # Sync with upstream
-            sync = $.ajax "#{github_api_url}/merge-upstream",
-              method: 'POST'
-              data: JSON.stringify {"branch": "#{storage.get 'repository.default_branch'}"}
-            sync.done (data) -> notification "Synched with upstream branch"
-          return # End upstream
+      # Build is updated, check sync and pulls for admin users
+      if login.storage()['role'] is 'admin'
+        # If it is a fork check if need sync or pull
+        if storage.get 'repository.fork'
+          # Get upstream SHA
+          upstream_api = "{{ site.github.api_url }}/repos/#{storage.get 'repository.parent'}/commits"
+          upstream = $.get upstream_api
+          upstream.done (data) ->
+            data = cache data, upstream_api
+            # Compare commits dates
+            if +new Date(latest_date) < +new Date(data[0].commit.author.date)
+              # Sync with upstream
+              # https://docs.github.com/en/rest/branches/branches#sync-a-fork-branch-with-the-upstream-repository
+              sync = $.ajax "#{github_api_url}/merge-upstream",
+                method: 'POST'
+                data: JSON.stringify {"branch": "#{storage.get 'repository.default_branch'}"}
+              sync.done (data) -> notification "Synched with upstream branch"
+            else notification "Needs pull #{latest_date} > #{data[0].commit.author.date}"
+            return # End upstream
+        # Not a fork, check pulls
+        else
+          pulls_url = github_api_url + '/pulls'
+          pulls = $.get pulls_url
+          pulls.done (date) ->
+            data = cache data, pulls_url
+            console.log data.length, data
+            return # End pulls
 
     return # End latest_build
 
   return # End checks
 
-# Start checks, pages API is for authenticated users
+# Start checks, `pages` API is for authenticated users
 if '{{ site.github.environment }}' isnt 'development'
-  setTimeout updates, 60 * 1000
+  setTimeout updates, ms.minute()
 
 {%- capture api -%}
 ## Updates
 
 Updates are checked every minute after pageload, only if window is blurred and _rate limit_ is more than 25.
 
-**Latest build**
+Compare Jekyll `site.time` with GitHub latest built `created_at` (or latest commit `author.date` if user is not authenticated). If they are different and the browser tab is blurred, refresh the page with a search string like `?latest=YYYY-MM-DDTHH:MM:SSZ`.  
 
-Compare Jekyll `site.time` with GitHub latest built `created_at` (or latest commit date if user is not authenticated).  
-If they are different and the browser tab is blurred, refresh the page.
+If the repository is a fork and logged user is admin, compare branch SHA with upstream and sync if different.
 
 This script is not active in `development` environment.
 {%- endcapture -%}
