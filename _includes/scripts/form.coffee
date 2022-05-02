@@ -39,7 +39,8 @@ form_create_item = (form) ->
   # Loop items properties
   for own key, value of schema.items.properties
     # Default variabiles
-    field = $ '<input/>', {type: 'text', autocomplete: 'off'}
+    field = $ '<input/>', {type: 'text'}
+    field.attr 'autocomplete', value.autocomplete || 'off'
     data_type = 'string'
 
     # Check enum SELECT

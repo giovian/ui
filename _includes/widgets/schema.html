@@ -7,7 +7,7 @@
 
   <div data-type='string'>
     <label for='$id'><code>$id</code> file path (no extension)</label>
-    <input type='text' autocomplete='off' name='$id' id='$id' required>
+    <input type='text' name='$id' id='$id' required>
     <span>URI-reference inside <code>_data/</code></span>
   </div>
 
@@ -102,7 +102,7 @@
     <div data-tab='attributes'>
       <div data-type='string'>
         <label for='default'>Default</label>
-        <input type='string' name='default' id='default' autocomplete='off' data-value-type='string'>
+        <input type='string' name='default' id='default' data-value-type='string'>
       </div>
       <div data-type='number'>
         <label for='minLength'>Min length</label>
@@ -116,8 +116,15 @@
       </div>
       <div data-type='string'>
         <label for='class'>Class</label>
-        <input type='text' autocomplete='off' name='class' id='class'>
+        <input type='text' name='class' id='class'>
         <span>Space separated class list</span>
+      </div>
+      <div data-type='string'>
+        <label>Autocomplete</label>
+        <select name='autocomplete' id='autocomplete' class='inline'>
+          <option value='off'>Off</option>
+          <option value='on'>On</option>
+        </select>
       </div>
     </div>
     <div data-tab="enum">
@@ -148,7 +155,7 @@
     <div data-tab='attributes'>
       <div data-type='number'>
         <label for='default'>Default</label>
-        <input type='number' name='default' id='default' autocomplete='off' data-value-type='number'>
+        <input type='number' name='default' id='default' data-value-type='number'>
       </div>
       <div data-type='number'>
         <label for='minimum'>Minimun</label>
@@ -162,11 +169,11 @@
       </div>
       <div data-type='string'>
         <label for='units'>Units</label>
-        <input type='text' autocomplete='off' name='units' id='units'>
+        <input type='text' name='units' id='units'>
       </div>
       <div data-type='string'>
         <label for='class'>Class</label>
-        <input type='text' autocomplete='off' name='class' id='class'>
+        <input type='text' name='class' id='class'>
         <span>Space separated class list</span>
       </div>
     </div>
@@ -198,7 +205,7 @@
     <div data-tab='attributes'>
       <div data-type='number'>
         <label for='default'>Default</label>
-        <input type='number' name='default' id='default' autocomplete='off' data-value-type='number'>
+        <input type='number' name='default' id='default' data-value-type='number'>
       </div>
       <div data-type='number'>
         <label for='minimum'>Minimun</label>
@@ -212,11 +219,11 @@
       </div>
       <div data-type='string'>
         <label for='units'>Units</label>
-        <input type='text' autocomplete='off' name='units' id='units'>
+        <input type='text' name='units' id='units'>
       </div>
       <div data-type='string'>
         <label for='class'>Class</label>
-        <input type='text' autocomplete='off' name='class' id='class'>
+        <input type='text' name='class' id='class'>
         <span>Space separated class list</span>
       </div>
     </div>
@@ -243,7 +250,7 @@
   </div>
   <div data-type='string'>
     <label for='class'>Class</label>
-    <input type='text' autocomplete='off' name='class' id='class'>
+    <input type='text' name='class' id='class'>
     <span>Space separated class list</span>
   </div>
 </template>
