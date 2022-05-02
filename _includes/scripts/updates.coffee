@@ -18,10 +18,11 @@ updates = ->
     [latest_date, latest_sha] = if login.logged()
       # Take the first 'built' build
       element = data.filter((build) -> build.status is 'built')[0]
-      [+new Date(element.created_at), element.commit]
-    else [+new Date(data[0].commit.author.date), data[0].sha]
+      [element.created_at, element.commit]
+    else [data[0].commit.author.date, data[0].sha]
+    unix = +new Date(latest_date)
     # Compare latest build created_at or commit date, and site.time
-    if latest_date / 1000 > {{ site.time | date: "%s" }}
+    if unix / 1000 > {{ site.time | date: "%s" }}
       # There was a build or a commit after site.time
       loc = window.location
       new_url = loc.origin + loc.pathname + '?latest=' + latest_date + loc.hash
@@ -40,7 +41,7 @@ updates = ->
             # Compare SHAs
             if latest_sha isnt data[0].sha
               # If repository is behind, need sync
-              if latest_date < +new Date(data[0].commit.author.date)
+              if unix < +new Date(data[0].commit.author.date)
                 # Sync with upstream
                 # https://docs.github.com/en/rest/branches/branches#sync-a-fork-branch-with-the-upstream-repository
                 sync = $.ajax "#{github_api_url}/merge-upstream",
@@ -48,7 +49,7 @@ updates = ->
                   data: JSON.stringify {"branch": "#{storage.get 'repository.default_branch'}"}
                 sync.done (data) -> notification 'Synched with upstream branch', 'green'
               # If repository is ahead, need pull
-              else notification "Needs pull #{latest_date} > #{data[0].commit.author.date}"
+              else open_pull()
             return # End upstream
         # Not a fork, check pulls
         else
@@ -56,7 +57,7 @@ updates = ->
           pulls = $.get pulls_url
           pulls.done (data) ->
             data = cache data, pulls_url
-            console.log data.length, data
+            if data.length then process_pulls data
             return # End pulls
 
     return # End latest_build

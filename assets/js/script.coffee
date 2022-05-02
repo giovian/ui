@@ -22,6 +22,7 @@
 
 {% include scripts/focus.coffee %}          # Check website browser tab is focused
 {% include scripts/inview.coffee %}         # In view Observer
+{% include scripts/pulls.coffee %}          # Open or process Pulls
 {% include scripts/updates.coffee %}        # Check site builds updates
 {% include scripts/tab.coffee %}            # Manage TABs
 
