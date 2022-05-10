@@ -69,6 +69,7 @@ fill_table = (table, data) ->
 
   # Loop and append rows
   ghost = []
+  origin_date = []
   for row_data, j in csv
     # Create row
     row = $ '<tr/>'
@@ -100,6 +101,7 @@ fill_table = (table, data) ->
               # Create and store ghost event
               # Array shallow copy
               new_values = row_values.slice 0
+              origin_date.push row_values[date_index_array[0]]
               new_values[date_index_array[0]] = new Date(running).toLocaleDateString 'en-CA'
               ghost.push new_values.join ','
       # Append cell
@@ -116,7 +118,7 @@ fill_table = (table, data) ->
     # Sort ghost events, next bottom rows
     ghost_sorted = ghost.sort (a, b) =>
       if a.split(',')[date_index_array[0]] > b.split(',')[date_index_array[0]] then 1 else -1
-    for entry in ghost_sorted
+    for entry, j in ghost_sorted
       # Prepare row
       row = $('<tr/>', {class: 'duration'}).append '<td/>'
       row_values = entry.split ','
@@ -127,7 +129,7 @@ fill_table = (table, data) ->
           text: value
           value: value
         if i is date_index_array[0]
-          datetime cell.attr {'datetime': value, 'embed': true}
+          datetime cell.attr {'datetime': value, 'embed': true, 'title': "Originally #{origin_date[j]}"}
           row.addClass ms.temporize(value)
         row.append cell
       # Add empty service links cell
