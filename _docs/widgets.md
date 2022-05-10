@@ -60,6 +60,7 @@ order: 30
 {% include widgets/api.html include='widgets/navigation' %}
 {% include widgets/api.html include='widgets/schema' %}
 {% include widgets/api.html include='widgets/document' %}
+{% include widgets/api.html include='widgets/form' %}
 {% include widgets/api.html include='widgets/csv-table' %}
 {% include widgets/api.html include='widgets/csv-blocks' %}
 {% include widgets/api.html include='widgets/csv-calendar' %}
