@@ -25,9 +25,22 @@
     <label>Type</label>
     <select name='type' id='type' class='inline'>
       <option value='array'>Array</option>
+      <option value='object'>Object</option>
     </select>
   </div>
 
+  <div inject></div>
+
+<!-- BUTTONS -->
+  <div data-type='button'>
+    <input class='green' type='submit' value='Save'>
+    <input class='red' type='reset'>
+  </div>
+<!-- TEMPLATES -->
+<!--
+          ARRAY TEMPLATE
+-->
+<template id="template-array">
   <div data-type='select'>
     <label>Items type</label>
     <select name='items[type]' id='items[type]' class='inline'>
@@ -40,13 +53,18 @@
   </div>
 
   <div properties-inject></div>
+</template>
+<!--
+          OBJECT TEMPLATE
+-->
+<template id="template-object">
 
-<!-- BUTTONS -->
-  <div data-type='button'>
-    <input class='green' type='submit' value='Save'>
-    <input class='red' type='reset'>
+  <div data-type='array'>
+    <label class='fg-secondary'>Object properties <a href='#add-property' data-add='property' class='prevent-default'>add</a></label>
   </div>
-<!-- TEMPLATES -->
+
+  <div properties-inject></div>
+</template>
 <!--
           PROPERTY TEMPLATE
 -->

@@ -124,11 +124,13 @@ form_load_schema = (form) ->
   form.find('[name="$id"]').val path
   schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
   form.attr 'disabled', ''
+  form.find('[inject]').empty().append get_template "#template-#{form.find('[name=type]').val()}"
+
   # Request schema file
   get_schema = $.get schema_url
   get_schema.done (data, status) ->
     data = cache data, schema_url
-    # Get schema content and save on DOM element as data
+    # Parse schema
     schema = JSON.parse Base64.decode(data.content)
     if schema.type isnt 'array'
       notification "schema type `#{schema.type}` to do", 'red'
@@ -146,6 +148,7 @@ form_load_schema = (form) ->
       form.find('[data-type="button"]').before get_template '#template-add-item'
     return # Form is populated
   get_schema.always -> form.removeAttr 'disabled'
+  get_schema.fail (request, status, error) -> if request.status is 404 then notification 'File not present, will be created on Save'
   return # End load_schema function
 
 #

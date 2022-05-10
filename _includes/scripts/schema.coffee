@@ -90,6 +90,11 @@ $('form.schema').each ->
   # REMOVE ENUM VALUE
   form.on 'click', 'a[data-remove=enum]', -> $(@).parents('[data-type]').remove()
 
+  # Change schema type
+  form.on 'change', 'select[name=type]', ->
+    form.find('[inject]').empty().append get_template "#template-#{$(@).val()}"
+    return # End schema type change
+
   # Change property type
   form.on 'change', 'select[name*=type]', ->
     # Get parent
@@ -110,7 +115,9 @@ $('form.schema').each ->
 
   # Reset
   form.on 'reset', ->
-    # Reset inject properties forms
+    # Reset schema type select
+    form.find('select[name=type]').prop 'selectedIndex', 0
+    # Reset inject item properties forms
     form.find('[properties-inject]').empty()
     # Load schema
     if form.attr 'data-file' then form_load_schema form
