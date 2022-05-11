@@ -62,9 +62,9 @@ updates = ->
 
     return # End latest_build
 
-  return # End checks
+  return # End updates
 
-# Start checks, `pages` API is for authenticated users
+# Start updates, `pages` API is for authenticated users
 if '{{ site.github.environment }}' isnt 'development'
   setTimeout updates, ms.minute()
 
