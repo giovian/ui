@@ -116,15 +116,14 @@ form_create_item = (form) ->
   return item # End create_item
 
 #
-# FORM LOAD SCHEMA function for schema FORM
+# FORM LOAD SCHEMA function for schema and document fomrs
 # --------------------------------------
 form_load_schema = (form) ->
   path = form.attr 'data-file'
-  # Default schema $id if it's a new schema
+  # Compile the file path field
   form.find('[name="$id"]').val path
   schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
   form.attr 'disabled', ''
-  form.find('[inject]').empty().append get_template "#template-#{form.find('[name=type]').val()}"
 
   # Request schema file
   get_schema = $.get schema_url
@@ -132,9 +131,9 @@ form_load_schema = (form) ->
     data = cache data, schema_url
     # Parse schema
     schema = JSON.parse Base64.decode(data.content)
-    if schema.type isnt 'array'
-      notification "schema type `#{schema.type}` to do", 'red'
     if form.hasClass 'schema'
+      # Inject schema type template
+      form.find('[inject]').empty().append get_template "#template-#{schema.type}"
       # Populate fields
       form.find('[name="title"]').val schema.title
       form.find('[name="$id"]').val schema['$id']
@@ -148,7 +147,16 @@ form_load_schema = (form) ->
       form.find('[data-type="button"]').before get_template '#template-add-item'
     return # Form is populated
   get_schema.always -> form.removeAttr 'disabled'
-  get_schema.fail (request, status, error) -> if request.status is 404 then notification 'File not present, will be created on Save'
+  get_schema.fail (request, status, error) ->
+    if request.status is 404
+      if form.hasClass 'schema'
+        form.find('[inject]').empty().append get_template "#template-#{form.find('[name=type]').val()}"
+      if form.hasClass 'document'
+        form.find('h3').after $ '<p/>',
+          class: 'red'
+          text: "No schema present at #{schema_url}"
+      notification 'File not present, will be created on Save'
+    return
   return # End load_schema function
 
 #
