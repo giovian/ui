@@ -41,6 +41,7 @@ form_create_item = (form) ->
     # Default variabiles
     field = $ '<input/>', {type: 'text'}
     field.attr 'autocomplete', value.autocomplete || 'off'
+    if value.required then field.attr 'required', 'required'
     data_type = 'string'
 
     # Check enum SELECT
