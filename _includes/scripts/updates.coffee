@@ -25,9 +25,10 @@ updates = ->
     if unix / 1000 > {{ site.time | date: "%s" }}
       # There was a build or a commit after site.time
       loc = window.location
-      new_url = loc.origin + loc.pathname + '?latest=' + latest_date + loc.hash
       # If browser is unfocused refresh page
-      if !focus then window.location.href = new_url
+      if !focus
+        window.location.href = loc.origin + loc.pathname + '?latest=' + latest_date + loc.hash
+      else history.pushState null, '', loc.origin + loc.pathname + '?update_to=' + latest_date + loc.hash
     else
       # Build is updated, check sync and pulls for admin users
       if login.storage()['role'] is 'admin'
@@ -71,7 +72,7 @@ if '{{ site.github.environment }}' isnt 'development'
 {%- capture api -%}
 ## Updates
 
-Updates are checked every minute after pageload, only if window is blurred and _rate limit_ is more than 25.
+Updates are checked every minute after pageload, only if _rate limit_ is more than 25.
 
 Compare Jekyll `site.time` with GitHub latest built `created_at` (or latest commit `author.date` if user is not authenticated). If they are different and the browser tab is blurred, refresh the page with a search string like `?latest=YYYY-MM-DDTHH:MM:SSZ`.  
 
