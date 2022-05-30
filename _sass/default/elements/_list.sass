@@ -7,10 +7,13 @@ ul
 //
 // Main lists
 // --------------------------------------
-main li
-  margin-bottom: $space/3
+main
+  li
+    margin-bottom: $space/3
+  ul ul
+    margin-top: $space/3
 footer li
-    margin-bottom: 0
+  margin-bottom: 0
 
 //
 // SIDEBAR lists
@@ -19,6 +22,11 @@ footer li
   ul
     list-style-type: none
     padding-inline: $space*1
+    li
+      color: var(--fg-secondary)
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
 
 // Consecutive `github-api` lists
 ul[github-api-url], ul[github-api-url-repo]

@@ -154,7 +154,7 @@ form_load_schema = (form) ->
       if form.hasClass 'document'
         form.find('h3').after $ '<p/>',
           class: 'red'
-          text: "No schema present at #{schema_url}"
+          text: "No schema present: #{path}.schema.json"
       notification 'File not present, will be created on Save'
     return
   return # End load_schema function
