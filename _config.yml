@@ -7,6 +7,9 @@ collections:
   docs:
     output: true
     title: Docs
+  games:
+    output: true
+    title: Games
 
 # DEFAULTS
 defaults:
