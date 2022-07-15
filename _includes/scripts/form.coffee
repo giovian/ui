@@ -97,7 +97,7 @@ form_create_item = (form) ->
     if value.default
       if value.format is 'date' and value.default is 'today'
         # Today date with leading zeros
-        field.val new Date().toLocaleDateString 'en-CA'
+        field.val date_iso()
       else field.val value.default
     # Prepare elements
     label = $ '<label/>', {text: value.title || key}

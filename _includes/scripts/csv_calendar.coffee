@@ -35,7 +35,7 @@ fill_calendar = (div, data) ->
       calendar_date = +new Date(values[date_index_array[0]])
       calendar_date += duration
       while calendar_date < end
-        values[date_index_array[0]] = new Date(calendar_date).toLocaleDateString 'en-CA'
+        values[date_index_array[0]] = date_iso calendar_date
         ghost.push values.join ','
         calendar_date += duration
   # End csv duration loop
@@ -43,7 +43,7 @@ fill_calendar = (div, data) ->
   while running < end
     # Get day and month
     day = new Date(running)
-    day_formatted = day.toLocaleDateString 'en-CA'
+    day_formatted = date_iso running
     day_number = +day.getDate()
     day_week = day.getDay()
     month = day.getMonth()
@@ -83,7 +83,7 @@ fill_calendar = (div, data) ->
         if e then "#{schema.items.properties[headers[i]].title || headers[i]}: #{e}").join '\n'
       day_div.addClass 'present'
     # Check if it is today
-    if day_formatted is new Date().toLocaleDateString 'en-CA'
+    if day_formatted is date_iso()
       day_div.addClass 'today'
     # Append day DIV
     div.find("[month='#{month}']").append day_div

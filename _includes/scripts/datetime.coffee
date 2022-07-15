@@ -20,12 +20,17 @@ ms =
     ms.past_future(date)
   ].join ' '
 
-# Convert ISO8601 duration string in milliseconds
+# Return ISO 8601 date
+date_iso = (date) -> new Date(date || +new Date()).toLocaleDateString 'en-CA'
+
+# Convert ISO-8601 duration string in milliseconds
 duration_ms = (string) ->
   duration = 0
-  ms_array = [null, ms.year(), ms.month(), ms.week(), ms.day(), null, ms.hour(), ms.minute(), ms.second]
   array = string.match(/^P(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(\d+H)?(\d+M)?(\d+S)?)?$/) || []
+  ms_array = [null, ms.year(), ms.month(), ms.week(), ms.day(), null, ms.hour(), ms.minute(), ms.second]
+  # Loop milliseconds array
   for e, i in ms_array
+    # If milliseconds and string match,
     if e and array[i] then duration += e * +array[i].slice 0, -1
   return duration
 

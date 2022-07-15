@@ -14,13 +14,13 @@ fill_counter = (div, data) ->
   div.empty()
   days = +div.attr 'data-days'
   # Set start and end of date range
-  running = Date.parse(div.attr('data-start') || new Date().toLocaleDateString 'en-CA')
+  running = Date.parse(div.attr('data-start') || date_iso())
   end = running - days * ms.day()
   # Loop days inside date range
   counted = 0
   while running > end
     day = new Date running
-    day_formatted = day.toLocaleDateString 'en-CA'
+    day_formatted = date_iso running
     # Check if day_formatted is present in document
     index = csv.findIndex (e) -> e.includes day_formatted
     if index isnt -1 then counted += 1

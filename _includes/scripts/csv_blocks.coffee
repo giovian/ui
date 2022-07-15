@@ -35,14 +35,14 @@ fill_blocks = (div, data) ->
         calendar_date = +new Date(values[date_index_array[0]])
         calendar_date += duration
         while calendar_date < Math.max end, running
-          values[date_index_array[0]] = new Date(calendar_date).toLocaleDateString 'en-CA'
+          values[date_index_array[0]] = date_iso calendar_date
           ghost.push values.join ','
           calendar_date += duration
   # End csv duration loop
   # Loop days inside blocks range
   while flow * running >= flow * end
     day = new Date(running)
-    day_formatted = day.toLocaleDateString 'en-CA'
+    day_formatted = date_iso running
     text = day.toLocaleDateString "{{ site.language | default: 'en-US' }}",
       weekday: 'narrow'
       day: 'numeric'
@@ -62,7 +62,7 @@ fill_blocks = (div, data) ->
         if e then "#{schema.items.properties[headers[i]].title || headers[i]}: #{e}").join '\n'
       block.addClass 'present'
     # Check if it is today
-    if day_formatted is new Date().toLocaleDateString 'en-CA'
+    if day_formatted is date_iso()
       block.addClass 'today'
     # Append blocks DIV
     div.append block.css

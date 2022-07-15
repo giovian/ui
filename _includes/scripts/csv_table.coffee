@@ -102,7 +102,7 @@ fill_table = (table, data) ->
               # Array shallow copy
               new_values = row_values.slice 0
               origin_date.push row_values[date_index_array[0]]
-              new_values[date_index_array[0]] = new Date(running).toLocaleDateString 'en-CA'
+              new_values[date_index_array[0]] = date_iso running
               ghost.push new_values.join ','
       # Append cell
       row.append cell
