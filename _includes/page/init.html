@@ -1,32 +1,27 @@
-{% comment %} -------------------- MODE (dark/light) {% endcomment %}
-{%- assign mode = page.mode -%}
-{%- if mode == nil -%}{%- assign mode = site.mode -%}{%- endif -%}
-{%- if mode == nil -%}{%- assign mode = 'dark' -%}{%- endif -%}
+{%- assign default_mode = "dark" -%}
+{%- assign default_nav = false -%}
+{%- assign default_header = false -%}
+{%- assign default_navigation = 'pages, collections, login' | split: ',' -%}
+{%- assign default_sidebar =  'toc, navigation, meta' | split: ',' -%}
+{%- assign default_footer  = 'toc, navigation, meta' | split: ',' -%}
+
+{% comment %} -------------------- MODE (string: dark/light) {% endcomment %}
+{%- assign mode = page.mode | default: default_mode -%}
 
 {% comment %} -------------------- TOP NAV (boolean) {% endcomment %}
-{%- assign nav = page.nav -%}
-{%- if nav == nil -%}{%- assign nav = site.nav -%}{%- endif -%}
-{%- if nav == nil -%}{%- assign nav = false -%}{%- endif -%}
+{%- assign nav = page.nav | default: default_nav -%}
 
 {% comment %} -------------------- HEADER (boolean) {% endcomment %}
-{%- assign header = page.header -%}
-{%- if header == nil -%}{%- assign header = site.header -%}{%- endif -%}
-{%- if header == nil -%}{%- assign header = false -%}{%- endif -%}
+{%- assign header = page.header | default: default_header -%}
 
 {% comment %} ----------- NAVIGATION (pages,help,collections,login) {% endcomment %}
-{%- assign navigation = page.navigation -%}
-{%- if navigation == nil -%}{%- assign navigation = site.navigation -%}{%- endif -%}
-{%- if navigation == nil -%}{%- assign navigation = 'pages, collections, login' | split: ',' -%}{%- endif -%}
+{%- assign navigation = page.navigation | default: site.navigation | default: default_navigation -%}
 
 {% comment %} -------------------- SIDEBAR (toc,navigation,meta) {% endcomment %}
-{%- assign sidebar = page.sidebar -%}
-{%- if sidebar == nil -%}{%- assign sidebar = site.sidebar -%}{%- endif -%}
-{%- if sidebar == nil -%}{%- assign sidebar = 'toc, navigation, meta' | split: ',' -%}{%- endif -%}
+{%- assign sidebar = page.sidebar | default: site.sidebar | default: default_sidebar -%}
 
 {% comment %} -------------------- FOOTER (boolean) {% endcomment %}
-{%- assign footer = page.footer -%}
-{%- if footer == nil -%}{%- assign footer = site.footer -%}{%- endif -%}
-{%- if footer == nil -%}{%- assign footer = false -%}{%- endif -%}
+{%- assign footer = page.footer | default: site.footer | default: default_footer -%}
 
 {%- capture api -%}
 ## Page attributes
