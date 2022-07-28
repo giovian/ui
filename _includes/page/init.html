@@ -6,13 +6,13 @@
 {%- assign default_footer  = false -%}
 
 {% comment %} -------------------- MODE (string: dark/light) {% endcomment %}
-{%- assign mode = page.mode | default: default_mode -%}
+{%- assign mode = page.mode | default: site.mode | default: default_mode -%}
 
 {% comment %} -------------------- TOP NAV (boolean) {% endcomment %}
-{%- assign nav = page.nav | default: default_nav -%}
+{%- assign nav = page.nav | default: site.nav | default: default_nav -%}
 
 {% comment %} -------------------- HEADER (boolean) {% endcomment %}
-{%- assign header = page.header | default: default_header -%}
+{%- assign header = page.header | default: site.header | default: default_header -%}
 
 {% comment %} ----------- NAVIGATION (pages,help,collections,login) {% endcomment %}
 {%- assign navigation = page.navigation | default: site.navigation | default: default_navigation -%}
