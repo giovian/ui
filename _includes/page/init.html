@@ -20,7 +20,7 @@
 
 {% comment %} -------------------- SIDEBAR (toc,navigation,meta) {% endcomment %}
 {%- assign sidebar = page.sidebar | default: site.sidebar -%}
-{%- if sidebar === nil -%}{%- assign sidebar = default_sidebar -%}{%- endif -%}
+{%- if sidebar == nil -%}{%- assign sidebar = default_sidebar -%}{%- endif -%}
 
 {% comment %} -------------------- FOOTER (boolean) {% endcomment %}
 {%- assign footer = page.footer | default: site.footer | default: default_footer -%}
