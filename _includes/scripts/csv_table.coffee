@@ -65,7 +65,8 @@ fill_table = (table, data) ->
     header.find('tr').append head_cell
 
   # Service links column
-  header.find('tr').append $ '<th/>'
+  if login.storage()['role'] is 'admin'
+    header.find('tr').append $ '<th/>'
 
   # Loop and append rows
   ghost = []
@@ -106,9 +107,12 @@ fill_table = (table, data) ->
               ghost.push new_values.join ','
       # Append cell
       row.append cell
+    # End row loop
 
-    # End row loop, edit remove links
-    row.append get_template '#template-service-links-cell'
+    # Add service links
+    if login.storage()['role'] is 'admin'
+      row.append get_template '#template-service-links-cell'
+    
     # Append row
     table.find('tbody').append row
   # End file loop
@@ -133,7 +137,7 @@ fill_table = (table, data) ->
           row.addClass ms.temporize(value)
         row.append cell
       # Add empty service links cell
-      row.append '<td/>'
+      if login.storage()['role'] is 'admin' then row.append '<td/>'
       # Prepend row
       table.find('tbody').prepend row
   # End ghost loop
