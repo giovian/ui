@@ -3,7 +3,7 @@
 {%- assign default_header = false -%}
 {%- assign default_navigation = 'pages, collections, login' | split: ',' -%}
 {%- assign default_sidebar =  'toc, navigation, meta' | split: ',' -%}
-{%- assign default_footer  = 'toc, navigation, meta' | split: ',' -%}
+{%- assign default_footer  = false -%}
 
 {% comment %} -------------------- MODE (string: dark/light) {% endcomment %}
 {%- assign mode = page.mode | default: default_mode -%}
