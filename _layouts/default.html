@@ -13,6 +13,7 @@
   page-title='{{ page.title | slugify }}'
   page-order='{{ page.order }}'
   page-collection='{{ page.collection }}'
+  page-categories='{{ page.category | join: ", " }}'
   collection-order='{{ page.collection.order }}'
   page-header='{{ header | inspect }}'
   page-nav='{{ nav | inspect }}'

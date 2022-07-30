@@ -1,0 +1,6 @@
+<ul id="metadata" class="bg-secondary font-small pv">
+  <li id="author" title="{{ page.author }}">Author: <code>{{ page.author }}</code></li>
+  <li id="date" title="{{ page.date }}">Date: <code>{% include widgets/datetime.html datetime=page.date replace=true %}</code></span>
+  <li id="categories" title="{{ page.category }}">Category: <code>{{ page.category | join: ", " }}</code></li>
+  <li id="source_url" title="{{ page.source_url }}">Source URL: <code><a href="{{ page.source_url }}">{{ page.source_url | truncate: 31 }}</a></code></li>
+</ul>
