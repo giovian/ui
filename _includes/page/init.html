@@ -3,7 +3,9 @@
 {%- assign default_header = false -%}
 {%- assign default_navigation = 'pages, collections, login' | split: ',' -%}
 {%- assign default_sidebar =  'toc, navigation, meta' | split: ',' -%}
-{%- assign default_footer  = false -%}
+{%- assign default_footer = false -%}
+{%- assign default_metadata = false -%}
+{%- assign default_paginator = false -%}
 
 {% comment %} -------------------- MODE (string: dark/light) {% endcomment %}
 {%- assign mode = page.mode | default: site.mode | default: default_mode -%}
@@ -24,6 +26,12 @@
 
 {% comment %} -------------------- FOOTER (boolean) {% endcomment %}
 {%- assign footer = page.footer | default: site.footer | default: default_footer -%}
+
+{% comment %} -------------------- METADATA (boolean) {% endcomment %}
+{%- assign metadata = page.metadata | default: site.metadata | default: default_metadata -%}
+
+{% comment %} -------------------- PAGINATOR (boolean) {% endcomment %}
+{%- assign paginator = page.paginator | default: site.paginator | default: default_paginator -%}
 
 {%- capture api -%}
 ## Page attributes

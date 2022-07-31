@@ -1,9 +1,9 @@
 //
 // BLOG POSTS METADATA
 // --------------------------------------
-body:not([page-collection='posts']) #metadata
-  @extend .hidden
-
 #metadata
-  li[title=""]
-    @extend .hidden
+  @extend .bg-secondary, .font-small, .pv
+  li
+    @extend .mbz
+    &[title=""]
+      @extend .hidden

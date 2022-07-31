@@ -19,7 +19,9 @@
   page-nav='{{ nav | inspect }}'
   page-navigation='{{ navigation | join: ',' }}'
   page-sidebar='{{ sidebar | join: ',' }}'
-  page-footer='{{ footer | inspect }}'>
+  page-footer='{{ footer | inspect }}'
+  page-metadata='{{ metadata | inspect }}'
+  page-paginator='{{ paginator | inspect }}'>
 
 <div class='notification'></div>
 {% if header %}{% include page/header.html %}{% endif %}

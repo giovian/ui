@@ -75,6 +75,7 @@ css:
 Possible syntax themes are in {% include widgets/github_link.html path='_sass/syntax' remote=true %}.
 
 {% include widgets/api.html include='page/sidebar' %}
+{% include widgets/api.html include='page/nav' %}
 {% include widgets/api.html include='page/navigation' %}
 {% include widgets/api.html include='page/footer' %}
 

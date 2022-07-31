@@ -1,6 +1,6 @@
-<ul id="metadata" class="bg-secondary font-small pv">
+{% if page.author != nil or page.date != nil or page.categories.size != 0 or page.source_url != nil %}<ul id="metadata">
   <li id="author" title="{{ page.author }}">Author: <code>{{ page.author }}</code></li>
   <li id="date" title="{{ page.date }}">Date: <code>{% include widgets/datetime.html datetime=page.date replace=true %}</code></span>
   <li id="categories" title="{{ page.categories | join: ',' }}">Category: <code>{{ page.categories | join: ", " }}</code></li>
   <li id="source_url" title="{{ page.source_url }}">Source URL: <code><a href="{{ page.source_url }}">{{ page.source_url | truncate: 31 }}</a></code></li>
-</ul>
+</ul>{% endif %}

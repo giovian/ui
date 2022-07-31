@@ -4,3 +4,13 @@
     {% include page/navigation.html %}
   </div>
 </nav>
+{%- capture api -%}
+## Navbar
+
+Show a navigation bar at the page top if `nav: true`{:.language-yml}.  
+Default value is `nav: false`{:.language-yml}.
+
+```liquid
+{% raw %}{% if nav %}{% include page/nav.html %}{% endif %}{% endraw %}
+```
+{%- endcapture -%}
