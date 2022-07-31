@@ -18,6 +18,12 @@
 
 ## To do
 
+- collections sort in config:  
+  ```yam
+  collections:
+    posts:
+      sort_by: date
+  ```
 - `value` attribute on csv-table rows to style
 - check multiple filters on csv-table headers
 - double sidebar

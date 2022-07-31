@@ -1,4 +1,4 @@
-{% if page.next %}<div id="pagination">
-  {% if page.next.previous %}<div>&larr; <a href="{{ page.next.previous.url | absolute_url }}">{{ page.next.previous.title }}</a></div>{% endif %}
-  {% if page.next %}<div><a href="{{ page.next.url | absolute_url }}">{{ page.next.title }}</a> &rarr;</div>{% endif %}
+{% if next_title or prev_title %}<div id="pagination">
+  <div>{% if prev_title %}&larr; <a href="{{ prev_url | absolute_url }}">{{ prev_title | truncate: 31 }}</a>{% endif %}</div>
+  <div>{% if next_title %}<a href="{{ next_url | absolute_url }}">{{ next_title | truncate: 31 }}</a> &rarr;{% endif %}</div>
 </div>{% endif %}

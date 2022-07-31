@@ -5,7 +5,7 @@
 {%- assign default_sidebar =  'toc, navigation, meta' | split: ',' -%}
 {%- assign default_footer = false -%}
 {%- assign default_metadata = false -%}
-{%- assign default_paginator = false -%}
+{%- assign default_pagination = false -%}
 
 {% comment %} -------------------- MODE (string: dark/light) {% endcomment %}
 {%- assign mode = page.mode | default: site.mode | default: default_mode -%}
@@ -31,7 +31,23 @@
 {%- assign metadata = page.metadata | default: site.metadata | default: default_metadata -%}
 
 {% comment %} -------------------- PAGINATOR (boolean) {% endcomment %}
-{%- assign paginator = page.paginator | default: site.paginator | default: default_paginator -%}
+{%- assign pagination = page.pagination | default: site.pagination | default: default_pagination -%}
+
+{% comment %} -------------------- NEXT AND PREV PAGE -------------------- {% endcomment %}
+{%- assign collection = site[page.collection] -%}
+{%- for doc in collection -%}
+  {%- if next -%}
+    {%- assign next_title = doc.title -%}
+    {%- assign next_url = doc.url -%}
+  {%- endif -%}
+  {%- if doc.url == page.url -%}
+    {%- assign prev_title = last_title -%}
+    {%- assign prev_url = last_url -%}
+    {%- assign next = true -%}
+  {%- endif -%}
+  {%- assign last_title = doc.title -%}
+  {%- assign last_url = doc.url -%}
+{% endfor %}
 
 {%- capture api -%}
 ## Page attributes
