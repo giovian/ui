@@ -3,6 +3,11 @@
 // --------------------------------------
 details summary
   @extend .p-around, .pointer
+  outline: none
+  &:hover
+    color: var(--fg-secondary)
+  &:active
+    color: var(--fg)
 
 //
 // MAIN DETAILS
@@ -17,16 +22,12 @@ main details
     clear: both
     content: ""
   
-  summary
-    outline: none
-    &:hover
-      color: var(--fg-secondary)
-    & > *
-      display: inline
+  summary > *
+    display: inline
 
-    // Headers on summray
+    // Headers on summary
     h1, h2, h3, h4, h5, h6
-      padding: 0
+      @extend .pz
 
 //
 // FORM DETAILS
@@ -35,18 +36,15 @@ form details
   @extend .border-top, .border-secondary
 
 //
-// SIDEBAR DETAILS
+// SIDEBAR DETAILS as WIDGETS HEADER
 // --------------------------------------
-.sidebar
-  & > details summary
-    @extend .bg-secondary, .fg-secondary
-  details
-    &:not([open])
-      margin-bottom: .1*$space
-    summary
-      &:hover
-        color: var(--link) !important
-      &:active
-        color: var(--fg-secondary) !important
-    &[open] summary
-      @extend .fg
+.sidebar > details
+  summary
+    @extend .bg-secondary
+    &:hover
+      color: var(--link) !important
+    &:active
+      color: var(--fg-secondary) !important
+  &:not([open])
+    margin-bottom: .1*$space
+    @extend .fg-secondary
