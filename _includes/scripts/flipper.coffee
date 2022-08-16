@@ -7,7 +7,9 @@ flipper = (flipper) ->
       $('body').attr 'page-title'
       $("[class*='flipper']").index container
     ].join '|'
+  # Flipper links
   links = container.find('>div:first-child').find('a')
+  # Flipper divs
   divs = container.find('>div:not(:first-child)')
 
   # Assign click event
@@ -30,16 +32,20 @@ flipper = (flipper) ->
     # Multiple
     if container.hasClass 'flippers'
       link.toggleClass 'active'
+      # Loop active links
       links.each (i, e) ->
         if $(@).hasClass 'active'
           active = $ @
+          # Get attribute and text string
           attribute = active.attr 'data-attribute'
           text = active.text()
+          # Show filtered divs
           divs.filter("[#{attribute}*='#{text}']").removeClass 'hidden'
+          # Save link index in state array
           save.push i
         return # End active links loop
 
-    # Save state
+    # Delete old state, save new state if it isnt [0]
     storage.clear "flippers.#{id}"
     if JSON.stringify(save) isnt JSON.stringify([0])
       storage.assign 'flippers', {"#{id}": save}
@@ -48,6 +54,7 @@ flipper = (flipper) ->
 
   # Check saved state (array, .flipper has always 1 element)
   saved = storage.get("flippers.#{id}") || [0]
+  # Loop trigger saved links
   saved.map (i) -> links.eq(i).trigger 'click'
 
   return # Flipper function
