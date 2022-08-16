@@ -101,6 +101,7 @@ collections:
     output: true
     # title: My Collection
     # order: 10
+    # sort_by: order
 
 defaults:
   - scope:
@@ -111,3 +112,57 @@ defaults:
 {:.minimal}
 
 {% include widgets/api.html include='page/favicon' %}
+
+## Defaults
+
+```yml
+# _config.yml
+
+# Favicon
+favicon:
+  ico: '/favicon.ico'
+  png: '/favicon.png'
+
+# Language
+language: 'en-US'
+
+# SASS Theme
+css:
+  theme: default
+
+# Dark / Light mode
+mode: dark
+
+# Visibility header, navigation bar and footer
+header: false
+nav: false
+footer: false
+
+# Include page metadata at top page
+metadata: false
+
+# Include pagination at bottom page
+pagination: false
+
+# Sort pages
+sort_by: 'date'
+
+# Widgets in _includes/page/navigation for the top navigation bar
+navigation: [pages, collections, login]
+
+# Widgets in _includes/widgets for the sidebar
+sidebar: [navigation, toc, meta]
+
+# Add a collection
+collections:
+  myCollection:
+    output: true
+    title: My Collection
+    order: 10
+
+defaults:
+  - scope:
+      type: myCollection
+    values:
+      layout: default
+```

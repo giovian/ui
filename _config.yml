@@ -2,6 +2,9 @@ timezone: Europe/Rome
 baseurl: /ui
 permalink: pretty
 
+# Future posts visibility
+future: true
+
 # COLLECTIONS
 collections:
   docs:
@@ -17,3 +20,4 @@ defaults:
       path: ""
     values:
       layout: default
+      sort_by: order

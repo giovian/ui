@@ -21,8 +21,8 @@ order: 1000
 {% for item in html_pages %}- `{{ item.order | inspect }}` {{ item.title | default: item.name }}
 {% endfor %}
 **Collections order**
-{% for item in sorted_collections %}- `{{ item.order | inspect }}` {{ item.title | default: item.label }} ({{ item.docs.size }} documents){% assign collection_docs = item.docs | sort: "order" %}{% for p in collection_docs %}
-  - `{{ p.order | inspect }}` {{ p.title | default: p.path }}{% endfor %}
+{% for collection in sorted_collections %}- `{{ collection.order | inspect }}` {{ collection.title | default: collection.label }} ({{ collection.docs.size }} documents){% assign sort_by = collection.sort_by | default: 'date' %}{% assign collection_docs = collection.docs | sort: sort_by %}{% for p in collection_docs %}
+  - `{{ p[sort_by] | inspect }}` {{ p.title | default: p.path }}{% endfor %}
 {% endfor %}
 {% if site.remote_theme %}
 **Remote theme**

@@ -2,10 +2,11 @@
 {%- assign default_nav = false -%}
 {%- assign default_header = false -%}
 {%- assign default_navigation = 'pages, collections, login' | split: ',' -%}
-{%- assign default_sidebar =  'toc, navigation, meta' | split: ',' -%}
+{%- assign default_sidebar =  'navigation, toc, meta' | split: ',' -%}
 {%- assign default_footer = false -%}
 {%- assign default_metadata = false -%}
 {%- assign default_pagination = false -%}
+{%- assign default_sort_by = 'date' -%}
 
 {% comment %} -------------------- MODE (string: dark/light) {% endcomment %}
 {%- assign mode = page.mode | default: site.mode | default: default_mode -%}
@@ -32,6 +33,9 @@
 
 {% comment %} -------------------- PAGINATOR (boolean) {% endcomment %}
 {%- assign pagination = page.pagination | default: site.pagination | default: default_pagination -%}
+
+{% comment %} -------------------- SORT DOCS BY -------------------- {% endcomment %}
+{%- assign sort_by = page.sort_by | default: site.sort_by | default: default_sort_by -%}
 
 {% comment %} -------------------- NEXT AND PREV PAGE -------------------- {% endcomment %}
 {%- assign collection = site[page.collection] -%}

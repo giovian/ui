@@ -18,12 +18,7 @@
 
 ## To do
 
-- collections sort in config:  
-  ```yam
-  collections:
-    posts:
-      sort_by: date
-  ```
+- clipboard copy with a class
 - `value` attribute on csv-table rows to style
 - check multiple filters on csv-table headers
 - double sidebar
