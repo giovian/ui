@@ -69,8 +69,8 @@ Hashed localStorage object with key `owner/repository`.
   'sort': {
     'page-title|form-index': 'down'
   },
-  'tabs': {
-    'page-title|tab-container-index': tab-link-index
+  'flippers': {
+    'page-title|flipper-container-index': [tab-link-index]
   },
   'github_api': {
     'api_request_url': {
@@ -88,7 +88,7 @@ Hashed localStorage object with key `owner/repository`.
   },
   'repository': {
     'fork': true/false,
-    'parent': false/repository object
+    'parent': false/{repository object}
   }
 }
 ```

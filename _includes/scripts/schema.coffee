@@ -1,9 +1,3 @@
-# Reset FORMs TABs
-reset_form_tabs = (tab) ->
-  if $(tab).find('div[data-tab="enum"] div[enum-inject]:not(:empty)').length then index=1 else index=0
-  reset_tabs tab, index
-  return
-
 #
 # PROPERTY inject helper function
 # --------------------------------------
@@ -36,7 +30,7 @@ get_property = (key, value) ->
         enum_div.find('label').text enum_value
         enum_inject.append enum_div
   # Append property
-  selected_template.find('[tab-container]').each -> reset_form_tabs @
+  selected_template.find('[class*="flipper"]').each -> flipper @
   template_property.find('[type-inject]').append selected_template
   return template_property # End property inject
 
@@ -101,7 +95,7 @@ $('form.schema').each ->
     parent = $(@).attr('name').replace '[type]', ''
     selected_template = get_template "#template-#{$(@).val()}", parent
     # Reset TABs and append on property [type-inject]
-    reset_tabs selected_template.find('[tab-container]')
+    flipper selected_template.find('[class*="flipper"]')
     $(@).parents('details').find('[type-inject]').empty().append selected_template
     return # End property type change
 
