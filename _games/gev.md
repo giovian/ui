@@ -17,15 +17,16 @@ order: 50
 {% include widgets/form.html file='gev/player' %}
 - Schema `gev/player.schema.json` has `name` and `slogan`
 - `side` string select Ogre/Human
-- Document `user/<username>/gev/player.json
+- Document `user/<username>/gev/player.json`
 
 **Player pull**
 Create commad
 - Schema `gev/command.schema.json` object
-  - `name` string <name> used as filename: `command.json` became `command/<name>.json`
+  - `name` string used as filename: `command.json` became `command/<name>.json`
   - `vp` number victory points
   - `infranty_points`, `armour_points`, `ogre_points` taken from `gev/points.json` with `side` as input
   - `units` array of units taken from `gev/units.json` with `side` as input until consuming `infranty_points`, `armour_points`, `ogre_points`
+
 Create points
 - Schema `gev/points.schema.json` CSV type Array
   - `side` Ogre/Human
