@@ -10,14 +10,17 @@
       "description": "Used to designate your units and Command Post",
       "type": "string",
       "autocomplete": "off",
-      "required": "true"
+      "required": true
     },
     "side": {
       "title": "Side you are on",
       "description": "Are you a Human or an Ogre?",
       "type": "string",
       "autocomplete": "off",
-      "required": "false"
+      "enum": [
+        "Human",
+        "Ogre"
+      ]
     }
   }
 }
