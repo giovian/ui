@@ -33,11 +33,16 @@ input_range_enable = (range) ->
 # --------------------------------------
 form_create_item = (form) ->
   unique_id = +new Date()
+  # Get schema from storage and decode content
   schema_data = get_github_api_data "#{form.attr 'data-file'}.schema.json"
   schema = JSON.parse Base64.decode schema_data.content
   item = $ '<div/>', {class: 'item'}
+  # Loop items
+  items = switch schema.type
+    when 'array' then schema.items.properties
+    when 'object' then schema.properties
   # Loop items properties
-  for own key, value of schema.items.properties
+  for own key, value of items
     # Default variabiles
     field = $ '<input/>', {type: 'text'}
     field.attr 'autocomplete', value.autocomplete || 'off'
@@ -46,7 +51,7 @@ form_create_item = (form) ->
 
     # Check enum SELECT
     if value.enum?.length
-      field = $ '<select/>', {class: 'inline'}
+      field = $ '<select/>', {class: value.class?}
       for option in value.enum
         field.append $ '<option/>', {value: option, text: option}
 
@@ -154,8 +159,11 @@ form_load_schema = (form) ->
             .append get_property(schema.type, key, value)
     if form.hasClass 'document'
       form.find('[inject]').append form_create_item form
-      # Append item adder
-      form.find('[data-type="button"]').before get_template '#template-add-item'
+      # Append item adder only for array type schemas
+      if schema.type is 'array'
+        form
+          .find('[data-type="button"]')
+          .before get_template '#template-add-item'
     return # Form is populated
   get_schema.always -> form.removeAttr 'disabled'
   get_schema.fail (request, status, error) ->
