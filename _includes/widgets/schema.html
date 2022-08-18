@@ -29,7 +29,7 @@
     </select>
   </div>
 
-  <div inject></div>
+  <div inject='string'></div>
 
 <!-- BUTTONS -->
   <div data-type='button'>
@@ -144,16 +144,16 @@
           <option value='on'>On</option>
         </select>
       </div>
-      <div data-type='string'>
+      <div data-type='boolean'>
         <label>Required</label>
-        <select name='required' id='required' class='inline'>
+        <select name='required' id='required' class='inline' data-value-type='boolean'>
           <option value='false'>False</option>
           <option value='true'>True</option>
         </select>
       </div>
     </div>
     <div>
-      <div data-type='number'>
+      <div data-type='enum'>
         <label class='fg-secondary'>Enum values <a href='#add-emun' data-add='enum' class='prevent-default'>add</a></label>
       </div>
       <div enum-inject></div>
@@ -284,9 +284,9 @@
           ENUM TEMPLATE
 -->
 <template id="template-enum">
-  <div data-type='string'>
+  <div data-type=''>
     <label></label>
-    <a href='#remove-enum' data-remove='enum' class='prevent-default'>remove</a>
+    <a href='#remove-enum' data-remove='enum' class='prevent-default'>🗑️</a>
     <input name='[enum][]' id='[enum][]' value='' type='hidden' data-value-type=''>
   </div>
 </template>

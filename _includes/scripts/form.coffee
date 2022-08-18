@@ -139,9 +139,19 @@ form_load_schema = (form) ->
       form.find('[name="title"]').val schema.title
       form.find('[name="$id"]').val schema['$id']
       form.find('[name="description"]').val schema.description
-      # Loop items.properties
-      for own key, value of schema.items.properties
-        form.find('[properties-inject]').append get_property(key, value)
+      form.find('[name="type"]').val schema.type
+      if schema.type is 'array'
+        # Loop items.properties
+        for own key, value of schema.items.properties
+          form
+            .find('[properties-inject]')
+            .append get_property(schema.type, key, value)
+      if schema.type is 'object'
+        # Loop object properties
+        for own key, value of schema.properties
+          form
+            .find('[properties-inject]')
+            .append get_property(schema.type, key, value)
     if form.hasClass 'document'
       form.find('[inject]').append form_create_item form
       # Append item adder
@@ -217,7 +227,7 @@ $('form').each ->
     return # end Reset handler
 
   # Submit
-  form.on "submit", -> console.log form.serializeJSON() # jsyaml.dump
+  form.on "submit", -> console.log form.serializeJSON()
 
   return # end FORM loop
 {%- capture api -%}

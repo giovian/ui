@@ -1,17 +1,25 @@
 #
 # PROPERTY inject helper function
 # --------------------------------------
-get_property = (key, value) ->
-  prepend = "items[properties][#{slug key}]"
+get_property = (parent_type, key, value) ->
+  nest = switch parent_type
+    when 'object' then 'properties'
+    when 'array' then 'items[properties]'
+    else 'error'
+  prepend = "#{nest}[#{slug key}]"
   template_property = get_template '#template-property', prepend
   # Update property title
   template_property.find('summary').prepend document.createTextNode "#{key}"
   # Get property type
   property_type = value?.type || 'string'
+  # Update type select
   template_property.find("[name='#{prepend}[type]']").val property_type
+  # Get property template
   selected_template = get_template "#template-#{property_type}", prepend
+  if property_type is 'integer' then property_type = 'number'
   # Set property values
   for own key, property of value
+    # Find inputs ending with [key]
     selected_template.find("[name$='[#{key}]']").val property
     # Check enums
     if key is 'enum' and Array.isArray property
@@ -24,14 +32,16 @@ get_property = (key, value) ->
         input.attr 'name', (i, v) -> v.replace('[[enum][]]', '[enum][]')
         input.attr 'id', (i, v) -> v.replace('[[enum][]]', '[enum][]')
         # Set attributes and values
-        input.attr 'data-value-type', (i, v) ->
-          if property_type is 'integer' then 'number' else property_type
+        input.attr 'data-value-type', property_type
         input.val enum_value
         enum_div.find('label').text enum_value
         enum_inject.append enum_div
   # Append property
   selected_template.find('[class*="flipper"]').each -> flipper @
-  template_property.find('[type-inject]').append selected_template
+  inject = template_property.find('[type-inject]')
+  console.log value?.type, property_type
+  inject.attr 'type-inject', property_type
+  inject.append selected_template
   return template_property # End property inject
 
 #
@@ -53,7 +63,9 @@ $('form.schema').each ->
     property_name = prompt 'Property name'
     # Inject property
     if property_name
-      form.find('[properties-inject]').append get_property(property_name)
+      form
+        .find('[properties-inject]')
+        .append get_property(form.find('[name="type"]').val(), property_name)
     return # End add-property
 
   # ADD ENUM VALUE
@@ -63,7 +75,7 @@ $('form.schema').each ->
     # Inject property
     if enum_value
       # Get value type
-      type = $(@).parents('[data-type]').attr 'data-type'
+      type = $(@).parents('[type-inject]').attr 'type-inject'
       # Prepare enum DIV
       enum_div = get_template '#template-enum', $(@).attr('data-prepend')
       input = enum_div.find('input')
@@ -86,7 +98,9 @@ $('form.schema').each ->
 
   # Change schema type
   form.on 'change', 'select[name=type]', ->
-    form.find('[inject]').empty().append get_template "#template-#{$(@).val()}"
+    inject = form.find('[inject]')
+    inject.empty().append get_template "#template-#{$(@).val()}"
+    inject.attr 'inject', $(@).val()
     return # End schema type change
 
   # Change property type
@@ -96,7 +110,9 @@ $('form.schema').each ->
     selected_template = get_template "#template-#{$(@).val()}", parent
     # Reset TABs and append on property [type-inject]
     flipper selected_template.find('[class*="flipper"]')
-    $(@).parents('details').find('[type-inject]').empty().append selected_template
+    type_inject = $(@).parents('details').find('[type-inject]')
+    type_inject.empty().append selected_template
+    type_inject.attr 'type-inject', $(@).val()
     return # End property type change
 
   #
@@ -118,76 +134,76 @@ $('form.schema').each ->
     return # end Reset handler
 
   # Submit
-  form.on 'submit', ->
-
-    # Check user is admin
-    if !$('html').hasClass 'role-admin'
-      notification 'You need to login as `admin`', 'red'
-      return
-
-    # Write data
-    encoded_content = Base64.encode JSON.stringify(form.serializeJSON(), null, 2)
-    path = form.find('[name="$id"]').val()
-    schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
-    notification 'Check if file exist'
-    form.attr 'disabled', ''
-
-    # Check if file already exist
-    get_schema = $.get schema_url
-    get_schema.fail (request, status, error) ->
-      # Schema not found
-      if error is 'Not Found'
-        load =
-          message: 'Create schema'
-          content: encoded_content
-        # Commit new file
-        notification load.message
-        put = $.ajax schema_url,
-          method: 'PUT'
-          data: JSON.stringify load
-        put.done (data) ->
-          notification 'Schema created', 'green'
-          stored_data =
-            sha: data.content.sha
-            content: encoded_content
-          # Save data for the future
-          set_github_api_data schema_url, stored_data
-          return # End create schema
-        put.always -> form.removeAttr 'disabled'
-      else
-        form.removeAttr 'disabled'
-        # Reset eventual Document
-        $('body').find("form.document[data-file='#{path}']").trigger 'reset'
-      return # End new file
-
-    # File present, overwrite with sha reference
-    get_schema.done (data) ->
-      data = cache data, schema_url
-      load =
-        message: 'Edit schema'
-        sha: data.sha
-        content: encoded_content
-      # Commit edited file
-      notification load.message
-      put = $.ajax schema_url,
-        method: 'PUT'
-        data: JSON.stringify load
-      put.done (data) ->
-        notification 'Schema edited', 'green'
-        # Store data for the future
-        stored_data =
-          sha: data.content.sha
-          content: encoded_content
-        # Save data for the future
-        set_github_api_data schema_url, stored_data
-        return # End schema update
-      put.always ->
-        form.removeAttr 'disabled'
-        # Reset eventual Document
-        $('body').find("form.document[data-file='#{path}']").trigger 'reset'
-      return # End overwrite
-
-    return # End submit handler
+  # form.on 'submit', ->
+  # 
+  #   # Check user is admin
+  #   if !$('html').hasClass 'role-admin'
+  #     notification 'You need to login as `admin`', 'red'
+  #     return
+  # 
+  #   # Write data
+  #   encoded_content = Base64.encode JSON.stringify(form.serializeJSON(), null, 2)
+  #   path = form.find('[name="$id"]').val()
+  #   schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
+  #   notification 'Check if file exist'
+  #   form.attr 'disabled', ''
+  # 
+  #   # Check if file already exist
+  #   get_schema = $.get schema_url
+  #   get_schema.fail (request, status, error) ->
+  #     # Schema not found
+  #     if error is 'Not Found'
+  #       load =
+  #         message: 'Create schema'
+  #         content: encoded_content
+  #       # Commit new file
+  #       notification load.message
+  #       put = $.ajax schema_url,
+  #         method: 'PUT'
+  #         data: JSON.stringify load
+  #       put.done (data) ->
+  #         notification 'Schema created', 'green'
+  #         stored_data =
+  #           sha: data.content.sha
+  #           content: encoded_content
+  #         # Save data for the future
+  #         set_github_api_data schema_url, stored_data
+  #         return # End create schema
+  #       put.always -> form.removeAttr 'disabled'
+  #     else
+  #       form.removeAttr 'disabled'
+  #       # Reset eventual Document
+  #       $('body').find("form.document[data-file='#{path}']").trigger 'reset'
+  #     return # End new file
+  # 
+  #   # File present, overwrite with sha reference
+  #   get_schema.done (data) ->
+  #     data = cache data, schema_url
+  #     load =
+  #       message: 'Edit schema'
+  #       sha: data.sha
+  #       content: encoded_content
+  #     # Commit edited file
+  #     notification load.message
+  #     put = $.ajax schema_url,
+  #       method: 'PUT'
+  #       data: JSON.stringify load
+  #     put.done (data) ->
+  #       notification 'Schema edited', 'green'
+  #       # Store data for the future
+  #       stored_data =
+  #         sha: data.content.sha
+  #         content: encoded_content
+  #       # Save data for the future
+  #       set_github_api_data schema_url, stored_data
+  #       return # End schema update
+  #     put.always ->
+  #       form.removeAttr 'disabled'
+  #       # Reset eventual Document
+  #       $('body').find("form.document[data-file='#{path}']").trigger 'reset'
+  #     return # End overwrite
+  # 
+  #   return # End submit handler
 
   return # end FORM loop
 {%- capture api -%}

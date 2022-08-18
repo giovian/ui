@@ -4,22 +4,20 @@
   "title": "Player join form",
   "description": "Choose the side you are on and the combat name",
   "type": "object",
-  "items": {
-    "properties": {
-      "name": {
-        "title": "Combat name",
-        "description": "Used to designate your units and Command Post",
-        "type": "string",
-        "autocomplete": "off",
-        "required": "true"
-      },
-      "side": {
-        "title": "Side you are on",
-        "description": "Are you a Human or an Ogre?",
-        "type": "string",
-        "autocomplete": "off",
-        "required": "false"
-      }
+  "properties": {
+    "name": {
+      "title": "Combat name",
+      "description": "Used to designate your units and Command Post",
+      "type": "string",
+      "autocomplete": "off",
+      "required": "true"
+    },
+    "side": {
+      "title": "Side you are on",
+      "description": "Are you a Human or an Ogre?",
+      "type": "string",
+      "autocomplete": "off",
+      "required": "false"
     }
   }
 }
