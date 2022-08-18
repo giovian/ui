@@ -12,7 +12,7 @@ get_property = (parent_type, key, value) ->
   template_property.find('summary').prepend document.createTextNode "#{key}"
   # Get property type
   property_type = value?.type || 'string'
-  # Update type select
+  # Update fields
   template_property.find("[name='#{prepend}[type]']").val property_type
   # Get property template
   selected_template = get_template "#template-#{property_type}", prepend
@@ -20,7 +20,8 @@ get_property = (parent_type, key, value) ->
   # Set property values
   for own key, property of value
     # Find inputs ending with [key]
-    selected_template.find("[name$='[#{key}]']").val property
+    template_property.find("[name='#{prepend}[#{key}]']").val property
+    selected_template.find("[name='#{prepend}[#{key}]']").val property
     # Check enums
     if key is 'enum' and Array.isArray property
       enum_inject = selected_template.find('[enum-inject]')
@@ -39,7 +40,6 @@ get_property = (parent_type, key, value) ->
   # Append property
   selected_template.find('[class*="flipper"]').each -> flipper @
   inject = template_property.find('[type-inject]')
-  console.log value?.type, property_type
   inject.attr 'type-inject', property_type
   inject.append selected_template
   return template_property # End property inject
@@ -134,76 +134,76 @@ $('form.schema').each ->
     return # end Reset handler
 
   # Submit
-  # form.on 'submit', ->
-  # 
-  #   # Check user is admin
-  #   if !$('html').hasClass 'role-admin'
-  #     notification 'You need to login as `admin`', 'red'
-  #     return
-  # 
-  #   # Write data
-  #   encoded_content = Base64.encode JSON.stringify(form.serializeJSON(), null, 2)
-  #   path = form.find('[name="$id"]').val()
-  #   schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
-  #   notification 'Check if file exist'
-  #   form.attr 'disabled', ''
-  # 
-  #   # Check if file already exist
-  #   get_schema = $.get schema_url
-  #   get_schema.fail (request, status, error) ->
-  #     # Schema not found
-  #     if error is 'Not Found'
-  #       load =
-  #         message: 'Create schema'
-  #         content: encoded_content
-  #       # Commit new file
-  #       notification load.message
-  #       put = $.ajax schema_url,
-  #         method: 'PUT'
-  #         data: JSON.stringify load
-  #       put.done (data) ->
-  #         notification 'Schema created', 'green'
-  #         stored_data =
-  #           sha: data.content.sha
-  #           content: encoded_content
-  #         # Save data for the future
-  #         set_github_api_data schema_url, stored_data
-  #         return # End create schema
-  #       put.always -> form.removeAttr 'disabled'
-  #     else
-  #       form.removeAttr 'disabled'
-  #       # Reset eventual Document
-  #       $('body').find("form.document[data-file='#{path}']").trigger 'reset'
-  #     return # End new file
-  # 
-  #   # File present, overwrite with sha reference
-  #   get_schema.done (data) ->
-  #     data = cache data, schema_url
-  #     load =
-  #       message: 'Edit schema'
-  #       sha: data.sha
-  #       content: encoded_content
-  #     # Commit edited file
-  #     notification load.message
-  #     put = $.ajax schema_url,
-  #       method: 'PUT'
-  #       data: JSON.stringify load
-  #     put.done (data) ->
-  #       notification 'Schema edited', 'green'
-  #       # Store data for the future
-  #       stored_data =
-  #         sha: data.content.sha
-  #         content: encoded_content
-  #       # Save data for the future
-  #       set_github_api_data schema_url, stored_data
-  #       return # End schema update
-  #     put.always ->
-  #       form.removeAttr 'disabled'
-  #       # Reset eventual Document
-  #       $('body').find("form.document[data-file='#{path}']").trigger 'reset'
-  #     return # End overwrite
-  # 
-  #   return # End submit handler
+  form.on 'submit', ->
+  
+    # Check user is admin
+    if !$('html').hasClass 'role-admin'
+      notification 'You need to login as `admin`', 'red'
+      return
+  
+    # Write data
+    encoded_content = Base64.encode JSON.stringify(form.serializeJSON(), null, 2)
+    path = form.find('[name="$id"]').val()
+    schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
+    notification 'Check if file exist'
+    form.attr 'disabled', ''
+  
+    # Check if file already exist
+    get_schema = $.get schema_url
+    get_schema.fail (request, status, error) ->
+      # Schema not found
+      if error is 'Not Found'
+        load =
+          message: 'Create schema'
+          content: encoded_content
+        # Commit new file
+        notification load.message
+        put = $.ajax schema_url,
+          method: 'PUT'
+          data: JSON.stringify load
+        put.done (data) ->
+          notification 'Schema created', 'green'
+          stored_data =
+            sha: data.content.sha
+            content: encoded_content
+          # Save data for the future
+          set_github_api_data schema_url, stored_data
+          return # End create schema
+        put.always -> form.removeAttr 'disabled'
+      else
+        form.removeAttr 'disabled'
+        # Reset eventual Document
+        $('body').find("form.document[data-file='#{path}']").trigger 'reset'
+      return # End new file
+  
+    # File present, overwrite with sha reference
+    get_schema.done (data) ->
+      data = cache data, schema_url
+      load =
+        message: 'Edit schema'
+        sha: data.sha
+        content: encoded_content
+      # Commit edited file
+      notification load.message
+      put = $.ajax schema_url,
+        method: 'PUT'
+        data: JSON.stringify load
+      put.done (data) ->
+        notification 'Schema edited', 'green'
+        # Store data for the future
+        stored_data =
+          sha: data.content.sha
+          content: encoded_content
+        # Save data for the future
+        set_github_api_data schema_url, stored_data
+        return # End schema update
+      put.always ->
+        form.removeAttr 'disabled'
+        # Reset eventual Document
+        $('body').find("form.document[data-file='#{path}']").trigger 'reset'
+      return # End overwrite
+  
+    return # End submit handler
 
   return # end FORM loop
 {%- capture api -%}
