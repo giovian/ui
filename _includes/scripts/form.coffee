@@ -51,7 +51,7 @@ form_create_item = (form) ->
 
     # Check enum SELECT
     if value.enum?.length
-      field = $ '<select/>', {class: value.class?}
+      field = $ '<select/>', {class: value.class? || ''}
       for option in value.enum
         field.append $ '<option/>', {value: option, text: option}
 
