@@ -8,12 +8,14 @@
     "name": {
       "title": "Team name",
       "type": "string",
-      "autocomplete": "off"
+      "autocomplete": "off",
+      "required": true
     },
     "stadium": {
       "title": "Stadium name",
       "type": "string",
-      "autocomplete": "off"
+      "autocomplete": "off",
+      "required": true
     },
     "shirt": {
       "title": "Type of shirt",
