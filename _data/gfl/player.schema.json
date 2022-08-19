@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gfl/player",
+  "title": "Player join form",
+  "description": "Choose team and stadium name, shirt and colors",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Team name",
+      "type": "string",
+      "autocomplete": "off"
+    },
+    "stadium": {
+      "title": "Stadium name",
+      "type": "string",
+      "autocomplete": "off"
+    },
+    "shirt": {
+      "title": "Type of shirt",
+      "type": "string",
+      "autocomplete": "off",
+      "enum": [
+        "horizontal",
+        "vertical"
+      ]
+    },
+    "color_1": {
+      "title": "First color",
+      "type": "string",
+      "format": "color",
+      "autocomplete": "off"
+    },
+    "color_2": {
+      "title": "Second color",
+      "type": "string",
+      "format": "color",
+      "autocomplete": "off"
+    }
+  },
+  "svg": "shirt"
+}
