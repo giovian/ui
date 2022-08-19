@@ -122,7 +122,7 @@ form_create_item = (form) ->
   return item # End create_item
 
 #
-# FORM LOAD SCHEMA function for schema and document fomrs
+# FORM LOAD SCHEMA function for schema and document forms
 # --------------------------------------
 form_load_schema = (form) ->
   path = form.attr 'data-file'
@@ -142,8 +142,8 @@ form_load_schema = (form) ->
       form.find('[inject]').empty().append get_template "#template-#{schema.type}"
       # Populate fields
       form.find('[name="title"]').val schema.title
-      form.find('[name="$id"]').val schema['$id']
       form.find('[name="description"]').val schema.description
+      form.find('[name="$id"]').val schema['$id']
       form.find('[name="type"]').val schema.type
       if schema.type is 'array'
         # Loop items.properties
@@ -154,16 +154,25 @@ form_load_schema = (form) ->
       if schema.type is 'object'
         # Loop object properties
         for own key, value of schema.properties
+          # Append property
           form
             .find('[properties-inject]')
             .append get_property(schema.type, key, value)
+          # Add option to SVG
+          form
+            .find('[name=svg]')
+            .append $('<option/>', {value: key, text: key})
     if form.hasClass 'document'
+      if schema.title then form.find('span.form-title').text schema.title
+      if schema.description then form.find('h3').after $ '<p/>', {text: schema.description}
       form.find('[inject]').append form_create_item form
       # Append item adder only for array type schemas
       if schema.type is 'array'
         form
           .find('[data-type="button"]')
           .before get_template '#template-add-item'
+      # Check SVG
+      if schema.svg then console.log schema.properties[schema.svg]
     return # Form is populated
   get_schema.always -> form.removeAttr 'disabled'
   get_schema.fail (request, status, error) ->

@@ -1,7 +1,7 @@
 {% if include.file == nil %}> Missing `file` for `document` widget
 {:.red}{% else %}
 <form class='prevent-default document' data-file='{{ include.file }}'>
-  <h3>Document{% if include.file %} <code>{{ include.file }}</code>{% endif %}</h3>
+  <h3><span class='form-title'>Document</span>{% if include.file %} <code>{{ include.file }}</code>{% endif %}</h3>
 
   <!-- Editing index -->
   <input data-value-type='skip' type="hidden" name="index" value="">

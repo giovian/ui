@@ -1,7 +1,7 @@
 {% if include.file == nil %}> Missing `file` for `schema` widget
 {:.red}{% else %}
 <form class='prevent-default schema' data-file='{{ include.file }}'>
-  <h3>Schema{% if include.file %} <code>{{ include.file }}</code>{% endif %}</h3>
+  <h3><span class='form-title'>Schema</span>{% if include.file %} <code>{{ include.file }}</code>{% endif %}</h3>
 
   <input type='hidden' name='$schema' value='https://json-schema.org/draft/2020-12/schema'>
 
@@ -64,6 +64,15 @@
   </div>
 
   <div properties-inject></div>
+
+  <!-- SVG -->
+  <div data-type='svg'>
+    <label>SVG</label>
+    <select name='svg' id='svg' class='inline'>
+      <option value=''></option>
+    </select>
+  </div>
+
 </template>
 <!--
           PROPERTY TEMPLATE
@@ -203,7 +212,7 @@
       </div>
     </div>
     <div>
-      <div data-type='number'>
+      <div data-type='enum'>
         <label class='fg-secondary'>Enum values <a href='#add-emun' data-add='enum' class='prevent-default'>add</a></label>
       </div>
       <div enum-inject></div>
@@ -253,7 +262,7 @@
       </div>
     </div>
     <div>
-      <div data-type='number'>
+      <div data-type='enum'>
         <label class='fg-secondary'>Enum values <a href='#add-enum' data-add='enum' class='prevent-default'>add</a></label>
       </div>
       <div enum-inject></div>
@@ -290,6 +299,7 @@
     <input name='[enum][]' id='[enum][]' value='' type='hidden' data-value-type=''>
   </div>
 </template>
+
 </form>
 {% endif %}
 {%- capture api -%}

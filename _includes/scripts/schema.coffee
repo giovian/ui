@@ -61,11 +61,14 @@ $('form.schema').each ->
   form.on 'click', 'a[data-add=property]', ->
     # Prompt property name
     property_name = prompt 'Property name'
-    # Inject property
+    # Inject property and SVG option
     if property_name
       form
         .find('[properties-inject]')
         .append get_property(form.find('[name="type"]').val(), property_name)
+      form
+        .find('[name=svg]')
+        .append $('<option/>', {value: property_name, text: property_name})
     return # End add-property
 
   # ADD ENUM VALUE
@@ -91,7 +94,15 @@ $('form.schema').each ->
     return # End add-property
 
   # REMOVE PROPERTY
-  form.on 'click', 'a[data-remove=property]', -> $(@).parents('details').remove()
+  form.on 'click', 'a[data-remove=property]', ->
+    # Remove property from SVG
+    # Remove link from summary to get the option[value]
+    summary = $(@).parents('summary').clone()
+    summary.find('a').remove()
+    form.find("[name=svg] option[value=#{summary.text()}]").remove()
+    # Remove property details
+    $(@).parents('details').remove()
+    return # End remove property
 
   # REMOVE ENUM VALUE
   form.on 'click', 'a[data-remove=enum]', -> $(@).parents('[data-type]').remove()
