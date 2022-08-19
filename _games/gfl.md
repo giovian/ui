@@ -26,14 +26,14 @@ order: 20
       - "player.json"
 ```
 {% include widgets/form.html file='gfl/player' %}
-- Schema `et/player.schema.json` has `teamname`, `color_1`, `color_2`, `stadium name`, `slogan` textarea.
+- Schema `gfl/player.schema.json` has `teamname`, `color_1`, `color_2`, `stadium name`, `slogan` textarea.
 - `baserace` string select 
 - Document `user/<username>/gfl/player.json`
 
 **Player pull**
 Create team
-- Schema `et/team.schema.json` object
-  - `name` string <team-name> used as filename: `team.json` became `team/<team-name>.json`
+- Schema `gfl/team.schema.json` object
+  - `name` string `<team-name>` used as filename: `team.json` became `team/<team-name>.json`
   - `win` `lost` `tie` `fan_factor` default 0
   - `creatures` array of 20 creatures taken from `gfl/creature.schema.json` with `baserace` as input
 - Document `gfl/team/<team-name>.json`

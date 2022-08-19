@@ -65,7 +65,15 @@ input, select
 select[multiple] option[value=""]:only-of-type
   min-width: $space*5
 
+//
 // BORDERS
+// --------------------------------------
+
+// FORM DETAILS
+form
+  details, [data-type='svg']
+    @extend .border-top, .border-secondary
+
 form.border
   & > h3, & > p
     @extend .border-bottom
@@ -105,7 +113,7 @@ form
   //
   // SPANS
   // --------------------------------------
-  span
+  [data-type] span
     @extend .fg-secondary, .font-mini
 
   //
@@ -159,6 +167,10 @@ form
   // Blocks
   input:not([type=range], [type=button], [type=submit], [type=reset], .button, .inline), textarea, select:not(.inline)
     @extend .block
+  
+  input, select
+    &.inline + span
+      display: block
 
   // Ranges
   [data-type=range]
