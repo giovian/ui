@@ -44,5 +44,6 @@
       "autocomplete": "off",
       "required": "false"
     }
-  }
+  },
+  "svg": "shirt"
 }
