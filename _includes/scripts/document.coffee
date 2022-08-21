@@ -46,6 +46,8 @@ $('form.document[data-file]').each ->
     form.find('[inject]').empty()
     form.find('[data-type="item"]').remove()
     form.find('[name=index]').val ''
+    # Remove description
+    form.find('h3 + p').remove()
     # If form was editing from a csv TABLE, reset class
     $(document).find("table.csv-table[data-file='#{form.attr 'data-file'}'] tr[disabled]").removeAttr 'disabled'
     # Load schema

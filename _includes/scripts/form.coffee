@@ -121,6 +121,24 @@ form_create_item = (form) ->
   # End properties loop
   return item # End create_item
 
+# SVG injected
+svg_injected = (div) ->
+  svg = $ div
+
+  # Loop color inputs for default values and change handlers
+  svg.parents('form.document').find('input[type=color]').each ->
+    svg
+      .find ".#{$(@).attr 'name'}"
+      .attr 'fill', $(@).val()
+    # Color change handler
+    $(@).on "change", (e) ->
+      svg
+        .find ".#{$(e.target).attr 'name'}"
+        .attr 'fill', $(e.target).val()
+    return # End properties loop
+
+  return # End SVG injected handler
+
 #
 # FORM LOAD SCHEMA function for schema and document forms
 # --------------------------------------
@@ -172,8 +190,20 @@ form_load_schema = (form) ->
           .find('[data-type="button"]')
           .before get_template '#template-add-item'
       # Check SVG
-      if schema.svg then console.log schema.properties[schema.svg]
-    return # Form is populated
+      if schema.svg
+        # Load SVG
+        image = get_template "#template-svg"
+        form.find('.item').append image
+        # bind svg file change event
+        form.on "change", "[name='#{schema.svg}']", (e) ->
+          image_url = "#{schema.svg}_#{$(e.target).val()}.svg"
+          form
+            .find('[data-type=svg]')
+            .load("{{ site.baseurl }}/assets/images/#{image_url}", null, () -> svg_injected @)
+          return # End onChange SVG-linked property
+        # Load default SVG
+        form.find("[name='#{schema.svg}']").trigger 'change'
+    return # End get_schema
   get_schema.always -> form.removeAttr 'disabled'
   get_schema.fail (request, status, error) ->
     if request.status is 404
@@ -233,6 +263,12 @@ $('form').each ->
   form.on "change", ':input', (e) ->
     # console.log $(e.target).attr 'name'
     return
+
+  #
+  # SUBMIT and RESET
+  # --------------------------------------
+  form.on 'click', '[data-type="button"] a[href="#submit"]', -> form.trigger 'submit'
+  form.on 'click', '[data-type="button"] a[href="#reset"]', -> form.trigger 'reset'
 
   # Reset
   form.on "reset", ->
