@@ -180,6 +180,8 @@ form_load_schema = (form) ->
           form
             .find('[name=svg]')
             .append $('<option/>', {value: key, text: key})
+        # Set default svg value
+        form.find('[name="svg"]').val schema.svg
     if form.hasClass 'document'
       if schema.title then form.find('span.form-title').text schema.title
       if schema.description then form.find('h3').after $ '<p/>', {text: schema.description}
