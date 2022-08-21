@@ -30,7 +30,7 @@ $('form.document[data-file]').each ->
   path = form.attr 'data-file'
   # Prepend user folder if repository is forked
   if storage.get "repository.fork"
-    path = "user/#{storage.get 'login.user'}/#{path}"
+    path = "user/{{ site.github.owner_name }}/#{path}"
 
   # Initial form population
   form_load_schema form
@@ -57,31 +57,45 @@ $('form.document[data-file]').each ->
   # Submit
   form.on 'submit', ->
 
-    # Check user is logged
+    # Check user logged is Admin (write permissions)
     if !$('html').hasClass 'role-admin'
       notification 'You need to login as `admin`', 'red'
-      return
+      return # Exit submit handler if not admin
 
+    #
     # Parse FORM
-    # Check empty object
-    if !Object.keys(form.serializeJSON()).length then return
-    # Loop fields
-    head = []
-    rows = []
-    # Item DIVs
-    form.find('.item').each (i, row) ->
-      rows[i] = []
-      # Item FIELDS
-      $(@).find(':input').each (j, field) ->
-        head[j] = $(field).attr 'name'
-        rows[i].push $(field).val()
-        return # End FIELDS loop
-      return # End item DIVs loop
-    head_csv = head.join ','
-    rows_csv = (row.join(',') for row in rows).join '\n'
+    # --------------------------------------
 
-    # Prepare for requests
-    document_url = "#{github_api_url}/contents/_data/#{path}.csv"
+    # Exit handler if form is an empty object
+    if !Object.keys(form.serializeJSON()).length then return
+
+    # Schema.type: 0 for object, 1 for array items
+    schema_type = form.find('a[href="#add-item"]').length
+
+    # Set file and url for an object
+    file = form.serializeJSON()
+    document_url = "#{github_api_url}/contents/_data/#{path}.json"
+
+    # For array items, rewrite file and url
+    if schema_type
+      # Assemble CSV
+      head = []
+      rows = []
+      # Loop form Item DIVs (rows)
+      form.find('.item').each (i, row) ->
+        rows[i] = []
+        # Loop form items INPUT fields
+        $(@).find(':input').each (j, field) ->
+          head[j] = $(field).attr 'name'
+          rows[i].push $(field).val()
+          return # End INPUT fields loop
+        return # End item DIVs loop
+      # Prepare file and url
+      head_csv = head.join ','
+      rows_csv = (row.join(',') for row in rows).join '\n'
+      file = [head_csv, rows_csv].join('\n')
+      document_url = "#{github_api_url}/contents/_data/#{path}.csv"
+
     form.attr 'disabled', ''
 
     # Check if document exist
@@ -92,7 +106,7 @@ $('form.document[data-file]').each ->
         # Prepare commit
         load =
           message: 'Create document'
-          content: Base64.encode [head_csv, rows_csv].join('\n')
+          content: Base64.encode file
         # Commit new file
         notification load.message
         put = $.ajax document_url,
@@ -117,36 +131,45 @@ $('form.document[data-file]').each ->
     # File present, overwrite with SHA reference
     get_document.done (data) ->
       data = cache data, document_url
-      # Prepare old array
-      csv_array = Base64.decode(data.content).split '\n'
-      csv_array[0] = head_csv
-      # Encode csv file, append or update row
-      if !form.find('[name=index]').val()
-        csv_array.push rows_csv
-        encoded_content = Base64.encode csv_array.join('\n')
-      else
-        # Update row
-        csv_array[+form.find('[name=index]').val()] = rows_csv
-        encoded_content = Base64.encode csv_array.join('\n')
+
+      # Prepare new file with updated/appended row
+      if schema_type
+        # Decode old file
+        csv_array = Base64.decode(data.content).split '\n'
+        # Update old head
+        csv_array[0] = head_csv
+        # Assemle csv, prepend or update row
+        if !form.find('[name=index]').val()
+          # Append new item(s)
+          csv_array.push rows_csv
+        else
+          # Update indexed row
+          csv_array[+form.find('[name=index]').val()] = rows_csv
+        file = csv_array.join('\n')
+
       # Prepare commit
       load =
         message: 'Edit document'
         sha: data.sha
-        content: encoded_content
+        content: Base64.encode file
       # Commit edited file
       notification load.message
       put = $.ajax document_url,
         method: 'PUT'
         data: JSON.stringify load
+
+      # Document edited handler
       put.done (data) ->
         notification 'Document edited', 'green'
-        # Save new SHA for the future
+        # Save new SHA and data for the future
         stored_data =
           sha: data.content.sha
-          content: encoded_content
+          content: file
         set_github_api_data document_url, stored_data
-        # Update other elements
+
+        # Reset CSV elements
         update_csv "#{form.attr 'data-file'}", stored_data
+        # Reset form
         form.trigger 'reset'
         return # End document update
       put.always -> form.removeAttr 'disabled'
