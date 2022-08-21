@@ -73,7 +73,7 @@ $('form.document[data-file]').each ->
     schema_type = form.find('a[href="#add-item"]').length
 
     # Set file and url for an object
-    file = form.serializeJSON()
+    file = JSON.stringify form.serializeJSON()
     document_url = "#{github_api_url}/contents/_data/#{path}.json"
 
     # For array items, rewrite file and url
