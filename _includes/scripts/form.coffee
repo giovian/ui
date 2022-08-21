@@ -197,6 +197,7 @@ form_load_schema = (form) ->
         # bind svg file change event
         form.on "change", "[name='#{schema.svg}']", (e) ->
           image_url = "#{schema.svg}_#{$(e.target).val()}.svg"
+          # Call the 'svg_injected' function at svg loaded
           form
             .find('[data-type=svg]')
             .load("{{ site.baseurl }}/assets/images/#{image_url}", null, () -> svg_injected @)
@@ -215,6 +216,7 @@ form_load_schema = (form) ->
           text: "No schema present: #{path}.schema.json"
       notification 'File not present, will be created on Save'
     return
+
   return # End load_schema function
 
 #
@@ -267,7 +269,7 @@ $('form').each ->
   #
   # SUBMIT and RESET
   # --------------------------------------
-  form.on 'click', '[data-type="button"] a[href="#submit"]', -> form.trigger 'submit'
+  form.on 'click', '[data-type="button"] a[href="#submit"]', -> form.submit()
   form.on 'click', '[data-type="button"] a[href="#reset"]', -> form.trigger 'reset'
 
   # Reset

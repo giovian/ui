@@ -1,3 +1,6 @@
+svg
+  vertical-align: bottom
+
 a[href^='#edit'] svg use
   fill: var(--link)
 a[href^='#add'] svg use
@@ -20,7 +23,6 @@ a[href^='#reset']
 a[href^='#remove'], a[href^='#edit'], a[href^='#add'],
 a[href^='#submit'], a[href^='#reset']
   svg
-    vertical-align: bottom
     width: floor($line-height * $font-size)
   &, &:active
     svg use
