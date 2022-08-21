@@ -9,18 +9,20 @@
       "title": "Team name",
       "type": "string",
       "autocomplete": "off",
-      "required": true
+      "required": "true"
     },
     "stadium": {
       "title": "Stadium name",
       "type": "string",
       "autocomplete": "off",
-      "required": true
+      "required": "true"
     },
     "shirt": {
       "title": "Type of shirt",
       "type": "string",
+      "class": "inline",
       "autocomplete": "off",
+      "required": "false",
       "enum": [
         "horizontal",
         "vertical"
@@ -30,14 +32,17 @@
       "title": "First color",
       "type": "string",
       "format": "color",
-      "autocomplete": "off"
+      "class": "inline",
+      "autocomplete": "off",
+      "required": "false"
     },
     "color_2": {
       "title": "Second color",
       "type": "string",
       "format": "color",
-      "autocomplete": "off"
+      "class": "inline",
+      "autocomplete": "off",
+      "required": "false"
     }
-  },
-  "svg": "shirt"
+  }
 }
