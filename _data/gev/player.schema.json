@@ -9,14 +9,15 @@
       "title": "Combat name",
       "description": "Used to designate your units and Command Post",
       "type": "string",
-      "autocomplete": "off",
-      "required": true
+      "autocomplete": "off"
     },
     "side": {
       "title": "Side you are on",
       "description": "Are you a Human or an Ogre?",
       "type": "string",
+      "class": "inline",
       "autocomplete": "off",
+      "required": "false",
       "enum": [
         "Human",
         "Ogre"
