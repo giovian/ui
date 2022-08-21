@@ -1,0 +1,36 @@
+a[href^='#edit'] svg use
+  fill: var(--link)
+a[href^='#add'] svg use
+  fill: var(--green_1)
+a[href^='#remove'] svg use
+  fill: var(--red_1)
+a[href^='#submit']
+  svg use
+    fill: var(--green_2)
+  &:active, &:focus
+    svg use
+      fill: var(--green_1) !important
+a[href^='#reset']
+  svg use
+    fill: var(--red_2)
+  &:active, &:focus
+    svg use
+      fill: var(--red_1) !important
+
+a[href^='#remove'], a[href^='#edit'], a[href^='#add'],
+a[href^='#submit'], a[href^='#reset']
+  svg
+    vertical-align: bottom
+    width: floor($line-height * $font-size)
+  &, &:active
+    svg use
+      &:first-of-type
+        display: inline
+      &:last-of-type
+        display: none
+  &:hover, &:focus
+    svg use
+      &:first-of-type
+        display: none
+      &:last-of-type
+        display: inline

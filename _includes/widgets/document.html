@@ -9,10 +9,7 @@
   <div inject></div>
 
 <!-- BUTTONS -->
-  <div data-type='button'>
-    <input class='green' type='submit' value='Save'>
-    <input class='red' type='reset'>
-  </div>
+{% include widgets/buttons.html %}
 
 <!--
           ENUM TEMPLATE
@@ -20,9 +17,17 @@
 <template id="template-add-item">
   <div data-type="item">
     <label class="fg-secondary">Add item</label>
-    <a href="#add-item" class="prevent-default" data-add="item">add</a>
+    <a href="#add-item" title="Add item" class="prevent-default" data-add="item">{% include svg/icon_add.svg %}</a>
   </div>
 </template>
+
+<!--
+          SVG TEMPLATE
+-->
+<template id="template-svg">
+  <div data-type="svg"></div>
+</template>
+
 </form>
 {% endif %}
 {%- capture api -%}

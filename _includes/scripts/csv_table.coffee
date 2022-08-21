@@ -238,7 +238,7 @@ sort_table = (table, col, sort) ->
   return # End sort function
 
 # Delete event
-$(document).on 'click', ".csv-table a[href='#delete']", ->
+$(document).on 'click', ".csv-table a[href='#remove-entry']", ->
   link = $ @
   row = link.parents 'tr'
   table = row.parents '.csv-table'
@@ -280,7 +280,7 @@ $(document).on 'click', ".csv-table a[href='#delete']", ->
   return # End delete event
 
 # Edit event
-$(document).on 'click', ".csv-table a[href='#edit']", ->
+$(document).on 'click', ".csv-table a[href='#edit-entry']", ->
   link = $ @
   row = link.parents 'tr'
   index = +row.children('td:first-child').text()

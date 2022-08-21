@@ -22,6 +22,18 @@ input:not([type=range]), textarea, select
 button:enabled, input[type=button], input[type=reset], input[type=submit]
   @extend .button
 
+// SUBMIT and RESET
+[data-type=button] a
+  @extend .p-around-small, .inline-block
+a[href="#submit"]
+  color: var(--green_2) !important
+  &:active, &:focus
+    color: var(--green_1) !important
+a[href="#reset"]
+  color: var(--red_2) !important
+  &:active, &:focus
+    color: var(--red_1) !important
+
 // RESET and PADDINGS
 input:not([type=range]), textarea, select
   appearance: none
@@ -139,26 +151,15 @@ form
     @extend .disabled
   // BUTTON
   .button
-    @extend .p-around, .font-small
+    @extend .p-around-small, .font-small, .bg
 
   //
   // COLORS
   // --------------------------------------
 
-  // Normal
-  .button
-    @extend .bg, .fg
-
   // BG Secondary
   & > h3, & > h4
     @extend .bg-secondary
-
-  .button
-    &:hover
-      @extend .bg-secondary
-      border-color: var(--border)
-    &:active
-      background: var(--bg) !important
 
   //
   // DISPLAY
@@ -219,7 +220,3 @@ main form
     @extend .p-around
   input
     max-width: 100%
-
-  // Buttons
-  .button
-    @extend .p-around-small

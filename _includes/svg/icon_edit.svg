@@ -1,0 +1,16 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="edit-symbol">
+      <polygon transform="translate(27, 84) rotate(-135)" points="8,0 0,17 16,17" />
+      <rect transform="translate(58, -28) rotate(45)" x="42" y="25" width="16" height="50" />
+    </g>
+    <mask id="edit-mask">
+      <rect fill="white" x="0" y="0" width="100" height="100" />
+      <polygon transform="translate(27, 84) rotate(-135)" fill="black" points="8,0 0,17 16,17" />
+      <rect transform="translate(58, -28) rotate(45)" fill="black" x="42" y="25" width="16" height="50" />
+    </mask>
+    <circle id="edit-circle" mask="url(#edit-mask)" r="48" cx="50" cy="50" />
+  </defs>
+  <use href="#edit-symbol" />
+  <use href="#edit-circle" />
+</svg>
