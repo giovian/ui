@@ -127,15 +127,20 @@ svg_injected = (div) ->
 
   # Loop color inputs for default values and change handlers
   svg.parents('form.document').find('input[type=color]').each ->
+
+    # Set selected color
     svg
       .find ".#{$(@).attr 'name'}"
       .attr 'fill', $(@).val()
+
     # Color change handler
     $(@).on "change", (e) ->
       svg
         .find ".#{$(e.target).attr 'name'}"
         .attr 'fill', $(e.target).val()
-    return # End properties loop
+      return # End colors loop
+
+    return # End color inputs loop
 
   return # End SVG injected handler
 
@@ -197,7 +202,7 @@ form_load_schema = (form) ->
         image = get_template "#template-svg"
         form.find('.item').append image
         # bind svg file change event
-        form.on "change", "[name='#{schema.svg}']", (e) ->
+        form.off("change", "[name='#{schema.svg}']").on "change", "[name='#{schema.svg}']", (e) ->
           image_url = "#{schema.svg}_#{$(e.target).val()}.svg"
           # Call the 'svg_injected' function at svg loaded
           form
