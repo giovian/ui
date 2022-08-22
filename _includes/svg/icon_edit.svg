@@ -1,4 +1,4 @@
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<svg class="icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <g id="edit-symbol">
       <polygon transform="translate(27, 84) rotate(-135)" points="8,0 0,17 16,17" />

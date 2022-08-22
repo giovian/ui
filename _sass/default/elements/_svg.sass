@@ -1,5 +1,12 @@
 svg
   vertical-align: bottom
+  .icon
+    width: floor($line-height * $font-size)
+    svg use
+      &:first-of-type
+        display: inline
+      &:last-of-type
+        display: none
 
 a[href^='#edit'] svg use
   fill: var(--link)
@@ -22,9 +29,7 @@ a[href^='#reset']
 
 a[href^='#remove'], a[href^='#edit'], a[href^='#add'],
 a[href^='#submit'], a[href^='#reset']
-  svg
-    width: floor($line-height * $font-size)
-  &, &:active
+  &:active
     svg use
       &:first-of-type
         display: inline
