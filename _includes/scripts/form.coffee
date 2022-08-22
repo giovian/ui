@@ -271,7 +271,10 @@ $('form').each ->
   #
   # SUBMIT and RESET
   # --------------------------------------
-  form.on 'click', '[data-type="button"] a[href="#submit"]', -> form.submit()
+  form.on 'click', '[data-type="button"] a[href="#submit"]', ->
+    # form.submit()
+    $('<input type="submit">').hide().appendTo(form).click().remove()
+    return
   form.on 'click', '[data-type="button"] a[href="#reset"]', -> form.trigger 'reset'
 
   # Reset
@@ -281,7 +284,7 @@ $('form').each ->
     # Default delay is 0ms, "immediately" i.e. next event cycle, actual delay may be longer
     setTimeout -> form.find("input[type=range]").trigger "input"
 
-    return # end Reset handler
+    return # End reset handler
 
   # Submit
   form.on "submit", -> console.log form.serializeJSON()

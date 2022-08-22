@@ -1,42 +1,53 @@
+//
+// SVG
+// --------------------------------------
 svg
   vertical-align: bottom
-  .icon
+  // Icon dimensions
+  &.icon
     width: floor($line-height * $font-size)
-    svg use
+    // Hover effect
+    use
       &:first-of-type
         display: inline
       &:last-of-type
         display: none
 
-a[href^='#edit'] svg use
+// Base COLORS
+a[href^='#edit'] svg.icon use
   fill: var(--link)
-a[href^='#add'] svg use
+a[href^='#add'] svg.icon use
   fill: var(--green_1)
-a[href^='#remove'] svg use
+a[href^='#remove'] svg.icon use
   fill: var(--red_1)
+
+// Form COLORS
 a[href^='#submit']
-  svg use
+  svg.icon use
     fill: var(--green_2)
   &:active, &:focus
-    svg use
+    svg.icon use
       fill: var(--green_1) !important
 a[href^='#reset']
-  svg use
+  svg.icon use
     fill: var(--red_2)
   &:active, &:focus
-    svg use
+    svg.icon use
       fill: var(--red_1) !important
 
-a[href^='#remove'], a[href^='#edit'], a[href^='#add'],
-a[href^='#submit'], a[href^='#reset']
-  &:active
-    svg use
-      &:first-of-type
-        display: inline
-      &:last-of-type
-        display: none
+// ivg.icon STATES inside LINK
+a
+
+  // ACTIVE
+  &:active svg.icon use
+    &:first-of-type
+      display: inline
+    &:last-of-type
+      display: none
+
+  // HOVER, FOCUS
   &:hover, &:focus
-    svg use
+    svg.icon use
       &:first-of-type
         display: none
       &:last-of-type
