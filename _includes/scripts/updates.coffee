@@ -13,7 +13,7 @@ updates = ->
   latest_url = github_api_url + if login.logged() then '/pages/builds' else '/commits'
   latest_build = $.get latest_url
   latest_build.done (data) ->
-    data = cache data, latest_url
+    data = cache latest_url, data
     # Get latest build/commit date and SHA
     [latest_date, latest_sha] = if login.logged()
       # Take the first 'built' build
@@ -38,7 +38,7 @@ updates = ->
           upstream_api = "{{ site.github.api_url }}/repos/#{storage.get 'repository.parent'}/commits"
           upstream = $.get upstream_api
           upstream.done (data) ->
-            data = cache data, upstream_api
+            data = cache upstream_api, data
             # Compare SHAs
             if latest_sha isnt data[0].sha
               # If repository is behind, need sync
@@ -57,7 +57,7 @@ updates = ->
           pulls_url = github_api_url + '/pulls'
           pulls = $.get pulls_url
           pulls.done (data) ->
-            data = cache data, pulls_url
+            data = cache pulls_url, data
             if data.length then process_pulls data
             return # End pulls
 

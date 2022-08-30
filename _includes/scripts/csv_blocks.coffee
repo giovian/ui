@@ -7,7 +7,7 @@ fill_blocks = (div, data) ->
   headers = csv.shift().split ','
   # Search schema properties with `format: duration`
   schema_file = "#{div.attr 'data-file'}.schema.json"
-  schema = JSON.parse Base64.decode get_github_api_data(schema_file).content
+  schema = JSON.parse Base64.decode cache(schema_file).content
   # Array of indexes for duration values
   duration_index_array = (index for property, index in Object.keys(schema.items.properties) when schema.items.properties[property].format is 'duration')
   # Array of indexes for date values
@@ -69,12 +69,6 @@ fill_blocks = (div, data) ->
       height: width
     running -= flow * ms.day()
   return # End Blocks fill
-
-#
-# CSV Blocks loop
-# --------------------------------------
-$('.csv-blocks[data-file]').each ->
-  load_schema_document @, fill_blocks
 
 {%- capture api -%}
 ## CSV Blocks

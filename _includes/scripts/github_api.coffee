@@ -1,16 +1,14 @@
 github_api_url = '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}'
 
-get_github_api_data = (url) ->
+# Retrieve cached data for GitHub API requests when 304
+cache = (url, data) ->
   if !url.startsWith github_api_url
     url = "#{github_api_url}/contents/_data/#{url}"
-  return storage.get('github_api')?[url].data
-
-set_github_api_data = (url, data) ->
-  if !url.startsWith github_api_url
-    url = "#{github_api_url}/contents/_data/#{url}"
-  storage.assign 'github_api', "#{url}":
-    data: data
-  return # End store API data
+  # if not 304 cache data
+  if data
+    storage.assign 'github_api', "#{url}":
+      data: data
+  return data || storage.get('github_api')?[url].data
 
 # For every lists: create link for the request and append it as first item
 $('ul[github-api-url],ul[github-api-url-repo]').each ->
@@ -65,7 +63,7 @@ github_api_request = (event) ->
   api = $.ajax ajax_url,
     method: link.attr 'github-api-method'
   api.done (data) ->
-    data = cache data, ajax_url
+    data = cache ajax_url, data
     # For every data (object or array) append a list looping out properties
     if !Array.isArray data then data = [data]
     data.map (d) ->

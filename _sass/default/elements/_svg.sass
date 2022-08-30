@@ -16,24 +16,22 @@ svg
 // Base COLORS
 a[href^='#edit'] svg.icon use
   fill: var(--link)
-a[href^='#add'] svg.icon use
-  fill: var(--green_1)
-a[href^='#remove'] svg.icon use
-  fill: var(--red_1)
+a[href^='#add'], a[href^='#submit']
+  & svg.icon use
+    fill: var(--green_1)
+a[href^='#remove'], a[href^='#reset']
+  svg.icon use
+    fill: var(--red_1)
 
 // Form COLORS
 a[href^='#submit']
-  svg.icon use
-    fill: var(--green_2)
   &:active, &:focus
     svg.icon use
-      fill: var(--green_1) !important
+      fill: var(--green_2) !important
 a[href^='#reset']
-  svg.icon use
-    fill: var(--red_2)
   &:active, &:focus
     svg.icon use
-      fill: var(--red_1) !important
+      fill: var(--red_2) !important
 
 // ivg.icon STATES inside LINK
 a

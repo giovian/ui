@@ -1,3 +1,15 @@
+# Sort function
+sort_table = (table, col, sort) ->
+  multi = if sort is 'down' then -1 else 1
+  rows = table.find('tbody tr').sort (a, b) ->
+    value_a = $(a).find("td[headers='#{col}']").attr 'value'
+    value_b = $(b).find("td[headers='#{col}']").attr 'value'
+    if value_a is value_b then return 0
+    return if value_a > value_b then multi else -multi
+  table.find('tbody tr').remove()
+  table.find('tbody').append rows
+  return # End sort function
+
 #
 # Fill CSV TABLE function
 # --------------------------------------
@@ -8,7 +20,7 @@ fill_table = (table, data) ->
   # Get document data
   csv = Base64.decode(data.content).split '\n'
   # Get schema data
-  schema_data = get_github_api_data "#{table.attr 'data-file'}.schema.json"
+  schema_data = cache "#{table.attr 'data-file'}.schema.json"
   schema = JSON.parse Base64.decode(schema_data.content)
   # Array of indexes for duration values
   duration_index_array = (index for property, index in Object.keys(schema.items.properties) when schema.items.properties[property].format is 'duration')
@@ -164,12 +176,6 @@ fill_table = (table, data) ->
   return # Table populated
 
 #
-# CSV TABLEs loop
-# --------------------------------------
-$('.csv-table[data-file]').each ->
-  load_schema_document @, fill_table
-
-#
 # Events
 # --------------------------------------
 
@@ -225,18 +231,6 @@ $('.csv-table[data-file]').on 'click', 'a[href="#up"], a[href="#down"]', ->
   sort_table table, col, sort
   return # End sort links
 
-# Sort function
-sort_table = (table, col, sort) ->
-  multi = if sort is 'down' then -1 else 1
-  rows = table.find('tbody tr').sort (a, b) ->
-    value_a = $(a).find("td[headers='#{col}']").attr 'value'
-    value_b = $(b).find("td[headers='#{col}']").attr 'value'
-    if value_a is value_b then return 0
-    return if value_a > value_b then multi else -multi
-  table.find('tbody tr').remove()
-  table.find('tbody').append rows
-  return # End sort function
-
 # Delete event
 $(document).on 'click', ".csv-table a[href='#remove-entry']", ->
   link = $ @
@@ -250,7 +244,7 @@ $(document).on 'click', ".csv-table a[href='#remove-entry']", ->
   # delete element `index` in csv array
   document_file = table.attr 'data-file'
   document_url = "#{github_api_url}/contents/_data/#{document_file}.csv"
-  stored_data = get_github_api_data document_url
+  stored_data = cache document_url
   # Retrieve array and remove row
   csv = Base64.decode(stored_data.content).split '\n'
   csv.splice index, 1
@@ -271,7 +265,7 @@ $(document).on 'click', ".csv-table a[href='#remove-entry']", ->
     notification 'Entry deleted', 'green'
     # Save new SHA for future deletes
     stored_data.sha = data.content.sha
-    set_github_api_data document_url, stored_data
+    cache document_url, stored_data
     # Update table and eventual blocks
     update_csv document_file, stored_data
     return # End document update
@@ -288,7 +282,7 @@ $(document).on 'click', ".csv-table a[href='#edit-entry']", ->
   table = row.parents '.csv-table'
   document_file = table.attr 'data-file'
   document_url = "#{github_api_url}/contents/_data/#{document_file}.csv"
-  stored_data = get_github_api_data document_url
+  stored_data = cache document_url
   csv = Base64.decode(stored_data.content).split '\n'
   values = csv[index].split ','
   head = csv[0].split ','

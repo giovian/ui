@@ -7,7 +7,7 @@ fill_counter = (div, data) ->
   headers = csv.shift().split ','
   # Search schema properties with `format: duration`
   schema_file = "#{div.attr 'data-file'}.schema.json"
-  schema = JSON.parse Base64.decode get_github_api_data(schema_file).content
+  schema = JSON.parse Base64.decode cache(schema_file).content
   # Array of indexes for date values
   date_index_array = (index for property, index in Object.keys(schema.items.properties) when schema.items.properties[property].format is 'date')
   # Prepare DIV
@@ -38,12 +38,6 @@ fill_counter = (div, data) ->
     text: days-counted
     width: "#{100-percent}%"
   return # End Counter fill
-
-#
-# CSV Blocks loop
-# --------------------------------------
-$('.bar[data-file]').each ->
-  load_schema_document @, fill_counter
 
 {%- capture api -%}
 ## CSV Counter
