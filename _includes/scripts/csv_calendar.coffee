@@ -7,7 +7,7 @@ fill_calendar = (div, data) ->
   headers = csv.shift().split ','
   # Search schema properties with `format: duration`
   schema_file = "#{div.attr 'data-file'}.schema.json"
-  schema = JSON.parse Base64.decode get_github_api_data(schema_file).content
+  schema = JSON.parse Base64.decode cache(schema_file).content
   # Array of indexes for duration values
   duration_index_array = (index for property, index in Object.keys(schema.items.properties) when schema.items.properties[property].format is 'duration')
   # Array of indexes for date values
@@ -89,12 +89,6 @@ fill_calendar = (div, data) ->
     div.find("[month='#{month}']").append day_div
     running += ms.day()
   return # End Blocks fill
-
-#
-# CSV Calendar loop
-# --------------------------------------
-$('.csv-calendar[data-file]').each ->
-  load_schema_document @, fill_calendar
 
 {%- capture api -%}
 ## CSV Calendar

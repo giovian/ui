@@ -45,17 +45,10 @@ get_property = (parent_type, key, value) ->
   return template_property # End property inject
 
 #
-# ACTIVATION function
+# FORM EVENTS
 # --------------------------------------
-$('form.schema').each ->
-  form = $ @
-
-  # Populate form
-  if form.attr 'data-file' then form_load_schema form
-
-  #
-  # EVENTS
-  # --------------------------------------
+$('form.schema').each (i, element)->
+  form = $ element
 
   # ADD PROPERTY
   form.on 'click', 'a[data-add=property]', ->
@@ -141,7 +134,7 @@ $('form.schema').each ->
     # Reset inject item properties forms
     form.find('[properties-inject]').empty()
     # Load schema
-    if form.attr 'data-file' then form_load_schema form
+    if form.attr 'data-file' then form_load_schema form.attr 'data-file'
     return # end Reset handler
 
   # Submit
@@ -178,7 +171,7 @@ $('form.schema').each ->
             sha: data.content.sha
             content: encoded_content
           # Save data for the future
-          set_github_api_data schema_url, stored_data
+          cache schema_url, stored_data
           return # End create schema
         put.always -> form.removeAttr 'disabled'
       else
@@ -189,7 +182,7 @@ $('form.schema').each ->
   
     # File present, overwrite with sha reference
     get_schema.done (data) ->
-      data = cache data, schema_url
+      data = cache schema_url, data
       load =
         message: 'Edit schema'
         sha: data.sha
@@ -206,12 +199,13 @@ $('form.schema').each ->
           sha: data.content.sha
           content: encoded_content
         # Save data for the future
-        set_github_api_data schema_url, stored_data
+        cache schema_url, stored_data
         return # End schema update
       put.always ->
         form.removeAttr 'disabled'
         # Reset eventual Document
         $('body').find("form.document[data-file='#{path}']").trigger 'reset'
+        return # End new schema PUT
       return # End overwrite
   
     return # End submit handler

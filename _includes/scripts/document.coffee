@@ -1,27 +1,3 @@
-update_csv = (document_file, data) ->
-
-  # Update eventual CSV table
-  $(".csv-table[data-file='#{document_file}']").each ->
-    fill_table $(@), data
-    return # End tables update
-
-  # Update eventual CSV blocks
-  $(".csv-blocks[data-file='#{document_file}']").each ->
-    fill_blocks $(@), data
-    return # End blocks update
-
-  # Update eventual CSV counter
-  $(".bar[data-file='#{document_file}']").each ->
-    fill_counter $(@), data
-    return # End counter update
-
-  # Update eventual CSV calendar
-  $(".csv-calendar[data-file='#{document_file}']").each ->
-    fill_calendar $(@), data
-    return # End blocks update
-
-  return # End updates tablesand blocks
-
 #
 # Loop Document FORMs
 # --------------------------------------
@@ -32,8 +8,9 @@ $('form.document[data-file]').each ->
   if storage.get "repository.fork"
     path = "user/{{ site.github.owner_name }}/#{path}"
 
-  # Initial form population
-  form_load_schema form
+  #
+  # EVENTS
+  # --------------------------------------
 
   # ADD PROPERTY
   form.on 'click', 'a[data-add="item"]', ->
@@ -53,7 +30,7 @@ $('form.document[data-file]').each ->
     # If form was editing from a csv TABLE, reset class
     $(document).find("table.csv-table[data-file='#{form.attr 'data-file'}'] tr[disabled]").removeAttr 'disabled'
     # Load schema
-    if form.attr 'data-file' then form_load_schema form
+    if form.attr 'data-file' then form_load_schema form.attr 'data-file'
     return # end Reset handler
 
   # Submit
@@ -121,7 +98,7 @@ $('form.document[data-file]').each ->
             sha: data.content.sha
             content: load
           # Save data for the future
-          set_github_api_data document_url, stored_data
+          cache document_url, stored_data
           # Update other elements
           update_csv "#{form.attr 'data-file'}", stored_data
           form.trigger 'reset'
@@ -132,7 +109,7 @@ $('form.document[data-file]').each ->
     
     # File present, overwrite with SHA reference
     get_document.done (data) ->
-      data = cache data, document_url
+      data = cache document_url, data
     
       # Prepare new file with updated/appended row
       if schema_type
@@ -167,7 +144,7 @@ $('form.document[data-file]').each ->
         stored_data =
           sha: data.content.sha
           content: file
-        set_github_api_data document_url, stored_data
+        cache document_url, stored_data
     
         # Reset CSV elements
         update_csv "#{form.attr 'data-file'}", stored_data

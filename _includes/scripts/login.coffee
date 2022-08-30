@@ -15,7 +15,7 @@ login.login_link.on 'click', (e) ->
   user_url = '{{ site.github.api_url }}/user'
   auth = $.get user_url
   auth.done (data) ->
-    data = cache data, user_url
+    data = cache user_url, data
     storage.assign 'login', {'user': data.login, 'logged': new Date()}
     login.permissions()
     return # End token check
@@ -26,7 +26,7 @@ login.permissions = ->
   notification 'Checking permissions'
   repo = $.get github_api_url
   repo.done (data) ->
-    data = cache data, github_api_url
+    data = cache github_api_url, data
     storage.assign('login',
       role: (if data.permissions.admin then 'admin' else 'guest')
     ).assign 'repository',

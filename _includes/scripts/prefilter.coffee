@@ -13,7 +13,24 @@ $.ajaxPrefilter (options, ajaxOptions, request) ->
 
   # Fail function
   request.fail (request, status, error) ->
-    notification "#{status}: #{request.status} #{request.responseJSON?.message || error}", 'red'
+    if status isnt 'canceled'
+      notification "#{status}: #{request.status} #{request.responseJSON?.message || error}", 'red'
+    return # End fail handler
+  
+  # Before send filter function
+  # options.beforeSend = (xhr, settings) ->
+  #   console.log xhr.done()
+  #   # Check for a recent copy
+  #   entry = storage.get('github_api')?[options.url]
+  #   if entry
+  #     if entry.checked?
+  #       if (diff = +new Date()-entry.checked) < ms.minute()
+  #         console.log 'aborted', options.url
+  #         xhr.abort()
+  #     # Mark file requested in ms
+  #     storage.assign 'github_api', "#{options.url}":
+  #       checked: +new Date()
+  #   return # end Before send filter
 
   # Add header options
   if options.url.startsWith '{{ site.github.api_url }}'
@@ -24,32 +41,49 @@ $.ajaxPrefilter (options, ajaxOptions, request) ->
       entry = storage.get('github_api')?[options.url]
       # Set If-Modified-Since and If-None-Match headers
       if entry
+        # Request successful only if the response has changed
+        options.ifModified = true
+        # Add `etag` and `ifmodified` to the request headers if presents
         if entry.etag?
           options.headers['If-None-Match'] = entry.etag
-        else if entry.ifModified? then options.headers['If-Modified-Since'] = entry.ifModified
-        options.ifModified = true
-    # Check personal token
+        if entry.ifModified?
+          options.headers['If-Modified-Since'] = entry.ifModified
+    # Add GitHub token
     if login.logged()
-      # Add GitHub token
       options.headers['Authorization'] = "token #{storage.get 'login.token'}"
 
   return # end Prefilter
 
 # Success function to save `last-modified`
 $(document).ajaxSuccess (event, request, ajaxOptions, data) ->
-  # Save rate_limit remaining if present
-  if request.getResponseHeader 'x-ratelimit-remaining'
-    storage.set 'rate_limit', +request.getResponseHeader 'x-ratelimit-remaining'
-  # Store data, last-modified and etag if presents
-  if (ajaxOptions.type || ajaxOptions.method).toLowerCase() is 'get' and data
-    storage.assign 'github_api', "#{ajaxOptions.url}":
-      data: data
-    if request.getResponseHeader 'last-modified'
-      storage.assign 'github_api', "#{ajaxOptions.url}":
-        ifModified: request.getResponseHeader 'last-modified'
-    if request.getResponseHeader 'etag'
-      storage.assign 'github_api', "#{ajaxOptions.url}":
-        etag: request.getResponseHeader 'etag'
+
+  url = ajaxOptions.url
+  # Update relative CSV widgets
+  # data_file = url.substring url.lastIndexOf('/')+1, url.lastIndexOf('.')
+  # console.log 'update', data_file, data || storage.get('github_api')?[url].data
+  # update_csv data_file, data || storage.get('github_api')?[url].data
+
+  # Save only GET from GitHub
+  if (ajaxOptions.type || ajaxOptions.method).toLowerCase() is 'get' and url.startsWith '{{ site.github.api_url }}'
+
+    # Save rate_limit remaining if present
+    if request.getResponseHeader 'x-ratelimit-remaining'
+      storage.set 'rate_limit', +request.getResponseHeader 'x-ratelimit-remaining'
+
+    # Store data and properties if is a GET from GitHub
+    if data
+
+      # Store Data
+      storage.assign 'github_api', "#{url}":
+        data: data
+
+      # Store properties
+      if request.getResponseHeader 'last-modified'
+        storage.assign 'github_api', "#{url}":
+          ifModified: request.getResponseHeader 'last-modified'
+      if request.getResponseHeader 'etag'
+        storage.assign 'github_api', "#{url}":
+          etag: request.getResponseHeader 'etag'
   return # End ajax Success
 
 {%- capture api -%}

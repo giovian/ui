@@ -34,7 +34,7 @@ input_range_enable = (range) ->
 form_create_item = (form) ->
   unique_id = +new Date()
   # Get schema from storage and decode content
-  schema_data = get_github_api_data "#{form.attr 'data-file'}.schema.json"
+  schema_data = cache "#{form.attr 'data-file'}.schema.json"
   schema = JSON.parse Base64.decode schema_data.content
   item = $ '<div/>', {class: 'item'}
   # Loop items
@@ -145,113 +145,110 @@ svg_injected = (div) ->
   return # End SVG injected handler
 
 #
+# CREATE SCHEMA FORM
+# --------------------------------------
+create_schema_form = (form, schema) ->
+  # Inject schema type template
+  form.find('[inject]').empty().append get_template "#template-#{schema.type}"
+  # Populate fields
+  form.find('[name="title"]').val schema.title
+  form.find('[name="description"]').val schema.description
+  form.find('[name="$id"]').val schema['$id']
+  form.find('[name="type"]').val schema.type
+  if schema.type is 'array'
+    # Loop items.properties
+    for own key, value of schema.items.properties
+      form
+        .find('[properties-inject]')
+        .append get_property(schema.type, key, value)
+  if schema.type is 'object'
+    # Loop object properties
+    for own key, value of schema.properties
+      # Append property
+      form
+        .find('[properties-inject]')
+        .append get_property(schema.type, key, value)
+      # Add option to SVG
+      form
+        .find('[name=svg]')
+        .append $('<option/>', {value: key, text: key})
+    # Set default svg value
+    form.find('[name="svg"]').val schema.svg
+  return # End Schema Form
+
+#
+# CREATE DOCUMENT FORM
+# --------------------------------------
+create_document_form = (form, schema) ->
+
+  # Title and description
+  if schema.title then form.find('span.form-title').text schema.title
+  if schema.description then form.find('h3').after $ '<p/>', {text: schema.description}
+
+  # Remove Add item button and create item
+  form.find('[data-type="item"]').remove()
+  form.find('[inject]').empty().append form_create_item form
+
+  # Append item adder only for array type schemas
+  if schema.type is 'array'
+    form
+      .find('[data-type="button"]')
+      .before get_template '#template-add-item'
+
+  # Check SVG
+  if schema.svg
+    # Load SVG
+    image = get_template "#template-svg"
+    form.find('.item').append image
+    # bind svg file change event
+    form.off("change", "[name='#{schema.svg}']").on "change", "[name='#{schema.svg}']", (e) ->
+      image_url = "#{schema.svg}_#{$(e.target).val()}.svg"
+      # Call the 'svg_injected' function at svg loaded
+      form
+        .find('[data-type=svg]')
+        .load("{{ site.baseurl }}/assets/images/#{image_url}", null, () -> svg_injected @)
+      return # End onChange SVG-linked property
+    # Load default SVG
+    form.find("[name='#{schema.svg}']").trigger 'change'
+
+  return # End create document form
+
+#
 # FORM LOAD SCHEMA function for schema and document forms
 # --------------------------------------
-form_load_schema = (form) ->
-  path = form.attr 'data-file'
-  # Compile the file path field
-  form.find('[name="$id"]').val path
+form_load_schema = (path) ->
+  forms = $("form[data-file='#{path}']")
   schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
-  form.attr 'disabled', ''
+  forms.attr 'disabled', ''
 
   # Request schema file
   get_schema = $.get schema_url
-  get_schema.done (data, status) ->
-    data = cache data, schema_url
+  get_schema.done (data) ->
+    data = cache schema_url, data
     # Parse schema
     schema = JSON.parse Base64.decode(data.content)
-    if form.hasClass 'schema'
-      # Inject schema type template
-      form.find('[inject]').empty().append get_template "#template-#{schema.type}"
-      # Populate fields
-      form.find('[name="title"]').val schema.title
-      form.find('[name="description"]').val schema.description
-      form.find('[name="$id"]').val schema['$id']
-      form.find('[name="type"]').val schema.type
-      if schema.type is 'array'
-        # Loop items.properties
-        for own key, value of schema.items.properties
-          form
-            .find('[properties-inject]')
-            .append get_property(schema.type, key, value)
-      if schema.type is 'object'
-        # Loop object properties
-        for own key, value of schema.properties
-          # Append property
-          form
-            .find('[properties-inject]')
-            .append get_property(schema.type, key, value)
-          # Add option to SVG
-          form
-            .find('[name=svg]')
-            .append $('<option/>', {value: key, text: key})
-        # Set default svg value
-        form.find('[name="svg"]').val schema.svg
-    if form.hasClass 'document'
-      if schema.title then form.find('span.form-title').text schema.title
-      if schema.description then form.find('h3').after $ '<p/>', {text: schema.description}
-      form.find('[inject]').append form_create_item form
-      # Append item adder only for array type schemas
-      if schema.type is 'array'
-        form
-          .find('[data-type="button"]')
-          .before get_template '#template-add-item'
-      # Check SVG
-      if schema.svg
-        # Load SVG
-        image = get_template "#template-svg"
-        form.find('.item').append image
-        # bind svg file change event
-        form.off("change", "[name='#{schema.svg}']").on "change", "[name='#{schema.svg}']", (e) ->
-          image_url = "#{schema.svg}_#{$(e.target).val()}.svg"
-          # Call the 'svg_injected' function at svg loaded
-          form
-            .find('[data-type=svg]')
-            .load("{{ site.baseurl }}/assets/images/#{image_url}", null, () -> svg_injected @)
-          return # End onChange SVG-linked property
-        # Load default SVG
-        form.find("[name='#{schema.svg}']").trigger 'change'
+    forms.each ->
+      if $(@).hasClass 'schema' then create_schema_form $(@), schema
+      if $(@).hasClass 'document' then create_document_form $(@), schema
     return # End get_schema
-  get_schema.always -> form.removeAttr 'disabled'
-  get_schema.fail (request, status, error) ->
+  get_schema.always -> forms.removeAttr 'disabled'
+  get_schema.fail (request) ->
+    # Schema file not present
     if request.status is 404
-      if form.hasClass 'schema'
-        form.find('[inject]').empty().append get_template "#template-#{form.find('[name=type]').val()}"
-      if form.hasClass 'document'
-        form.find('h3').after $ '<p/>',
-          class: 'red'
-          text: "No schema present: #{path}.schema.json"
+      # Form schema load default type template
+      forms.each ->
+        if $(@).hasClass 'schema'
+          $(@).find('[inject]').empty().append get_template "#template-#{$(@).find('[name=type]').val()}"
+        # For document show error
+        if $(@).hasClass 'document'
+          $(@).find('h3').after $ '<p/>',
+            class: 'red'
+            text: "No schema present: #{path}.schema.json"
+        return # End forms loop
       notification 'File not present, will be created on Save'
     return
 
   return # End load_schema function
-
-#
-# Load Schema and Document for CSV
-# --------------------------------------
-load_schema_document = (el, callback) ->
-  element = $ el
-  element.attr 'disabled', ''
-
-  # Get file names
-  document_url = "#{github_api_url}/contents/_data/#{element.attr 'data-file'}.csv"
-  schema_url = "#{github_api_url}/contents/_data/#{element.attr 'data-file'}.schema.json"
-  
-  # Load schema
-  get_schema = $.get schema_url
-  get_schema.done (data) ->
-    data = cache data, schema_url
-    # Load document
-    get_document = $.get document_url
-    get_document.done (data) ->
-      data = cache data, document_url
-      callback element, data
-      return # End get document
-    get_document.always -> element.removeAttr 'disabled'
-    return # End schema file load
-  get_schema.fail -> element.removeAttr 'disabled'
-
-  return # End CSV tables loop
 
 #
 # ACTIVATION function
@@ -295,6 +292,16 @@ $('form').each ->
   form.on "submit", -> console.log form.serializeJSON()
 
   return # end FORM loop
+
+#
+# ACTIVATION SCHEMAs and DOCUMENTs
+# --------------------------------------
+$('form.document[data-file], form.schema')
+  .toArray()
+  .map (e) -> $(e).attr 'data-file'
+  .filter (e, i, a) -> i == a.indexOf e
+  .map (e) -> form_load_schema e
+
 {%- capture api -%}
 ## Form
 

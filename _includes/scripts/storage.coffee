@@ -52,11 +52,6 @@ $(document).on 'click', 'a[log-storage]', (e) ->
   e.preventDefault()
   storage.console()
 
-# Retrieve cached data for GitHub API requests when 304
-cache = (data, url) ->
-  if data then set_github_api_data url, data
-  return data || storage.get('github_api')?[url].data
-
 {%- capture api -%}
 ## Storage
 
