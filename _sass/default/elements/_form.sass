@@ -31,6 +31,7 @@ a[href="#submit"]
   &:active, &:focus
     color: var(--green_2) !important
 a[href="#reset"]
+  margin-left: $space/4
   color: var(--red_1) !important
   border-color: var(--red_1) !important
   &:active, &:focus
@@ -126,7 +127,7 @@ form
   div.item
     @extend .border-bottom, .border-secondary
   div[data-type=button]
-    @extend .border-top, .border-secondary
+    @extend .border-top, .border-secondary, .pvh
 
   //
   // SPANS
