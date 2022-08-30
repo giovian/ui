@@ -76,11 +76,8 @@ order: 60
       </div>
     </div>
   </div>
-  <div data-type="button">
-    <input class='green' type="submit" value="Save">
-    <input class='red' type="reset">
-    <input type="button" value="Button">
-  </div>
+  <!-- BUTTONS -->
+  {% include widgets/buttons.html %}
 </form>
 
 ## Storing data

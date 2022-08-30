@@ -24,15 +24,17 @@ button:enabled, input[type=button], input[type=reset], input[type=submit]
 
 // SUBMIT and RESET
 [data-type=button] a
-  @extend .p-around-small, .inline-block
+  @extend .p-around-small, .inline-block, .border, .rounded-medium
 a[href="#submit"]
-  color: var(--green_2) !important
+  color: var(--green_1) !important
+  border-color: var(--green_1) !important
   &:active, &:focus
-    color: var(--green_1) !important
+    color: var(--green_2) !important
 a[href="#reset"]
-  color: var(--red_2) !important
+  color: var(--red_1) !important
+  border-color: var(--red_1) !important
   &:active, &:focus
-    color: var(--red_1) !important
+    color: var(--red_2) !important
 
 // RESET and PADDINGS
 input:not([type=range]), textarea, select
@@ -93,7 +95,7 @@ form.border
     @extend .border-bottom
   div.grid > div:not(:last-child)
     @extend .border-right
-  div[data-type=button], div[data-type=array]
+  div[data-type=array]
     @extend .border-top
 
 form.rounded
@@ -123,6 +125,8 @@ form
   // Borders
   div.item
     @extend .border-bottom, .border-secondary
+  div[data-type=button]
+    @extend .border-top, .border-secondary
 
   //
   // SPANS
@@ -209,13 +213,11 @@ form
 // --------------------------------------
 main form
   display: table
-  @extend .mv, .border-right, .border-left, .border-secondary
-  [data-type=button]
-    @extend .bg-secondary
+  @extend .mv, .border-right, .border-left, .border-bottom, .border-secondary
 
 .sidebar form
   &:not(:last-child) [data-type=button]
-    @extend .border-top, .border-secondary
+    @extend .border-secondary
     padding: $space/2
   &:last-child [data-type=button]
     @extend .bg-secondary
