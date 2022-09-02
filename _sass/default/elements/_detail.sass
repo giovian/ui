@@ -4,10 +4,12 @@
 details summary
   @extend .p-around, .pointer
   outline: none
+  &::marker
+    color: var(--link) !important
   &:hover
-    color: var(--fg-secondary)
+    color: var(--link) !important
   &:active
-    color: var(--fg)
+    color: var(--fg-secondary) !important
 
 //
 // MAIN DETAILS

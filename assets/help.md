@@ -3,11 +3,15 @@ title: Help
 permalink: help/
 order: 1000
 ---
+{% include page/init.html %}
 {%- assign repo = site.github.public_repositories | where: "full_name", site.github.repository_nwo | first -%}
 # Help
 <div class="grid">
   <div markdown="1">
-**Repository**
+<details markdown=1>
+<summary markdown=1>
+  **Repository**
+</summary>
 - [{{ site.github.repository_nwo }}]({{ site.github.repository_url }})
 - Owner type `{{ repo.owner.type }}`
 - Page type `{% if site.github.is_user_page %}User{% endif %}{% if site.github.is_project_page %}Project{% endif %}`
@@ -15,24 +19,64 @@ order: 1000
 - Created <code>{% include widgets/datetime.html datetime=repo.created_at replace=true %}</code>
 - Modified <code>{% include widgets/datetime.html datetime=repo.modified_at replace=true %}</code>
 - Site build <code>{% include widgets/datetime.html datetime=site.time replace=true %}</code>
-{% assign html_pages = site.html_pages | sort: "order" %}
-{% assign sorted_collections = site.collections | sort: "order" %}
-**Pages order**
+</details>
+
+{% assign html_pages = site.html_pages | sort: sort_by %}
+{% assign sorted_collections = site.collections | sort: sort_by %}
+<details markdown=1>
+<summary markdown=1>
+  **Layout** (* default value)
+</summary>
+- mode `{{ mode }}` {% if mode == default_mode %}*{% endif %}
+- nav `{{ nav | inspect }}` {% if nav == default_nav %}*{% endif %}
+- header `{{ header | inspect }}` {% if header == default_header %}*{% endif %}
+- navigation {% if navigation == default_navigation %}*{% endif %}  
+  {% for n in navigation %}- `{{ n }}`
+  {% endfor %}
+- sidebar {% if sidebar == default_sidebar %}*{% endif %}  
+  {% for s in sidebar %}- `{{ s }}`
+  {% endfor %}
+- footer `{{ footer | inspect }}` {% if footer == default_footer %}*{% endif %}
+- metadata `{{ metadata | inspect }}` {% if metadata == default_metadata %}*{% endif %}
+- pagination `{{ pagination | inspect }}` {% if pagination == default_pagination %}*{% endif %}
+- sort_by `{{ sort_by }}` {% if sort_by == default_sort_by %}*{% endif %}
+</details>
+
+<details markdown=1>
+<summary markdown=1>
+  **Pages order**
+</summary>
 {% for item in html_pages %}- `{{ item.order | inspect }}` {{ item.title | default: item.name }}
 {% endfor %}
-**Collections order**
-{% for collection in sorted_collections %}- `{{ collection.order | inspect }}` {{ collection.title | default: collection.label }} ({{ collection.docs.size }} documents){% assign sort_by = collection.sort_by | default: 'date' %}{% assign collection_docs = collection.docs | sort: sort_by %}{% for p in collection_docs %}
+</details>
+
+<details markdown=1>
+<summary markdown=1>
+  **Collections and pages order**
+</summary>
+{% for collection in sorted_collections %}- `{{ collection.order | inspect }}` {{ collection.title | default: collection.label }} ({{ collection.docs.size }} documents){% assign collection_docs = collection.docs | sort: sort_by %}{% for p in collection_docs %}
   - `{{ p[sort_by] | inspect }}` {{ p.title | default: p.path }}{% endfor %}
 {% endfor %}
+</details>
+
 {% if site.remote_theme %}
-**Remote theme**
+<details markdown=1>
+<summary markdown=1>
+  **Remote theme**
+</summary>
 - Repository [{{ site.remote_theme | split: '@' | first }}]({{ site.remote_theme | split: '@' | first }})
 - Branch `{{ site.remote_theme | split: '@' | last | default: '-' }}`
 - Plugin [jekyll-remote-theme](https://github.com/benbalter/jekyll-remote-theme) {{ site.github.versions["jekyll-remote-theme"] }}
+</details>
 
-**Latest remote theme release**
+<details markdown=1>
+<summary markdown=1>
+  **Latest remote theme release**
+</summary>
 <ul github-api-url='repos/{{ site.remote_theme | split: '@' | first }}/releases/latest' github-api-out='tag_name,name,published_at'></ul>
+</details>
 {% endif %}
+
 </div>
 <div markdown="1">
 **Auth**

@@ -16,21 +16,6 @@ $.ajaxPrefilter (options, ajaxOptions, request) ->
     if status isnt 'canceled'
       notification "#{status}: #{request.status} #{request.responseJSON?.message || error}", 'red'
     return # End fail handler
-  
-  # Before send filter function
-  # options.beforeSend = (xhr, settings) ->
-  #   console.log xhr.done()
-  #   # Check for a recent copy
-  #   entry = storage.get('github_api')?[options.url]
-  #   if entry
-  #     if entry.checked?
-  #       if (diff = +new Date()-entry.checked) < ms.minute()
-  #         console.log 'aborted', options.url
-  #         xhr.abort()
-  #     # Mark file requested in ms
-  #     storage.assign 'github_api', "#{options.url}":
-  #       checked: +new Date()
-  #   return # end Before send filter
 
   # Add header options
   if options.url.startsWith '{{ site.github.api_url }}'
@@ -56,12 +41,7 @@ $.ajaxPrefilter (options, ajaxOptions, request) ->
 
 # Success function to save `last-modified`
 $(document).ajaxSuccess (event, request, ajaxOptions, data) ->
-
   url = ajaxOptions.url
-  # Update relative CSV widgets
-  # data_file = url.substring url.lastIndexOf('/')+1, url.lastIndexOf('.')
-  # console.log 'update', data_file, data || storage.get('github_api')?[url].data
-  # update_csv data_file, data || storage.get('github_api')?[url].data
 
   # Save only GET from GitHub
   if (ajaxOptions.type || ajaxOptions.method).toLowerCase() is 'get' and url.startsWith '{{ site.github.api_url }}'
