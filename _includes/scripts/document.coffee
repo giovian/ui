@@ -70,7 +70,7 @@ $('form.document[data-file]').each ->
       head_csv = head.join ','
       rows_csv = (row.join(',') for row in rows).join '\n'
       file = [head_csv, rows_csv].join('\n')
-      document_url = "#{path}.scv"
+      document_url = "#{path}.csv"
 
     # Start checking file existence
     form.attr 'disabled', ''
