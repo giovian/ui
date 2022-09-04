@@ -23,19 +23,20 @@ button:enabled, input[type=button], input[type=reset], input[type=submit]
   @extend .button
 
 // SUBMIT and RESET
-[data-type=button] a
+[data-type=button] button
   @extend .p-around-small, .inline-block, .border, .rounded-medium
-a[href="#submit"]
-  color: var(--green_1) !important
-  border-color: var(--green_1) !important
-  &:active, &:focus
-    color: var(--green_2) !important
-a[href="#reset"]
-  margin-left: $space/4
-  color: var(--red_1) !important
-  border-color: var(--red_1) !important
-  &:active, &:focus
-    color: var(--red_2) !important
+button
+  &[type=submit]
+    color: var(--green_1) !important
+    border-color: var(--green_1) !important
+    &:active, &:focus
+      color: var(--green_2) !important
+  &[type="reset"]
+    margin-left: $space/4
+    color: var(--red_1) !important
+    border-color: var(--red_1) !important
+    &:active, &:focus
+      color: var(--red_2) !important
 
 // RESET and PADDINGS
 input:not([type=range]), textarea, select

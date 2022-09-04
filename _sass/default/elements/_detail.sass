@@ -4,12 +4,22 @@
 details summary
   @extend .p-around, .pointer
   outline: none
-  &::marker
+  &::-webkit-details-marker, &::marker
+    content: ""
+    display: none
+  &::before
     color: var(--link) !important
+    float: left
+    content: "▶"
+    font-size: $font-size-mini
+    margin-right: $space/2
   &:hover
     color: var(--link) !important
   &:active
     color: var(--fg-secondary) !important
+
+details[open] summary::before
+  content: "▼"
 
 //
 // MAIN DETAILS
