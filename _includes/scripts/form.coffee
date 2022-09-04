@@ -3,6 +3,17 @@
 # --------------------------------------
 $.serializeJSON.defaultOptions.skipFalsyValuesForTypes = 'string,number,boolean,date'.split ','
 
+# Get file url from data-file FORMs attribute
+url_from_datafile = (form) ->
+  path = form.attr 'data-file'
+  if path
+    if form.hasClass 'document' # Prepend user folder if repository is forked
+      if storage.get "repository.fork"
+        url = "user/{{ site.github.owner_name }}/#{path}"
+    if form.hasClass 'schema'
+      url = "#{path}.schema.json"
+  return "#{github_api_url}/contents/_data/#{url || path}"
+
 #
 # TEMPLATE helper function
 # --------------------------------------
@@ -281,6 +292,7 @@ $('form').each ->
 
   # Reset
   form.on "reset", ->
+    form.find(':input').blur()
 
     # Reset range output value
     # Default delay is 0ms, "immediately" i.e. next event cycle, actual delay may be longer
@@ -289,7 +301,9 @@ $('form').each ->
     return # End reset handler
 
   # Submit
-  form.on "submit", -> console.log form.serializeJSON()
+  form.on "submit", ->
+    form.find(':input').blur()
+    console.log form.serializeJSON()
 
   return # end FORM loop
 
