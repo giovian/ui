@@ -3,10 +3,7 @@
 # --------------------------------------
 $('form.document[data-file]').each ->
   form = $ @
-  path = form.attr 'data-file'
-  # Prepend user folder if repository is forked
-  if storage.get "repository.fork"
-    path = "user/{{ site.github.owner_name }}/#{path}"
+  path = url_from_datafile form
 
   #
   # EVENTS
@@ -50,11 +47,11 @@ $('form.document[data-file]').each ->
     
     # Schema.type: 0 for object, 1 for array items
     schema_type = form.find('a[href="#add-item"]').length
-    
+
     # Set file and url for an object
     file = JSON.stringify form.serializeJSON()
-    document_url = "#{github_api_url}/contents/_data/#{path}.json"
-    
+    document_url = "#{path}.json"
+
     # For array items, rewrite file and url
     if schema_type
       # Assemble CSV
@@ -73,10 +70,11 @@ $('form.document[data-file]').each ->
       head_csv = head.join ','
       rows_csv = (row.join(',') for row in rows).join '\n'
       file = [head_csv, rows_csv].join('\n')
-      document_url = "#{github_api_url}/contents/_data/#{path}.csv"
-    
+      document_url = "#{path}.scv"
+
+    # Start checking file existence
     form.attr 'disabled', ''
-    
+
     # Check if document exist
     get_document = $.get document_url
     get_document.fail (request, status, error) ->
@@ -96,7 +94,7 @@ $('form.document[data-file]').each ->
           # Save new SHA for future deletes
           stored_data =
             sha: data.content.sha
-            content: load
+            content: Base64.encode file
           # Save data for the future
           cache document_url, stored_data
           # Update other elements
@@ -110,7 +108,8 @@ $('form.document[data-file]').each ->
     # File present, overwrite with SHA reference
     get_document.done (data) ->
       data = cache document_url, data
-    
+
+      # Type ARRAY
       # Prepare new file with updated/appended row
       if schema_type
         # Decode old file
@@ -125,7 +124,8 @@ $('form.document[data-file]').each ->
           # Update indexed row
           csv_array[+form.find('[name=index]').val()] = rows_csv
         file = csv_array.join('\n')
-    
+
+      # Type OBJECT
       # Prepare commit
       load =
         message: 'Edit document'
@@ -136,16 +136,16 @@ $('form.document[data-file]').each ->
       put = $.ajax document_url,
         method: 'PUT'
         data: JSON.stringify load
-    
+
       # Document edited handler
       put.done (data) ->
         notification 'Document edited', 'green'
         # Save new SHA and data for the future
         stored_data =
           sha: data.content.sha
-          content: file
+          content: Base64.encode file
         cache document_url, stored_data
-    
+
         # Reset CSV elements
         update_csv "#{form.attr 'data-file'}", stored_data
         # Reset form
