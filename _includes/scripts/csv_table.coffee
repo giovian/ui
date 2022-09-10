@@ -299,14 +299,15 @@ $(document).on 'click', ".csv-table a[href='#edit-entry']", ->
   form.find('[name=index]').val index
   # Keep only 1 item
   form.find('[inject] div.item:not(:first-child)').remove()
-  # Remove Add Item link
+  # Remove Add Item link BUT save schema_type hidden input
   form.find('a[data-add=item]').parents('[data-type=item]').remove()
+  form.find('[name=schema_type]').val 'array'
   # Loop head properties and update values
   for property, i in head
     form.find("[name='#{property}']").val values[i]
   # Scroll FORM into view
   form[0].scrollIntoView()
-  return # End delete event
+  return # End edit event
 
 {%- capture api -%}
 ## CSV Table

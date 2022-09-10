@@ -19,7 +19,7 @@ $('form.document[data-file]').each ->
     # Remove appended items and items adder, reset item index
     form.find('[inject]').empty()
     form.find('[data-type=item]').remove()
-    form.find('[name=index]').val ''
+    form.find('[name=index],[name=schema_type]').val ''
     # Remove focus on buttons
     form.find('[data-type=button] a').blur()
     # Remove description
@@ -46,7 +46,7 @@ $('form.document[data-file]').each ->
     if !Object.keys(form.serializeJSON()).length then return
     
     # Schema.type: 0 for object, 1 for array items
-    schema_type = form.find('a[href="#add-item"]').length
+    schema_type = form.find('a[href="#add-item"],[name=schema_type][value=array]').length
 
     # Set file and url for an object
     file = JSON.stringify form.serializeJSON()
