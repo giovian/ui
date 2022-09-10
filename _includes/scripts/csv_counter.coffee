@@ -2,6 +2,7 @@
 # Fill CSV COUNTER function
 # --------------------------------------
 fill_counter = (div, data) ->
+  console.log 'start counter'
   # Create data array and headers
   csv = Base64.decode(data.content).split '\n'
   headers = csv.shift().split ','
@@ -37,6 +38,7 @@ fill_counter = (div, data) ->
     title: "#{days-counted} of #{days}: #{100-percent}%"
     text: days-counted
     width: "#{100-percent}%"
+  console.log 'end counter'
   return # End Counter fill
 
 {%- capture api -%}

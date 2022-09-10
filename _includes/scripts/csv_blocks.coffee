@@ -2,6 +2,7 @@
 # Fill CSV BLOCKS function
 # --------------------------------------
 fill_blocks = (div, data) ->
+  console.log 'start blocks'
   # Create data array and headers
   csv = Base64.decode(data.content).split '\n'
   headers = csv.shift().split ','
@@ -68,6 +69,7 @@ fill_blocks = (div, data) ->
     div.append block.css
       height: width
     running -= flow * ms.day()
+  console.log 'end blocks'
   return # End Blocks fill
 
 {%- capture api -%}

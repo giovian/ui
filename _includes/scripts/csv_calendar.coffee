@@ -2,6 +2,7 @@
 # Fill CSV BLOCKS function
 # --------------------------------------
 fill_calendar = (div, data) ->
+  console.log 'start calendar'
   # Create data array and headers
   csv = Base64.decode(data.content).split '\n'
   headers = csv.shift().split ','
@@ -88,7 +89,8 @@ fill_calendar = (div, data) ->
     # Append day DIV
     div.find("[month='#{month}']").append day_div
     running += ms.day()
-  return # End Blocks fill
+  console.log 'end calendar'
+  return # End Calendar fill
 
 {%- capture api -%}
 ## CSV Calendar

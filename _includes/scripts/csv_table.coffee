@@ -14,6 +14,7 @@ sort_table = (table, col, sort) ->
 # Fill CSV TABLE function
 # --------------------------------------
 fill_table = (table, data) ->
+  console.log 'start table'
   # Get sort
   id = [$('body').attr('page-title'), $('.csv-table').index(table)].join '|'
   table.attr 'data-sort', (i, v) -> storage.get("sort.#{id}") || v
@@ -172,7 +173,7 @@ fill_table = (table, data) ->
   # Initial sort table
   if date_index_array.length
     sort_table table, headers[date_index_array[0]], table.attr 'data-sort'
-
+  console.log 'end table'
   return # Table populated
 
 #
