@@ -25,21 +25,21 @@ order: 1000
 {% assign sorted_collections = site.collections | sort: sort_by %}
 <details markdown=1>
 <summary markdown=1>
-  **Layout** (* default value)
+  **Layout**
 </summary>
-- mode `{{ mode }}` {% if mode == default_mode %}*{% endif %}
-- nav `{{ nav | inspect }}` {% if nav == default_nav %}*{% endif %}
-- header `{{ header | inspect }}` {% if header == default_header %}*{% endif %}
-- navigation {% if navigation == default_navigation %}*{% endif %}  
+- mode `{{ mode }}` {% if mode == default_mode %}default{% endif %}
+- nav `{{ nav | inspect }}` {% if nav == default_nav %}default{% endif %}
+- header `{{ header | inspect }}` {% if header == default_header %}default{% endif %}
+- navigation {% if navigation == default_navigation %}default{% endif %}  
   {% for n in navigation %}- `{{ n }}`
   {% endfor %}
-- sidebar {% if sidebar == default_sidebar %}*{% endif %}  
+- sidebar {% if sidebar == default_sidebar %}default{% endif %}  
   {% for s in sidebar %}- `{{ s }}`
   {% endfor %}
-- footer `{{ footer | inspect }}` {% if footer == default_footer %}*{% endif %}
-- metadata `{{ metadata | inspect }}` {% if metadata == default_metadata %}*{% endif %}
-- pagination `{{ pagination | inspect }}` {% if pagination == default_pagination %}*{% endif %}
-- sort_by `{{ sort_by }}` {% if sort_by == default_sort_by %}*{% endif %}
+- footer `{{ footer | inspect }}` {% if footer == default_footer %}default{% endif %}
+- metadata `{{ metadata | inspect }}` {% if metadata == default_metadata %}default{% endif %}
+- pagination `{{ pagination | inspect }}` {% if pagination == default_pagination %}default{% endif %}
+- sort_by `{{ sort_by }}` {% if sort_by == default_sort_by %}default{% endif %}
 </details>
 
 <details markdown=1>
