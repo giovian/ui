@@ -1,17 +1,16 @@
 update_csv = (document_file, data) ->
-  defer = $.Deferred()
 
   # Update eventual CSV table
-  $(".csv-table[data-file='#{document_file}']").each -> defer.done(fill_table $(@), data)
+  $(".csv-table[data-file='#{document_file}']").each -> fill_table $(@), data
 
   # Update eventual CSV blocks
-  $(".csv-blocks[data-file='#{document_file}']").each -> defer.done(fill_blocks $(@), data)
+  $(".csv-blocks[data-file='#{document_file}']").each -> fill_blocks $(@), data
 
   # Update eventual CSV counter
-  $(".bar[data-file='#{document_file}']").each -> defer.done(fill_counter $(@), data)
+  $(".bar[data-file='#{document_file}']").each -> fill_counter $(@), data
 
   # Update eventual CSV calendar
-  $(".csv-calendar[data-file='#{document_file}']").each -> defer.done(fill_calendar $(@), data)
+  $(".csv-calendar[data-file='#{document_file}']").each -> fill_calendar $(@), data
 
   return # End updates tablesand blocks
 
