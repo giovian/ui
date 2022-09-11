@@ -1,8 +1,5 @@
 update_csv = (document_file, data) ->
 
-  # Update eventual CSV table
-  $(".csv-table[data-file='#{document_file}']").each -> fill_table $(@), data
-
   # Update eventual CSV blocks
   $(".csv-blocks[data-file='#{document_file}']").each -> fill_blocks $(@), data
 
@@ -11,6 +8,9 @@ update_csv = (document_file, data) ->
 
   # Update eventual CSV calendar
   $(".csv-calendar[data-file='#{document_file}']").each -> fill_calendar $(@), data
+
+  # Update eventual CSV table
+  $(".csv-table[data-file='#{document_file}']").each -> fill_table $(@), data
 
   return # End updates tablesand blocks
 

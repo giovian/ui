@@ -10,6 +10,7 @@
 
 {% comment %} -------------------- MODE (string: dark/light) {% endcomment %}
 {%- assign mode = page.mode | default: site.mode | default: default_mode -%}
+{%- if mode == 'dark' -%}{%- assign mode_inverse = 'light' -%}{%- else -%}{%- assign mode_inverse = 'dark' -%}{%- endif -%}
 
 {% comment %} -------------------- TOP NAV (boolean) {% endcomment %}
 {%- assign nav = page.nav | default: site.nav | default: default_nav -%}

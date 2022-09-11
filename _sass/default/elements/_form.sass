@@ -27,18 +27,18 @@ button:enabled, input[type=button], input[type=reset], input[type=submit]
   @extend .p-around-small, .inline-block, .border, .rounded-medium
 button
   &[type=submit]
-    color: var(--green_1) !important
-    border-color: var(--green_1) !important
+    color: var(--green) !important
+    border-color: var(--green) !important
     &:active, &:focus
-      color: var(--green_2) !important
-      border-color: var(--green_2) !important
+      color: var(--green_active) !important
+      border-color: var(--green_active) !important
   &[type="reset"]
     margin-left: $space/4 !important
-    color: var(--red_1) !important
-    border-color: var(--red_1) !important
+    color: var(--red) !important
+    border-color: var(--red) !important
     &:active, &:focus
-      color: var(--red_2) !important
-      border-color: var(--red_2) !important
+      color: var(--red_active) !important
+      border-color: var(--red_active) !important
 
 // RESET and PADDINGS
 input:not([type=range]), textarea, select
@@ -46,7 +46,7 @@ input:not([type=range]), textarea, select
   -webkit-appearance: none
   padding: 1px 5px
 input[type=color]
-  padding: 0
+  @extend .pz
   &.inline
     vertical-align: bottom
 
