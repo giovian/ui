@@ -20,26 +20,28 @@ order: 1000
 - Modified <code>{% include widgets/datetime.html datetime=repo.modified_at replace=true %}</code>
 - Site build <code>{% include widgets/datetime.html datetime=site.time replace=true %}</code>
 </details>
-
+{%- capture def -%}<i class="fg-secondary">default</i>{%- endcapture -%}
 {% assign html_pages = site.html_pages | sort: sort_by %}
 {% assign sorted_collections = site.collections | sort: sort_by %}
 <details markdown=1>
 <summary markdown=1>
   **Layout**
 </summary>
-- mode `{{ mode }}` {% if mode == default_mode %}default{% endif %}
-- nav `{{ nav | inspect }}` {% if nav == default_nav %}default{% endif %}
-- header `{{ header | inspect }}` {% if header == default_header %}default{% endif %}
-- navigation {% if navigation == default_navigation %}default{% endif %}  
+- mode `{{ mode }}` {% if mode == default_mode %}{{ def }}{% endif %}
+- nav `{{ nav | inspect }}` {% if nav == default_nav %}{{ def }}{% endif %}
+- header `{{ header | inspect }}` {% if header == default_header %}{{ def }}{% endif %}
+- navigation {% if navigation == default_navigation %}{{ def }}
+  {% endif %}{%- if navigation.size == 0 -%}`[]`{%- else -%}  
   {% for n in navigation %}- `{{ n }}`
-  {% endfor %}
-- sidebar {% if sidebar == default_sidebar %}default{% endif %}  
+  {% endfor %}{% endif %}
+- sidebar {% if sidebar == default_sidebar %}{{ def }}
+  {% endif %}{%- if sidebar.size == 0 -%}`[]`{%- else -%}  
   {% for s in sidebar %}- `{{ s }}`
-  {% endfor %}
-- footer `{{ footer | inspect }}` {% if footer == default_footer %}default{% endif %}
-- metadata `{{ metadata | inspect }}` {% if metadata == default_metadata %}default{% endif %}
-- pagination `{{ pagination | inspect }}` {% if pagination == default_pagination %}default{% endif %}
-- sort_by `{{ sort_by }}` {% if sort_by == default_sort_by %}default{% endif %}
+  {% endfor %}{% endif %}
+- footer `{{ footer | inspect }}` {% if footer == default_footer %}{{ def }}{% endif %}
+- metadata `{{ metadata | inspect }}` {% if metadata == default_metadata %}{{ def }}{% endif %}
+- pagination `{{ pagination | inspect }}` {% if pagination == default_pagination %}{{ def }}{% endif %}
+- sort_by `{{ sort_by }}` {% if sort_by == default_sort_by %}{{ def }}{% endif %}
 </details>
 
 <details markdown=1>
