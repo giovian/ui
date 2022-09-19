@@ -13,8 +13,9 @@ order: 1000
   **Repository**
 </summary>
 - [{{ site.github.repository_nwo }}]({{ site.github.repository_url }})
-- Owner type `{{ repo.owner.type }}`
+- Owner type `{{ repo.owner.type | inspect }}`
 - Page type `{% if site.github.is_user_page %}User{% endif %}{% if site.github.is_project_page %}Project{% endif %}`
+- Fork `{{ repo.fork | inspect }}`
 - Release `{{ site.github.releases | first | map: 'tag_name' | default: '-' }}` `{{ site.github.releases | first | map: 'name' | default: '-' }}`
 - Created <code>{% include widgets/datetime.html datetime=repo.created_at replace=true %}</code>
 - Modified <code>{% include widgets/datetime.html datetime=repo.modified_at replace=true %}</code>
@@ -46,15 +47,15 @@ order: 1000
 
 <details markdown=1>
 <summary markdown=1>
-  **Pages order**
+  **Pages {{ sort_by }} value**
 </summary>
-{% for item in html_pages %}- `{{ item.order | inspect }}` {{ item.title | default: item.name }}
+{% assign html_sorted = html_pages | sort: sort_by %}{% for item in html_sorted %}- `{{ item[sort_by] | inspect }}` {{ item.title | default: item.name }}
 {% endfor %}
 </details>
 
 <details markdown=1>
 <summary markdown=1>
-  **Collections and pages order**
+  **Collections and pages {{ sort_by }}**
 </summary>
 {% for collection in sorted_collections %}- `{{ collection.order | inspect }}` {{ collection.title | default: collection.label }} ({{ collection.docs.size }} documents){% assign collection_docs = collection.docs | sort: sort_by %}{% for p in collection_docs %}
   - `{{ p[sort_by] | inspect }}` {{ p.title | default: p.path }}{% endfor %}

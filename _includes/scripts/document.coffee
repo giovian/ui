@@ -125,7 +125,7 @@ $('form.document[data-file]').each ->
           csv_array[+form.find('[name=index]').val()] = rows_csv
         file = csv_array.join('\n')
 
-      # Type OBJECT
+      # Type OBJECT and ARRAY
       # Prepare commit
       load =
         message: 'Edit document'

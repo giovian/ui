@@ -75,6 +75,7 @@ fill_table = (table, data) ->
 
     # Append header cell
     header.find('tr').append head_cell
+  # End headers loop
 
   # Service links column
   if login.storage()['role'] is 'admin'
@@ -124,7 +125,7 @@ fill_table = (table, data) ->
     # Add service links
     if login.storage()['role'] is 'admin'
       row.append get_template '#template-service-links-cell'
-    
+
     # Append row
     table.find('tbody').append row
   # End file loop
