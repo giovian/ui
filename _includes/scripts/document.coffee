@@ -27,7 +27,7 @@ $('form.document[data-file]').each ->
     # If form was editing from a csv TABLE, reset class
     $(document).find("table.csv-table[data-file='#{form.attr 'data-file'}'] tr[disabled]").removeAttr 'disabled'
     # Load schema
-    if form.attr 'data-file' then form_load_schema form.attr 'data-file'
+    if form.attr 'data-file' then form_load_schema form.attr('data-file'), 'document'
     return # end Reset handler
 
   # Submit
