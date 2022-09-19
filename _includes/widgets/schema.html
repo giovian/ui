@@ -12,14 +12,7 @@
   </div>
 
 <!-- ANNOTATIONS -->
-  <div data-type='string'>
-    <label for='title'>Title</label>
-    <input type='text' autocomplete='off' name='title' id='title'>
-  </div>
-  <div data-type='string'>
-    <label for='description'>Description</label>
-    <input type='text' autocomplete='off' name='description' id='description'>
-  </div>
+{% include widgets/form_elements/annotations.html %}
 
   <div data-type='select'>
     <label>Type</label>
@@ -32,7 +25,7 @@
   <div inject='string'></div>
 
 <!-- BUTTONS -->
-{% include widgets/buttons.html %}
+{% include widgets/form_elements/buttons.html %}
 
 <!-- TEMPLATES -->
 <!--
@@ -63,14 +56,6 @@
 
   <div properties-inject></div>
 
-  <!-- SVG -->
-  <div data-type='svg'>
-    <label>SVG</label>
-    <select name='svg' id='svg' class='inline'>
-      <option value=''></option>
-    </select>
-  </div>
-
 </template>
 <!--
           PROPERTY TEMPLATE
@@ -78,14 +63,7 @@
 <template id='template-property'>
   <details>
     <summary><a href='#remove-property' data-remove='property' title="Remove property" class='prevent-default'>{% include svg/icon_remove.svg %}</a></summary>
-    <div data-type='string'>
-      <label for='title'>Title</label>
-      <input type='text' autocomplete='off' name='title' id='title'>
-    </div>
-    <div data-type='string'>
-      <label for='description'>Description</label>
-      <input type='text' autocomplete='off' name='description' id='description'>
-    </div>
+{% include widgets/form_elements/annotations.html %}
   <!-- PROPERTY TYPE -->
     <div data-type='select'>
       <label>Type</label>
@@ -120,10 +98,7 @@
     </select>
   </div>
   <div class='flipper'>
-    <div data-type='flipper-links'>
-      <a href="#">Attributes</a>
-      <a href="#">Enum</a>
-    </div>
+{% include widgets/form_elements/flipper_links.html %}
     <div>
       <div data-type='string'>
         <label for='default'>Default</label>
@@ -139,31 +114,13 @@
         <input type='number' name='maxLength' id='maxLength' data-value-type='number'>
         <span>Inclusive limit</span>
       </div>
-      <div data-type='string'>
-        <label for='class'>Class</label>
-        <input type='text' name='class' id='class'>
-        <span>Space separated class list</span>
-      </div>
-      <div data-type='string'>
-        <label>Autocomplete</label>
-        <select name='autocomplete' id='autocomplete' class='inline'>
-          <option value='off'>Off</option>
-          <option value='on'>On</option>
-        </select>
-      </div>
-      <div data-type='string'>
-        <label>Required</label>
-        <select name='required' id='required' class='inline' data-value-type='string'>
-          <option value='false'>False</option>
-          <option value='true'>True</option>
-        </select>
-      </div>
+{% include widgets/form_elements/class.html %}
+{% include widgets/form_elements/autocomplete.html %}
+{% include widgets/form_elements/required.html %}
     </div>
     <div>
-      <div data-type='enum'>
-        <label class='fg-secondary'>Enum values <a href='#add-emun' data-add='enum' title="Add enum element" class='prevent-default'>{% include svg/icon_add.svg %}</a></label>
-      </div>
-      <div enum-inject></div>
+{% include widgets/form_elements/enum_items.html %}
+{% include widgets/form_elements/svg.html %}
     </div>
   </div>
 </template>
@@ -180,54 +137,15 @@
     </select>
   </div>
   <div class='flipper'>
-    <div data-type='flipper-links'>
-      <a href="#">Attributes</a>
-      <a href="#">Enum</a>
+{% include widgets/form_elements/flipper_links.html %}
+    <div>
+{% include widgets/form_elements/numeric.html %}
+{% include widgets/form_elements/class.html %}
+{% include widgets/form_elements/autocomplete.html %}
+{% include widgets/form_elements/required.html %}
     </div>
     <div>
-      <div data-type='number'>
-        <label for='default'>Default</label>
-        <input type='number' name='default' id='default' data-value-type='number'>
-      </div>
-      <div data-type='number'>
-        <label for='minimum'>Minimun</label>
-        <input type='number' name='minimum' id='minimum' data-value-type='number'>
-        <span>Inclusive limit</span>
-      </div>
-      <div data-type='number'>
-        <label for='maximum'>Maximum</label>
-        <input type='number' name='maximum' id='maximum' data-value-type='number'>
-        <span>Inclusive limit</span>
-      </div>
-      <div data-type='string'>
-        <label for='units'>Units</label>
-        <input type='text' name='units' id='units'>
-      </div>
-      <div data-type='string'>
-        <label for='class'>Class</label>
-        <input type='text' name='class' id='class'>
-        <span>Space separated class list</span>
-      </div>
-      <div data-type='string'>
-        <label>Autocomplete</label>
-        <select name='autocomplete' id='autocomplete' class='inline'>
-          <option value='off'>Off</option>
-          <option value='on'>On</option>
-        </select>
-      </div>
-      <div data-type='string'>
-        <label>Required</label>
-        <select name='required' id='required' class='inline' data-value-type='string'>
-          <option value='false'>False</option>
-          <option value='true'>True</option>
-        </select>
-      </div>
-    </div>
-    <div>
-      <div data-type='enum'>
-        <label class='fg-secondary'>Enum values <a href='#add-emun' data-add='enum' title="Add enum element" class='prevent-default'>{% include svg/icon_add.svg %}</a></label>
-      </div>
-      <div enum-inject></div>
+{% include widgets/form_elements/enum_items.html %}
     </div>
   </div>
 </template>
@@ -244,54 +162,15 @@
     </select>
   </div>
   <div class='flipper'>
-    <div data-type='tab'>
-      <a href="#">Attributes</a>
-      <a href="#">Enum</a>
+{% include widgets/form_elements/flipper_links.html %}
+    <div>
+{% include widgets/form_elements/numeric.html %}
+{% include widgets/form_elements/class.html %}
+{% include widgets/form_elements/autocomplete.html %}
+{% include widgets/form_elements/required.html %}
     </div>
     <div>
-      <div data-type='number'>
-        <label for='default'>Default</label>
-        <input type='number' name='default' id='default' data-value-type='number'>
-      </div>
-      <div data-type='number'>
-        <label for='minimum'>Minimun</label>
-        <input type='number' name='minimum' id='minimum' data-value-type='number'>
-        <span>Inclusive limit</span>
-      </div>
-      <div data-type='number'>
-        <label for='maximum'>Maximum</label>
-        <input type='number' name='maximum' id='maximum' data-value-type='number'>
-        <span>Inclusive limit</span>
-      </div>
-      <div data-type='string'>
-        <label for='units'>Units</label>
-        <input type='text' name='units' id='units'>
-      </div>
-      <div data-type='string'>
-        <label for='class'>Class</label>
-        <input type='text' name='class' id='class'>
-        <span>Space separated class list</span>
-      </div>
-      <div data-type='string'>
-        <label>Autocomplete</label>
-        <select name='autocomplete' id='autocomplete' class='inline'>
-          <option value='off'>Off</option>
-          <option value='on'>On</option>
-        </select>
-      </div>
-      <div data-type='string'>
-        <label>Required</label>
-        <select name='required' id='required' class='inline' data-value-type='string'>
-          <option value='false'>False</option>
-          <option value='true'>True</option>
-        </select>
-      </div>
-    </div>
-    <div>
-      <div data-type='enum'>
-        <label class='fg-secondary'>Enum values <a href='#add-enum' data-add='enum' title="Add enum element" class='prevent-default'>{% include svg/icon_add.svg %}</a></label>
-      </div>
-      <div enum-inject></div>
+{% include widgets/form_elements/enum_items.html %}
     </div>
   </div>
 </template>
@@ -300,7 +179,7 @@
           BOOLEAN TEMPLATE
 -->
 <template id='template-boolean'>
-  <div data-type='string'>
+  <div data-type='boolean'>
     <label>Default</label>
     <select name='default' id='default' class='inline' data-value-type='boolean'>
       <option value=''></option>
@@ -308,22 +187,12 @@
       <option value='false'>False</option>
     </select>
   </div>
-  <div data-type='string'>
-    <label for='class'>Class</label>
-    <input type='text' name='class' id='class'>
-    <span>Space separated class list</span>
-  </div>
-  <div data-type='string'>
-    <label>Required</label>
-    <select name='required' id='required' class='inline' data-value-type='string'>
-      <option value='false'>False</option>
-      <option value='true'>True</option>
-    </select>
-  </div>
+{% include widgets/form_elements/class.html %}
+{% include widgets/form_elements/required.html %}
 </template>
 
 <!--
-          ENUM TEMPLATE
+          ENUM ITEM TEMPLATE
 -->
 <template id="template-enum">
   <div data-type=''>

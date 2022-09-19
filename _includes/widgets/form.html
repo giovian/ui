@@ -1,5 +1,5 @@
-{%- assign repo = site.github.public_repositories | where: "full_name", site.github.repository_nwo | first -%}
-{%- if repo.fork == nil -%}{% include widgets/schema.html file=include.file %}{%- else -%}{% include widgets/document.html file=include.file %}{%- endif -%}
+{%- assign repo = site.github.public_repositories | where: "full_name", site.github.repository_nwo | first -%}{{repo.fork | inspect }}
+{%- if repo.fork == false -%}{% include widgets/schema.html file=include.file %}{%- else -%}{% include widgets/document.html file=include.file %}{%- endif -%}
 {%- capture api -%}
 ## Form
 

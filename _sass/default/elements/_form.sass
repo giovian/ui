@@ -11,7 +11,7 @@ input:not([type=range]), textarea, select
   margin-bottom: $space*.1
 
 // Override default browser BORDERS
-input:not([type=range]), textarea, select, .button
+input:not([type=range]), textarea, select
   @extend .border, .border-secondary
 
 // Mini rounded
@@ -23,9 +23,10 @@ button:enabled, input[type=button], input[type=reset], input[type=submit]
   @extend .button
 
 // SUBMIT and RESET
-[data-type=button] button
-  @extend .p-around-small, .inline-block, .border, .rounded-medium
 button
+  @extend .fg-secondary, .p-around-small, .inline-block, .border, .rounded-medium
+  &[type]:not(:first-child)
+    margin-left: $space/4 !important
   &[type=submit]
     color: var(--green) !important
     border-color: var(--green) !important
@@ -33,12 +34,16 @@ button
       color: var(--green_active) !important
       border-color: var(--green_active) !important
   &[type="reset"]
-    margin-left: $space/4 !important
     color: var(--red) !important
     border-color: var(--red) !important
     &:active, &:focus
       color: var(--red_active) !important
       border-color: var(--red_active) !important
+  &[type=button]
+    border-color: var(--fg-secondary) !important
+    &:active, &:focus
+      color: var(--fg) !important
+      border-color: var(--fg) !important
 
 // RESET and PADDINGS
 input:not([type=range]), textarea, select
