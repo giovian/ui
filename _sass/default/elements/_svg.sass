@@ -5,6 +5,8 @@ svg
   vertical-align: bottom
   // Icon dimensions
   &.icon
+    fill: var(--fg-secondary)
+    stroke: var(--fg-secondary)
     width: floor($line-height * $font-size)
     // Hover effect
     use
@@ -18,20 +20,24 @@ a[href^='#edit'] svg.icon use
   fill: var(--link)
 a[href^='#add'], a[href^='#submit'], [type=submit]
   & svg.icon use
-    fill: var(--green_1)
+    fill: var(--green)
 a[href^='#remove'], a[href^='#reset'], [type=reset]
   svg.icon use
-    fill: var(--red_1)
+    fill: var(--red)
 
 // Form COLORS
 [type=submit]
   &:active, &:focus
     svg.icon use
-      fill: var(--green_2) !important
+      fill: var(--green_active) !important
 [type=reset]
   &:active, &:focus
     svg.icon use
-      fill: var(--red_2) !important
+      fill: var(--red_active) !important
+[type=button]
+  &:active, &:focus
+    svg.icon use
+      fill: var(--fg) !important
 
 // svg.icon STATES inside LINK
 a, button

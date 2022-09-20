@@ -1,0 +1,18 @@
+<svg class="icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="view-symbol">
+      <circle cx="50" cy="50" r="15" />
+      <path d="M12,50 Q50,0 88,50" fill="none" stroke-width="8" stroke-linecap="round" />
+      <path d="M12,50 Q50,100 88,50" fill="none" stroke-width="8" stroke-linecap="round" />
+    </g>
+    <mask id="view-mask">
+      <rect fill="white" x="0" y="0" width="100" height="100" />
+      <circle cx="50" cy="50" r="15" fill="black" />
+      <path d="M12,50 Q50,0 88,50" fill="none" stroke="black" stroke-width="8" stroke-linecap="round" />
+      <path d="M12,50 Q50,100 88,50" fill="none" stroke="black" stroke-width="8" stroke-linecap="round" />
+    </mask>
+    <circle id="view-circle" mask="url(#view-mask)" r="48" cx="50" cy="50" />
+  </defs>
+  <use href="#view-symbol" />
+  <use href="#view-circle" />
+</svg>

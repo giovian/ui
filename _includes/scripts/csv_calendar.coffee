@@ -88,7 +88,7 @@ fill_calendar = (div, data) ->
     # Append day DIV
     div.find("[month='#{month}']").append day_div
     running += ms.day()
-  return # End Blocks fill
+  return # End Calendsr fill
 
 {%- capture api -%}
 ## CSV Calendar

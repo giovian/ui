@@ -15,44 +15,47 @@ order: 1000
 - [{{ site.github.repository_nwo }}]({{ site.github.repository_url }})
 - Owner type `{{ repo.owner.type }}`
 - Page type `{% if site.github.is_user_page %}User{% endif %}{% if site.github.is_project_page %}Project{% endif %}`
+- Fork `{{ repo.fork | inspect }}`
 - Release `{{ site.github.releases | first | map: 'tag_name' | default: '-' }}` `{{ site.github.releases | first | map: 'name' | default: '-' }}`
 - Created <code>{% include widgets/datetime.html datetime=repo.created_at replace=true %}</code>
 - Modified <code>{% include widgets/datetime.html datetime=repo.modified_at replace=true %}</code>
 - Site build <code>{% include widgets/datetime.html datetime=site.time replace=true %}</code>
 </details>
-
+{%- capture def -%}<i class="fg-secondary">default</i>{%- endcapture -%}
 {% assign html_pages = site.html_pages | sort: sort_by %}
 {% assign sorted_collections = site.collections | sort: sort_by %}
 <details markdown=1>
 <summary markdown=1>
-  **Layout** (* default value)
+  **Layout**
 </summary>
-- mode `{{ mode }}` {% if mode == default_mode %}*{% endif %}
-- nav `{{ nav | inspect }}` {% if nav == default_nav %}*{% endif %}
-- header `{{ header | inspect }}` {% if header == default_header %}*{% endif %}
-- navigation {% if navigation == default_navigation %}*{% endif %}  
+- mode `{{ mode }}` {% if mode == default_mode %}{{ def }}{% endif %}
+- nav `{{ nav | inspect }}` {% if nav == default_nav %}{{ def }}{% endif %}
+- header `{{ header | inspect }}` {% if header == default_header %}{{ def }}{% endif %}
+- navigation {% if navigation == default_navigation %}{{ def }}
+  {% endif %}{%- if navigation.size == 0 -%}`[]`{%- else -%}  
   {% for n in navigation %}- `{{ n }}`
-  {% endfor %}
-- sidebar {% if sidebar == default_sidebar %}*{% endif %}  
+  {% endfor %}{% endif %}
+- sidebar {% if sidebar == default_sidebar %}{{ def }}
+  {% endif %}{%- if sidebar.size == 0 -%}`[]`{%- else -%}  
   {% for s in sidebar %}- `{{ s }}`
-  {% endfor %}
-- footer `{{ footer | inspect }}` {% if footer == default_footer %}*{% endif %}
-- metadata `{{ metadata | inspect }}` {% if metadata == default_metadata %}*{% endif %}
-- pagination `{{ pagination | inspect }}` {% if pagination == default_pagination %}*{% endif %}
-- sort_by `{{ sort_by }}` {% if sort_by == default_sort_by %}*{% endif %}
+  {% endfor %}{% endif %}
+- footer `{{ footer | inspect }}` {% if footer == default_footer %}{{ def }}{% endif %}
+- metadata `{{ metadata | inspect }}` {% if metadata == default_metadata %}{{ def }}{% endif %}
+- pagination `{{ pagination | inspect }}` {% if pagination == default_pagination %}{{ def }}{% endif %}
+- sort_by `{{ sort_by }}` {% if sort_by == default_sort_by %}{{ def }}{% endif %}
 </details>
 
 <details markdown=1>
 <summary markdown=1>
-  **Pages order**
+  **Pages {{ sort_by }} value**
 </summary>
-{% for item in html_pages %}- `{{ item.order | inspect }}` {{ item.title | default: item.name }}
+{% assign html_sorted = html_pages | sort: sort_by %}{% for item in html_sorted %}- `{{ item[sort_by] | inspect }}` {{ item.title | default: item.name }}
 {% endfor %}
 </details>
 
 <details markdown=1>
 <summary markdown=1>
-  **Collections and pages order**
+  **Collections and pages {{ sort_by }}**
 </summary>
 {% for collection in sorted_collections %}- `{{ collection.order | inspect }}` {{ collection.title | default: collection.label }} ({{ collection.docs.size }} documents){% assign collection_docs = collection.docs | sort: sort_by %}{% for p in collection_docs %}
   - `{{ p[sort_by] | inspect }}` {{ p.title | default: p.path }}{% endfor %}

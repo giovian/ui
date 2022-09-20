@@ -9,41 +9,38 @@
       "title": "Team name",
       "type": "string",
       "autocomplete": "off",
-      "required": "true"
+      "required": true
     },
     "stadium": {
       "title": "Stadium name",
       "type": "string",
       "autocomplete": "off",
-      "required": "true"
+      "required": true
     },
-    "shirt": {
-      "title": "Type of shirt",
+    "base_race": {
+      "title": "Base race",
       "type": "string",
       "class": "inline",
       "autocomplete": "off",
-      "required": "false",
       "enum": [
-        "horizontal",
-        "vertical"
-      ]
+        "human",
+        "ork",
+        "dwarf",
+        "elf"
+      ],
+      "svg": true
     },
     "color_1": {
       "title": "First color",
       "type": "string",
       "format": "color",
-      "class": "inline",
-      "autocomplete": "off",
-      "required": "false"
+      "autocomplete": "off"
     },
     "color_2": {
       "title": "Second color",
       "type": "string",
       "format": "color",
-      "class": "inline",
-      "autocomplete": "off",
-      "required": "false"
+      "autocomplete": "off"
     }
-  },
-  "svg": "shirt"
+  }
 }

@@ -65,6 +65,21 @@ form_create_item = (form) ->
       field = $ '<select/>', {class: value.class? || ''}
       for option in value.enum
         field.append $ '<option/>', {value: option, text: option}
+      # Check SVG
+      if value.svg
+        # Load SVG
+        image = get_template "#template-svg"
+        item.append image
+        # bind svg file change event
+        field.off("change").on "change", (e) -> console.log e
+        #   image_url = "#{schema.svg}_#{$(e.target).val()}.svg"
+        #   # Call the 'svg_injected' function at svg loaded
+        #   form
+        #     .find('[data-type=svg]')
+        #     .load("{{ site.baseurl }}/assets/images/#{image_url}", null, () -> svg_injected @)
+        #   return # End onChange SVG-linked property
+        # # Load default SVG
+        # form.find("[name='#{schema.svg}']").trigger 'change'
 
     # Check property type and format
     switch value.type
@@ -117,7 +132,9 @@ form_create_item = (form) ->
       else field.val value.default
     # Prepare elements
     label = $ '<label/>', {text: value.title || key}
+    # Selects don't need labe[for]
     if field.prop('tagName') isnt 'SELECT' then label.attr 'for', "#{key}-#{unique_id}"
+    # Prepare container div[data-type]
     div = $ '<div/>', {'data-type': data_type}
     # Append label and field to DIV, add whitespace for inline SELECTs
     div.append [label, " ", field]
@@ -129,6 +146,7 @@ form_create_item = (form) ->
     if value.description then div.append [' ', $ '<span/>', {text: value.description}]
     # Append DIV to ITEM
     item.append div
+
   # End properties loop
   return item # End create_item
 
@@ -179,12 +197,6 @@ create_schema_form = (form, schema) ->
       form
         .find('[properties-inject]')
         .append get_property(schema.type, key, value)
-      # Add option to SVG
-      form
-        .find('[name=svg]')
-        .append $('<option/>', {value: key, text: key})
-    # Set default svg value
-    form.find('[name="svg"]').val schema.svg
   return # End Schema Form
 
 #
@@ -206,29 +218,16 @@ create_document_form = (form, schema) ->
       .find('[data-type="button"]')
       .before get_template '#template-add-item'
 
-  # Check SVG
-  if schema.svg
-    # Load SVG
-    image = get_template "#template-svg"
-    form.find('.item').append image
-    # bind svg file change event
-    form.off("change", "[name='#{schema.svg}']").on "change", "[name='#{schema.svg}']", (e) ->
-      image_url = "#{schema.svg}_#{$(e.target).val()}.svg"
-      # Call the 'svg_injected' function at svg loaded
-      form
-        .find('[data-type=svg]')
-        .load("{{ site.baseurl }}/assets/images/#{image_url}", null, () -> svg_injected @)
-      return # End onChange SVG-linked property
-    # Load default SVG
-    form.find("[name='#{schema.svg}']").trigger 'change'
+  # Required asterix
+  form.find('input[required]').each -> $(@).prev('label').append '<sup class="fg-secondary"> *</sup>'
 
   return # End create document form
 
 #
 # FORM LOAD SCHEMA function for schema and document forms
 # --------------------------------------
-form_load_schema = (path) ->
-  forms = $("form[data-file='#{path}']")
+form_load_schema = (path, classe) ->
+  forms = if classe then $("form.#{classe}[data-file='#{path}']") else $("form[data-file='#{path}']")
   schema_url = "#{github_api_url}/contents/_data/#{path}.schema.json"
   forms.attr 'disabled', ''
 
@@ -270,9 +269,6 @@ $('form').each ->
   # Update range output
   form.find("input[type=range]").each -> input_range_enable $(@)
 
-  # Required asterix
-  form.find('input[required]').each -> $(@).prev('label').append '*'
-
   #
   # FORM EVENTS
   # --------------------------------------
@@ -284,11 +280,6 @@ $('form').each ->
   #
   # SUBMIT and RESET
   # --------------------------------------
-  form.on 'click', '[data-type="button"] a[href="#submit"]', ->
-    # form.submit()
-    $('<input type="submit">').hide().appendTo(form).click().remove()
-    return
-  form.on 'click', '[data-type="button"] a[href="#reset"]', -> form.trigger 'reset'
 
   # Reset
   form.on "reset", ->
@@ -302,6 +293,11 @@ $('form').each ->
 
   # Submit
   form.on "submit", ->
+    form.find(':input').blur()
+    console.log form.serializeJSON()
+
+  # View button click
+  form.on 'click', '[data-type="button"] [type="button"]', ->
     form.find(':input').blur()
     console.log form.serializeJSON()
 

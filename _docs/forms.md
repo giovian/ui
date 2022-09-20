@@ -77,7 +77,7 @@ order: 60
     </div>
   </div>
   <!-- BUTTONS -->
-  {% include widgets/buttons.html %}
+  {% include widgets/form_elements/buttons.html %}
 </form>
 
 ## Storing data

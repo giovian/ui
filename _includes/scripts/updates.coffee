@@ -20,7 +20,7 @@ updates = ->
       element = data.filter((build) -> build.status is 'built')[0]
       [element.created_at, element.commit]
     else [data[0].commit.author.date, data[0].sha]
-    unix = +new Date(latest_date)
+    unix = +new Date latest_date
     # Compare latest build created_at or commit date, and site.time
     if unix / 1000 > {{ site.time | date: "%s" }}
       # There was a build or a commit after site.time

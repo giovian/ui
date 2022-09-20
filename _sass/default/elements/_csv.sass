@@ -26,12 +26,6 @@
       & td
         @extend .border-top
 
-  // Today and Tomorrow
-  tr.today
-    @extend .light
-  tr.tomorrow
-    @extend .orange
-
   //
   // SORT LINKS
   // --------------------------------------
@@ -42,6 +36,15 @@
   th >
     select, input
       @extend .inline, .bg, .no-border
+
+  // Today and Tomorrow
+  tr.tomorrow
+    @extend .orange
+
+html[mode=dark] .csv-table tr.today
+  @extend .light
+html[mode=light] .csv-table tr.today
+  @extend .dark
 
 //
 // SERVICE LINKS
