@@ -34,12 +34,16 @@
       "title": "First color",
       "type": "string",
       "format": "color",
+      "default": "#0000ff",
+      "class": "inline",
       "autocomplete": "off"
     },
     "color_2": {
       "title": "Second color",
       "type": "string",
       "format": "color",
+      "default": "#ff0000",
+      "class": "inline",
       "autocomplete": "off"
     }
   }
