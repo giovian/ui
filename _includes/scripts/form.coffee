@@ -142,7 +142,7 @@ form_create_item = (form) ->
         # Call the 'svg_injected' function at svg loaded
         item
           .find('[data-type=svg]')
-          .load("{{ site.baseurl }}/assets/images/#{image_url}", null, () -> svg_injected @)
+          .load("{{ site.baseurl }}/assets/images/#{image_url}?t=#{+new Date()}", null, () -> svg_injected @)
         return # End onChange SVG-linked property
       # Load default SVG
       field.trigger 'change'
