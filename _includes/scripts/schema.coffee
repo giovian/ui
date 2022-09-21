@@ -22,6 +22,9 @@ get_property = (parent_type, key, value) ->
     # Find inputs ending with [key]
     template_property.find("[name='#{prepend}[#{key}]']").val property
     selected_template.find("[name='#{prepend}[#{key}]']").val property
+    # Set boolean selects
+    if key in ['required', 'svg'] and property
+      selected_template.find("[name='#{prepend}[#{key}]']").val 'true'
     # Check enums
     if key is 'enum' and Array.isArray property
       enum_inject = selected_template.find('[enum-inject]')

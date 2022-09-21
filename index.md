@@ -18,7 +18,6 @@
 
 ## To do
 
-- SVG as boolean in object properties
 - clipboard copy with a class
 - `value` attribute on csv-table rows to style
 - check multiple filters on csv-table headers

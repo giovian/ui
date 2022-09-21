@@ -40,19 +40,23 @@
 
 {% comment %} -------------------- NEXT AND PREV PAGE -------------------- {% endcomment %}
 {%- assign collection = site[page.collection] -%}
-{%- for doc in collection -%}
-  {%- if next -%}
-    {%- assign next_title = doc.title -%}
-    {%- assign next_url = doc.url -%}
-  {%- endif -%}
-  {%- if doc.url == page.url -%}
-    {%- assign prev_title = last_title -%}
-    {%- assign prev_url = last_url -%}
-    {%- assign next = true -%}
-  {%- endif -%}
-  {%- assign last_title = doc.title -%}
-  {%- assign last_url = doc.url -%}
-{% endfor %}
+{%- if collection.size -%}
+  {%- assign sorted_docs = collection | sort: sort_by -%}
+  {%- for doc in sorted_docs -%}
+    {%- if next -%}
+      {%- assign next_title = doc.title -%}
+      {%- assign next_url = doc.url -%}
+      {%- assign next = nil -%}
+    {%- endif -%}
+    {%- if doc.url == page.url -%}
+      {%- assign prev_title = last_title -%}
+      {%- assign prev_url = last_url -%}
+      {%- assign next = true -%}
+    {%- endif -%}
+    {%- assign last_title = doc.title -%}
+    {%- assign last_url = doc.url -%}
+  {%- endfor -%}
+{%- endif -%}
 
 {%- capture api -%}
 ## Page attributes

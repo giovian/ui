@@ -1,6 +1,6 @@
-{%- assign sorted_collections = site.collections | sort: "order" -%}
+{%- assign sorted_collections = site.collections | sort: sort_by -%}
 {%- for collection in sorted_collections -%}{% if collection.docs.size > 0 %}
-{%- assign collection_docs = collection.docs | sort: "order" -%}
+{%- assign collection_docs = collection.docs | sort: sort_by -%}
 <li>
   <span{% if page.collection == collection.label %} class="active"{% endif %}>{{ collection.title | default: collection.label }}</span>
   <ul>
