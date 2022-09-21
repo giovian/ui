@@ -65,21 +65,6 @@ form_create_item = (form) ->
       field = $ '<select/>', {class: value.class? || ''}
       for option in value.enum
         field.append $ '<option/>', {value: option, text: option}
-      # Check SVG
-      if value.svg
-        # Load SVG
-        image = get_template "#template-svg"
-        item.append image
-        # bind svg file change event
-        field.off("change").on "change", (e) -> console.log e
-        #   image_url = "#{schema.svg}_#{$(e.target).val()}.svg"
-        #   # Call the 'svg_injected' function at svg loaded
-        #   form
-        #     .find('[data-type=svg]')
-        #     .load("{{ site.baseurl }}/assets/images/#{image_url}", null, () -> svg_injected @)
-        #   return # End onChange SVG-linked property
-        # # Load default SVG
-        # form.find("[name='#{schema.svg}']").trigger 'change'
 
     # Check property type and format
     switch value.type
@@ -107,8 +92,8 @@ form_create_item = (form) ->
         data_type = 'select'
         field = $('<select class="inline" data-value-type="boolean"></select>')
           .append [
-            $ '<option value="true">True</option>'
             $ '<option value="false">False</option>'
+            $ '<option value="true">True</option>'
           ]
       else notification "Property type `#{value.type}` to do", 'red'
 
@@ -147,6 +132,21 @@ form_create_item = (form) ->
     # Append DIV to ITEM
     item.append div
 
+    # Check SVG
+    if value.svg
+      # Load SVG
+      item.append get_template "#template-svg"
+      # bind svg file change event
+      field.off("change").on "change", (e) ->
+        image_url = "#{$(e.target).attr 'name'}_#{e.target.value}.svg"
+        # Call the 'svg_injected' function at svg loaded
+        item
+          .find('[data-type=svg]')
+          .load("{{ site.baseurl }}/assets/images/#{image_url}", null, () -> svg_injected @)
+        return # End onChange SVG-linked property
+      # Load default SVG
+      field.trigger 'change'
+
   # End properties loop
   return item # End create_item
 
@@ -156,18 +156,19 @@ svg_injected = (div) ->
 
   # Loop color inputs for default values and change handlers
   svg.parents('form.document').find('input[type=color]').each ->
-
-    # Set selected color
-    svg
-      .find ".#{$(@).attr 'name'}"
-      .attr 'fill', $(@).val()
-
     # Color change handler
     $(@).on "change", (e) ->
+      # Set selected color
       svg
-        .find ".#{$(e.target).attr 'name'}"
+        .find ".#{$(e.target).attr 'name'}[stroke=none]"
         .attr 'fill', $(e.target).val()
-      return # End colors loop
+      svg
+        .find ".#{$(e.target).attr 'name'}[fill=none]"
+        .attr 'stroke', $(e.target).val()
+      return # End colors handler
+
+    # Initial colorization
+    $(@).trigger 'change'
 
     return # End color inputs loop
 
@@ -184,19 +185,13 @@ create_schema_form = (form, schema) ->
   form.find('[name="description"]').val schema.description
   form.find('[name="$id"]').val schema['$id']
   form.find('[name="type"]').val schema.type
-  if schema.type is 'array'
-    # Loop items.properties
-    for own key, value of schema.items.properties
-      form
-        .find('[properties-inject]')
-        .append get_property(schema.type, key, value)
-  if schema.type is 'object'
-    # Loop object properties
-    for own key, value of schema.properties
-      # Append property
-      form
-        .find('[properties-inject]')
-        .append get_property(schema.type, key, value)
+  items = switch schema.type
+    when 'array' then schema.items.properties
+    when 'object' then schema.properties
+  for own key, value of items
+    form
+      .find('[properties-inject]')
+      .append get_property(schema.type, key, value)
   return # End Schema Form
 
 #
