@@ -10,3 +10,11 @@
   > div
     @extend .box
     flex: 0 0 auto
+
+p.counter-title
+  @extend .mbz, .fg-secondary, .center
+  margin-left: $space/2
+  &:empty
+    @extend .hidden
+  & + .bar
+    @extend .mtz

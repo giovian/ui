@@ -1,4 +1,4 @@
-#
+ #
 # Fill CSV COUNTER function
 # --------------------------------------
 fill_counter = (div, data) ->
@@ -32,6 +32,8 @@ fill_counter = (div, data) ->
     text: counted
     width: "#{percent}%"
     class: 'bg-border fg'
+  if div.prev('.counter-title').text()
+    div.prev('.counter-title').append " #{percent}%"
   # Append Empty Bar DIV
   div.append $ '<div/>',
     title: "#{days-counted} of #{days}: #{100-percent}%"

@@ -1,5 +1,5 @@
 {% if include.file == nil %}> Missing `file` for `csv-counter` widget
-{:.red}{% else %}
+{:.red}{% else %}<p class="counter-title">{{ include.title }}</p>
 <div class='{{ include.class | split: " " | push: "bar" | join: " " }}' data-file='{{ include.file }}' data-days='{{ include.days | default: 14 }}' {% if include.start %}data-start='{{ include.start }}'{% endif %}></div>
 {% endif %}
 {%- capture api -%}
@@ -19,4 +19,5 @@ Require the [SCV Counter script]({{ 'docs/scripts/#csv-counter' | absolute_url }
 - `days`: (optional) number of days, default to 14
 - `start`: (optional) optional data to start counting backwards
 - `class`: (optional) space separated list of classes
+- `title`: (optional) title of the counter and appended positive percent
 {%- endcapture -%}

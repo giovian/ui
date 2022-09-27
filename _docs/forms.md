@@ -148,11 +148,10 @@ storage.get("repository.fork") = true
 
 ### Counter
 
-
-{% include widgets/csv-counter.html file='practices' start='2022-02-24' days='30' %}
+{% include widgets/csv-counter.html file='practices' start='2022-02-24' days='30' title='Month' %}
 
 ```liquid
-{% raw %}{% include widgets/csv-counter.html file='practices' start='2022-02-24' days='30' %}{% endraw %}
+{% raw %}{% include widgets/csv-counter.html file='practices' start='2022-02-24' days='30' title='Month' %}{% endraw %}
 ```
 {:.minimal}
 
