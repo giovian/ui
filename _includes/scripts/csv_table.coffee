@@ -241,6 +241,7 @@ $(document).on 'click', ".csv-table a[href='#remove-entry']", ->
   row.attr 'disabled', ''
   if !confirm "Delete row #{index}?"
     row.removeAttr 'disabled'
+    link.blur()
     return
   # delete element `index` in csv array
   document_file = table.attr 'data-file'
