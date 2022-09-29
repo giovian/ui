@@ -32,8 +32,10 @@ fill_counter = (div, data) ->
     text: counted
     width: "#{percent}%"
     class: 'bg-border fg'
-  if div.prev('.counter-title').text()
-    div.prev('.counter-title').append " #{percent}%"
+  title_element = div.prev('.counter-title')
+  if title_element.text()
+    title_element.find('span').remove()
+    title_element.append "<span> #{percent}%<span>"
   # Append Empty Bar DIV
   div.append $ '<div/>',
     title: "#{days-counted} of #{days}: #{100-percent}%"
