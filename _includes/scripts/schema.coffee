@@ -62,6 +62,7 @@ $('form.schema').each (i, element)->
       form
         .find('[properties-inject]')
         .append get_property(form.find('[name="type"]').val(), property_name)
+    else $(@).blur()
     return # End add-property
 
   # ADD ENUM VALUE
@@ -87,7 +88,12 @@ $('form.schema').each (i, element)->
     return # End add-property
 
   # REMOVE PROPERTY
-  form.on 'click', 'a[data-remove=property]', -> $(@).parents('details').remove()
+  form.on 'click', 'a[data-remove=property]', ->
+    if !confirm "Delete property?"
+      $(@).blur()
+      return
+    $(@).parents('details').remove()
+    return
 
   # REMOVE ENUM VALUE
   form.on 'click', 'a[data-remove=enum]', -> $(@).parents('[data-type]').remove()

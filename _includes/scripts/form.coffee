@@ -158,14 +158,29 @@ svg_injected = (div) ->
   svg.parents('form.document').find('input[type=color]').each ->
     # Color change handler
     $(@).on "change", (e) ->
-      # Set selected color
+      # Set selected color on Fill
       svg
         .find ".#{$(e.target).attr 'name'}[stroke=none]"
         .attr 'fill', $(e.target).val()
+      # Set selected color on Stroke
       svg
         .find ".#{$(e.target).attr 'name'}[fill=none]"
         .attr 'stroke', $(e.target).val()
       return # End colors handler
+
+    # Initial colorization
+    $(@).trigger 'change'
+
+    return # End color inputs loop
+
+  # Loop text inputs for default text and change handler
+  svg.parents('form.document').find('input[type=text]').each ->
+    # Set string on Text tags
+    $(@).on "change", (e) ->
+      svg
+        .find "text.#{$(e.target).attr 'name'}"
+        .text $(e.target).val()
+      return
 
     # Initial colorization
     $(@).trigger 'change'

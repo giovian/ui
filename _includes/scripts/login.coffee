@@ -49,7 +49,7 @@ login.setLogin = ->
   $('html').removeClass 'role-admin role-guest logged'
   $('html').addClass 'unlogged'
   login.login_link.removeAttr 'disabled'
-  storage.clear('login').clear('repository').clear 'github_api'
+  storage.clear('login').clear 'repository'
   true
 
 login.setLogout = ->
