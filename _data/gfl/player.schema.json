@@ -45,6 +45,25 @@
       "default": "#ff0000",
       "class": "inline",
       "autocomplete": "off"
+    },
+    "color_3": {
+      "title": "Third color",
+      "type": "string",
+      "format": "color",
+      "default": "#00ff00",
+      "autocomplete": "off"
+    },
+    "symbol": {
+      "title": "Team symbol",
+      "type": "string",
+      "default": "⤱",
+      "autocomplete": "on"
+    },
+    "slogan": {
+      "title": "Team slogan",
+      "type": "string",
+      "format": "textarea",
+      "autocomplete": "off"
     }
   }
 }
