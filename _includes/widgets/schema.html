@@ -62,7 +62,11 @@
 -->
 <template id='template-property'>
   <details>
-    <summary><a href='#remove-property' data-remove='property' title="Remove property" class='prevent-default'>{% include svg/icon_remove.svg %}</a></summary>
+    <summary>
+      <a href='#remove-property' data-remove='property' title="Remove property" class='prevent-default'>{% include svg/icon_remove.svg %}</a>
+      <a href='#down-property' data-down='property' title="Move down" class='prevent-default'>{% include svg/icon_down.svg %}</a>
+      <a href='#up-property' data-up='property' title="Move up" class='prevent-default'>{% include svg/icon_up.svg %}</a>
+    </summary>
 {% include widgets/form_elements/annotations.html %}
   <!-- PROPERTY TYPE -->
     <div data-type='select'>

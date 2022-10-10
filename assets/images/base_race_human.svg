@@ -40,5 +40,7 @@
     transform="matrix(0.23246401,-0.05206968,0.05206968,0.23246401,-0.11667318,5.4832217)"
     d="m 44,68 c -2.573869,0.367695 -7.632305,-3.426132 -8,-6 -0.367695,-2.573869 3.426132,-7.632305 6,-8 2.573869,-0.367695 7.632305,3.426132 8,6 0.367695,2.573869 -3.426132,7.632305 -6,8 z" />
 
-  <text x="7.5" y="13.5" class="color_2" stroke="none" style="font: bold 7px sans-serif">&#10545;</text>
+  <text class="color_2 symbol" x="11" y="13.5"
+    stroke="none"
+    style="text-anchor: middle;font: bold 7px sans-serif">00</text>
 </svg>

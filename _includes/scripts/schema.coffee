@@ -95,6 +95,18 @@ $('form.schema').each (i, element)->
     $(@).parents('details').remove()
     return
 
+  # MOVE PROPERTY DOWN
+  form.on 'click', 'a[data-down=property]', ->
+    details = $(@).parents 'details'
+    details.insertAfter details.next()
+    return
+
+  # MOVE PROPERTY UP
+  form.on 'click', 'a[data-up=property]', ->
+    details = $(@).parents 'details'
+    details.insertBefore details.prev()
+    return
+
   # REMOVE ENUM VALUE
   form.on 'click', 'a[data-remove=enum]', -> $(@).parents('[data-type]').remove()
 

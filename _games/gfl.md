@@ -27,7 +27,10 @@ order: 20
       # Single user game filed
       - "player.json"
 ```
-{% include widgets/form.html file='gfl/player' %}
+<div class="role-admin">
+{% include widgets/schema.html file='gfl/player' %}
+</div>
+{% include widgets/document.html file='gfl/player' %}
 - Schema `gfl/player.schema.json` has `teamname`, `color_1`, `color_2`, `stadium name`, `slogan` textarea.
 - `baserace` string select 
 - Document `user/<username>/gfl/player.json`
