@@ -25,6 +25,10 @@ button:enabled, input[type=button], input[type=reset], input[type=submit]
 // SUBMIT and RESET
 button
   @extend .fg-secondary, .p-around-small, .inline-block, .border, .rounded-medium
+  svg + span
+    color: inherit !important
+    font-size: 100% !important
+    margin-left: .2em
   &[type]:not(:first-child)
     margin-left: $space/4 !important
   &[type=submit]
@@ -237,3 +241,5 @@ main form
     @extend .p-around
   input
     max-width: 100%
+  button svg + span
+    @extend .hidden
