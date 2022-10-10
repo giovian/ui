@@ -34,7 +34,7 @@
       "title": "First color",
       "type": "string",
       "format": "color",
-      "default": "#0000ff",
+      "default": "#ff0000",
       "class": "inline",
       "autocomplete": "off"
     },
@@ -42,7 +42,7 @@
       "title": "Second color",
       "type": "string",
       "format": "color",
-      "default": "#ff0000",
+      "default": "#00ff00",
       "class": "inline",
       "autocomplete": "off"
     },
@@ -50,14 +50,9 @@
       "title": "Third color",
       "type": "string",
       "format": "color",
-      "default": "#00ff00",
+      "default": "#0000ff",
+      "class": "inline",
       "autocomplete": "off"
-    },
-    "symbol": {
-      "title": "Team symbol",
-      "type": "string",
-      "default": "⤱",
-      "autocomplete": "on"
     },
     "slogan": {
       "title": "Team slogan",
