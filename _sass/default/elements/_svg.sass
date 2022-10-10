@@ -8,33 +8,31 @@ svg
     fill: var(--fg-secondary)
     stroke: var(--fg-secondary)
     width: floor($line-height * $font-size)
-    // Hover effect
-    use
-      &:first-of-type
-        display: inline
-      &:last-of-type
-        display: none
 
-// Base COLORS
+// Base and Hover/Active colors
+
+// Edit
 a[href^='#edit'] svg.icon use
   fill: var(--link)
-a[href^='#add'], a[href^='#submit'], [type=submit]
-  & svg.icon use
-    fill: var(--green)
-a[href^='#remove'], a[href^='#reset'], [type=reset]
-  svg.icon use
-    fill: var(--red)
 
-// Form COLORS
-[type=submit]
+// Submit, Add
+a[href^='#add'], a[href^='#submit'], [type=submit]
+  svg.icon use
+    fill: var(--green)
   &:active, &:focus
     svg.icon use
       fill: var(--green_active) !important
-[type=reset]
+
+// Remove, Reset
+a[href^='#remove'], a[href^='#reset'], [type=reset]
+  svg.icon use
+    fill: var(--red)
   &:active, &:focus
     svg.icon use
       fill: var(--red_active) !important
-[type=button]
+
+// Button, view, Up, Down
+[type=button], a[href^='#up'], a[href^='#down']
   &:active, &:focus
     svg.icon use
       fill: var(--fg) !important
@@ -43,11 +41,12 @@ a[href^='#remove'], a[href^='#reset'], [type=reset]
 a, button
 
   // ACTIVE
-  &:active svg.icon use
-    &:first-of-type
-      display: inline
-    &:last-of-type
-      display: none
+  &, &:active
+    svg.icon use
+      &:first-of-type
+        display: inline
+      &:last-of-type
+        display: none
 
   // HOVER, FOCUS
   &:hover, &:focus

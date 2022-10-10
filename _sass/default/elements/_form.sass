@@ -202,12 +202,18 @@ form
       display: block
 
   //
-  // ADD/REMOVE links
+  // ADD/REMOVE/MOVE links
   // --------------------------------------
 
   // Links align right
-  [data-add], [data-remove]
+  [data-add], [data-remove], [data-down], [data-up]
     float: right
+
+  // Hide impossible property movements
+  div[properties-inject]
+    details:first-child summary a[data-up],
+    details:last-child summary a[data-down]
+      @extend .hidden
 
   //
   // ENUM values spacing

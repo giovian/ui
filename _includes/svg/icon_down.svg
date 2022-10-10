@@ -1,4 +1,4 @@
 <svg class="icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <use href="#view-symbol" />
-  <use href="#view-circle" />
+  <use href="#down-symbol" />
+  <use href="#down-circle" />
 </svg>
