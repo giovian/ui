@@ -139,14 +139,18 @@
 .rounded-small
   border-radius: $border-small
 
-//
-// LOGGED CLASSES
-// --------------------------------------
-html.logged .unlogged, html.unlogged .logged
-  @extend .hidden
 
 //
-// ROLE CLASSES
+// HIDE CLASSES
 // --------------------------------------
-html.role-admin .role-guest, html.role-guest .role-admin
+
+// LOGGED CLASSES
+html.logged .unlogged,
+html.unlogged .logged,
+// ROLE CLASSES
+html.role-admin .role-guest,
+html.role-guest .role-admin,
+// FORK CLASSES
+body[fork=true] .unforked,
+body[fork=false] .forked
   @extend .hidden
