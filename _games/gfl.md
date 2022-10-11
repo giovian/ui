@@ -27,7 +27,7 @@ order: 20
       # Single user game filed
       - "player.json"
 ```
-<div class="role-admin">
+<div class="role-admin unforked">
 {% include widgets/schema.html file='gfl/player' %}
 </div>
 {% include widgets/document.html file='gfl/player' %}
