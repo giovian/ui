@@ -3,7 +3,7 @@ $('details').each ->
   # Prepare
   detail = $ @
   summary = detail.find 'summary'
-  id = "#{$('body').attr 'page-title'}|#{summary.text()}"
+  id = "#{$('body').attr 'page-title'}|#{$.trim summary.text()}"
 
   # Initial check
   if storage.get('details')?[id] isnt undefined
