@@ -110,6 +110,18 @@ $('form.schema').each (i, element)->
   # REMOVE ENUM VALUE
   form.on 'click', 'a[data-remove=enum]', -> $(@).parents('[data-type]').remove()
 
+  # MOVE ENUM DOWN
+  form.on 'click', 'a[data-down=enum]', ->
+    container = $(@).parents '[data-type]'
+    container.insertAfter container.next()
+    return
+
+  # MOVE ENUM UP
+  form.on 'click', 'a[data-up=enum]', ->
+    container = $(@).parents '[data-type]'
+    container.insertBefore container.prev()
+    return
+
   # Change schema type
   form.on 'change', 'select[name=type]', ->
     inject = form.find('[inject]')
