@@ -210,9 +210,11 @@ form
     float: right
 
   // Hide impossible property movements
-  div[properties-inject]
+  div[properties-inject], div[enum-inject]
     details:first-child summary a[data-up],
-    details:last-child summary a[data-down]
+    details:last-child summary a[data-down],
+    [data-type]:first-child a[data-up],
+    [data-type]:last-child a[data-down]
       @extend .hidden
 
   //
