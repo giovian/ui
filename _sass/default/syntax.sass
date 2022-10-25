@@ -1,0 +1,19 @@
+pre.highlight,
+code.highlighter-rouge
+  filter: saturate(40%)
+  [class~='na'], [class~='nv'], [class~='kc']
+    color: $green-dark
+  [class^='s']
+    color: var(--orange_2)
+  [class~='nx']
+    color: var(--orange_1)
+  [class~='nb']
+    color: desaturate($orange-dark, 30%)
+  [class^='o'], [class~='pi']
+    color: var(--pink)
+  [class~='kr'], [class~='no'], [class~='dl']
+    color: var(--blue_3)
+  [class~='nt'], [class~='m']
+    color: lighten($pink-dark, 15%)
+  [class^='c']
+    color: $dark-50
