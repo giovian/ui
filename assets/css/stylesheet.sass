@@ -3,12 +3,6 @@
 // Import SASS variabiles
 @import variabiles
 
-// Import syntax
-[mode='dark']
-  @import {{ site.css.syntax.dark | default: 'rouge/molokai_custom' | prepend: 'syntax/' }}
-[mode='light']
-  @import {{ site.css.syntax.light | default: 'rouge/github' | prepend: 'syntax/' }}
-
 // Import theme
 @import {{ site.css.theme | default: 'default' }}
 

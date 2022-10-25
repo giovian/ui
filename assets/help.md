@@ -43,6 +43,7 @@ order: 1000
 - metadata `{{ metadata | inspect }}` {% if metadata == default_metadata %}{{ def }}{% endif %}
 - pagination `{{ pagination | inspect }}` {% if pagination == default_pagination %}{{ def }}{% endif %}
 - sort_by `{{ sort_by }}` {% if sort_by == default_sort_by %}{{ def }}{% endif %}
+- prefers-color-scheme <code class="bg-secondary"><span class="prefers-color-scheme"></span></code>
 </details>
 
 <details markdown=1>
