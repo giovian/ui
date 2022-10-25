@@ -24,7 +24,6 @@ button:enabled, input[type=button], input[type=reset], input[type=submit]
 
 // SUBMIT and RESET
 button
-  @extend .fg-secondary, .p-around-small, .inline-block, .border, .rounded-medium
   svg + span
     color: inherit !important
     font-size: 100% !important
@@ -32,22 +31,11 @@ button
   &[type]:not(:first-child)
     margin-left: $space/4 !important
   &[type=submit]
-    color: var(--green) !important
-    border-color: var(--green) !important
-    &:active, &:focus
-      color: var(--green_active) !important
-      border-color: var(--green_active) !important
+    @extend .green
   &[type="reset"]
-    color: var(--red) !important
-    border-color: var(--red) !important
-    &:active, &:focus
-      color: var(--red_active) !important
-      border-color: var(--red_active) !important
-  &[type=button]
-    border-color: var(--fg-secondary) !important
-    &:active, &:focus
-      color: var(--fg) !important
-      border-color: var(--fg) !important
+    @extend .red
+  // &[type=button]
+  //   @extend .secondary
 
 // RESET and PADDINGS
 input:not([type=range]), textarea, select
@@ -104,7 +92,8 @@ form
     @extend .border-top, .border-secondary
 
   // Border bottom
-  div.item, [data-type=item], [properties-inject]
+  // [properties-inject]
+  div.item:not(:last-child), [data-type=item]
     @extend .border-bottom, .border-secondary
 
   // Bordered
@@ -172,9 +161,6 @@ form
   // Disabled
   input:disabled, button:disabled, select:disabled, input[readonly]
     @extend .disabled
-  // BUTTON
-  .button
-    @extend .p-around-small, .font-small, .bg
 
   //
   // COLORS
@@ -182,7 +168,7 @@ form
 
   // BG Secondary
   & > h3, & > h4
-    @extend .bg-secondary
+    @extend .border-bottom
 
   //
   // DISPLAY
@@ -236,7 +222,7 @@ form
 // --------------------------------------
 main form
   display: table
-  @extend .mv, .border-right, .border-left, .border-bottom, .border-secondary
+  @extend .mv, .border-secondary
 
 .sidebar form
   &:not(:last-child) [data-type=button]

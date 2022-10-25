@@ -49,13 +49,21 @@ $color-lightness-light: (bg: 94%, fg: 17%, bg_secondary: 91%, fg_secondary: 50%,
 
 Colors are applied to elements with the classes `.blue .red .green .orange .pink`{:.language-css}.
 <div class="grid">
-{%- assign colors = "blue,green,red,orange,pink,default" | split: "," -%}
-{% for color in colors %}
-<div class="p-around rounded {{ color }}">
-Example {{ color }} <span class="fg-secondary">secondary text</span>
-<div class="p-around mvh bg-secondary rounded">Secondary background</div>
-and <a href="#">Link</a>
+  {%- assign colors = "default,secondary,blue,green,red,orange,pink" | split: "," -%}
+  {% for color in colors %}
+    <div class="p-around rounded {{ color }}">
+    Example <i>{{ color }}</i>: <span class="fg-secondary">secondary text</span>
+    <div class="p-around mvh bg-secondary rounded">Secondary background</div>
+    and <a href="#">Link</a>
+    </div>
+  {% endfor %}
 </div>
+
+## Buttons
+
+<div class="flex" style="gap: .2em;">
+{% for color in colors %}
+<button type="button" name="button" class="{{ color }}">{{ color | capitalize }}</button>
 {% endfor %}
 </div>
 

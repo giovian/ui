@@ -1,0 +1,12 @@
+//
+// BUTTON
+// --------------------------------------
+button, [mode] button
+  padding: $space/3 $space
+  @extend .pointer, .inline-block, .border, .rounded-medium
+  background: var(--bg)
+  color: var(--fg-secondary) !important
+  &:hover
+    background: var(--bg-secondary)
+  &:active
+    color: var(--fg) !important
