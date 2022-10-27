@@ -15,24 +15,14 @@
   --orange_1: OrangeRed
   --orange_2: Orange
   --pink: Fuchsia
-  --grey_1: hsl(0, 0%,  4%)
-  --grey_2: hsl(0, 0%,  9%)
-  --grey_3: hsl(0, 0%, 17%)
-  --grey_4: hsl(0, 0%, 21%)
-  --grey_5: hsl(0, 0%, 50%)
-  --grey_6: hsl(0, 0%, 56%)
-  --grey_7: hsl(0, 0%, 79%)
-  --grey_8: hsl(0, 0%, 83%)
-  --grey_9: hsl(0, 0%, 93%)
-  --grey_10: hsl(0, 0%, 98%)
   //
   // DARK MODE
   // --------------------------------------
-  --bg: hsl(0, 0%, 4%)
-  --bg-secondary: hsl(0, 0%, 9%)
-  --fg: hsl(0, 0%, 83%)
-  --fg-secondary: hsl(0, 0%, 56%)
-  --border: hsl(0, 0%, 21%)
+  --bg: #{$dark-bg}
+  --bg-secondary: #{$dark-bg-secondary}
+  --fg: #{$dark-fg}
+  --fg-secondary: #{$dark-fg-secondary}
+  --border: #{$dark-border}
   --link: #{$link-dark}
   --blue: #{$link-dark}
   --blue_active: var(--blue_2)
@@ -40,19 +30,17 @@
   --green_active: var(--green_2)
   --red: var(--red_1)
   --red_active: var(--red_2)
-  // color: var(--fg)
-  // background: var(--bg)
 
 // Color classes
 @each $color-name, $color-value in $colors-dark
   $hue: hue($color-value)
   .#{$color-name}
     --link:         #{$color-value}
-    --bg:           #{hsl($hue, 28%, map-get($color-lightness-dark, bg))}
-    --fg:           #{hsl($hue, 20%, map-get($color-lightness-dark, fg))}
-    --bg-secondary: #{hsl($hue, 21%, map-get($color-lightness-dark, bg_secondary))}
-    --fg-secondary: #{hsl($hue,  9%, map-get($color-lightness-dark, fg_secondary))}
-    --border:       #{hsl($hue, 12%, map-get($color-lightness-dark, border))}
+    --bg:           #{hsl($hue, map-get($color-saturation-dark, bg), map-get($color-lightness-dark, bg))}
+    --fg:           #{hsl($hue, map-get($color-saturation-dark, fg), map-get($color-lightness-dark, fg))}
+    --bg-secondary: #{hsl($hue, map-get($color-saturation-dark, bg_secondary), map-get($color-lightness-dark, bg_secondary))}
+    --fg-secondary: #{hsl($hue, map-get($color-saturation-dark, fg_secondary), map-get($color-lightness-dark, fg_secondary))}
+    --border:       #{hsl($hue, map-get($color-saturation-dark, border), map-get($color-lightness-dark, border))}
     color: var(--fg)
     background: var(--bg)
 
@@ -66,7 +54,7 @@
   --bg: hsl(0, 0%, 98%)
   --bg-secondary: hsl(0, 0%, 93%)
   --fg: hsl(0, 0%, 17%)
-  --fg-secondary: #{$dark-50}
+  --fg-secondary: #{$light-fg-secondary}
   --border: hsl(0, 0%, 79%)
   --link: #{$link-light}
   --blue: #{$link-light}

@@ -69,18 +69,11 @@ Colors are applied to elements with the classes `.blue .red .green .orange .pink
 
 ## Syntax highlight
 
-Syntax highlight theme is set in the `_config.yml` file with the value `css.syntax` for both `light` and `dark` modes; defaults are `rouge/github` and `rouge/molokai_custom`.
+Syntax highlight colors for dark and light color scheme are in {% include widgets/github_link.html path='_sass/default/syntax' remote=true %}.
 
-```yml
-# _config.yml
-css:
-  syntax:
-    dark: rouge/molokai_custom
-    light: rouge/github
-```
-{:.minimal}
-
-Possible syntax themes are in {% include widgets/github_link.html path='_sass/syntax' remote=true %}.
+<pre class="highlight">
+<span class="na">.na</span> <span class="nv">.nv</span> <span class="s">.s</span> <span class="nx">.nx</span> <span class="nb">.nb</span> <span class="o">.o</span> <span class="pi">.pi</span> <span class="kr">.kr</span> <span class="no">.no</span> <span class="nt">.nt</span> <span class="m">.m</span> <span class="c">.c</span> <span class="p">.p</span>
+</pre>
 
 {% include widgets/api.html include='page/sidebar' %}
 {% include widgets/api.html include='page/nav' %}
