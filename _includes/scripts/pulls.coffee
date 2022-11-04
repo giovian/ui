@@ -9,6 +9,18 @@ open_pull = ->
   head = "#{storage.key.split('/')[0]}:#{storage.get 'repository.default_branch'}"
   # Base: The name of the branch you want the changes pulled into
   base = storage.get 'repository.default_branch'
-  if confirm "#{post} - #{head}"
-    console.log post, head
+  if confirm "Open pull request in #{storage.get 'repository.parent'} from #{head}?"
+    # Create a Pull request
+    load =
+      title: 'Create a pull request'
+      body: "From #{head}"
+      head: head
+      base: base
+    notification load.message
+    open = $.ajax post,
+      method: 'POST'
+      data: JSON.stringify load
+    open.done (data) ->
+      notification 'Pull opened', 'green'
+      console.log data
   return # End open pull
