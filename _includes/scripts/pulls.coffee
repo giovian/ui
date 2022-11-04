@@ -5,10 +5,11 @@
 # Logged role is `admin`
 # `site.time` is ahead of builds
 process_pulls = (pulls) ->
-  pulls.each ->
+  for pull in pulls
     # Get a pull request
     # <https://docs.github.com/en/rest/pulls/pulls#get-a-pull-request>
-    console.log @
+    pull_url = "#{github_api_url}/pulls/#{pull.number}"
+    console.log pull_url
     return
   return # End process_pulls
 
