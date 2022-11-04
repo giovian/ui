@@ -12,7 +12,8 @@ process_pulls = (pulls) ->
     files_url = "#{github_api_url}/pulls/#{pull.number}/files"
     files = $.get files_url
     files.done (data) ->
-      if data.length
+      data = cache files_url, data
+      if data?.length
         for file in data
           console.log "#{author}: #{data.filename} -> #{data.status}"
       return
