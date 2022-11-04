@@ -15,7 +15,7 @@ process_pulls = (pulls) ->
       data = cache files_url, data
       if data?.length
         for file in data
-          console.log "#{author}: #{data.filename} -> #{data.status}"
+          console.log "#{author}: #{file.filename} -> #{file.status}"
       return
   return # End process_pulls
 
