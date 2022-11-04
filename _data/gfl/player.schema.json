@@ -34,7 +34,7 @@
       "title": "First color",
       "type": "string",
       "format": "color",
-      "default": "#ff0000",
+      "default": "#fff",
       "class": "inline",
       "autocomplete": "off"
     },
@@ -42,15 +42,7 @@
       "title": "Second color",
       "type": "string",
       "format": "color",
-      "default": "#00ff00",
-      "class": "inline",
-      "autocomplete": "off"
-    },
-    "color_3": {
-      "title": "Third color",
-      "type": "string",
-      "format": "color",
-      "default": "#0000ff",
+      "default": "#000",
       "class": "inline",
       "autocomplete": "off"
     },
