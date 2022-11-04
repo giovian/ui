@@ -25,7 +25,7 @@ $('form.document[data-file]').each ->
     # Remove description
     form.find('h3 + p').remove()
     # If form was editing from a csv TABLE, reset class
-    $(document).find("table.csv-table[data-file='#{form.attr 'data-file'}'] tr[disabled]").removeAttr 'disabled'
+    $(document).find("table.csv-table[data-file='#{form.attr 'data-file'}'] tr.blink").removeClass 'blink'
     # Load schema
     if form.attr 'data-file' then form_load_schema form.attr('data-file'), 'document'
     return # end Reset handler

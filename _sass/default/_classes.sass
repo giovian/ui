@@ -140,6 +140,14 @@
 .rounded-small
   border-radius: $border-small
 
+// BLINK
+.blink
+  animation: blinker 1s step-start infinite
+
+@keyframes blinker
+  50%
+    opacity: .3
+
 //
 // HIDE CLASSES
 // --------------------------------------
