@@ -47,32 +47,33 @@ For every colors there are five shades defined in the lightness SASS list for ba
 $color-lightness-light: (bg: 94%, fg: 17%, bg_secondary: 91%, fg_secondary: 50%, border: 79%) !default
 ```
 
-Colors are applied to elements with the classes `.blue .red .green .orange .pink`{:.language-css}.
+Colors are applied to elements with the classes `.secondary .blue .red .green .orange .pink`{:.language-css}.
 <div class="grid">
-{%- assign colors = "blue,green,red,orange,pink,default" | split: "," -%}
-{% for color in colors %}
-<div class="p-around rounded {{ color }}">
-Example {{ color }} <span class="fg-secondary">secondary text</span>
-<div class="p-around mvh bg-secondary rounded">Secondary background</div>
-and <a href="#">Link</a>
+  {%- assign colors = "default,secondary,blue,green,red,orange,pink" | split: "," -%}
+  {% for color in colors %}
+    <div class="p-around rounded {{ color }}">
+    Example <i>{{ color }}</i>: <span class="fg-secondary">secondary text</span>
+    <div class="p-around mvh bg-secondary rounded">Secondary background</div>
+    and <a href="#">Link</a>
+    </div>
+  {% endfor %}
 </div>
+
+## Buttons
+
+<div class="flex" style="gap: .2em;">
+{% for color in colors %}
+<button type="button" name="button" class="{{ color }}">{{ color | capitalize }}</button>
 {% endfor %}
 </div>
 
 ## Syntax highlight
 
-Syntax highlight theme is set in the `_config.yml` file with the value `css.syntax` for both `light` and `dark` modes; defaults are `rouge/github` and `rouge/molokai_custom`.
+Syntax highlight colors for dark and light color scheme are in {% include widgets/github_link.html path='_sass/default/syntax' remote=true %}.
 
-```yml
-# _config.yml
-css:
-  syntax:
-    dark: rouge/molokai_custom
-    light: rouge/github
-```
-{:.minimal}
-
-Possible syntax themes are in {% include widgets/github_link.html path='_sass/syntax' remote=true %}.
+<pre class="highlight">
+<span class="na">.na</span> <span class="nv">.nv</span> <span class="s">.s</span> <span class="nx">.nx</span> <span class="nb">.nb</span> <span class="o">.o</span> <span class="pi">.pi</span> <span class="kr">.kr</span> <span class="no">.no</span> <span class="nt">.nt</span> <span class="m">.m</span> <span class="c">.c</span> <span class="p">.p</span>
+</pre>
 
 {% include widgets/api.html include='page/sidebar' %}
 {% include widgets/api.html include='page/nav' %}

@@ -1,5 +1,5 @@
 <div data-type='button'>
-  <button class="prevent-default" title="Save" type="submit">{% include svg/icon_confirm.svg %}<span>Save</span></button>
-  <button class="prevent-default" title="Reset" type="reset">{% include svg/icon_remove.svg %}<span>Reset</span></button>
-  {% if site.github.environment == 'development' %}<button class="prevent-default" title="View" type="button">{% include svg/icon_view.svg %}<span>View</span></button>{% endif %}
+  <button class="prevent-default" title="Save" type="submit">{% comment %} {% include svg/icon_confirm.svg %} {% endcomment %}Save</button>
+  <button class="prevent-default" title="Reset" type="reset">{% comment %} {% include svg/icon_remove.svg %} {% endcomment %}Reset</button>
+  {% if site.github.environment == 'development' %}<button class="prevent-default secondary" title="View" type="button">{% comment %} {% include svg/icon_view.svg %} {% endcomment %}View</button>{% endif %}
 </div>

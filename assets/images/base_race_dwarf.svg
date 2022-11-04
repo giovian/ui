@@ -1,0 +1,7 @@
+<svg width="100" height="100" version="1.1" viewBox="0 0 26.458 26.458" xmlns="http://www.w3.org/2000/svg">
+  <rect class="color_1" stroke="none" x="0" y="0" width="100%" height="100%" />
+  <rect class="color_2" fill="none" stroke-width="1" x="0" y="0" width="100%" height="100%" />
+  <g>
+    <path class="color_2" stroke="none" transform="scale(.26458)" d="m50 2-7.6523 15.303c-8.2679 5.1988-16.348 15.1-16.348 22.697 0 10 4 26-2 32s10 15 26 15c16 0 32-9 26-15s-2-22-2-32c0-7.5971-8.0797-17.498-16.348-22.697zm-16 46h32v4c-10 0-16 4-16 4s-6-4-16-4zm8 16h16l1 1-1 1h-16l-1-1zm1 4h14l1 1-1 1h-14l-1-1zm1 4h12l1 1-1 1h-12l-1-1z"/>
+  </g>
+</svg>

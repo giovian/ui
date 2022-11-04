@@ -1,4 +1,10 @@
 // FOOTNOTES
+a.footnote
+  margin-inline: .2*$space
+  &:before
+    content: "["
+  &:after
+    content: "]"
 .footnotes
   background: var(--bg-secondary)
   @extend .rounded

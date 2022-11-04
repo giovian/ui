@@ -39,33 +39,61 @@ $z-index-notification:    2000 !default
 // --------------------------------------
 
 //
-// DARK MODE
+// Shades
 // --------------------------------------
+
+// DARK MODE
+$dark-fg:             hsl(0, 0%, 83%) !default
+$dark-fg-secondary:   hsl(0, 0%, 56%) !default
+$dark-border:         hsl(0, 0%, 21%) !default
+$dark-bg-secondary:   hsl(0, 0%, 9%) !default
+$dark-bg:             hsl(0, 0%, 4%) !default
+// LIGHT MODE
+$light-fg-secondary:  hsl(0, 0%, 50%) !default
 // Colors
 $blue-dark:     DodgerBlue !default
 $red-dark:      Red !default
 $green-dark:    LimeGreen !default
 $orange-dark:   Orange !default
 $pink-dark:     Fuchsia !default
+$grey-dark:     DimGray !default
 // Links
 $link-dark:     $blue-dark !default
 // As a list
 $colors-dark: (blue: $blue-dark, red: $red-dark, green: $green-dark, orange: $orange-dark, pink: $pink-dark) !default
+
+// Lightness and saturation levels
+$color-lightness-dark: (bg: 7%, fg: 83%, bg-secondary: 11%, fg-secondary: 58%, border: 21%) !default
+$color-saturation-dark: (bg: 28%, fg: 20%, bg-secondary: 21%, fg-secondary: 9%, border: 12%) !default
+
 // Colors shades
-$color-lightness-dark: (bg: 7%, fg: 83%, bg_secondary: 11%, fg_secondary: 58%, border: 21%) !default
+
+// BLUE SECONDARY
+$blue-dark-hue: hue(map-get($colors-dark, blue))
+$blue-dark-fg-secondary: hsl($blue-dark-hue, map-get($color-saturation-dark, fg-secondary), map-get($color-lightness-dark, fg-secondary))
+
+// GREEN SECONDARY
+$green-dark-hue: hue(map-get($colors-dark, green))
+$green-dark-fg-secondary: hsl($green-dark-hue, map-get($color-saturation-dark, fg-secondary), map-get($color-lightness-dark, fg-secondary))
+
+// RED SECONDARY
+$red-dark-hue: hue(map-get($colors-dark, red))
+$red-dark-fg-secondary: hsl($red-dark-hue, map-get($color-saturation-dark, fg-secondary), map-get($color-lightness-dark, fg-secondary))
 
 //
 // LIGHT MODE
 // --------------------------------------
 // Colors
-$blue-light:     MediumBlue !default
-$red-light:      FireBrick !default
-$green-light:    DarkGreen !default
-$orange-light:   OrangeRed !default
-$pink-light:     Fuchsia !default
+$blue-light:    MediumBlue !default
+$red-light:     FireBrick !default
+$green-light:   DarkGreen !default
+$orange-light:  OrangeRed !default
+$pink-light:    Fuchsia !default
+$grey-light:    Gainsboro !default
 // Links
 $link-light:     $blue-light !default
 // As a list
 $colors-light: (blue: $blue-light, red: $red-light, green: $green-light, orange: $orange-light, pink: $pink-light) !default
-// Colors shades
-$color-lightness-light: (bg: 94%, fg: 17%, bg_secondary: 91%, fg_secondary: 50%, border: 79%) !default
+// Lightness and saturation levels
+$color-lightness-light: (bg: 94%, fg: 17%, bg-secondary: 91%, fg-secondary: 50%, border: 79%) !default
+$color-saturation-light: (bg: 28%, fg: 17%, bg-secondary: 21%, fg-secondary: 9%, border: 12%) !default

@@ -290,12 +290,13 @@ $(document).on 'click', ".csv-table a[href='#edit-entry']", ->
   head = csv[0].split ','
   # Apply highlight class
   table.find('tr').removeAttr 'disabled'
-  row.attr 'disabled', ''
+  row.addClass 'blink'
   # Check Document FORM is present
   form = $ $(document).find("form.document[data-file='#{document_file}']")[0]
   if !Object.keys(form).length
     alert "Include 'widgets/document.html' form in the page"
-    row.removeAttr 'disabled'
+    row.removeClass 'blink'
+    link.blur()
     return # End delete event
   # Update edit index
   form.find('[name=index]').val index
@@ -309,6 +310,8 @@ $(document).on 'click', ".csv-table a[href='#edit-entry']", ->
     form.find("[name='#{property}']").val values[i]
   # Scroll FORM into view
   form[0].scrollIntoView()
+  # Release button
+  link.blur()
   return # End edit event
 
 {%- capture api -%}

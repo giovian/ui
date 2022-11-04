@@ -73,13 +73,14 @@
 .pbz
   padding-bottom: 0 !important
 
-// BUTTONS
-.button, .pointer
+// CURSOR
+.pointer
   cursor: pointer
+.wait
+  cursor: wait
 
 // DISABLED ELEMENTS
 [disabled]
-  cursor: wait
   opacity: .5
   a, label, input, select, [datetime]
     cursor: wait !important
@@ -139,11 +140,17 @@
 .rounded-small
   border-radius: $border-small
 
+// BLINK
+.blink
+  animation: blinker 1s step-start infinite
+
+@keyframes blinker
+  50%
+    opacity: .3
 
 //
 // HIDE CLASSES
 // --------------------------------------
-
 html.logged .unlogged,
 html.unlogged .logged,
 html.role-admin .role-guest,
@@ -151,3 +158,26 @@ html.role-guest .role-admin,
 body[fork=true] .unforked,
 body[fork=false] .forked
   @extend .hidden
+
+//
+// PREFER COLOR SCHEME
+// --------------------------------------
+@media not all and (prefers-color-scheme)
+  .prefers-color-scheme::after
+    content: "not-supported"
+
+@media (prefers-color-scheme)
+  .prefers-color-scheme::after
+    content: "supported"
+
+@media (prefers-color-scheme: light)
+  .prefers-color-scheme::after
+    content: "light"
+
+@media (prefers-color-scheme: dark)
+  .prefers-color-scheme::after
+    content: "dark"
+
+@media (prefers-color-scheme: no-preference)
+  .prefers-color-scheme::after
+    content: "no-preference"
