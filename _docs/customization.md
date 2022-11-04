@@ -47,7 +47,7 @@ For every colors there are five shades defined in the lightness SASS list for ba
 $color-lightness-light: (bg: 94%, fg: 17%, bg_secondary: 91%, fg_secondary: 50%, border: 79%) !default
 ```
 
-Colors are applied to elements with the classes `.blue .red .green .orange .pink`{:.language-css}.
+Colors are applied to elements with the classes `.secondary .blue .red .green .orange .pink`{:.language-css}.
 <div class="grid">
   {%- assign colors = "default,secondary,blue,green,red,orange,pink" | split: "," -%}
   {% for color in colors %}

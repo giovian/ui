@@ -6,7 +6,8 @@ notification = (code, cls, persist = false) ->
     container = $(@)
     if persist then container.empty()
     container.append div
-    # Log notification in console as well
+    # Log notification in console
+    # Remove HTML tags
     console.log $("<b>#{code}</b>").text(), new Date().toLocaleTimeString("{{ site.language | default: 'en-US' }}")
     # Timer to fade and expire
     if !persist then div.delay(3000).slideUp 'slow', -> div.remove()
@@ -27,7 +28,7 @@ notification('text', 'color', persist)
 
 **Arguments**
 
-- `text`: text to show
-- `color`: added as class, default to `.bg-secondary`{:.language-sass}
+- `code`: text to show
+- `cls`: added as class, default to `.bg-secondary`{:.language-sass}
 - `persist`: boolean, if `true` the notification will not fade out
 {%- endcapture -%}
