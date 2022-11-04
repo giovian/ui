@@ -1,5 +1,15 @@
+# Process pull requests
+# pulls: Non empty array of pull requests
+# `site.github.environment` isnt `development`
+# Repository is not a fork
+# Logged role is `admin`
+# `site.time` is ahead of builds
 process_pulls = (pulls) ->
-  console.log pulls
+  pulls.each ->
+    # Get a pull request
+    # <https://docs.github.com/en/rest/pulls/pulls#get-a-pull-request>
+    console.log @
+    return
   return # End process_pulls
 
 open_pull = ->
@@ -16,11 +26,10 @@ open_pull = ->
       body: "From #{head}"
       head: head
       base: base
-    notification load.message
+    notification load.title
     open = $.ajax post,
       method: 'POST'
       data: JSON.stringify load
     open.done (data) ->
-      notification 'Pull opened', 'green'
-      console.log data
+      notification "Pull ##{data.number} opened", 'green'
   return # End open pull
