@@ -61,22 +61,24 @@ $grey-dark:     DimGray !default
 $link-dark:     $blue-dark !default
 // As a list
 $colors-dark: (blue: $blue-dark, red: $red-dark, green: $green-dark, orange: $orange-dark, pink: $pink-dark) !default
+
 // Lightness and saturation levels
-$color-lightness-dark: (bg: 7%, fg: 83%, bg_secondary: 11%, fg_secondary: 58%, border: 21%) !default
-$color-saturation-dark: (bg: 28%, fg: 20%, bg_secondary: 21%, fg_secondary: 9%, border: 12%) !default
+$color-lightness-dark: (bg: 7%, fg: 83%, bg-secondary: 11%, fg-secondary: 58%, border: 21%) !default
+$color-saturation-dark: (bg: 28%, fg: 20%, bg-secondary: 21%, fg-secondary: 9%, border: 12%) !default
+
 // Colors shades
 
 // BLUE SECONDARY
 $blue-dark-hue: hue(map-get($colors-dark, blue))
-$blue-dark-fg-secondary: hsl($blue-dark-hue, map-get($color-saturation-dark, fg_secondary), map-get($color-lightness-dark, fg_secondary))
+$blue-dark-fg-secondary: hsl($blue-dark-hue, map-get($color-saturation-dark, fg-secondary), map-get($color-lightness-dark, fg-secondary))
 
 // GREEN SECONDARY
 $green-dark-hue: hue(map-get($colors-dark, green))
-$green-dark-fg-secondary: hsl($green-dark-hue, map-get($color-saturation-dark, fg_secondary), map-get($color-lightness-dark, fg_secondary))
+$green-dark-fg-secondary: hsl($green-dark-hue, map-get($color-saturation-dark, fg-secondary), map-get($color-lightness-dark, fg-secondary))
 
 // RED SECONDARY
 $red-dark-hue: hue(map-get($colors-dark, red))
-$red-dark-fg-secondary: hsl($red-dark-hue, map-get($color-saturation-dark, fg_secondary), map-get($color-lightness-dark, fg_secondary))
+$red-dark-fg-secondary: hsl($red-dark-hue, map-get($color-saturation-dark, fg-secondary), map-get($color-lightness-dark, fg-secondary))
 
 //
 // LIGHT MODE
@@ -93,5 +95,5 @@ $link-light:     $blue-light !default
 // As a list
 $colors-light: (blue: $blue-light, red: $red-light, green: $green-light, orange: $orange-light, pink: $pink-light) !default
 // Lightness and saturation levels
-$color-lightness-light: (bg: 94%, fg: 17%, bg_secondary: 91%, fg_secondary: 50%, border: 79%) !default
-$color-saturation-light: (bg: 28%, fg: 17%, bg_secondary: 21%, fg_secondary: 9%, border: 12%) !default
+$color-lightness-light: (bg: 94%, fg: 17%, bg-secondary: 91%, fg-secondary: 50%, border: 79%) !default
+$color-saturation-light: (bg: 28%, fg: 17%, bg-secondary: 21%, fg-secondary: 9%, border: 12%) !default

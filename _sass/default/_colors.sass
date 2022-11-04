@@ -35,17 +35,15 @@
 @each $color-name, $color-value in $colors-dark
   $hue: hue($color-value)
   .#{$color-name}
-    --link:         #{$color-value}
-    --bg:           #{hsl($hue, map-get($color-saturation-dark, bg), map-get($color-lightness-dark, bg))}
-    --fg:           #{hsl($hue, map-get($color-saturation-dark, fg), map-get($color-lightness-dark, fg))}
-    --bg-secondary: #{hsl($hue, map-get($color-saturation-dark, bg_secondary), map-get($color-lightness-dark, bg_secondary))}
-    --fg-secondary: #{hsl($hue, map-get($color-saturation-dark, fg_secondary), map-get($color-lightness-dark, fg_secondary))}
-    --border:       #{hsl($hue, map-get($color-saturation-dark, border), map-get($color-lightness-dark, border))}
+    --link: #{$color-value}
+    @each $element, $percent in $color-lightness-dark
+      $sat: map-get($color-saturation-dark, $element)
+      --#{$element}: #{hsl($hue, $sat, $percent)}
     color: var(--fg)
     background: var(--bg)
 
 .secondary
-  --bg:             #{hsl(0, 0%, map-get($color-lightness-dark, bg_secondary))}
+  --bg:             #{hsl(0, 0%, map-get($color-lightness-dark, bg-secondary))}
   --bg-secondary:   #{hsl(0, 0%, map-get($color-lightness-dark, border))}
   color: var(--fg)
   background: var(--bg)
@@ -70,17 +68,15 @@
   @each $color-name, $color-value in $colors-light
     $hue: hue($color-value)
     .#{$color-name}
-      --link:         #{$color-value}
-      --bg:           #{hsl($hue, 28%, map-get($color-lightness-light, bg))}
-      --fg:           #{hsl($hue, 17%, map-get($color-lightness-light, fg))}
-      --bg-secondary: #{hsl($hue, 21%, map-get($color-lightness-light, bg_secondary))}
-      --fg-secondary: #{hsl($hue,  9%, map-get($color-lightness-light, fg_secondary))}
-      --border:       #{hsl($hue, 12%, map-get($color-lightness-light, border))}
+      --link: #{$color-value}
+      @each $element, $percent in $color-lightness-light
+        $sat: map-get($color-saturation-light, $element)
+        --#{$element}: #{hsl($hue, $sat, $percent)}
       color: var(--fg)
       background: var(--bg)
 
   .secondary
-    --bg:             #{hsl(0, 0%, map-get($color-lightness-light, bg_secondary))}
+    --bg:             #{hsl(0, 0%, map-get($color-lightness-light, bg-secondary))}
     --bg-secondary:   #{hsl(0, 0%, map-get($color-lightness-light, border))}
     color: var(--fg)
     background: var(--bg)
@@ -109,16 +105,14 @@
   @each $color-name, $color-value in $colors-light
     $hue: hue($color-value)
     .#{$color-name}
-      --link:         #{$color-value}
-      --bg:           #{hsl($hue, 28%, map-get($color-lightness-light, bg))}
-      --fg:           #{hsl($hue, 17%, map-get($color-lightness-light, fg))}
-      --bg-secondary: #{hsl($hue, 21%, map-get($color-lightness-light, bg_secondary))}
-      --fg-secondary: #{hsl($hue,  9%, map-get($color-lightness-light, fg_secondary))}
-      --border:       #{hsl($hue, 12%, map-get($color-lightness-light, border))}
+      --link: #{$color-value}
+      @each $element, $percent in $color-lightness-light
+        $sat: map-get($color-saturation-light, $element)
+        --#{$element}: #{hsl($hue, $sat, $percent)}
       color: var(--fg)
       background: var(--bg)
   .secondary
-    --bg:             #{hsl(0, 0%, map-get($color-lightness-light, bg_secondary))}
+    --bg:             #{hsl(0, 0%, map-get($color-lightness-light, bg-secondary))}
     --bg-secondary:   #{hsl(0, 0%, map-get($color-lightness-light, border))}
     color: var(--fg)
     background: var(--bg)
@@ -143,17 +137,15 @@
     @each $color-name, $color-value in $colors-dark
       $hue: hue($color-value)
       .#{$color-name}
-        --link:         #{$color-value}
-        --bg:           #{hsl($hue, 28%, map-get($color-lightness-dark, bg))}
-        --fg:           #{hsl($hue, 20%, map-get($color-lightness-dark, fg))}
-        --bg-secondary: #{hsl($hue, 21%, map-get($color-lightness-dark, bg_secondary))}
-        --fg-secondary: #{hsl($hue,  9%, map-get($color-lightness-dark, fg_secondary))}
-        --border:       #{hsl($hue, 12%, map-get($color-lightness-dark, border))}
+        --link: #{$color-value}
+        @each $element, $percent in $color-lightness-dark
+          $sat: map-get($color-saturation-dark, $element)
+          --#{$element}: #{hsl($hue, $sat, $percent)}
         color: var(--fg)
         background: var(--bg)
 
     .secondary
-      --bg:             #{hsl(0, 0%, map-get($color-lightness-dark, bg_secondary))}
+      --bg:             #{hsl(0, 0%, map-get($color-lightness-dark, bg-secondary))}
       --bg-secondary:   #{hsl(0, 0%, map-get($color-lightness-dark, border))}
       color: var(--fg)
       background: var(--bg)

@@ -12,8 +12,12 @@ svg
 // Base and Hover/Active colors
 
 // Edit
-a[href^='#edit'] svg.icon use
-  fill: $blue-dark-fg-secondary !important
+a[href^='#edit']
+  svg.icon use
+    fill: $blue-dark-fg-secondary !important
+  &:active, &:focus
+    svg.icon use
+      fill: var(--blue_active) !important
 
 // Submit, Add
 a[href^='#add'], a[href^='#submit'], [type=submit]
