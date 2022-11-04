@@ -6,11 +6,16 @@
 # `site.time` is ahead of builds
 process_pulls = (pulls) ->
   for pull in pulls
-    # Get a pull request
-    # <https://docs.github.com/en/rest/pulls/pulls#get-a-pull-request>
-    pull_url = "#{github_api_url}/pulls/#{pull.number}"
-    console.log pull_url
-    return
+    author = pull.head.user.login
+    # List pull requests files
+    # <https://docs.github.com/en/rest/pulls/pulls#list-pull-requests-files>
+    files_url = "#{github_api_url}/pulls/#{pull.number}/files"
+    files = $.get files_url
+    files.done (data) ->
+      if data.length
+        for file in data
+          console.log "#{author}: #{data.filename} -> #{data.status}"
+      return
   return # End process_pulls
 
 open_pull = ->

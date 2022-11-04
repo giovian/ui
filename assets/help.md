@@ -14,6 +14,7 @@ order: 1000
 </summary>
 - [{{ site.github.repository_nwo }}]({{ site.github.repository_url }})
 - Owner type `{{ repo.owner.type }}`
+- Owner name `{{ site.github.owner_name }}`
 - Page type `{% if site.github.is_user_page %}User{% endif %}{% if site.github.is_project_page %}Project{% endif %}`
 - Fork `{{ repo.fork | inspect }}`
 - Release `{{ site.github.releases | first | map: 'tag_name' | default: '-' }}` `{{ site.github.releases | first | map: 'name' | default: '-' }}`
