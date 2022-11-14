@@ -1,6 +1,9 @@
 ---
 ---
 
+# LOAD JEKYLL DATA
+{% include scripts/sort.coffee %}
+
 # HELPERS
 
 {% include scripts/prevent.coffee %}        # Prevent default events for links and forms
