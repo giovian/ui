@@ -1,6 +1,15 @@
 focus = true
-window.onfocus = -> focus = true
-window.onblur = -> focus = false
+
+window.onfocus = ->
+  $('html').toggleClass "focus"
+  focus = true
+  return
+
+window.onblur = ->
+  $("html").toggleClass "focus"
+  focus = false
+  return
+
 {%- capture api -%}
 ## Focus
 

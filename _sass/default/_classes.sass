@@ -140,6 +140,10 @@
 .rounded-small
   border-radius: $border-small
 
+// FOCUS desaturation
+html:not(.focus)
+  filter: saturate(0%)
+
 // BLINK
 .blink
   animation: blinker 1s step-start infinite

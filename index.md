@@ -24,4 +24,3 @@
 - check multiple filters on csv-table headers
 - double sidebar
 - check daytime approximations
-- use color classes for higlights
