@@ -32,13 +32,11 @@ order: 1000
 - mode `{{ mode }}` {% if mode == default_mode %}{{ def }}{% endif %}
 - nav `{{ nav | inspect }}` {% if nav == default_nav %}{{ def }}{% endif %}
 - header `{{ header | inspect }}` {% if header == default_header %}{{ def }}{% endif %}
-- navigation {% if navigation == default_navigation %}{{ def }}
-  {% endif %}{%- if navigation.size == 0 -%}`[]`{%- else -%}  
-  {% for n in navigation %}- `{{ n | strip }}`
+- navigation{% if navigation == default_navigation %} {{ def }}{% endif %}
+  {% if navigation.size == 0 %}`[]`{% else %}{% for n in navigation %}- `{{ n | strip }}`
   {% endfor %}{% endif %}
-- sidebar {% if sidebar == default_sidebar %}{{ def }}
-  {% endif %}{%- if sidebar.size == 0 -%}`[]`{%- else -%}  
-  {% for s in sidebar %}- `{{ s | strip }}`
+- sidebar{% if sidebar == default_sidebar %} {{ def }}{% endif %}
+  {% if sidebar.size == 0 %}`[]`{% else %}{% for s in sidebar %}- `{{ s | strip }}`
   {% endfor %}{% endif %}
 - footer `{{ footer | inspect }}` {% if footer == default_footer %}{{ def }}{% endif %}
 - metadata `{{ metadata | inspect }}` {% if metadata == default_metadata %}{{ def }}{% endif %}
@@ -100,7 +98,8 @@ order: 1000
 **Rate limit**
 <ul github-api-url='rate_limit' github-api-text="Remaining and used" github-api-out='rate.used,rate.remaining,resources.search.used,resources.search.remaining'></ul>
 </div>
-**Local storage**
-- [Log](#){:log-storage=''} in console
+**Console logs**
+- Log [local storage](#){:log-storage=''}
+- Log [site data](#){:onclick="console.log(site_data.obj)"}
 </div>
 </div>

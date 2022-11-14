@@ -79,7 +79,7 @@ $('form.document[data-file]').each ->
     get_document = $.get document_url
     get_document.fail (request, status, error) ->
       # File don't exist
-      if error is 'Not Found'
+      if request.status is 404
         # Prepare commit
         load =
           message: 'Create document'

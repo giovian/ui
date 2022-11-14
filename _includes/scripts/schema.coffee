@@ -178,7 +178,7 @@ $('form.schema').each (i, element)->
     get_schema = $.get schema_url
     get_schema.fail (request, status, error) ->
       # Schema not found
-      if error is 'Not Found'
+      if request.status is 404
         load =
           message: 'Create schema'
           content: encoded_content

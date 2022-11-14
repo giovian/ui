@@ -2,11 +2,13 @@ pre.highlight,
 figure.highlight,
 code.highlighter-rouge
   filter: saturate(40%)
-  [class^='s']
+  [class^='s'], [class^='p']
     color: var(--orange_2)
   [class~='nx']
     color: var(--orange_1)
-  [class~='nb'], [class~='nl']
+  [class~='err']
+    color: desaturate(Red, 50%)
+  [class~='nb']
     color: desaturate($orange-dark, 30%)
   [class~='kr'], [class~='no'], [class~='dl'], [class~='mi']
     color: var(--blue_3)
@@ -21,7 +23,7 @@ code.highlighter-rouge
 @media (prefers-color-scheme: dark)
   [class~='na'], [class~='nv'], [class~='kc']
     color: $green-dark
-  [class~='nt'], [class~='m']
+  [class~='nt'], [class~='m'], [class~='nl']
     color: lighten($pink-dark, 15%)
   [class^='o'], [class~='pi']
     color: lighten($pink-dark, 8%)
@@ -29,7 +31,7 @@ code.highlighter-rouge
 @media (prefers-color-scheme: light)
   [class~='na'], [class~='nv'], [class~='kc']
     color: $green-light
-  [class~='nt'], [class~='m']
+  [class~='nt'], [class~='m'], [class~='nl']
     color: darken($pink-dark, 15%)
   [class^='o'], [class~='pi']
     color: darken($pink-dark, 8%)

@@ -1,7 +1,7 @@
 # Default attributes
 inview_default = {{ site.inview | jsonify }} || {
   in:
-    element: "h2, h3"
+    element: "h1, h2, h3"
     attribute: "id"
   out:
     element: "#markdown-toc a"
@@ -61,7 +61,7 @@ Caveat: `config.out.attribute` can contain exact `config.in.attribute` or the an
 ```js
 config = {
   in:
-    element: "h2, h3"
+    element: "h1, h2, h3"
     attribute: "id"
   out:
     element: "#markdown-toc a"
