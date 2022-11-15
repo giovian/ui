@@ -6,32 +6,39 @@ updates = ->
 
   # Abort rate_limit low
   if storage.get('rate_limit') < 25
-    notification "Rate limit low for updates: #{storage.get 'rate_limit'}"
+    notification "Rate limit low for updates: #{storage.get 'rate_limit'}", 'red'
     return
 
-  # Request builds list if authenticated or commit list if guest
-  latest_url = github_api_url + if login.logged() then '/pages/builds' else '/commits'
+  # Request builds list if admin or commit list if guest
+  latest_url = github_api_url + if login.admin() then '/pages/builds' else '/commits'
   latest_build = $.get latest_url
   latest_build.done (data) ->
     data = cache latest_url, data
-    # Get latest build/commit date and SHA
-    [latest_date, latest_sha] = if login.logged()
+    # Get latest build date and SHA
+    [latest_date, latest_sha] = if login.admin()
       # Take the first 'built' build
       element = data.filter((build) -> build.status is 'built')[0]
       [element.created_at, element.commit]
+    # Get latest commit date and SHA
     else [data[0].commit.author.date, data[0].sha]
     unix = +new Date latest_date
     # Compare latest build created_at or commit date, and site.time
     if unix / 1000 > {{ site.time | date: "%s" }}
+      $('html').removeClass 'updated'
       # There was a build or a commit after site.time
       loc = window.location
+      url_start = loc.origin + loc.pathname
+      url_end = latest_date + '&sha=' + latest.sha.slice(0, 7) + loc.hash
       # If browser is unfocused refresh page
       if !focus
-        window.location.href = loc.origin + loc.pathname + '?latest=' + latest_date + loc.hash
-      else history.pushState null, '', loc.origin + loc.pathname + '?update_to=' + latest_date + loc.hash
+        # Refresh on blur
+        window.location.href = url_start + '?latest=' + url_end
+      # Push updated url in hystory
+      else history.pushState null, '', url_start + '?update_to=' + url_end
     else
+      $('html').addClass 'updated'
       # Build is updated, check sync and pulls for admin users
-      if login.storage()['role'] is 'admin'
+      if login.admin()
         # If it is a fork check if need sync or pull
         if storage.get 'repository.fork'
           # Get upstream commits

@@ -10,7 +10,8 @@
 <body
   class='{{ page.class | append: " " | append: site.class | strip }}'
   site-pages='{{ site.html_pages.size | plus: site.documents.size }}'
-  fork='{{ site.github.public_repositories | where: "full_name", site.github.repository_nwo | first | map: "fork" | first }}'
+  github-fork='{{ site.github.public_repositories | where: "full_name", site.github.repository_nwo | first | map: "fork" | first }}'
+  github-environment = '{{ site.github.environment }}'
   page-title='{{ page.title | slugify }}'
   page-collection='{{ page.collection }}'
   collection-order='{{ page.collection.order }}'

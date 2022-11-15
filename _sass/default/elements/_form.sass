@@ -98,7 +98,7 @@ form
 
   // Bordered
   &.border
-    & > h3, & > p
+    & > p
       @extend .border-bottom
     div.grid > div:not(:last-child)
       @extend .border-right
@@ -231,8 +231,8 @@ main form
   &:last-child [data-type=button]
     @extend .bg-secondary
   h3
+    @extend .p-around, .no-border, .bg-secondary
     font-size: 1em
-    @extend .p-around
   input
     max-width: 100%
   button svg + span

@@ -1,12 +1,14 @@
-focus = true
+# Default focus state
+# similar to html:not(.focus)
+focus = false
 
 window.onfocus = ->
-  $('html').toggleClass "focus"
+  $('html').addClass "focus"
   focus = true
   return
 
 window.onblur = ->
-  $("html").toggleClass "focus"
+  $("html").removeClass "focus"
   focus = false
   return
 

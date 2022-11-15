@@ -4,7 +4,9 @@ login =
   storage: -> storage.get('login') || {}
   text: -> "Logged as #{login.storage()['user']} (#{login.storage()['role']})"
 
-login.logged = -> storage.get('login.token')
+login.logged = -> storage.get 'login.token'
+
+login.admin = -> storage.get('login.role') is 'admin'
 
 login.login_link.on 'click', (e) ->
   token = prompt "Paste a GitHub personal token"

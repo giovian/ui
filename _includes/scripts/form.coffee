@@ -228,6 +228,22 @@ create_document_form = (form, schema) ->
       .find('[data-type="button"]')
       .before get_template '#template-add-item'
 
+  # Check if is an existent object instance
+  if schema.type is 'object'
+    document_url = "#{url_from_datafile form}.json"
+    check_document = $.get document_url
+    check_document.done (data) ->
+      data = cache document_url, data
+      obj = JSON.parse Base64.decode(data.content)
+      # Fill form fields if present
+      # TO DO: nested objects
+      form.find('[name][id]').each ->
+        input = $ @
+        name = input.attr 'name'
+        if obj[name]? then input.val obj[name]
+        return
+      return
+
   # Required asterix
   form.find('input[required]').each -> $(@).prev('label').append '<sup class="fg-secondary"> *</sup>'
 
@@ -247,6 +263,7 @@ form_load_schema = (path, classe) ->
     data = cache schema_url, data
     # Parse schema
     schema = JSON.parse Base64.decode(data.content)
+    # Create the FORM
     forms.each ->
       if $(@).hasClass 'schema' then create_schema_form $(@), schema
       if $(@).hasClass 'document' then create_document_form $(@), schema
