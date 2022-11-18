@@ -310,7 +310,7 @@ $('form').each ->
 
   # Reset
   form.on "reset", ->
-    form.find(':input').blur()
+    form.find(':input').focusout()
 
     # Reset range output value
     # Default delay is 0ms, "immediately" i.e. next event cycle, actual delay may be longer
@@ -320,12 +320,12 @@ $('form').each ->
 
   # Submit
   form.on "submit", ->
-    form.find(':input').blur()
+    form.find(':input').focusout()
     console.log form.serializeJSON()
 
   # View button click
   form.on 'click', '[data-type="button"] [type="button"]', ->
-    form.find(':input').blur()
+    form.find(':input').focusout()
     console.log form.serializeJSON()
 
   return # end FORM loop

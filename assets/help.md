@@ -100,6 +100,5 @@ order: 1000
 </div>
 **Console logs**
 - Log [local storage](#){:log-storage=''}
-- Log [site data](#){:onclick="console.log(site_data.obj)"}
 </div>
 </div>

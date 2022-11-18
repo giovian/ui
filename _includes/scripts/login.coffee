@@ -33,6 +33,7 @@ login.permissions = ->
       role: (if data.permissions.admin then 'admin' else 'guest')
     ).assign 'repository',
       fork: data.fork
+      pushed_at: data.pushed_at
       parent: data.parent?.full_name
       default_branch: data.default_branch
     return # End permission check
@@ -51,11 +52,12 @@ login.setLogin = ->
   $('html').removeClass 'role-admin role-guest logged'
   $('html').addClass 'unlogged'
   login.login_link.removeAttr 'disabled'
-  storage.clear 'login'
-    .clear 'repository'
-    .clear 'sort'
-    .clear 'flippers'
-    .clear 'details'
+  # storage.clear 'login'
+  #   .clear 'repository'
+  #   .clear 'sort'
+  #   .clear 'flippers'
+  #   .clear 'details'
+  storage.clear()
   true
 
 login.setLogout = ->

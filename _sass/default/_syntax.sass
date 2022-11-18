@@ -21,21 +21,24 @@ code.highlighter-rouge
     font-style: italic
 
 @media (prefers-color-scheme: dark)
-  [class~='na'], [class~='nv'], [class~='kc']
-    color: $green-dark
-  [class~='nt'], [class~='m'], [class~='nl']
-    color: lighten($pink-dark, 15%)
-  [class^='o'], [class~='pi']
-    color: lighten($pink-dark, 8%)
+  pre.highlight,
+  figure.highlight,
+  code.highlighter-rouge
+    [class~='na'], [class~='nv'], [class~='kc']
+      color: $green-dark
+    [class~='nt'], [class~='m'], [class~='nl']
+      color: lighten($pink-dark, 15%)
+    [class^='o'], [class~='pi']
+      color: lighten($pink-dark, 8%)
 
 @media (prefers-color-scheme: light)
-  [class~='na'], [class~='nv'], [class~='kc']
-    color: $green-light
-  [class~='nt'], [class~='m'], [class~='nl']
-    color: darken($pink-dark, 15%)
-  [class^='o'], [class~='pi']
-    color: darken($pink-dark, 8%)
   pre.highlight,
   figure.highlight,
   code.highlighter-rouge
     filter: saturate(50%)
+    [class~='na'], [class~='nv'], [class~='kc']
+      color: $green-light
+    [class~='nt'], [class~='m'], [class~='nl']
+      color: darken($pink-dark, 15%)
+    [class^='o'], [class~='pi']
+      color: darken($pink-dark, 8%)

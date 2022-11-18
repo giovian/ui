@@ -63,12 +63,12 @@ flipper = (flipper) ->
 $("[class*='flipper']").each -> flipper @
 
 {%- capture api -%}
-## Flippers
+## Flipper/s
 
 Show/Hide divs using links and save the state on `storage`.
 
-Class `flipper` is a TAB with one active div visible the time.  
-Class `flippers` links have a `data-attribute` and reveals the divs which the selected attribute contains the link text string.
+- Class `flipper` is a TAB with one active div visible the time.
+- Class `flippers` links with `data-attribute` and reveals the divs which the selected attribute contains the link text string.
 
 Single `flipper` (tab):
 ```html

@@ -28,7 +28,7 @@ updates = ->
       # There was a build or a commit after site.time
       loc = window.location
       url_start = loc.origin + loc.pathname
-      url_end = latest_date + '&sha=' + latest.sha.slice(0, 7) + loc.hash
+      url_end = latest_date + '&sha=' + latest_sha.slice(0, 7) + loc.hash
       # If browser is unfocused refresh page
       if !focus
         # Refresh on blur

@@ -4,6 +4,9 @@
 # LOAD JEKYLL DATA
 {% include scripts/sort.coffee %}
 
+# CITATIONS
+$('[cite]:not([title])').each -> $(@).attr 'title', $(@).attr('cite')
+
 # HELPERS
 
 {% include scripts/prevent.coffee %}        # Prevent default events for links and forms

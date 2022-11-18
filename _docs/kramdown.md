@@ -69,38 +69,54 @@ Use `|----` for a new `<tbody>`{:.language-html} and `|====` for a table footer 
 |====
 | Foot1 | Foot2 | Foot3
 
-TABLES can be styled with the classes `.border .border-secondary .rounded`. Headers, even bodies and footers have a secondary background. A class color can be applied to tables, rows or cells.
+TABLES can be styled with the classes `.border .border-secondary .rounded`. Headers, even-th bodies and footers have a secondary background. A class color can be applied to tables, rows or cells.
 
-{% assign colors = "blue,green,red,orange,pink" | split: "," %}
+{% assign colors = "secondary,blue,green,red,orange,pink" | split: "," %}
 <table class='border rounded'>
   <thead>
     <tr>
-      <th colspan=6>Colors</th>
+      <th>headers</th>
+      {% for color in colors %}
+        <th class="{{ color }}">.{{ color }}</th>
+      {% endfor %}
     </tr>
   </thead>
   <tbody class='border-secondary'>
     <tr>
-      <td><code>code</code></td>
-      {% for color in colors %}
-        <td class="{{ color }}">.{{ color }}</td>
-      {% endfor %}
+      <td colspan="{{ colors.size | plus: 1 }}">rows <code>code</code></td>
     </tr>
     {% for color in colors %}
       <tr class="{{ color }}">
-        <td colspan=6>.{{ color }} <code>code</code></td>
+        <td colspan="{{ colors.size | plus: 1 }}">.{{ color }} <code>code</code></td>
       </tr>
     {% endfor %}
   </tbody>
   <tbody>
     <tr>
-      <td colspan=6>New body</td>
+      <td colspan="{{ colors.size | plus: 1 }}">New body</td>
     </tr>
   </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="{{ colors.size | plus: 1 }}">Footer</td>
+    </tr>
+  </tfoot>
 </table>
 
 ## Blockquotes
 
-> Example
+> Example with cite attribute (source url)
+{:cite="https://example.com"}
+
+{% for color in colors %}
+<blockquote class="{{ color }}">.{{ color }}</blockquote>
+{% endfor %}
+
+And **Inline quotation element** like <q cite="https://example.com">this</q>.
+
+```html
+<q cite="{source url}">Quote</q>
+```
 
 ## Typography
 
@@ -129,6 +145,11 @@ TABLES can be styled with the classes `.border .border-secondary .rounded`. Head
 Abbreviated text is written normally and below the text add  
 `*[normally]: Abbreviation`
 
+Rendered HTML code:
+```html
+<abbr title="Abbreviation">normally</abbr>
+```
+
 *[normally]: Abbreviation
 
 ## Footnotes
@@ -136,6 +157,7 @@ Abbreviated text is written normally and below the text add
 Text is followed[^1] by `[^1]` and below the text add `[^1]: Footnote`.  
 The note will be added at the end[^where] of the document.
 
+Rendered HTML code:
 ```html
 <sup id="fnref:1" role="doc-noteref">
   <a href="#fn:1" class="footnote" rel="footnote">1</a>

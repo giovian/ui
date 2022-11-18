@@ -1,21 +1,21 @@
 # Default focus state
-# similar to html:not(.focus)
-focus = false
+focus = document.hasFocus()
+if focus then $('html').addClass 'focus'
 
 window.onfocus = ->
-  $('html').addClass "focus"
+  $('html').addClass 'focus'
   focus = true
   return
 
 window.onblur = ->
-  $("html").removeClass "focus"
+  $("html").removeClass 'focus'
   focus = false
   return
 
 {%- capture api -%}
 ## Focus
 
-Boolean variabile `focus` indicate browser page focus status.
+When the browser page has focus the boolean javascript variabile `focus` will be `true`{:.language-js} and `<html>`{:.language-html} element will have a `.focus`{:.language-css} class.
 
 ```coffee
 if focus

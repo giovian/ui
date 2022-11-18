@@ -8,7 +8,7 @@ details summary
     content: ""
     display: none
   &::before
-    color: var(--link) !important
+    // color: var(--link) !important
     float: left
     content: "▶"
     font-size: $font-size-mini
@@ -20,6 +20,9 @@ details summary
 
 details[open] summary::before
   content: "▼"
+
+details:not([open])
+  @extend .fg-secondary
 
 //
 // MAIN DETAILS
@@ -52,4 +55,3 @@ main details
       color: var(--fg-secondary) !important
   &:not([open])
     margin-bottom: .1*$space
-    @extend .fg-secondary
