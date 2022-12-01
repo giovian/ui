@@ -24,6 +24,13 @@ a, a .highlight, a > code
     pointer-events: none
     color: var(--fg-secondary) !important
 
+// External links external symbol
+@if $mark-ext-links
+  a[href^='http']:not([href^='#{$absolute_url}'])
+    &:after
+      content: $mark-ext-links-symbol
+      font-size: 80%
+
 //
 // SIDEBAR Widgets
 // --------------------------------------

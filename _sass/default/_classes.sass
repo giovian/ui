@@ -140,8 +140,8 @@
 .rounded-small
   border-radius: $border-small
 
-// FOCUS desaturation
-html:not(.focus)
+// FOCUS desaturation but not on local development environment
+html:not(.focus) body:not([github-environment="development"])
   filter: saturate(0%)
 
 // BLINK

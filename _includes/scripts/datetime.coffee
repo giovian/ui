@@ -66,7 +66,7 @@ time_diff = (date, return_update) ->
       value = ms.get_value date, ms.week()
       moment = "#{value} week#{ms.s value}"
       update = ms.day()
-    when abs < ms.year() - ms.month()
+    when abs < ms.month() * 11
       value = ms.get_value date, ms.month()
       moment = "#{value} month#{ms.s value}"
       update = ms.day()

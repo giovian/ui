@@ -48,9 +48,27 @@ $color-lightness-light: (bg: 94%, fg: 17%, bg_secondary: 91%, fg_secondary: 50%,
 ```
 
 Colors are applied to elements with the classes `.secondary .blue .red .green .orange .pink`{:.language-css}.
+
+Then you have `.blink`{:.blink} and `.bg-stripe`{:.bg-stripe} classes, compatible with color ones.
+
+{% assign colors = "default,secondary,blue,green,red,orange,pink" | split: "," %}
+<div class="flex mv">
+  {% for c in colors offset: 1 %}
+  <div>
+    <div class="p-around-small">.{{ c }}</div>
+    <div class="p-around-small font-small {{ c }}" style="background-color:var(--bg);">bg</div>
+    <div class="p-around-small font-small {{ c }}" style="background-color:var(--bg-secondary);">bg-secondary</div>
+    <div class="p-around-small font-small {{ c }}" style="background-color:var(--border);">border</div>
+    <div class="p-around-small font-small {{ c }}" style="background-color:var(--fg);color:var(--bg);">fg</div>
+    <div class="p-around-small font-small {{ c }}" style="background-color:var(--fg-secondary);color:var(--bg);">fg-secondary</div>
+  </div>
+  {% endfor %}
+</div>
+
+### Usage
+
 <div class="grid">
-  {%- assign colors = "default,secondary,blue,green,red,orange,pink" | split: "," -%}
-  {% for color in colors %}
+  {% for color in colors offset: 1 %}
     <div class="p-around rounded {{ color }}">
     Example <i>{{ color }}</i>: <span class="fg-secondary">secondary text</span>
     <div class="p-around mvh bg-secondary rounded">Secondary background</div>
@@ -59,7 +77,7 @@ Colors are applied to elements with the classes `.secondary .blue .red .green .o
   {% endfor %}
 </div>
 
-## Buttons
+### Buttons
 
 <div class="flex" style="gap: .2em;">
 {% for color in colors %}
@@ -67,9 +85,9 @@ Colors are applied to elements with the classes `.secondary .blue .red .green .o
 {% endfor %}
 </div>
 
-## Syntax highlight
+### Syntax highlight
 
-Syntax highlight colors for dark and light color scheme are in {% include widgets/github_link.html path='_sass/default/syntax' remote=true %}.
+Syntax highlight colors for dark and light color scheme are in {% include widgets/github_link.html path='_sass/default/_syntax.sass' remote=true %}.
 
 <pre class="highlight">
 <span class="na">.na</span> <span class="nv">.nv</span> <span class="s">.s</span> <span class="nx">.nx</span> <span class="nb">.nb</span> <span class="o">.o</span> <span class="pi">.pi</span> <span class="kr">.kr</span> <span class="no">.no</span> <span class="nt">.nt</span> <span class="m">.m</span> <span class="c">.c</span> <span class="p">.p</span>
