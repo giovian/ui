@@ -47,6 +47,19 @@ order: 1000
 
 <details markdown=1>
 <summary markdown=1>
+  **Static files**
+</summary>
+{% assign folder_assets = site.static_files | group_by_exp: "item", "item.path | replace: item.name, ''" %}
+<ul>{% for folder in folder_assets %}
+  <li>Folder <code>{{ folder.name }}</code></li>
+  <ul>{% for file in folder.items %}
+    <li><code>{{ file.name }}</code></li>
+  {% endfor %}</ul>
+{% endfor %}</ul>
+</details>
+
+<details markdown=1>
+<summary markdown=1>
   **Pages {{ sort_by }} value**
 </summary>
 {% assign html_sorted = html_pages | sort: sort_by %}{% for item in html_sorted %}- `{{ item[sort_by] | inspect }}` {{ item.title | default: item.name }}

@@ -21,6 +21,7 @@ order: 40
 {% include widgets/api.html include='scripts/flipper.coffee' %}
 {% include widgets/api.html include='scripts/focus.coffee' %}
 {% include widgets/api.html include='scripts/inview.coffee' %}
+{% include widgets/api.html include='scripts/sort.coffee' %}
 {% include widgets/api.html include='scripts/updates.coffee' %}
 {% include widgets/api.html include='scripts/form.coffee' %}
 {% include widgets/api.html include='scripts/schema.coffee' %}
